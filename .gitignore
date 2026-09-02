@@ -1,0 +1,6 @@
+# Obsidian local UI state (not meaningful to sync)
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+
+# Claudian AI 对话历史记录（本地隐私内容，不同步）
+.claudian/sessions/
