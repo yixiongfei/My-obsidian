@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+  <style>
+    body { margin: 0; }
+    a { color: #1B44E8; text-decoration: none; }
+    a:hover { color: #0A2CB0; }
+    * { box-sizing: border-box; }
+    .mv { font-family: 'Times New Roman', Times, serif; font-style: italic; font-size: 1.06em; }
+    .mn { font-family: 'Times New Roman', Times, serif; }
+  </style>
+</helmet>
+
+<div style="width: 1440px; height: 1180px; background: #FFFFFF; color: #0A0B0D; font-family: 'Archivo', 'Noto Sans SC', system-ui, sans-serif; font-size: 14px; line-height: 1.5; display: flex; font-variant-numeric: tabular-nums;">
+
+  <!-- ══════════ 导航栏 ══════════ -->
+  <div style="width: 208px; flex: none; border-right: 1px solid #E2E4E8; padding: 40px 0 32px; display: flex; flex-direction: column;">
+    <div style="padding: 0 24px 48px;">
+      <div style="font-size: 15px; font-weight: 600; letter-spacing: -0.01em;">知识库</div>
+      <div style="font-size: 10px; letter-spacing: 0.18em; color: #8A8F98; margin-top: 4px;">KNOWLEDGE BASE</div>
+    </div>
+    <div style="display: flex; flex-direction: column;">
+      <div style="display: flex; align-items: center; gap: 12px; padding: 10px 24px; border-top: 1px solid #E2E4E8; border-left: 2px solid transparent; color: #5A5F68;">
+        <span style="font-size: 10px; letter-spacing: 0.14em; color: #8A8F98; width: 14px;">01</span><span style="font-size: 13px;">仪表盘</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px; padding: 10px 24px; border-top: 1px solid #E2E4E8; border-left: 2px solid #1B44E8;">
+        <span style="font-size: 10px; letter-spacing: 0.14em; color: #1B44E8; width: 14px;">02</span><span style="font-size: 13px; font-weight: 500;">笔记</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px; padding: 10px 24px; border-top: 1px solid #E2E4E8; border-left: 2px solid transparent; color: #5A5F68;">
+        <span style="font-size: 10px; letter-spacing: 0.14em; color: #8A8F98; width: 14px;">03</span><span style="font-size: 13px;">复习</span>
+        <span style="margin-left: auto; font-size: 11px; color: #1B44E8; font-weight: 600;">3</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px; padding: 10px 24px; border-top: 1px solid #E2E4E8; border-bottom: 1px solid #E2E4E8; border-left: 2px solid transparent; color: #5A5F68;">
+        <span style="font-size: 10px; letter-spacing: 0.14em; color: #8A8F98; width: 14px;">04</span><span style="font-size: 13px;">日程</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════ 目录树 ══════════ -->
+  <div style="width: 240px; flex: none; border-right: 1px solid #E2E4E8; padding: 40px 0 0;">
+    <div style="padding: 0 20px 16px; font-size: 10px; letter-spacing: 0.18em; color: #8A8F98;">目录树</div>
+
+    <div style="display: flex; justify-content: space-between; padding: 8px 20px; border-top: 1px solid #E2E4E8; font-size: 12px; font-weight: 600;">
+      <span>数学 / 线性代数</span><span style="color: #8A8F98; font-weight: 400;">8</span>
+    </div>
+    <div style="padding: 7px 20px 7px 32px; font-size: 12.5px; color: #5A5F68;">伴随矩阵与可逆矩阵</div>
+    <div style="padding: 7px 20px 7px 32px; font-size: 12.5px; color: #5A5F68;">多项式除法</div>
+    <div style="padding: 7px 20px 7px 30px; font-size: 12.5px; color: #1B44E8; font-weight: 500; border-left: 2px solid #1B44E8; background: #F4F6FE;">二次型</div>
+    <div style="padding: 7px 20px 7px 32px; font-size: 12.5px; color: #5A5F68;">矩阵的运算与变换</div>
+    <div style="padding: 7px 20px 7px 32px; font-size: 12.5px; color: #5A5F68;">矩阵相似与相似对角化</div>
+    <div style="padding: 7px 20px 7px 32px; font-size: 12.5px; color: #5A5F68;">线性方程组</div>
+    <div style="padding: 7px 20px 7px 32px; font-size: 12.5px; color: #5A5F68;">向量组的线性相关性</div>
+
+    <div style="display: flex; justify-content: space-between; padding: 8px 20px; border-top: 1px solid #E2E4E8; margin-top: 12px; font-size: 12px; font-weight: 600;">
+      <span>数学 / 高等数学</span><span style="color: #8A8F98; font-weight: 400;">3</span>
+    </div>
+    <div style="padding: 7px 20px 7px 32px; font-size: 12.5px; color: #5A5F68;">初等函数</div>
+    <div style="padding: 7px 20px 7px 32px; font-size: 12.5px; color: #5A5F68;">函数，极限，连续</div>
+    <div style="display: flex; justify-content: space-between; padding: 7px 20px 7px 32px; font-size: 12.5px; color: #8A8F98;">
+      <span>无穷小</span><span style="font-size: 10px; letter-spacing: 0.1em;">空</span>
+    </div>
+  </div>
+
+  <!-- ══════════ 正文 ══════════ -->
+  <div style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
+    <div style="flex: 1; min-height: 0; display: flex; gap: 0;">
+
+      <div style="flex: 1; min-width: 0; padding: 40px 48px 0;">
+        <div style="font-size: 10px; letter-spacing: 0.18em; color: #8A8F98;">数学 / 线性代数</div>
+        <h1 style="font-size: 46px; font-weight: 500; letter-spacing: -0.035em; line-height: 1.1; margin: 14px 0 18px;">二次型</h1>
+
+        <div style="display: flex; gap: 28px; border-top: 1px solid #0A0B0D; border-bottom: 1px solid #E2E4E8; padding: 10px 0; font-size: 11px; color: #5A5F68;">
+          <span>2174 字</span><span>2026.08.23 创建</span><span>复习 2 次</span>
+          <span style="color: #1B44E8; margin-left: auto;">下次 2026.09.10 · 今天</span>
+        </div>
+
+        <p style="font-size: 15px; line-height: 1.85; color: #2A2F38; margin: 26px 0 0;">
+          秩、特征值等基础工具见 <a href="#">行列式 · 矩阵 · 逆矩阵 速查表</a>；线性方程组解的结构见 <a href="#">线性方程组</a>。这份笔记专门收录二次型/二次曲面相关的真题和结论。
+        </p>
+
+        <h2 style="font-size: 11px; letter-spacing: 0.18em; font-weight: 600; margin: 36px 0 0; padding-bottom: 8px; border-bottom: 1px solid #0A0B0D;">01　考研真题</h2>
+
+        <div style="margin: 26px 0; text-align: center; font-size: 19px; padding: 22px 0; border-top: 1px solid #E2E4E8; border-bottom: 1px solid #E2E4E8;">
+          <span class="mv">f</span><span class="mn">(</span><span class="mv">X</span><span class="mn">) = </span><span class="mv">X</span><sup class="mv" style="font-size: 0.68em;">T</sup><span class="mv">AX</span><span class="mn"> = </span><span class="mn">λ</span><sub class="mn" style="font-size: 0.68em;">1</sub><span class="mv">x</span><sup class="mn" style="font-size: 0.68em;">′2</sup><span class="mn"> + </span><span class="mn">λ</span><sub class="mn" style="font-size: 0.68em;">2</sub><span class="mv">y</span><sup class="mn" style="font-size: 0.68em;">′2</sup><span class="mn"> + </span><span class="mn">λ</span><sub class="mn" style="font-size: 0.68em;">3</sub><span class="mv">z</span><sup class="mn" style="font-size: 0.68em;">′2</sup><span class="mn"> = 1</span>
+        </div>
+
+        <!-- callout：折叠 -->
+        <div style="border-top: 1px solid #C3C7CE; border-bottom: 1px solid #E2E4E8;">
+          <div style="display: flex; align-items: center; gap: 14px; padding: 13px 0;">
+            <span style="font-size: 10px; letter-spacing: 0.16em; color: #1B44E8; width: 52px;">提示 01</span>
+            <span style="font-size: 13.5px; font-weight: 500; flex: 1;">先看图形是「连成一块」还是「分成两片」</span>
+            <span style="width: 7px; height: 7px; border-right: 1px solid #8A8F98; border-bottom: 1px solid #8A8F98; transform: rotate(-45deg); margin-right: 4px;"></span>
+          </div>
+        </div>
+
+        <!-- callout：展开 -->
+        <div style="border-bottom: 1px solid #E2E4E8;">
+          <div style="display: flex; align-items: center; gap: 14px; padding: 13px 0;">
+            <span style="font-size: 10px; letter-spacing: 0.16em; color: #1B44E8; width: 52px;">答案</span>
+            <span style="font-size: 13.5px; font-weight: 500; flex: 1;">完整推导</span>
+            <span style="width: 7px; height: 7px; border-right: 1px solid #1B44E8; border-bottom: 1px solid #1B44E8; transform: rotate(45deg); margin-right: 4px; margin-bottom: 4px;"></span>
+          </div>
+          <div style="padding: 0 0 18px 66px; font-size: 14px; line-height: 1.8; color: #2A2F38; border-left: 1px solid #1B44E8; margin-left: 8px; padding-left: 58px;">
+            图形是<strong style="font-weight: 600;">两片完全分离</strong>、分别扣在 <span class="mv">x</span> 轴正负两侧的碗状曲面 —— 这是<strong style="font-weight: 600;">双叶双曲面</strong>，对应特征值符号是 <strong style="font-weight: 600;">1 正 2 负</strong>。选 B。
+          </div>
+        </div>
+
+        <h2 style="font-size: 11px; letter-spacing: 0.18em; font-weight: 600; margin: 40px 0 0; padding-bottom: 8px; border-bottom: 1px solid #0A0B0D;">02　二次曲面 · 特征值符号对照</h2>
+
+        <table style="width: 100%; border-collapse: collapse; margin-top: 2px; font-size: 13px;">
+          <thead>
+            <tr>
+              <th style="text-align: left; padding: 11px 12px 11px 0; border-bottom: 1px solid #C3C7CE; font-size: 10px; letter-spacing: 0.14em; font-weight: 600; color: #5A5F68;">图形</th>
+              <th style="text-align: left; padding: 11px 12px; border-bottom: 1px solid #C3C7CE; font-size: 10px; letter-spacing: 0.14em; font-weight: 600; color: #5A5F68;">特征值符号</th>
+              <th style="text-align: left; padding: 11px 0 11px 12px; border-bottom: 1px solid #C3C7CE; font-size: 10px; letter-spacing: 0.14em; font-weight: 600; color: #5A5F68;">形状特征</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td style="padding: 11px 12px 11px 0; border-bottom: 1px solid #E2E4E8;">椭球面</td><td style="padding: 11px 12px; border-bottom: 1px solid #E2E4E8; color: #5A5F68;">3 正</td><td style="padding: 11px 0 11px 12px; border-bottom: 1px solid #E2E4E8; color: #5A5F68;">完全封闭</td></tr>
+            <tr><td style="padding: 11px 12px 11px 0; border-bottom: 1px solid #E2E4E8;">单叶双曲面</td><td style="padding: 11px 12px; border-bottom: 1px solid #E2E4E8; color: #5A5F68;">2 正 1 负</td><td style="padding: 11px 0 11px 12px; border-bottom: 1px solid #E2E4E8; color: #5A5F68;">连成一整块，沿负号轴贯通</td></tr>
+            <tr><td style="padding: 11px 12px 11px 0; border-bottom: 1px solid #E2E4E8; color: #1B44E8; font-weight: 500;">双叶双曲面</td><td style="padding: 11px 12px; border-bottom: 1px solid #E2E4E8; color: #1B44E8;">1 正 2 负</td><td style="padding: 11px 0 11px 12px; border-bottom: 1px solid #E2E4E8; color: #1B44E8;">两片分离，中间无图形</td></tr>
+            <tr><td style="padding: 11px 12px 11px 0; border-bottom: 1px solid #E2E4E8;">椭圆柱面</td><td style="padding: 11px 12px; border-bottom: 1px solid #E2E4E8; color: #5A5F68;">秩 2，同号不等</td><td style="padding: 11px 0 11px 12px; border-bottom: 1px solid #E2E4E8; color: #5A5F68;">横截面椭圆，沿缺失轴延伸</td></tr>
+            <tr><td style="padding: 11px 12px 11px 0; border-bottom: 1px solid #E2E4E8;">圆柱面</td><td style="padding: 11px 12px; border-bottom: 1px solid #E2E4E8; color: #5A5F68;">秩 2，同号且相等</td><td style="padding: 11px 0 11px 12px; border-bottom: 1px solid #E2E4E8; color: #5A5F68;">横截面正圆</td></tr>
+          </tbody>
+        </table>
+
+        <div style="display: flex; gap: 10px; margin-top: 34px;">
+          <span style="font-size: 11px; color: #5A5F68; border: 1px solid #E2E4E8; padding: 5px 11px;">← 线性代数</span>
+          <span style="font-size: 11px; color: #5A5F68; border: 1px solid #E2E4E8; padding: 5px 11px;">← 线性方程组</span>
+          <span style="font-size: 11px; color: #5A5F68; border: 1px solid #E2E4E8; padding: 5px 11px;">→ 矩阵相似与相似对角化</span>
+        </div>
+      </div>
+
+      <!-- 右侧目录 -->
+      <div style="width: 196px; flex: none; padding: 40px 40px 0 0;">
+        <div style="font-size: 10px; letter-spacing: 0.18em; color: #8A8F98; padding-bottom: 10px; border-bottom: 1px solid #0A0B0D;">目录</div>
+        <div style="display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid #E2E4E8;"><span style="font-size: 10px; color: #1B44E8; width: 16px;">01</span><span style="font-size: 12px; color: #1B44E8;">考研真题</span></div>
+        <div style="display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid #E2E4E8;"><span style="font-size: 10px; color: #8A8F98; width: 16px;">02</span><span style="font-size: 12px; color: #5A5F68;">二次曲面 · 特征值符号对照</span></div>
+        <div style="display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid #E2E4E8;"><span style="font-size: 10px; color: #8A8F98; width: 16px;">03</span><span style="font-size: 12px; color: #5A5F68;">常用技巧：矩阵多项式方程</span></div>
+        <div style="display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid #E2E4E8;"><span style="font-size: 10px; color: #8A8F98; width: 16px;">04</span><span style="font-size: 12px; color: #5A5F68;">易错点：配方法凑出的「平方」</span></div>
+      </div>
+    </div>
+
+    <!-- 复习条 -->
+    <div style="border-top: 1px solid #0A0B0D; padding: 16px 40px 16px 48px; display: flex; align-items: center; gap: 16px; background: #FFFFFF;">
+      <span style="font-size: 10px; letter-spacing: 0.16em; color: #8A8F98;">记一次复习</span>
+      <span style="flex: 1; font-size: 13px; color: #8A8F98; border-bottom: 1px solid #E2E4E8; padding: 6px 0;">本次新增 / 加深的理解（可留空）</span>
+      <span style="font-size: 12.5px; color: #5A5F68; border: 1px solid #C3C7CE; padding: 8px 16px;">需重来　1 天</span>
+      <span style="font-size: 12.5px; font-weight: 500; color: #FFFFFF; background: #1B44E8; padding: 9px 18px;">已掌握　4 天</span>
+      <span style="font-size: 11px; color: #8A8F98;">→ 2026.09.14</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

@@ -6,7 +6,6 @@ const NAV = [
   { to: '/', icon: 'dash', label: '仪表盘', end: true },
   { to: '/notes', icon: 'notes', label: '笔记' },
   { to: '/review', icon: 'review', label: '复习', badgeKey: 'due' },
-  { to: '/graph', icon: 'graph', label: '图谱' },
   { to: '/schedule', icon: 'calendar', label: '日程' },
 ];
 

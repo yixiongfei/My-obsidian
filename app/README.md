@@ -31,26 +31,44 @@ npm run electron:build   # 产出 release/ 里的安装包
 | 视图 | 做什么 |
 |---|---|
 | 仪表盘 | 初试倒计时、今日待复习、复习热力图、各学科掌握度 |
-| 笔记 | 目录树 + 阅读页，支持 KaTeX、表格、callout 折叠、wiki 链接互跳、反向链接 |
+| 笔记 | 可折叠目录树 + 阅读页，支持 KaTeX、表格、callout 折叠、wiki 链接互跳、反向链接 |
 | 复习 | 到期笔记逐篇过，callout 默认折叠即天然自测；「已掌握 / 需重来」写回仓库 |
-| 图谱 | `[[wiki 链接]]` 构成的力导向图，滚轮缩放、点击进入笔记 |
 | 日程 | 年表 → 月表 → 日表逐层下钻，带共享元素动画 |
 
 `Ctrl / ⌘ + K` 全局搜索。
 
+wiki 链接的关系图没有做——Obsidian 自带的 graph view 已经覆盖了。
+
 ## 数据怎么流动
 
-后端不复制任何内容，vault 本身就是唯一数据源：
+**.md 文件始终是笔记的唯一真相**，SQLite 只是从它派生出来的索引层：
 
 ```
 Obsidian 里保存 .md
       ↓ chokidar 监听
-Node 重新索引这一个文件
+Node 重解析这一个文件 → 写进 SQLite
       ↓ SSE 推送
 网页自动刷新
 ```
 
-**复习写回**只动笔记 frontmatter 的三个字段：
+删掉 `.kb/index.db` 下次启动会原样重建，所以它不进 git。
+
+用的是 Node 22 内置的 `node:sqlite`——零依赖，不用编译原生模块，Electron 37+ 同样是 Node 22，桌面端和服务端共用一份代码。
+
+库里存三类东西：
+
+| 表 | 内容 | 从哪来 |
+|---|---|---|
+| `notes` `tags` `headings` `links` | 笔记索引与链接关系 | 扫描 .md 派生 |
+| `notes_fts` | 全文检索（FTS5 trigram 分词） | 同上 |
+| `reviews` | 复习历史 | `review_log.jsonl` 的镜像 |
+| `events` | 自定义日程 | **本库是唯一真相** |
+
+全文检索用 trigram 分词器：中文没有词边界，默认的 unicode61 切不开。代价是查询词必须 ≥ 3 个字符，所以「矩阵」「极限」这类两字词自动退回 `LIKE` 匹配。
+
+**复习写回是三处同时写**：笔记 frontmatter（给 Obsidian 看）、`review_log.jsonl`（给你那份 schema 和 Claudian 看）、SQLite（只为统计快）。前两者是契约，第三者随时能从前两者重建。
+
+frontmatter 只动三个字段：
 
 ```yaml
 review_count: 3
@@ -78,7 +96,7 @@ next_review: 2026-09-17
 - **待复习** — 笔记 frontmatter 的 `next_review`
 - **已复习** — `review_log.jsonl`
 - **新建** — 笔记 frontmatter 的 `created`
-- **自定义日程** — 仓库根目录的 `schedule.json`（网页上添加时自动创建）
+- **自定义日程** — SQLite 的 `events` 表（旧的 `schedule.json` 首次启动会自动迁移进来，原文件改名成 `.migrated` 留档）
 
 年表和月表顶部的阶段目标，实时解析 `个人/考研倒计时.canvas`——在 Obsidian 里改画布、勾选任务，网站跟着变。
 
@@ -92,10 +110,12 @@ app/
     lib/vault.js        扫描、frontmatter 解析、wiki 链接解析、反向链接
     lib/markdown.js     markdown-it：KaTeX、callout 折叠、[[链接]]、==高亮==
     lib/review.js       间隔重复计算 + frontmatter 逐行写回
+    lib/db.js           SQLite 建表（node:sqlite）+ 事务封装
+    lib/sync.js          .md / review_log.jsonl → SQLite 的同步
     lib/schedule.js     年/月/日聚合 + 画布路线图解析
-    lib/query.js        搜索、图谱、仪表盘统计
+    lib/query.js        全文检索、复习分桶、仪表盘统计
   web/src/
-    views/              Dashboard / Notes / Review / Graph / Schedule
+    views/              Dashboard / Notes / Review / Schedule
     components/         Shell、命令面板、Prose、复习浮条
     styles/             base（设计系统）· markdown（正文）· views（各视图）
   electron/main.cjs     选仓库 → 起服务 → 开窗口

@@ -8,7 +8,6 @@ const PAGES = [
   { id: '/', title: '仪表盘', kind: 'page' },
   { id: '/notes', title: '笔记', kind: 'page' },
   { id: '/review', title: '复习', kind: 'page' },
-  { id: '/graph', title: '知识图谱', kind: 'page' },
   { id: '/schedule', title: '日程', kind: 'page' },
 ];
 

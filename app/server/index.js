@@ -7,10 +7,12 @@ import yaml from 'js-yaml';
 import fsp from 'node:fs/promises';
 
 import { VAULT_ROOT, APP_ROOT, PORT, TAGS_FILE, IGNORED_DIRS } from './config.js';
-import { index, toAbs } from './lib/vault.js';
+import { index, toAbs, toId } from './lib/vault.js';
 import { render } from './lib/markdown.js';
-import { recordReview, readLog, bucketNotes, todayStr } from './lib/review.js';
-import { search, graph, dashboard } from './lib/query.js';
+import { recordReview, readLog, todayStr } from './lib/review.js';
+import { search, dashboard, bucketNotes, allNotes, getNoteMeta } from './lib/query.js';
+import * as db from './lib/db.js';
+import { syncAll, syncNote } from './lib/sync.js';
 import * as schedule from './lib/schedule.js';
 
 const app = express();
@@ -47,33 +49,32 @@ app.get('/api/stream', (req, res) => {
  * 笔记
  * ------------------------------------------------------------------ */
 
-app.get('/api/meta', wrap(async (_req, res) => {
-  const cfg = await schedule.loadSchedule();
+app.get('/api/meta', (_req, res) => {
   res.json({
     vault: VAULT_ROOT,
     name: path.basename(VAULT_ROOT),
     notes: index.notes.size,
     images: index.images.size,
     version: index.version,
-    examDate: cfg.examDate,
+    examDate: schedule.examDate(),
     today: todayStr(),
   });
-}));
+});
 
 app.get('/api/tree', (_req, res) => res.json(index.tree()));
-app.get('/api/notes', (_req, res) => res.json(index.allMeta()));
+app.get('/api/notes', (_req, res) => res.json(allNotes()));
 
 app.get('/api/note', wrap(async (req, res) => {
   const id = String(req.query.path || '');
   const note = index.get(id);
   if (!note) throw bad('笔记不存在', 404);
 
-  const backlinks = [...(index.backlinks.get(id) || [])]
-    .map((b) => index.get(b)).filter(Boolean).map((n) => index.meta(n));
-  const outlinks = [...new Set(note.linkTargets.map((t) => index.resolve(t)).filter((x) => x && index.notes.has(x)))]
-    .map((x) => index.meta(index.get(x)));
+  const backlinks = db.handle().prepare('SELECT src FROM links WHERE dst = ? AND embed = 0').all(id)
+    .map((r) => getNoteMeta(r.src)).filter(Boolean);
+  const outlinks = db.handle().prepare('SELECT dst FROM links WHERE src = ? AND embed = 0').all(id)
+    .map((r) => getNoteMeta(r.dst)).filter(Boolean);
 
-  res.json({ ...index.meta(note), html: render(note.body), outline: note.outline, backlinks, outlinks });
+  res.json({ ...getNoteMeta(id), html: render(note.body), outline: note.outline, backlinks, outlinks });
 }));
 
 app.get('/api/tags', wrap(async (_req, res) => {
@@ -85,16 +86,12 @@ app.get('/api/tags', wrap(async (_req, res) => {
 }));
 
 app.get('/api/search', (req, res) => res.json(search(req.query.q, Number(req.query.limit) || 30)));
-app.get('/api/graph', (_req, res) => res.json(graph()));
 
 /* ------------------------------------------------------------------ *
  * 复习
  * ------------------------------------------------------------------ */
 
-app.get('/api/dashboard', wrap(async (_req, res) => {
-  const cfg = await schedule.loadSchedule();
-  res.json(await dashboard(cfg.examDate));
-}));
+app.get('/api/dashboard', (_req, res) => res.json(dashboard(schedule.examDate())));
 
 app.get('/api/review/queue', (_req, res) => res.json(bucketNotes()));
 app.get('/api/review/log', wrap(async (_req, res) => res.json(await readLog())));
@@ -125,23 +122,23 @@ app.get('/api/schedule/month/:month', wrap(async (req, res) => {
 
 app.get('/api/schedule/day/:date', wrap(async (req, res) => {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(req.params.date)) throw bad('日期格式应为 YYYY-MM-DD');
-  res.json(await schedule.dayView(req.params.date));
+  res.json(schedule.dayView(req.params.date));
 }));
 
 app.post('/api/schedule/event', wrap(async (req, res) => {
-  const event = await schedule.addEvent(req.body || {});
+  const event = schedule.addEvent(req.body || {});
   broadcast({ type: 'schedule' });
   res.json(event);
 }));
 
 app.patch('/api/schedule/event/:id', wrap(async (req, res) => {
-  const event = await schedule.patchEvent(req.params.id, req.body || {});
+  const event = schedule.patchEvent(req.params.id, req.body || {});
   broadcast({ type: 'schedule' });
   res.json(event);
 }));
 
 app.delete('/api/schedule/event/:id', wrap(async (req, res) => {
-  const out = await schedule.removeEvent(req.params.id);
+  const out = schedule.removeEvent(req.params.id);
   broadcast({ type: 'schedule' });
   res.json(out);
 }));
@@ -184,15 +181,19 @@ function onFsEvent(type, abs) {
   const changed = type === 'unlink' ? index.remove(abs) : index.update(abs);
   Promise.resolve(changed).then((ok) => {
     if (!ok) return;
+    if (abs.toLowerCase().endsWith('.md')) syncNote(toId(abs));
     clearTimeout(debounce);
     debounce = setTimeout(() => broadcast({ type: 'vault', version: index.version }), 120);
   });
 }
 
 export async function start() {
+  db.open();
   await index.scan();
+  const synced = await syncAll();
   console.log(`[知识库] vault: ${VAULT_ROOT}`);
-  console.log(`[知识库] 已索引 ${index.notes.size} 篇笔记 / ${index.images.size} 张图片`);
+  console.log(`[知识库] 索引 ${index.notes.size} 篇笔记 / ${index.images.size} 张图片`);
+  console.log(`[知识库] SQLite ${db.DB_PATH}（全文检索 ${db.hasFts() ? '开启' : '降级为 LIKE'}，复习记录 +${synced.reviews}）`);
 
   chokidar
     .watch(VAULT_ROOT, {

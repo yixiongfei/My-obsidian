@@ -7,10 +7,10 @@
   "main": "electron/main.cjs",
   "scripts": {
     "dev": "concurrently -n server,web -c blue,cyan \"npm:dev:server\" \"npm:dev:web\"",
-    "dev:server": "node --watch server/index.js",
+    "dev:server": "node --disable-warning=ExperimentalWarning --watch server/index.js",
     "dev:web": "vite",
     "build": "vite build",
-    "start": "cross-env NODE_ENV=production node server/index.js",
+    "start": "cross-env NODE_ENV=production node --disable-warning=ExperimentalWarning server/index.js",
     "electron:dev": "cross-env ELECTRON_DEV=1 electron .",
     "electron:build": "npm run build && electron-builder --win"
   },
@@ -27,8 +27,7 @@
     "@vitejs/plugin-react": "^4.3.4",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
-    "d3-force": "^3.0.0",
-    "electron": "^33.4.11",
+    "electron": "^37.6.0",
     "electron-builder": "^25.1.8",
     "framer-motion": "^11.18.2",
     "katex": "^0.16.11",

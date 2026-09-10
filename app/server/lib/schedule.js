@@ -1,63 +1,55 @@
 import fsp from 'node:fs/promises';
 import { randomUUID } from 'node:crypto';
-import { SCHEDULE_FILE, DEFAULT_EXAM_DATE, VAULT_ROOT } from '../config.js';
+import { handle, getMeta, setMeta } from './db.js';
+import { DEFAULT_EXAM_DATE } from '../config.js';
 import { index, toAbs } from './vault.js';
-import { readLog, todayStr, daysBetween } from './review.js';
+import { allNotes } from './query.js';
+import { todayStr, daysBetween } from './review.js';
 
-const ym = (date) => date.slice(0, 7);
 const pad = (n) => String(n).padStart(2, '0');
 
+export const examDate = () => getMeta('exam_date') || DEFAULT_EXAM_DATE;
+export const setExamDate = (d) => setMeta('exam_date', d);
+
 /* ------------------------------------------------------------------ *
- * schedule.json：自定义日程 + 关键日期
+ * 自定义日程：SQLite 是唯一真相
  * ------------------------------------------------------------------ */
 
-const EMPTY = { examDate: DEFAULT_EXAM_DATE, startDate: null, events: [] };
+const bad = (msg, status = 400) => Object.assign(new Error(msg), { status });
+const rowToEvent = (r) => ({ ...r, done: !!r.done });
 
-export async function loadSchedule() {
-  try {
-    const parsed = JSON.parse(await fsp.readFile(SCHEDULE_FILE, 'utf8'));
-    return {
-      examDate: parsed.examDate || DEFAULT_EXAM_DATE,
-      startDate: parsed.startDate || null,
-      events: Array.isArray(parsed.events) ? parsed.events : [],
-    };
-  } catch {
-    return { ...EMPTY, events: [] };
-  }
+export const listEvents = (from, to) =>
+  handle().prepare('SELECT * FROM events WHERE date BETWEEN ? AND ? ORDER BY date, rowid')
+    .all(from, to).map(rowToEvent);
+
+export function addEvent({ date, title, note = '', kind = 'plan' }) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(date))) throw bad('日期格式应为 YYYY-MM-DD');
+  if (!String(title || '').trim()) throw bad('标题不能为空');
+  const event = { id: randomUUID(), date, title: String(title).trim(), note: String(note || ''), kind, done: 0 };
+  handle().prepare('INSERT INTO events (id, date, title, note, kind, done) VALUES (?, ?, ?, ?, ?, ?)')
+    .run(event.id, event.date, event.title, event.note, event.kind, event.done);
+  return rowToEvent(event);
 }
 
-export async function saveSchedule(data) {
-  await fsp.writeFile(SCHEDULE_FILE, `${JSON.stringify(data, null, 2)}\n`, 'utf8');
-  return data;
+export function patchEvent(id, patch) {
+  const db = handle();
+  const row = db.prepare('SELECT * FROM events WHERE id = ?').get(id);
+  if (!row) throw bad('日程不存在', 404);
+  const next = {
+    date: patch.date ?? row.date,
+    title: patch.title ?? row.title,
+    note: patch.note ?? row.note,
+    kind: patch.kind ?? row.kind,
+    done: 'done' in patch ? (patch.done ? 1 : 0) : row.done,
+  };
+  db.prepare('UPDATE events SET date = ?, title = ?, note = ?, kind = ?, done = ? WHERE id = ?')
+    .run(next.date, next.title, next.note, next.kind, next.done, id);
+  return rowToEvent({ id, ...next });
 }
 
-export async function addEvent({ date, title, note = '', kind = 'plan' }) {
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(date))) throw Object.assign(new Error('日期格式应为 YYYY-MM-DD'), { status: 400 });
-  if (!String(title || '').trim()) throw Object.assign(new Error('标题不能为空'), { status: 400 });
-  const data = await loadSchedule();
-  const event = { id: randomUUID(), date, title: String(title).trim(), note: String(note || ''), kind, done: false };
-  data.events.push(event);
-  await saveSchedule(data);
-  return event;
-}
-
-export async function patchEvent(id, patch) {
-  const data = await loadSchedule();
-  const event = data.events.find((e) => e.id === id);
-  if (!event) throw Object.assign(new Error('日程不存在'), { status: 404 });
-  for (const key of ['date', 'title', 'note', 'done', 'kind']) {
-    if (key in patch) event[key] = patch[key];
-  }
-  await saveSchedule(data);
-  return event;
-}
-
-export async function removeEvent(id) {
-  const data = await loadSchedule();
-  const before = data.events.length;
-  data.events = data.events.filter((e) => e.id !== id);
-  if (data.events.length === before) throw Object.assign(new Error('日程不存在'), { status: 404 });
-  await saveSchedule(data);
+export function removeEvent(id) {
+  const r = handle().prepare('DELETE FROM events WHERE id = ?').run(id);
+  if (!r.changes) throw bad('日程不存在', 404);
   return { ok: true };
 }
 
@@ -83,18 +75,17 @@ export async function roadmap() {
     if (!m || !/^#{2,4}\s/.test(header)) continue;
 
     const key = `${m[1]}-${pad(Number(m[2]))}`;
-    const lines = text.split('\n').slice(1);
     const tasks = [];
     const desc = [];
     let phase = '';
-    for (const line of lines) {
+    for (const line of text.split('\n').slice(1)) {
       const task = line.match(/^\s*-\s*\[([ xX])\]\s*(.+)$/);
       if (task) { tasks.push({ text: task[2].trim(), done: task[1].toLowerCase() === 'x' }); continue; }
       const bold = line.match(/^\s*\*\*(.+?)\*\*\s*$/);
       if (bold && !phase) { phase = bold[1].trim(); continue; }
       if (line.trim()) desc.push(line.trim());
     }
-    // 同一个月可能有多个节点（正式路线 + 复试规划），合并
+
     const prev = out[key];
     out[key] = {
       month: key,
@@ -109,86 +100,88 @@ export async function roadmap() {
 }
 
 /* ------------------------------------------------------------------ *
- * 按天聚合：待复习 / 已复习 / 新建 / 自定义日程
+ * 年 / 月 / 日聚合，全部走 SQL
  * ------------------------------------------------------------------ */
 
-async function aggregate() {
-  const [log, schedule, plan] = await Promise.all([readLog(), loadSchedule(), roadmap()]);
-  const notes = index.allMeta();
-
-  const byDay = new Map();
-  const day = (d) => {
-    if (!byDay.has(d)) byDay.set(d, { date: d, due: [], reviewed: [], created: [], events: [] });
-    return byDay.get(d);
+const countsByDay = (from, to) => {
+  const db = handle();
+  const map = new Map();
+  const bump = (date, key, n = 1) => {
+    if (!map.has(date)) map.set(date, { due: 0, reviewed: 0, created: 0, events: 0 });
+    map.get(date)[key] += n;
   };
-
-  for (const n of notes) {
-    if (n.nextReview) day(n.nextReview).due.push(n);
-    if (n.created) day(n.created).created.push(n);
-  }
-  for (const e of log) {
-    if (!e.date) continue;
-    const note = index.get(e.note_path);
-    day(e.date).reviewed.push({ ...e, title: note?.title || e.note_path });
-  }
-  for (const e of schedule.events) day(e.date).events.push(e);
-
-  return { byDay, schedule, plan, notes, log };
-}
+  for (const r of db.prepare('SELECT next_review d, COUNT(*) c FROM notes WHERE next_review BETWEEN ? AND ? GROUP BY d').all(from, to)) bump(r.d, 'due', r.c);
+  for (const r of db.prepare('SELECT date d, COUNT(*) c FROM reviews WHERE date BETWEEN ? AND ? GROUP BY d').all(from, to)) bump(r.d, 'reviewed', r.c);
+  for (const r of db.prepare('SELECT created d, COUNT(*) c FROM notes WHERE created BETWEEN ? AND ? GROUP BY d').all(from, to)) bump(r.d, 'created', r.c);
+  for (const r of db.prepare('SELECT date d, COUNT(*) c FROM events WHERE date BETWEEN ? AND ? GROUP BY d').all(from, to)) bump(r.d, 'events', r.c);
+  return map;
+};
 
 /** 年表：12 张月卡片 */
 export async function yearView(year) {
-  const { byDay, plan, notes, log, schedule } = await aggregate();
+  const plan = await roadmap();
   const today = todayStr();
+  const db = handle();
+
+  const agg = (key, table, col) =>
+    new Map(db.prepare(
+      `SELECT substr(${col}, 1, 7) m, COUNT(*) c FROM ${table} WHERE ${col} LIKE ? GROUP BY m`,
+    ).all(`${year}-%`).map((r) => [r.m, r.c]));
+
+  const due = agg('due', 'notes', 'next_review');
+  const reviewed = agg('reviewed', 'reviews', 'date');
+  const created = agg('created', 'notes', 'created');
+  const events = agg('events', 'events', 'date');
 
   const months = [];
   for (let m = 1; m <= 12; m++) {
     const key = `${year}-${pad(m)}`;
-    let due = 0, reviewed = 0, created = 0, events = 0;
-    for (const [date, d] of byDay) {
-      if (ym(date) !== key) continue;
-      due += d.due.length; reviewed += d.reviewed.length; created += d.created.length; events += d.events.length;
-    }
     months.push({
-      month: key, index: m, due, reviewed, created, events,
+      month: key,
+      index: m,
+      due: due.get(key) || 0,
+      reviewed: reviewed.get(key) || 0,
+      created: created.get(key) || 0,
+      events: events.get(key) || 0,
       milestone: plan[key] || null,
-      isCurrent: ym(today) === key,
-      isPast: key < ym(today),
+      isCurrent: today.slice(0, 7) === key,
+      isPast: key < today.slice(0, 7),
     });
   }
 
   const years = new Set([Number(year), Number(today.slice(0, 4))]);
   for (const key of Object.keys(plan)) years.add(Number(key.slice(0, 4)));
 
+  const exam = examDate();
   return {
     year: Number(year),
     months,
     years: [...years].sort((a, b) => a - b),
-    examDate: schedule.examDate,
-    daysToExam: daysBetween(today, schedule.examDate),
-    totals: { notes: notes.length, reviews: log.length },
+    examDate: exam,
+    daysToExam: daysBetween(today, exam),
+    totals: {
+      notes: db.prepare('SELECT COUNT(*) c FROM notes').get().c,
+      reviews: db.prepare('SELECT COUNT(*) c FROM reviews').get().c,
+    },
   };
 }
 
 /** 月表：日历格子 */
 export async function monthView(monthKey) {
-  const { byDay, plan, schedule } = await aggregate();
+  const plan = await roadmap();
   const today = todayStr();
   const [y, m] = monthKey.split('-').map(Number);
-  const first = new Date(y, m - 1, 1);
   const daysInMonth = new Date(y, m, 0).getDate();
+  const counts = countsByDay(`${monthKey}-01`, `${monthKey}-${pad(daysInMonth)}`);
 
   const days = [];
   for (let d = 1; d <= daysInMonth; d++) {
     const date = `${y}-${pad(m)}-${pad(d)}`;
-    const bucket = byDay.get(date);
+    const c = counts.get(date) || { due: 0, reviewed: 0, created: 0, events: 0 };
     days.push({
       date, day: d,
       weekday: new Date(y, m - 1, d).getDay(),
-      due: bucket?.due.length || 0,
-      reviewed: bucket?.reviewed.length || 0,
-      created: bucket?.created.length || 0,
-      events: bucket?.events.length || 0,
+      ...c,
       isToday: date === today,
       isPast: date < today,
     });
@@ -198,29 +191,45 @@ export async function monthView(monthKey) {
     month: monthKey,
     year: y,
     // 周一为一周之首：把周日(0)排到第 7 位
-    leadingBlanks: (first.getDay() + 6) % 7,
+    leadingBlanks: (new Date(y, m - 1, 1).getDay() + 6) % 7,
     days,
     milestone: plan[monthKey] || null,
-    examDate: schedule.examDate,
+    examDate: examDate(),
   };
 }
 
 /** 日表：当天全部安排 */
-export async function dayView(date) {
-  const { byDay, schedule } = await aggregate();
-  const bucket = byDay.get(date) || { date, due: [], reviewed: [], created: [], events: [] };
+export function dayView(date) {
+  const db = handle();
   const today = todayStr();
+  const notes = new Map(allNotes().map((n) => [n.id, n]));
+
+  const pick = (ids) => ids.map((r) => notes.get(r.id)).filter(Boolean);
+
+  const due = pick(db.prepare('SELECT id FROM notes WHERE next_review = ? ORDER BY id').all(date));
+  const created = pick(db.prepare('SELECT id FROM notes WHERE created = ? ORDER BY id').all(date));
+
+  const reviewed = db.prepare(`
+    SELECT r.date, r.note_id AS note_path, r.review_count_after, r.added_content, r.source,
+           IFNULL(n.title, r.note_id) AS title
+    FROM reviews r LEFT JOIN notes n ON n.id = r.note_id
+    WHERE r.date = ? ORDER BY r.id`).all(date);
+
+  // 今天要看的不只是当天到期的，还有之前欠下的
+  const overdue = date === today
+    ? pick(db.prepare('SELECT id FROM notes WHERE next_review IS NOT NULL AND next_review < ? ORDER BY next_review').all(today))
+      .map((n) => ({ ...n, status: 'due', overdueDays: -daysBetween(today, n.nextReview) }))
+    : [];
+
+  const [y, m, d] = date.split('-').map(Number);
+  const exam = examDate();
   return {
-    ...bucket,
-    // 今天要看的不只是当天到期的，还有之前欠下的
-    overdue: date === today
-      ? index.allMeta().filter((n) => n.nextReview && n.nextReview < today).map((n) => ({ ...n, overdueDays: -daysBetween(today, n.nextReview) }))
-      : [],
+    date,
+    due, created, reviewed, overdue,
+    events: listEvents(date, date),
     isToday: date === today,
-    weekday: new Date(...date.split('-').map((v, i) => (i === 1 ? Number(v) - 1 : Number(v)))).getDay(),
-    examDate: schedule.examDate,
-    daysToExam: daysBetween(date, schedule.examDate),
+    weekday: new Date(y, m - 1, d).getDay(),
+    examDate: exam,
+    daysToExam: daysBetween(date, exam),
   };
 }
-
-export { VAULT_ROOT };

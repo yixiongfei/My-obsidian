@@ -1,22 +1,66 @@
-import { index } from './vault.js';
-import { readLog, todayStr, daysBetween, bucketNotes, intervalAfter } from './review.js';
+import { handle, hasFts } from './db.js';
+import { todayStr, daysBetween, intervalAfter } from './review.js';
+
+/** SQL 里用 char(1) 把标签聚成一列，这里用同一个分隔符拆回来 */
+const TAG_SEP = String.fromCharCode(1);
+
+/** notes 表的一行 → 前端用的 meta 结构 */
+const toMeta = (r) => ({
+  id: r.id,
+  title: r.title,
+  basename: r.basename,
+  folder: r.folder,
+  tags: r.tags ? r.tags.split(TAG_SEP) : [],
+  created: r.created,
+  reviewCount: r.review_count,
+  lastReviewed: r.last_reviewed,
+  nextReview: r.next_review,
+  words: r.words,
+  empty: r.words === 0,
+});
+
+/** 把每篇笔记的标签聚成一列，省掉 N+1 次查询 */
+const WITH_TAGS = `
+  LEFT JOIN (SELECT note_id, group_concat(tag, char(1)) AS tags FROM tags GROUP BY note_id) t
+    ON t.note_id = n.id`;
+
+export const allNotes = () =>
+  handle().prepare(`SELECT n.*, t.tags FROM notes n ${WITH_TAGS} ORDER BY n.id`).all().map(toMeta);
+
+export const getNoteMeta = (id) => {
+  const row = handle().prepare(`SELECT n.*, t.tags FROM notes n ${WITH_TAGS} WHERE n.id = ?`).get(id);
+  return row ? toMeta(row) : null;
+};
 
 /* ------------------------------------------------------------------ *
- * 全局搜索
+ * 搜索
+ *
+ * trigram 分词器要求查询词 >= 3 字符，「矩阵」「极限」这类两字词命不中，
+ * 所以短词退回 LIKE。候选取回来后在 JS 里打分：标题 / 标签 / 小标题的
+ * 命中权重高于正文，正文命中次数只作次要加权。
  * ------------------------------------------------------------------ */
 
-/** 子序列模糊匹配：连续命中给更高分，用于命令面板式搜索 */
-function fuzzy(needle, hay) {
-  const n = needle.toLowerCase(), h = hay.toLowerCase();
-  if (!n) return 0;
-  const direct = h.indexOf(n);
-  if (direct !== -1) return 1000 - direct * 2 + (direct === 0 ? 200 : 0);
-  let i = 0, score = 0, streak = 0;
-  for (let j = 0; j < h.length && i < n.length; j++) {
-    if (h[j] === n[i]) { i++; streak++; score += 10 + streak * 4; }
-    else streak = 0;
+function candidates(q) {
+  const db = handle();
+
+  if (q.length >= 3 && hasFts()) {
+    const phrase = `"${q.replace(/"/g, '""')}"`;
+    try {
+      const ids = db.prepare('SELECT id FROM notes_fts WHERE notes_fts MATCH ? LIMIT 400').all(phrase);
+      if (!ids.length) return [];
+      const holes = ids.map(() => '?').join(',');
+      return db.prepare(`SELECT n.*, t.tags FROM notes n ${WITH_TAGS} WHERE n.id IN (${holes})`)
+        .all(...ids.map((r) => r.id));
+    } catch { /* MATCH 语法出错就退回 LIKE */ }
   }
-  return i === n.length ? score : 0;
+
+  const like = `%${q.replace(/[%_\\]/g, (c) => `\\${c}`)}%`;
+  return db.prepare(`
+    SELECT n.*, t.tags FROM notes n ${WITH_TAGS}
+    WHERE n.title LIKE ?1 ESCAPE '\\' OR n.plain LIKE ?1 ESCAPE '\\'
+       OR n.id LIKE ?1 ESCAPE '\\' OR IFNULL(t.tags, '') LIKE ?1 ESCAPE '\\'
+       OR EXISTS (SELECT 1 FROM headings h WHERE h.note_id = n.id AND h.text LIKE ?1 ESCAPE '\\')
+    LIMIT 400`).all(like);
 }
 
 function snippet(plain, q, len = 90) {
@@ -26,153 +70,126 @@ function snippet(plain, q, len = 90) {
   return `${start > 0 ? '…' : ''}${plain.slice(start, start + len).trim()}…`;
 }
 
-export function search(q, limit = 30) {
-  const query = String(q || '').trim();
-  if (!query) return [];
-  const results = [];
+export function search(rawQuery, limit = 30) {
+  const q = String(rawQuery || '').trim();
+  if (!q) return [];
+  const lower = q.toLowerCase();
+  const headingsOf = handle().prepare('SELECT text FROM headings WHERE note_id = ? ORDER BY ord');
+  const out = [];
 
-  for (const note of index.notes.values()) {
-    const titleScore = fuzzy(query, note.title) * 3;
-    const pathScore = fuzzy(query, note.id) * 1.5;
-    const tagScore = Math.max(0, ...note.tags.map((t) => fuzzy(query, t))) * 2;
-    const headScore = Math.max(0, ...note.outline.map((h) => fuzzy(query, h.text)), 0) * 1.2;
+  for (const row of candidates(q)) {
+    const meta = toMeta(row);
+    const plain = row.plain || '';
+    const hits = plain.toLowerCase().split(lower).length - 1;
+    const matchedHeading = headingsOf.all(row.id).map((h) => h.text)
+      .find((h) => h.toLowerCase().includes(lower)) || null;
 
-    const plain = note.plain.replace(/\s+/g, ' ');
-    const bodyHits = plain.toLowerCase().split(query.toLowerCase()).length - 1;
-    const bodyScore = bodyHits ? 400 + Math.min(bodyHits, 10) * 20 : 0;
+    let score = 0;
+    const titleAt = meta.title.toLowerCase().indexOf(lower);
+    if (titleAt !== -1) score += 3000 - titleAt * 8 + (titleAt === 0 ? 600 : 0);
+    if (meta.tags.some((t) => t.toLowerCase().includes(lower))) score += 1400;
+    if (matchedHeading) score += 900;
+    if (row.id.toLowerCase().includes(lower)) score += 400;
+    if (hits) score += 500 + Math.min(hits, 12) * 25;
+    if (!score) continue;
 
-    const score = titleScore + pathScore + tagScore + headScore + bodyScore;
-    if (score <= 0) continue;
-
-    const matchedHeading = note.outline.find((h) => h.text.toLowerCase().includes(query.toLowerCase()));
-    results.push({
-      ...index.meta(note),
+    out.push({
+      ...meta,
       score,
-      snippet: bodyHits ? snippet(plain, query) : (matchedHeading?.text || plain.slice(0, 80).trim()),
-      hits: bodyHits,
-      matchedHeading: matchedHeading?.text || null,
+      hits,
+      matchedHeading,
+      snippet: hits ? snippet(plain, q) : (matchedHeading || plain.slice(0, 80).trim()),
     });
   }
 
-  return results.sort((a, b) => b.score - a.score).slice(0, limit);
+  return out.sort((a, b) => b.score - a.score).slice(0, limit);
 }
 
 /* ------------------------------------------------------------------ *
- * 知识图谱
+ * 复习分桶
  * ------------------------------------------------------------------ */
 
-/** 一级标签（学科），决定图谱配色分组 */
-const TOP_TAGS = ['高等数学', '线性代数', '概率论', '数据结构', '操作系统', '计算机网络', '计算机组成原理', '英语', '语法', '词汇', '个人'];
-
-function groupOf(note) {
-  for (const t of TOP_TAGS) if (note.tags.includes(t)) return t;
-  const seg = note.folder.split('/').filter(Boolean);
-  return seg[seg.length - 1] || seg[0] || '未分类';
-}
-
-export function graph() {
-  const nodes = [];
-  const links = [];
-  const degree = new Map();
-
-  for (const note of index.notes.values()) {
-    nodes.push({
-      id: note.id,
-      title: note.title,
-      group: groupOf(note),
-      tags: note.tags,
-      words: note.words,
-      reviewCount: note.reviewCount,
-      nextReview: note.nextReview,
-      empty: note.words === 0,
-    });
-    degree.set(note.id, 0);
+export function bucketNotes(today = todayStr()) {
+  const due = [], upcoming = [], unscheduled = [], scheduled = [];
+  for (const n of allNotes()) {
+    if (n.empty) { unscheduled.push({ ...n, status: 'empty' }); continue; }
+    if (!n.nextReview) { unscheduled.push({ ...n, status: 'new' }); continue; }
+    const delta = daysBetween(today, n.nextReview);
+    if (delta <= 0) due.push({ ...n, status: 'due', overdueDays: -delta });
+    else if (delta <= 7) upcoming.push({ ...n, status: 'upcoming', inDays: delta });
+    else scheduled.push({ ...n, status: 'scheduled', inDays: delta });
   }
-
-  const seen = new Set();
-  for (const note of index.notes.values()) {
-    for (const target of note.linkTargets) {
-      const to = index.resolve(target);
-      if (!to || to === note.id || !index.notes.has(to)) continue;
-      const key = `${note.id}→${to}`;
-      if (seen.has(key)) continue;
-      seen.add(key);
-      links.push({ source: note.id, target: to });
-      degree.set(note.id, degree.get(note.id) + 1);
-      degree.set(to, degree.get(to) + 1);
-    }
-  }
-
-  for (const n of nodes) n.degree = degree.get(n.id) || 0;
-  return { nodes, links, groups: [...new Set(nodes.map((n) => n.group))].sort() };
+  due.sort((a, b) => b.overdueDays - a.overdueDays);
+  upcoming.sort((a, b) => a.inDays - b.inDays);
+  return { due, upcoming, unscheduled, done: scheduled };
 }
 
 /* ------------------------------------------------------------------ *
- * 复习仪表盘
+ * 仪表盘
  * ------------------------------------------------------------------ */
 
-export async function dashboard(examDate) {
+export function dashboard(examDate) {
+  const db = handle();
   const today = todayStr();
-  const log = await readLog();
-  const buckets = bucketNotes(today);
-  const notes = index.allMeta();
 
-  // 近 26 周的复习热力图
-  const counts = new Map();
-  for (const e of log) counts.set(e.date, (counts.get(e.date) || 0) + 1);
+  const totals = db.prepare('SELECT COUNT(*) n, IFNULL(SUM(words), 0) w, IFNULL(SUM(words = 0), 0) e FROM notes').get();
+  const reviewTotal = db.prepare('SELECT COUNT(*) c FROM reviews').get().c;
+
+  const perDay = new Map(
+    db.prepare('SELECT date, COUNT(*) c FROM reviews GROUP BY date').all().map((r) => [r.date, r.c]),
+  );
+
+  // 近 26 周，从周一起算
   const heatmap = [];
-  const weeks = 26;
   const cursor = new Date();
-  cursor.setDate(cursor.getDate() - ((cursor.getDay() + 6) % 7) - (weeks - 1) * 7);
-  for (let i = 0; i < weeks * 7; i++) {
+  cursor.setDate(cursor.getDate() - ((cursor.getDay() + 6) % 7) - 25 * 7);
+  for (let i = 0; i < 26 * 7; i++) {
     const d = todayStr(cursor);
-    heatmap.push({ date: d, count: counts.get(d) || 0, future: d > today });
+    heatmap.push({ date: d, count: perDay.get(d) || 0, future: d > today });
     cursor.setDate(cursor.getDate() + 1);
   }
 
-  // 按学科统计掌握度：平均复习次数 / 最大间隔档位
-  const byTag = new Map();
-  for (const n of notes) {
-    for (const t of n.tags) {
-      if (!byTag.has(t)) byTag.set(t, { tag: t, notes: 0, reviews: 0, due: 0, empty: 0 });
-      const b = byTag.get(t);
-      b.notes++;
-      b.reviews += n.reviewCount;
-      if (n.empty) b.empty++;
-      if (n.nextReview && daysBetween(today, n.nextReview) <= 0) b.due++;
-    }
-  }
-  const subjects = [...byTag.values()]
-    .map((b) => ({
-      ...b,
-      // 掌握度 = 平均复习次数占满档(5次)的比例
-      mastery: Math.min(1, b.notes ? b.reviews / (b.notes * 5) : 0),
-    }))
-    .sort((a, b) => b.notes - a.notes);
-
-  // 连续复习天数
+  // 连续复习天数：今天还没复习不算断
   let streak = 0;
-  const cur = new Date();
+  const back = new Date();
   for (;;) {
-    const d = todayStr(cur);
-    if (counts.get(d)) { streak++; cur.setDate(cur.getDate() - 1); continue; }
-    if (d === today) { cur.setDate(cur.getDate() - 1); continue; } // 今天还没复习不算断
+    const d = todayStr(back);
+    if (perDay.get(d)) { streak++; back.setDate(back.getDate() - 1); continue; }
+    if (d === today) { back.setDate(back.getDate() - 1); continue; }
     break;
   }
 
+  const subjects = db.prepare(`
+    SELECT t.tag                                                             AS tag,
+           COUNT(*)                                                          AS notes,
+           IFNULL(SUM(n.review_count), 0)                                    AS reviews,
+           IFNULL(SUM(n.next_review IS NOT NULL AND n.next_review <= ?), 0)  AS due,
+           IFNULL(SUM(n.words = 0), 0)                                       AS empty
+    FROM tags t JOIN notes n ON n.id = t.note_id
+    GROUP BY t.tag ORDER BY notes DESC, tag`).all(today)
+    .map((s) => ({ ...s, mastery: Math.min(1, s.notes ? s.reviews / (s.notes * 5) : 0) }));
+
+  const recent = db.prepare(`
+    SELECT r.date, r.note_id AS note_path, r.review_count_after, r.added_content, r.source,
+           IFNULL(n.title, r.note_id) AS title
+    FROM reviews r LEFT JOIN notes n ON n.id = r.note_id
+    ORDER BY r.date DESC, r.id DESC LIMIT 12`).all();
+
+  const buckets = bucketNotes(today);
+
   return {
     today,
-    daysToExam: examDate ? daysBetween(today, examDate) : null,
     examDate: examDate || null,
+    daysToExam: examDate ? daysBetween(today, examDate) : null,
     counts: {
-      notes: notes.length,
-      words: notes.reduce((s, n) => s + n.words, 0),
-      reviews: log.length,
+      notes: totals.n,
+      words: totals.w,
+      empty: totals.e,
+      reviews: reviewTotal,
       due: buckets.due.length,
       upcoming: buckets.upcoming.length,
       unscheduled: buckets.unscheduled.length,
-      empty: notes.filter((n) => n.empty).length,
-      todayDone: counts.get(today) || 0,
+      todayDone: perDay.get(today) || 0,
     },
     streak,
     due: buckets.due.slice(0, 50),
@@ -180,7 +197,7 @@ export async function dashboard(examDate) {
     unscheduled: buckets.unscheduled.slice(0, 20),
     heatmap,
     subjects,
-    recent: log.slice(-12).reverse().map((e) => ({ ...e, title: index.get(e.note_path)?.title || e.note_path })),
+    recent,
     intervals: [0, 1, 2, 3, 4, 5].map((c) => ({ after: c, days: intervalAfter(c) })),
   };
 }

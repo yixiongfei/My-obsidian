@@ -1,0 +1,133 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+  <style>
+    body { margin: 0; }
+    a { color: #2C5CFF; text-decoration: none; }
+    a:hover { color: #6E90FF; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<div style="width: 1440px; height: 1180px; background: #08090A; color: #F2F3F5; font-family: 'Archivo', 'Noto Sans SC', system-ui, sans-serif; font-size: 14px; line-height: 1.5; display: flex; font-variant-numeric: tabular-nums;">
+
+  <div style="width: 208px; flex: none; border-right: 1px solid #22242A; padding: 40px 0 32px; display: flex; flex-direction: column;">
+    <div style="padding: 0 24px 48px;">
+      <div style="font-size: 15px; font-weight: 600; letter-spacing: -0.01em;">知识库</div>
+      <div style="font-size: 10px; letter-spacing: 0.18em; color: #5C606A; margin-top: 4px;">KNOWLEDGE BASE</div>
+    </div>
+    <div style="display: flex; flex-direction: column;">
+      <div style="display: flex; align-items: center; gap: 12px; padding: 10px 24px; border-top: 1px solid #22242A; border-left: 2px solid #2C5CFF;">
+        <span style="font-size: 10px; letter-spacing: 0.14em; color: #2C5CFF; width: 14px;">01</span><span style="font-size: 13px; font-weight: 500;">仪表盘</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px; padding: 10px 24px; border-top: 1px solid #22242A; border-left: 2px solid transparent; color: #8B8F98;">
+        <span style="font-size: 10px; letter-spacing: 0.14em; color: #5C606A; width: 14px;">02</span><span style="font-size: 13px;">笔记</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px; padding: 10px 24px; border-top: 1px solid #22242A; border-left: 2px solid transparent; color: #8B8F98;">
+        <span style="font-size: 10px; letter-spacing: 0.14em; color: #5C606A; width: 14px;">03</span><span style="font-size: 13px;">复习</span>
+        <span style="margin-left: auto; font-size: 11px; color: #2C5CFF; font-weight: 600;">3</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px; padding: 10px 24px; border-top: 1px solid #22242A; border-bottom: 1px solid #22242A; border-left: 2px solid transparent; color: #8B8F98;">
+        <span style="font-size: 10px; letter-spacing: 0.14em; color: #5C606A; width: 14px;">04</span><span style="font-size: 13px;">日程</span>
+      </div>
+    </div>
+    <div style="margin-top: auto; padding: 0 24px;">
+      <div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #22242A; padding-top: 12px;">
+        <span style="font-size: 11px; color: #5C606A;">搜索</span>
+        <span style="font-size: 10px; letter-spacing: 0.1em; color: #5C606A; border: 1px solid #22242A; padding: 2px 6px;">⌘K</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex: 1; min-width: 0; display: flex; flex-direction: column;">
+
+    <!-- ═══════ 首屏 ═══════ -->
+    <div style="height: 900px; flex: none; padding: 40px 64px 36px; display: flex; flex-direction: column; position: relative; overflow: hidden;">
+
+      <div style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 12px; border-bottom: 1px solid #3A3D45;">
+        <div style="font-size: 10px; letter-spacing: 0.18em; color: #5C606A;">OVERVIEW</div>
+        <div style="font-size: 11px; color: #8B8F98;">2026.09.10　周四</div>
+      </div>
+
+      <div style="flex: 1; min-height: 0; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; align-items: center;">
+
+        <div style="grid-column: span 6;">
+          <div style="font-size: 10px; letter-spacing: 0.18em; color: #5C606A; margin-bottom: 14px;">距 2027 初试</div>
+          <div style="display: flex; align-items: baseline; gap: 18px;">
+            <span style="font-size: 168px; font-weight: 500; letter-spacing: -0.06em; line-height: 0.8;">467</span>
+            <span style="font-size: 17px; color: #8B8F98;">天</span>
+          </div>
+          <div style="font-size: 13.5px; color: #8B8F98; line-height: 1.75; margin-top: 26px; max-width: 380px;">
+            2027.12.21 初试 · 约 67 周<br>
+            当前阶段：一轮基础 · 高等数学
+          </div>
+          <div style="display: flex; align-items: center; gap: 18px; margin-top: 34px;">
+            <span style="font-size: 12.5px; font-weight: 500; color: #08090A; background: #2C5CFF; padding: 11px 22px;">开始复习</span>
+            <span style="font-size: 11.5px; color: #5C606A;">3 篇到期 · 12 篇未纳入</span>
+          </div>
+        </div>
+
+        <div style="grid-column: span 6; position: relative; height: 560px; display: flex; align-items: center; justify-content: center;">
+          <div style="position: relative; width: 520px; height: 560px; transform: scale(0.85); transform-origin: center center;">
+            <svg viewBox="-260 -420 520 560" width="520" height="560" xmlns="http://www.w3.org/2000/svg" style="display:block;overflow:visible"><g stroke="#191C22" stroke-width="1" stroke-dasharray="3 6"><line x1="26.0" y1="-405.0" x2="-701.5" y2="15.0"/><line x1="-26.0" y1="-405.0" x2="701.5" y2="15.0"/><line x1="93.5" y1="-366.0" x2="-633.9" y2="54.0"/><line x1="-93.5" y1="-366.0" x2="633.9" y2="54.0"/><line x1="161.1" y1="-327.0" x2="-566.4" y2="93.0"/><line x1="-161.1" y1="-327.0" x2="566.4" y2="93.0"/><line x1="228.6" y1="-288.0" x2="-498.8" y2="132.0"/><line x1="-228.6" y1="-288.0" x2="498.8" y2="132.0"/><line x1="296.2" y1="-249.0" x2="-431.3" y2="171.0"/><line x1="-296.2" y1="-249.0" x2="431.3" y2="171.0"/><line x1="363.7" y1="-210.0" x2="-363.7" y2="210.0"/><line x1="-363.7" y1="-210.0" x2="363.7" y2="210.0"/><line x1="431.3" y1="-171.0" x2="-296.2" y2="249.0"/><line x1="-431.3" y1="-171.0" x2="296.2" y2="249.0"/><line x1="498.8" y1="-132.0" x2="-228.6" y2="288.0"/><line x1="-498.8" y1="-132.0" x2="228.6" y2="288.0"/><line x1="566.4" y1="-93.0" x2="-161.1" y2="327.0"/><line x1="-566.4" y1="-93.0" x2="161.1" y2="327.0"/><line x1="633.9" y1="-54.0" x2="-93.5" y2="366.0"/><line x1="-633.9" y1="-54.0" x2="93.5" y2="366.0"/><line x1="701.5" y1="-15.0" x2="-26.0" y2="405.0"/><line x1="-701.5" y1="-15.0" x2="26.0" y2="405.0"/></g><ellipse cx="0" cy="0" rx="216.5" ry="125.0" fill="none" stroke="#3A3D45" stroke-width="1" stroke-dasharray="5 7" opacity="1"/><ellipse cx="0" cy="0" rx="147.2" ry="85.0" fill="none" stroke="#3A3D45" stroke-width="1" stroke-dasharray="3 8" opacity="0.55"/><g stroke="#FFFFFF" stroke-width="1.1" stroke-linejoin="round" opacity="0.95"><polygon points="0.00,-128.00 107.39,-66.00 0.00,-4.00 -107.39,-66.00"   fill="#16233F"/><polygon points="107.39,0.00 107.39,-66.00 0.00,-4.00 0.00,62.00" fill="#121D35"/><polygon points="-107.39,0.00 -107.39,-66.00 0.00,-4.00 0.00,62.00" fill="#0E172A"/></g><g stroke="#FFFFFF" stroke-width="1.1" stroke-linejoin="round" opacity="0.45"><polygon points="0.00,-194.00 107.39,-132.00 0.00,-70.00 -107.39,-132.00"   fill="none"/><polygon points="107.39,-66.00 107.39,-132.00 0.00,-70.00 0.00,-4.00" fill="none"/><polygon points="-107.39,-66.00 -107.39,-132.00 0.00,-70.00 0.00,-4.00" fill="none"/></g><g stroke="#FFFFFF" stroke-width="1.1" stroke-linejoin="round" opacity="0.95"><polygon points="0.00,-260.00 107.39,-198.00 0.00,-136.00 -107.39,-198.00"   fill="#16233F"/><polygon points="107.39,-132.00 107.39,-198.00 0.00,-136.00 0.00,-70.00" fill="#121D35"/><polygon points="-107.39,-132.00 -107.39,-198.00 0.00,-136.00 0.00,-70.00" fill="#0E172A"/></g><g stroke="#FFFFFF" stroke-width="1.1" stroke-linejoin="round" opacity="0.95"><polygon points="0.00,-326.00 107.39,-264.00 0.00,-202.00 -107.39,-264.00"   fill="#2C5CFF"/><polygon points="107.39,-198.00 107.39,-264.00 0.00,-202.00 0.00,-136.00" fill="#2450DC"/><polygon points="-107.39,-198.00 -107.39,-264.00 0.00,-202.00 0.00,-136.00" fill="#1B3FBE"/></g><line x1="0.0" y1="-264.0" x2="0.0" y2="-414.0" stroke="#3A3D45" stroke-width="1"/><circle cx="0.0" cy="-414.0" r="30" fill="none" stroke="#FFFFFF" stroke-width="1.1"/><ellipse cx="0.0" cy="-414.0" rx="30" ry="18.6" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.5"/><ellipse cx="0.0" cy="-414.0" rx="30" ry="9.0" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.5"/><ellipse cx="0.0" cy="-414.0" rx="30" ry="18.6" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.5"/><ellipse cx="0.0" cy="-414.0" rx="12.6" ry="30" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.5"/><g transform="translate(109.7 165.0)" stroke="#FFFFFF" stroke-width="1.1" stroke-linejoin="round"><polygon points="0.00,-51.00 29.44,-34.00 0.00,-17.00 -29.44,-34.00"   fill="#101319"/><polygon points="29.44,0.00 29.44,-34.00 0.00,-17.00 0.00,17.00" fill="#0B0E13"/><polygon points="-29.44,0.00 -29.44,-34.00 0.00,-17.00 0.00,17.00" fill="#0D1017"/><circle cx="0" cy="-34.0" r="2.6" fill="#2C5CFF"/></g></svg>
+            <div style="position: absolute; left: 306px; top: 8px; transform: rotate(-30deg); transform-origin: left center; font-size: 10px; letter-spacing: 0.16em; color: #8B8F98; white-space: nowrap;">初试 2027.12.21</div>
+            <div style="position: absolute; left: 352px; top: 220px; transform: translateY(-50%); display: flex; align-items: center; gap: 12px; white-space: nowrap;"><span style="width: 34px; height: 1px; background: #2C5CFF; flex: none;"></span><span><span style="font-size: 12.5px; color: #F2F3F5; font-weight: 600;">线性代数</span><span style="font-size: 10.5px; color: #5C606A; margin-left: 10px;">7 篇 · 掌握度 46%</span></span></div><div style="position: absolute; left: 352px; top: 286px; transform: translateY(-50%); display: flex; align-items: center; gap: 12px; white-space: nowrap;"><span style="width: 34px; height: 1px; background: #3A3D45; flex: none;"></span><span><span style="font-size: 12.5px; color: #8B8F98; font-weight: 400;">高等数学</span><span style="font-size: 10.5px; color: #5C606A; margin-left: 10px;">3 篇 · 掌握度 28%</span></span></div><div style="position: absolute; left: 352px; top: 352px; transform: translateY(-50%); display: flex; align-items: center; gap: 12px; white-space: nowrap;"><span style="width: 34px; height: 1px; background: #3A3D45; flex: none;"></span><span><span style="font-size: 12.5px; color: #8B8F98; font-weight: 400;">408</span><span style="font-size: 10.5px; color: #5C606A; margin-left: 10px;">尚未开始</span></span></div><div style="position: absolute; left: 352px; top: 418px; transform: translateY(-50%); display: flex; align-items: center; gap: 12px; white-space: nowrap;"><span style="width: 34px; height: 1px; background: #3A3D45; flex: none;"></span><span><span style="font-size: 12.5px; color: #8B8F98; font-weight: 400;">英语 · 语法</span><span style="font-size: 10.5px; color: #5C606A; margin-left: 10px;">1 篇 · 掌握度 12%</span></span></div>
+            <div style="position: absolute; left: 462px; top: 594px; font-size: 10px; letter-spacing: 0.14em; color: #5C606A; white-space: nowrap;">下次复习</div>
+            <div style="position: absolute; left: 8px; top: 500px; font-size: 10px; letter-spacing: 0.14em; color: #5C606A; white-space: nowrap;">复习周期 1 · 2 · 4 · 7 · 15 · 30 天</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 32px; align-items: flex-start; padding-top: 4px; position: relative; z-index: 1;">
+        <div style="flex: 1; margin-top: 40px;"><div style="font-size: 26px; font-weight: 500; letter-spacing: -0.03em; line-height: 1; color: #2C5CFF;">3</div><div style="font-size: 10px; letter-spacing: 0.14em; color: #5C606A; margin: 10px 0 9px;">待复习</div><div style="height: 1px; background: #22242A;"></div></div><div style="flex: 1; margin-top: 32px;"><div style="font-size: 26px; font-weight: 500; letter-spacing: -0.03em; line-height: 1; color: #F2F3F5;">1</div><div style="font-size: 10px; letter-spacing: 0.14em; color: #5C606A; margin: 10px 0 9px;">今日已复习</div><div style="height: 1px; background: #22242A;"></div></div><div style="flex: 1; margin-top: 24px;"><div style="font-size: 26px; font-weight: 500; letter-spacing: -0.03em; line-height: 1; color: #F2F3F5;">14</div><div style="font-size: 10px; letter-spacing: 0.14em; color: #5C606A; margin: 10px 0 9px;">连续天数</div><div style="height: 1px; background: #22242A;"></div></div><div style="flex: 1; margin-top: 16px;"><div style="font-size: 26px; font-weight: 500; letter-spacing: -0.03em; line-height: 1; color: #F2F3F5;">15</div><div style="font-size: 10px; letter-spacing: 0.14em; color: #5C606A; margin: 10px 0 9px;">笔记</div><div style="height: 1px; background: #22242A;"></div></div><div style="flex: 1; margin-top: 8px;"><div style="font-size: 26px; font-weight: 500; letter-spacing: -0.03em; line-height: 1; color: #F2F3F5;">14,268</div><div style="font-size: 10px; letter-spacing: 0.14em; color: #5C606A; margin: 10px 0 9px;">累计字数</div><div style="height: 1px; background: #22242A;"></div></div><div style="flex: 1; margin-top: 0px;"><div style="font-size: 26px; font-weight: 500; letter-spacing: -0.03em; line-height: 1; color: #F2F3F5;">68</div><div style="font-size: 10px; letter-spacing: 0.14em; color: #5C606A; margin: 10px 0 9px;">复习总次数</div><div style="height: 1px; background: #22242A;"></div></div>
+      </div>
+    </div>
+
+    <!-- ═══════ 折线以下 ═══════ -->
+    <div style="flex: 1; min-height: 0; padding: 44px 64px 40px; border-top: 1px solid #22242A; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 48px;">
+
+      <div style="grid-column: span 7;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #3A3D45; padding-bottom: 10px;">
+          <span style="font-size: 10px; letter-spacing: 0.18em;">今日待复习</span>
+          <span style="font-size: 10px; letter-spacing: 0.14em; color: #5C606A;">间隔　逾期</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px; padding: 13px 0; border-bottom: 1px solid #22242A;">
+          <span style="font-size: 10px; color: #2C5CFF; width: 18px;">01</span>
+          <div style="flex: 1;"><div style="font-size: 14px; font-weight: 500;">二次型</div><div style="font-size: 11px; color: #5C606A; margin-top: 2px;">线性代数　复习 2 次</div></div>
+          <span style="font-size: 12px; color: #8B8F98; width: 34px; text-align: right;">4 天</span>
+          <span style="font-size: 12px; color: #2C5CFF; width: 34px; text-align: right;">+2</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px; padding: 13px 0; border-bottom: 1px solid #22242A;">
+          <span style="font-size: 10px; color: #2C5CFF; width: 18px;">02</span>
+          <div style="flex: 1;"><div style="font-size: 14px; font-weight: 500;">矩阵相似与相似对角化</div><div style="font-size: 11px; color: #5C606A; margin-top: 2px;">线性代数　复习 1 次</div></div>
+          <span style="font-size: 12px; color: #8B8F98; width: 34px; text-align: right;">2 天</span>
+          <span style="font-size: 12px; color: #2C5CFF; width: 34px; text-align: right;">+1</span>
+        </div>
+        <div style="display: flex; align-items: center; gap: 16px; padding: 13px 0; border-bottom: 1px solid #22242A;">
+          <span style="font-size: 10px; color: #2C5CFF; width: 18px;">03</span>
+          <div style="flex: 1;"><div style="font-size: 14px; font-weight: 500;">向量组的线性相关性</div><div style="font-size: 11px; color: #5C606A; margin-top: 2px;">线性代数　复习 3 次</div></div>
+          <span style="font-size: 12px; color: #8B8F98; width: 34px; text-align: right;">7 天</span>
+          <span style="font-size: 12px; color: #5C606A; width: 34px; text-align: right;">今天</span>
+        </div>
+      </div>
+
+      <div style="grid-column: span 5;">
+        <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #3A3D45; padding-bottom: 10px; margin-bottom: 18px;">
+          <span style="font-size: 10px; letter-spacing: 0.18em;">复习节奏</span>
+          <span style="font-size: 10px; letter-spacing: 0.14em; color: #5C606A;">近 18 周</span>
+        </div>
+        <div style="display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 9px); gap: 3px;"><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#1B2E5E"></i><i style="background:#1B2E5E"></i><i style="background:#1B2E5E"></i><i style="background:#234099"></i><i style="background:#2C5CFF"></i><i style="background:#1B2E5E"></i><i style="background:#1B2E5E"></i><i style="background:#16181C"></i><i style="background:#234099"></i><i style="background:#1B2E5E"></i><i style="background:#2C5CFF"></i><i style="background:#234099"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#1B2E5E"></i><i style="background:#16181C"></i><i style="background:#1B2E5E"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#234099"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#2C5CFF"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#1B2E5E"></i><i style="background:#2C5CFF"></i><i style="background:#234099"></i><i style="background:#234099"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#2C5CFF"></i><i style="background:#2C5CFF"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#1B2E5E"></i><i style="background:#1B2E5E"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#1B2E5E"></i><i style="background:#2C5CFF"></i><i style="background:#234099"></i><i style="background:#1B2E5E"></i><i style="background:#1B2E5E"></i><i style="background:#1B2E5E"></i><i style="background:#16181C"></i><i style="background:#2C5CFF"></i><i style="background:#234099"></i><i style="background:#2C5CFF"></i><i style="background:#234099"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#16181C"></i><i style="background:#1B2E5E"></i><i style="background:#16181C"></i><i style="background:#16181C"></i></div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

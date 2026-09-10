@@ -1,6 +1,7 @@
 import fsp from 'node:fs/promises';
 import { INTERVALS, REVIEW_LOG } from '../config.js';
 import { index, toAbs } from './vault.js';
+import { recordReviewRow, syncNote } from './sync.js';
 
 export const todayStr = (d = new Date()) => {
   const p = (n) => String(n).padStart(2, '0');
@@ -91,7 +92,12 @@ export async function recordReview(id, { result = 'good', addedContent = '', sou
   };
   await fsp.appendFile(REVIEW_LOG, `${JSON.stringify(entry)}\n`, 'utf8');
 
+  // 三处写入：frontmatter（给 Obsidian）、review_log.jsonl（给 schema/Claudian）、
+  // SQLite（只为统计快，任何时候都能从前两者重建）
+  recordReviewRow(entry);
   await index.update(abs);
+  syncNote(id);
+
   return { entry, nextReview, reviewCount: countAfter, gap };
 }
 
@@ -109,23 +115,4 @@ export async function readLog() {
     try { out.push(JSON.parse(s)); } catch { /* 跳过坏行，不让整份日志失效 */ }
   }
   return out;
-}
-
-/* ------------------------------------------------------------------ *
- * 复习状态分桶
- * ------------------------------------------------------------------ */
-
-export function bucketNotes(today = todayStr()) {
-  const due = [], upcoming = [], unscheduled = [], done = [];
-  for (const meta of index.allMeta()) {
-    if (meta.empty) { unscheduled.push({ ...meta, status: 'empty' }); continue; }
-    if (!meta.nextReview) { unscheduled.push({ ...meta, status: 'new' }); continue; }
-    const delta = daysBetween(today, meta.nextReview);
-    if (delta <= 0) due.push({ ...meta, status: 'due', overdueDays: -delta });
-    else if (delta <= 7) upcoming.push({ ...meta, status: 'upcoming', inDays: delta });
-    else done.push({ ...meta, status: 'scheduled', inDays: delta });
-  }
-  due.sort((a, b) => b.overdueDays - a.overdueDays);
-  upcoming.sort((a, b) => a.inDays - b.inDays);
-  return { due, upcoming, unscheduled, done };
 }

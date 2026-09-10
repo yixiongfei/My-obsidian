@@ -20,7 +20,6 @@ export const api = {
   note: (id) => j(`/api/note?path=${encodeURIComponent(id)}`),
   tags: () => j('/api/tags'),
   search: (q) => j(`/api/search?q=${encodeURIComponent(q)}`),
-  graph: () => j('/api/graph'),
   dashboard: () => j('/api/dashboard'),
   queue: () => j('/api/review/queue'),
   review: (payload) => j('/api/review', body('POST', payload)),

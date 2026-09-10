@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Noto+Sans+SC:wght@400;500;700&display=swap">
+  <style>
+    body { margin: 0; }
+    a { color: #2C5CFF; text-decoration: none; }
+    a:hover { color: #6E90FF; }
+    * { box-sizing: border-box; }
+  </style>
+</helmet>
+
+<div style="width: 1440px; height: 900px; background: #08090A; color: #F2F3F5; font-family: 'Archivo', 'Noto Sans SC', system-ui, sans-serif; font-size: 14px; line-height: 1.5; display: flex; font-variant-numeric: tabular-nums;">
+
+  <div style="width: 208px; flex: none; border-right: 1px solid #22242A; padding: 40px 0 32px; display: flex; flex-direction: column;">
+    <div style="padding: 0 24px 48px;">
+      <div style="font-size: 15px; font-weight: 600; letter-spacing: -0.01em;">知识库</div>
+      <div style="font-size: 10px; letter-spacing: 0.18em; color: #5C606A; margin-top: 4px;">KNOWLEDGE BASE</div>
+    </div>
+    <div style="display: flex; flex-direction: column;">
+      <div style="display: flex; align-items: center; gap: 12px; padding: 10px 24px; border-top: 1px solid #22242A; border-left: 2px solid transparent; color: #8B8F98;">
+        <span style="font-size: 10px; letter-spacing: 0.14em; color: #5C606A; width: 14px;">01</span><span style="font-size: 13px;">仪表盘</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px; padding: 10px 24px; border-top: 1px solid #22242A; border-left: 2px solid #2C5CFF;">
+        <span style="font-size: 10px; letter-spacing: 0.14em; color: #2C5CFF; width: 14px;">02</span><span style="font-size: 13px; font-weight: 500;">笔记</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px; padding: 10px 24px; border-top: 1px solid #22242A; border-left: 2px solid transparent; color: #8B8F98;">
+        <span style="font-size: 10px; letter-spacing: 0.14em; color: #5C606A; width: 14px;">03</span><span style="font-size: 13px;">复习</span>
+        <span style="margin-left: auto; font-size: 11px; color: #2C5CFF; font-weight: 600;">3</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 12px; padding: 10px 24px; border-top: 1px solid #22242A; border-bottom: 1px solid #22242A; border-left: 2px solid transparent; color: #8B8F98;">
+        <span style="font-size: 10px; letter-spacing: 0.14em; color: #5C606A; width: 14px;">04</span><span style="font-size: 13px;">日程</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ 折叠起来的目录树 ═══════ -->
+  <div style="width: 52px; flex: none; border-right: 1px solid #22242A; padding: 22px 0; display: flex; flex-direction: column; align-items: center; gap: 20px;">
+    <div style="width: 22px; height: 22px; border: 1px solid #3A3D45; display: flex; align-items: center; justify-content: center;">
+      <span style="width: 5px; height: 5px; border-right: 1px solid #8B8F98; border-top: 1px solid #8B8F98; transform: rotate(45deg); margin-left: -2px;"></span>
+    </div>
+    <div style="writing-mode: vertical-rl; flex: none; font-size: 10px; letter-spacing: 0.24em; color: #5C606A; white-space: nowrap;">目录树</div>
+    <div style="width: 1px; flex: 1; background: #22242A;"></div>
+    <div style="writing-mode: vertical-rl; flex: none; font-size: 10px; letter-spacing: 0.2em; color: #3A3D45; white-space: nowrap;">15 NOTES</div>
+  </div>
+
+  <!-- ═══════ 思维导图 ═══════ -->
+  <div style="flex: 1; min-width: 0; padding: 40px 56px 0; display: flex; flex-direction: column;">
+
+    <div style="display: flex; justify-content: space-between; align-items: baseline; padding-bottom: 12px; border-bottom: 1px solid #3A3D45;">
+      <div style="display: flex; gap: 26px; align-items: baseline;">
+        <span style="font-size: 10px; letter-spacing: 0.18em; color: #F2F3F5;">结构</span>
+        <span style="font-size: 10px; letter-spacing: 0.18em; color: #5C606A;">列表</span>
+        <span style="font-size: 10px; letter-spacing: 0.18em; color: #5C606A;">标签</span>
+      </div>
+      <div style="font-size: 11px; color: #8B8F98;">学科 → 分支 → 笔记</div>
+    </div>
+
+    <div style="flex: 1; min-height: 0; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+      <svg viewBox="0 0 1010 762" width="1010" height="762" xmlns="http://www.w3.org/2000/svg" style="display:block;margin:0 auto;font-family:Archivo,'Noto Sans SC',system-ui,sans-serif"><path d="M 560 167.0 H 578.0 V 34 H 596" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 560 167.0 H 578.0 V 72 H 596" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 560 167.0 H 578.0 V 110 H 596" fill="none" stroke="#2C5CFF" stroke-width="1"/><path d="M 560 167.0 H 578.0 V 148 H 596" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 560 167.0 H 578.0 V 186 H 596" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 560 167.0 H 578.0 V 224 H 596" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 560 167.0 H 578.0 V 262 H 596" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 560 167.0 H 578.0 V 300 H 596" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 560 390.0 H 578.0 V 352 H 596" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 560 390.0 H 578.0 V 390 H 596" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 560 390.0 H 578.0 V 428 H 596" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 344 278.5 H 363.0 V 167.0 H 382" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 344 278.5 H 363.0 V 390.0 H 382" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 560 502.0 H 578.0 V 502 H 596" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 344 502.0 H 363.0 V 502.0 H 382" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 344 595.0 H 560 V 576 H 596" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 344 595.0 H 560 V 614 H 596" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 344 688.0 H 560 V 688 H 596" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 150 515.875 H 174.0 V 278.5 H 198" fill="none" stroke="#2C5CFF" stroke-width="1"/><path d="M 150 515.875 H 174.0 V 502.0 H 198" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 150 515.875 H 174.0 V 595.0 H 198" fill="none" stroke="#2A2D34" stroke-width="1"/><path d="M 150 515.875 H 174.0 V 688.0 H 198" fill="none" stroke="#2A2D34" stroke-width="1"/><rect x="606.5" y="30.5" width="7" height="7" fill="none" stroke="#8B8F98" stroke-width="1"/><text x="624" y="38" font-size="12.5" fill="#F2F3F5" font-weight="400">伴随矩阵与可逆矩阵</text><rect x="606.5" y="68.5" width="7" height="7" fill="none" stroke="#2A2D34" stroke-width="1"/><text x="624" y="76" font-size="12.5" fill="#8B8F98" font-weight="400">多项式除法</text><rect x="606" y="106" width="8" height="8" fill="#2C5CFF"/><text x="624" y="114" font-size="12.5" fill="#2C5CFF" font-weight="600">二次型</text><line x1="624" y1="121" x2="663" y2="121" stroke="#2C5CFF" stroke-width="1"/><rect x="606.5" y="144.5" width="7" height="7" fill="none" stroke="#8B8F98" stroke-width="1"/><text x="624" y="152" font-size="12.5" fill="#F2F3F5" font-weight="400">矩阵的运算与变换</text><rect x="606" y="182" width="8" height="8" fill="#2C5CFF"/><text x="624" y="190" font-size="12.5" fill="#F2F3F5" font-weight="400">矩阵相似与相似对角化</text><rect x="606.5" y="220.5" width="7" height="7" fill="none" stroke="#8B8F98" stroke-width="1"/><text x="624" y="228" font-size="12.5" fill="#F2F3F5" font-weight="400">行列式 · 矩阵 速查表</text><rect x="606.5" y="258.5" width="7" height="7" fill="none" stroke="#8B8F98" stroke-width="1"/><text x="624" y="266" font-size="12.5" fill="#F2F3F5" font-weight="400">线性方程组</text><rect x="606" y="296" width="8" height="8" fill="#2C5CFF"/><text x="624" y="304" font-size="12.5" fill="#F2F3F5" font-weight="400">向量组的线性相关性</text><text x="392" y="171.0" font-size="13" fill="#F2F3F5" font-weight="500">线性代数</text><text x="392" y="187.0" font-size="10" fill="#5C606A" letter-spacing="1.4">8 篇</text><rect x="606.5" y="348.5" width="7" height="7" fill="none" stroke="#8B8F98" stroke-width="1"/><text x="624" y="356" font-size="12.5" fill="#F2F3F5" font-weight="400">初等函数</text><rect x="606.5" y="386.5" width="7" height="7" fill="none" stroke="#2A2D34" stroke-width="1"/><text x="624" y="394" font-size="12.5" fill="#8B8F98" font-weight="400">函数，极限，连续</text><line x1="606" y1="428" x2="614" y2="428" stroke="#2A2D34" stroke-width="1"/><text x="624" y="432" font-size="12.5" fill="#8B8F98" font-weight="400">无穷小</text><text x="392" y="394.0" font-size="13" fill="#F2F3F5" font-weight="500">高等数学</text><text x="392" y="410.0" font-size="10" fill="#5C606A" letter-spacing="1.4">3 篇</text><text x="208" y="282.5" font-size="15" fill="#F2F3F5" font-weight="600">数学</text><text x="208" y="299.5" font-size="10" fill="#5C606A" letter-spacing="1.4">11 篇</text><rect x="606.5" y="498.5" width="7" height="7" fill="none" stroke="#2A2D34" stroke-width="1"/><text x="624" y="506" font-size="12.5" fill="#8B8F98" font-weight="400">Clause 从句语法笔记</text><text x="392" y="506.0" font-size="13" fill="#F2F3F5" font-weight="500">语法</text><text x="392" y="522.0" font-size="10" fill="#5C606A" letter-spacing="1.4">1 篇</text><text x="208" y="506.0" font-size="15" fill="#F2F3F5" font-weight="600">英语</text><text x="208" y="523.0" font-size="10" fill="#5C606A" letter-spacing="1.4">1 篇</text><rect x="606.5" y="572.5" width="7" height="7" fill="none" stroke="#2A2D34" stroke-width="1"/><text x="624" y="580" font-size="12.5" fill="#8B8F98" font-weight="400">认识自己</text><rect x="606.5" y="610.5" width="7" height="7" fill="none" stroke="#2A2D34" stroke-width="1"/><text x="624" y="618" font-size="12.5" fill="#8B8F98" font-weight="400">做题习惯</text><text x="208" y="599.0" font-size="15" fill="#F2F3F5" font-weight="600">个人</text><text x="208" y="616.0" font-size="10" fill="#5C606A" letter-spacing="1.4">2 篇</text><rect x="606.5" y="684.5" width="7" height="7" fill="none" stroke="#2A2D34" stroke-width="1"/><text x="624" y="692" font-size="12.5" fill="#8B8F98" font-weight="400">复习日志说明</text><text x="208" y="692.0" font-size="15" fill="#F2F3F5" font-weight="600">未分类</text><text x="208" y="709.0" font-size="10" fill="#5C606A" letter-spacing="1.4">1 篇</text><circle cx="44" cy="515.875" r="5" fill="#2C5CFF"/><text x="60" y="519.875" font-size="15" fill="#F2F3F5" font-weight="600">知识库</text><text x="60" y="536.875" font-size="10" fill="#5C606A" letter-spacing="1.4">15 篇</text></svg>
+    </div>
+
+    <div style="display: flex; gap: 26px; align-items: center; padding: 14px 0 20px; border-top: 1px solid #22242A;">
+      <div style="display:flex;align-items:center;gap:8px;font-size:11px;color:#5C606A"><span style="width:8px;height:8px;background:#2C5CFF;display:block"></span>待复习</div><div style="display:flex;align-items:center;gap:8px;font-size:11px;color:#5C606A"><span style="width:7px;height:7px;border:1px solid #8B8F98;display:block"></span>已排期</div><div style="display:flex;align-items:center;gap:8px;font-size:11px;color:#5C606A"><span style="width:7px;height:7px;border:1px solid #2A2D34;display:block"></span>未纳入</div><div style="display:flex;align-items:center;gap:8px;font-size:11px;color:#5C606A"><span style="width:8px;height:1px;background:#2A2D34;display:block"></span>空笔记</div>
+      <span style="margin-left: auto; font-size: 11px; color: #5C606A;">点击任一节点进入笔记　·　拖拽平移　·　滚轮缩放</span>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

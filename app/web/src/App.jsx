@@ -7,7 +7,6 @@ import CommandPalette from './components/CommandPalette.jsx';
 import Dashboard from './views/Dashboard.jsx';
 import Notes from './views/Notes.jsx';
 import Review from './views/Review.jsx';
-import Graph from './views/Graph.jsx';
 import Schedule from './views/Schedule.jsx';
 
 import { api } from './api.js';
@@ -47,7 +46,6 @@ export default function App() {
               <Route path="/notes" element={<Notes version={version} onReviewed={reloadDash} />} />
               <Route path="/note/:id" element={<Notes version={version} onReviewed={reloadDash} />} />
               <Route path="/review" element={<Review version={version} onReviewed={reloadDash} />} />
-              <Route path="/graph" element={<Graph version={version} />} />
               <Route path="/schedule" element={<Schedule version={version} />} />
               <Route path="/schedule/:year" element={<Schedule version={version} />} />
               <Route path="/schedule/:year/:month" element={<Schedule version={version} />} />
