@@ -87,6 +87,7 @@ function parseNote(abs, id, raw) {
 
   const plain = body
     .replace(WIKILINK_RE, '$2')
+    .replace(/\[!\w+\][-+]?/g, ' ')          // callout 标记不该出现在搜索摘要里
     .replace(/```[\s\S]*?```/g, ' ')
     .replace(/\$\$[\s\S]*?\$\$/g, ' ')
     .replace(/\$[^$\n]*\$/g, ' ')
