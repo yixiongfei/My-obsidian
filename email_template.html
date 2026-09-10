@@ -1,0 +1,63 @@
+<!-- 邮件 HTML 模板：复习清单 / 学习清单
+     邮件客户端限制：必须用 table 布局 + 内联样式，不能用 flex/grid/外部CSS。
+     占位符：{{TITLE}} {{DATE}} {{SUBTITLE}} {{SECTIONS}} {{FOOTER}}
+     每个 section 用下面 SECTION_BLOCK 的结构重复生成。 -->
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f4f5f7;padding:32px 12px;font-family:-apple-system,'Segoe UI','Hiragino Sans',sans-serif;">
+  <tr><td align="center">
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;background-color:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,0.08);">
+
+      <!-- 头部 -->
+      <tr>
+        <td style="background-color:#2d3748;padding:28px 32px;">
+          <div style="color:#ffffff;font-size:22px;font-weight:600;letter-spacing:0.5px;">{{TITLE}}</div>
+          <div style="color:#a0aec0;font-size:13px;margin-top:6px;">{{DATE}} · {{SUBTITLE}}</div>
+        </td>
+      </tr>
+
+      <!-- 正文区：SECTIONS 插入这里 -->
+      <tr>
+        <td style="padding:8px 32px 24px 32px;">
+          {{SECTIONS}}
+        </td>
+      </tr>
+
+      <!-- 页脚 -->
+      <tr>
+        <td style="background-color:#f7fafc;padding:16px 32px;border-top:1px solid #e2e8f0;">
+          <div style="color:#a0aec0;font-size:12px;line-height:1.6;">{{FOOTER}}</div>
+        </td>
+      </tr>
+
+    </table>
+  </td></tr>
+</table>
+
+
+<!-- ============ SECTION_BLOCK（每个科目分组重复一次） ============ -->
+<!--
+<div style="margin-top:24px;">
+  <div style="font-size:15px;font-weight:600;color:#2d3748;padding-bottom:8px;border-bottom:2px solid #4299e1;display:inline-block;">科目名</div>
+</div>
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:12px;">
+  ITEM_ROW 重复
+</table>
+-->
+
+<!-- ============ ITEM_ROW（每个条目重复一次） ============ -->
+<!--
+<tr>
+  <td style="padding:10px 0;border-bottom:1px solid #edf2f7;">
+    <div style="font-size:14px;color:#2d3748;font-weight:500;line-height:1.5;">笔记标题</div>
+    <div style="margin-top:5px;">
+      <span style="display:inline-block;background-color:#ebf8ff;color:#2b6cb0;font-size:11px;padding:2px 8px;border-radius:10px;margin-right:6px;">标签</span>
+      <span style="color:#a0aec0;font-size:12px;">第 N 次复习 · 上次 YYYY-MM-DD</span>
+    </div>
+  </td>
+</tr>
+-->
+
+<!-- 空状态（某个科目今天没有条目时使用） -->
+<!--
+<div style="color:#a0aec0;font-size:13px;padding:12px 0;">今天这一科没有到期内容。</div>
+-->
