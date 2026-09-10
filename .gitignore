@@ -4,3 +4,8 @@
 
 # Claudian AI 对话历史记录（本地隐私内容，不同步）
 .claudian/sessions/
+
+# 知识库网站（app/）的构建产物与依赖
+app/node_modules/
+app/dist-web/
+app/release/

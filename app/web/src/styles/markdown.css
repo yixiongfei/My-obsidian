@@ -1,0 +1,174 @@
+/* ==================================================================
+ * 笔记正文排版
+ * ================================================================== */
+
+.prose { font-size: 15px; line-height: 1.85; color: var(--text-2); max-width: 78ch; }
+.prose > *:first-child { margin-top: 0; }
+
+.prose h1, .prose h2, .prose h3, .prose h4 {
+  color: var(--text); font-weight: 660; letter-spacing: -0.01em;
+  scroll-margin-top: 24px; line-height: 1.35;
+}
+.prose h1 { font-size: 25px; margin: 44px 0 16px; }
+.prose h2 {
+  font-size: 19px; margin: 42px 0 14px; padding-bottom: 9px;
+  border-bottom: 1px solid var(--line); position: relative;
+}
+.prose h2::after {
+  content: ''; position: absolute; left: 0; bottom: -1px; width: 34px; height: 1px;
+  background: var(--blue); box-shadow: 0 0 10px var(--blue-glow);
+}
+.prose h3 { font-size: 16px; margin: 30px 0 10px; }
+.prose h4 { font-size: 14.5px; margin: 22px 0 8px; color: var(--text-2); }
+
+.prose p { margin: 0 0 14px; }
+.prose strong { color: var(--text); font-weight: 640; }
+.prose em { color: var(--text-2); }
+.prose hr { border: none; border-top: 1px solid var(--line); margin: 34px 0; }
+.prose ul, .prose ol { margin: 0 0 14px; padding-left: 1.5em; }
+.prose li { margin: 4px 0; }
+.prose li::marker { color: var(--blue); }
+
+.prose mark {
+  background: var(--blue-soft); color: var(--blue);
+  padding: 1px 4px; border-radius: 4px; font-weight: 550;
+}
+
+.prose code {
+  font: 0.88em/1.5 var(--mono);
+  background: var(--bg-3); border: 1px solid var(--line);
+  padding: 1.5px 5px; border-radius: 5px; color: var(--blue-2);
+}
+.prose pre {
+  background: var(--bg-1); border: 1px solid var(--line);
+  border-radius: var(--r); padding: 15px 17px; overflow-x: auto; margin: 0 0 16px;
+}
+.prose pre code { background: none; border: none; padding: 0; color: var(--text-2); font-size: 12.6px; }
+
+/* 引用块（不是 callout 的那种） */
+.prose blockquote {
+  margin: 0 0 16px; padding: 2px 0 2px 16px;
+  border-left: 2px solid var(--blue-line); color: var(--dim);
+}
+.prose blockquote p:last-child { margin-bottom: 0; }
+
+/* 图片 */
+.prose .md-figure { display: block; margin: 18px 0; }
+.prose .md-figure img {
+  display: block; max-width: 100%; height: auto; border-radius: var(--r);
+  border: 1px solid var(--line); background: #fff;
+  transition: transform 0.3s var(--ease), border-color 0.3s;
+  cursor: zoom-in;
+}
+.prose .md-figure img:hover { border-color: var(--blue-line); transform: scale(1.006); }
+
+/* 表格 */
+.table-wrap {
+  margin: 0 0 18px; overflow-x: auto;
+  border: 1px solid var(--line); border-radius: var(--r); background: var(--bg-1);
+}
+.prose table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+.prose thead th {
+  position: sticky; top: 0;
+  background: var(--bg-2); color: var(--text);
+  font-weight: 620; text-align: left; white-space: nowrap;
+  padding: 10px 14px; border-bottom: 1px solid var(--line-2);
+}
+.prose tbody td { padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+.prose tbody tr:last-child td { border-bottom: none; }
+.prose tbody tr { transition: background 0.14s; }
+.prose tbody tr:hover { background: var(--sheen); }
+
+/* wiki 链接 */
+.prose .wikilink {
+  color: var(--blue); font-weight: 550;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.16s, color 0.16s;
+}
+.prose .wikilink:hover { border-bottom-color: var(--blue); }
+.prose .wikilink.is-broken { color: var(--dim); cursor: help; border-bottom: 1px dashed var(--line-2); }
+.prose .wikilink.is-canvas::before { content: '◫ '; opacity: 0.6; }
+
+/* ==================================================================
+ * Callout（> [!question]- 之类）—— 这份笔记的提示/答案机制
+ * ================================================================== */
+
+.prose .callout {
+  margin: 16px 0; border-radius: var(--r);
+  border: 1px solid var(--line);
+  background: var(--bg-1);
+  overflow: hidden;
+  transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.prose .callout[open] { border-color: var(--blue-line); box-shadow: 0 0 0 1px var(--blue-soft); }
+
+.prose .callout-title {
+  display: flex; align-items: center; gap: 11px;
+  padding: 12px 15px; cursor: pointer; list-style: none;
+  font-weight: 600; color: var(--text); user-select: none;
+  transition: background 0.16s;
+}
+.prose .callout-title::-webkit-details-marker { display: none; }
+.prose .callout-title:hover { background: var(--sheen); }
+
+.prose .callout-icon {
+  flex: none; width: 21px; height: 21px; border-radius: 6px;
+  display: grid; place-items: center;
+  font: 700 12px/1 var(--mono);
+  background: var(--blue-soft); color: var(--blue);
+  box-shadow: inset 0 0 0 1px var(--blue-line);
+}
+.prose .callout-title-text { flex: 1; min-width: 0; }
+
+.prose .callout-chevron {
+  flex: none; width: 8px; height: 8px; margin-right: 2px;
+  border-right: 1.6px solid var(--dim); border-bottom: 1.6px solid var(--dim);
+  transform: rotate(-45deg); transition: transform 0.28s var(--ease), border-color 0.2s;
+}
+.prose .callout[open] > .callout-title .callout-chevron { transform: rotate(45deg); border-color: var(--blue); }
+
+.prose .callout-body {
+  padding: 2px 15px 13px 47px;
+  border-top: 1px solid var(--line);
+  animation: callout-in 0.32s var(--ease);
+}
+.prose .callout-body > *:last-child { margin-bottom: 0; }
+@keyframes callout-in {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* 答案类 callout 用实心蓝，和提示区分开 */
+.prose .callout-success > .callout-title .callout-icon,
+.prose .callout-tip > .callout-title .callout-icon {
+  background: var(--blue); color: #fff; box-shadow: none;
+}
+.prose .callout-failure > .callout-title .callout-icon,
+.prose .callout-danger > .callout-title .callout-icon,
+.prose .callout-warning > .callout-title .callout-icon {
+  background: var(--bg-3); color: var(--text); box-shadow: inset 0 0 0 1px var(--line-2);
+}
+
+/* ==================================================================
+ * KaTeX
+ * ================================================================== */
+
+.prose .katex { font-size: 1.045em; }
+.prose .katex-display {
+  margin: 20px 0; padding: 4px 0;
+  overflow-x: auto; overflow-y: hidden;
+}
+.prose .katex-display > .katex { color: var(--text); }
+.prose .katex-error { color: var(--blue-2); background: var(--blue-soft); padding: 0 4px; border-radius: 4px; }
+
+/* 图片灯箱 */
+.lightbox {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0, 0, 0, 0.86); backdrop-filter: blur(6px);
+  display: grid; place-items: center; padding: 40px; cursor: zoom-out;
+}
+.lightbox img {
+  max-width: 100%; max-height: 100%;
+  border-radius: var(--r); background: #fff;
+  box-shadow: 0 30px 80px -20px #000;
+}
