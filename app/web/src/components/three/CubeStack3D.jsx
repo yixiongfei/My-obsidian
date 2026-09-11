@@ -52,12 +52,20 @@ export default function CubeStack3D({ subjects = [], nextReview, theme }) {
       fov: 40,
       cameraAt: [26, 16, 30],
       bloom: 0.32,
-      build: ({ scene, camera, colors, dark }) => {
+      shadows: true,
+      build: ({ scene, camera, colors, dark, size }) => {
         scene.fog = new THREE.Fog(colors.bg, 60, 150);
         scene.add(new THREE.AmbientLight(0xffffff, dark ? 0.42 : 0.9));
 
         const key = new THREE.DirectionalLight(0xffffff, dark ? 0.85 : 1.0);
         key.position.set(18, 28, 16);
+        key.castShadow = true;
+        key.shadow.mapSize.set(1024, 1024);
+        key.shadow.camera.near = 5;
+        key.shadow.camera.far = 90;
+        Object.assign(key.shadow.camera, { left: -22, right: 22, top: 26, bottom: -26 });
+        key.shadow.bias = -0.002;
+        key.shadow.radius = 3;
         scene.add(key);
         const fill = new THREE.DirectionalLight(colors.accent2, dark ? 0.7 : 0.6);
         fill.position.set(-22, 8, -14);
@@ -84,6 +92,9 @@ export default function CubeStack3D({ subjects = [], nextReview, theme }) {
             opacity: l.notes > 0 ? 0.35 + l.lit * 0.62 : 0.05,
           });
           const box = new THREE.Mesh(boxGeo, mat);
+          // 层与层之间互相投影，堆叠的厚度感就出来了
+          box.castShadow = true;
+          box.receiveShadow = true;
           group.add(box);
 
           const edges = new THREE.LineSegments(edgeGeo, new THREE.LineBasicMaterial({
@@ -94,6 +105,17 @@ export default function CubeStack3D({ subjects = [], nextReview, theme }) {
           scene.add(group);
           return { ...l, group, box, mat, edges, y: yOf(i) };
         });
+
+        // 接影地面：只显示阴影的透明平面，让整堆有个落脚点
+        const catcher = new THREE.Mesh(
+          new THREE.PlaneGeometry(90, 90),
+          // 夜里影子压在近黑的地上，同样不透明度会显得很脏，只要一点点就够
+          new THREE.ShadowMaterial({ opacity: dark ? 0.2 : 0.18 }),
+        );
+        catcher.rotation.x = -Math.PI / 2;
+        catcher.position.y = -totalH / 2 - 10;
+        catcher.receiveShadow = true;
+        scene.add(catcher);
 
         // 初试标记：顶上的线框球
         const markY = totalH / 2 + 9;
@@ -181,7 +203,6 @@ export default function CubeStack3D({ subjects = [], nextReview, theme }) {
 
         const tmp = new THREE.Vector3();
         const anchor = new THREE.Vector3();
-        const size = { w: 0, h: 0 };
 
         return (t) => {
           par.x += (par.tx - par.x) * 0.06;
@@ -208,19 +229,16 @@ export default function CubeStack3D({ subjects = [], nextReview, theme }) {
           camera.position.set(Math.sin(ang) * rad, 17 - par.y * 5 + Math.sin(t * 0.23) * 2.5, Math.cos(ang) * rad);
           camera.lookAt(0, 0, 0);
 
-          const host = mountRef.current;
-          if (host) {
-            size.w = host.clientWidth; size.h = host.clientHeight;
-            built.forEach((b, i) => {
-              anchor.set(W * 0.95, b.group.position.y, 0);
-              const s = projectToScreen(anchor, camera, size.w, size.h, tmp);
-              const node = labelRefs.current[i];
-              if (node) {
-                node.style.transform = `translate(0, -50%) translate(${s.x + 14}px, ${s.y}px)`;
-                node.style.opacity = s.behind ? '0' : '1';
-              }
-            });
-          }
+          // size 由 stage 在 resize 时更新；rAF 里不读 DOM 布局属性
+          built.forEach((b, i) => {
+            anchor.set(W * 0.95, b.group.position.y, 0);
+            const s = projectToScreen(anchor, camera, size.width, size.height, tmp);
+            const node = labelRefs.current[i];
+            if (node) {
+              node.style.transform = `translate(0, -50%) translate(${s.x + 14}px, ${s.y}px)`;
+              node.style.opacity = s.behind ? '0' : '1';
+            }
+          });
         };
       },
     });

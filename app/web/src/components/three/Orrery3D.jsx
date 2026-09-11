@@ -71,7 +71,8 @@ export default function Orrery3D({ subjects = [], theme }) {
       fov: 42,
       cameraAt: [0, 30, 40],
       bloom: 0.85,
-      build: ({ scene, camera, colors, dark }) => {
+      shadows: true,
+      build: ({ scene, camera, colors, dark, size }) => {
         scene.fog = new THREE.Fog(colors.bg, 70, 165);
 
         // 环境光必须是白光：拿 --text 当光色的话，浅色主题下它是近黑色，等于没开灯
@@ -82,6 +83,19 @@ export default function Orrery3D({ subjects = [], theme }) {
         rim.position.set(-30, 26, -18);
         scene.add(rim);
 
+        // 唯一投影光源：从高处斜打，让行星在下方地面上落影
+        const sun = new THREE.DirectionalLight(0xffffff, dark ? 0.9 : 1.25);
+        sun.position.set(22, 46, 20);
+        sun.castShadow = true;
+        sun.shadow.mapSize.set(1024, 1024);
+        sun.shadow.camera.near = 10;
+        sun.shadow.camera.far = 120;
+        // 正交阴影相机要刚好罩住轨道范围，开太大分辨率会被摊薄、影子发虚
+        Object.assign(sun.shadow.camera, { left: -34, right: 34, top: 34, bottom: -34 });
+        sun.shadow.bias = -0.0015;
+        sun.shadow.radius = 3;
+        scene.add(sun);
+
         // 共同质心：一颗自发光的小核，同时是场景唯一光源的位置
         const bary = new THREE.Mesh(
           new THREE.SphereGeometry(0.5, 24, 24),
@@ -90,11 +104,24 @@ export default function Orrery3D({ subjects = [], theme }) {
         scene.add(bary);
 
         // 参考平面：星历表的格网，给 3D 一个可读的地面
+        /* 地面：极坐标网格 + 一张只显示阴影的透明平面。
+           放在轨道平面下方 FLOOR 处，行星就浮在盘面之上、影子落在盘上，
+           这也是星历仪实物的样子。 */
+        const FLOOR = -7;
         const grid = new THREE.PolarGridHelper(40, 8, 4, 96, colors.line, colors.line);
         grid.material.transparent = true;
         grid.material.opacity = dark ? 0.22 : 0.28;
-        grid.position.y = -0.01;
+        grid.position.y = FLOOR;
         scene.add(grid);
+
+        const catcher = new THREE.Mesh(
+          new THREE.PlaneGeometry(110, 110),
+          new THREE.ShadowMaterial({ opacity: dark ? 0.32 : 0.16 }),
+        );
+        catcher.rotation.x = -Math.PI / 2;
+        catcher.position.y = FLOOR + 0.01;
+        catcher.receiveShadow = true;
+        scene.add(catcher);
 
         // 星野
         const starPos = new Float32Array(520 * 3);
@@ -130,6 +157,7 @@ export default function Orrery3D({ subjects = [], theme }) {
             metalness: dark ? 0.55 : 0.2,
           });
           const ball = new THREE.Mesh(new THREE.SphereGeometry(b.radius, 48, 48), mat);
+          ball.castShadow = true;
           group.add(ball);
 
           // 细框架球壳：保住星历台的线描语言，不让它变成纯渲染球
@@ -172,7 +200,6 @@ export default function Orrery3D({ subjects = [], theme }) {
         const tmp = new THREE.Vector3();
         const tmp2 = new THREE.Vector3();
         const edge = new THREE.Vector3();
-        const size = { w: 0, h: 0 };
 
         return (t) => {
           planets.forEach((p, i) => {
@@ -196,20 +223,17 @@ export default function Orrery3D({ subjects = [], theme }) {
               p.trailGeo.attributes.position.needsUpdate = true;
             }
 
-            const host = mountRef.current;
-            if (host) {
-              size.w = host.clientWidth; size.h = host.clientHeight;
-              const s = projectToScreen(p.group.position, camera, size.w, size.h, tmp);
-              // 标签要让开球体本身：把球顶也投影一次，拿到它此刻的屏幕半径。
-              // 固定像素偏移在近大远小的透视里必然会压到大行星上
-              edge.copy(p.group.position).y += p.radius;
-              const se = projectToScreen(edge, camera, size.w, size.h, tmp2);
-              const rpx = Math.abs(se.y - s.y);
-              const node = labelRefs.current[i];
-              if (node) {
-                node.style.transform = `translate(-50%, 0) translate(${s.x}px, ${s.y + rpx + 12}px)`;
-                node.style.opacity = s.behind ? '0' : '1';
-              }
+            // size 由 stage 在 resize 时更新；这里只读缓存值，不碰 DOM 布局
+            const s = projectToScreen(p.group.position, camera, size.width, size.height, tmp);
+            // 标签要让开球体本身：把球顶也投影一次，拿到它此刻的屏幕半径。
+            // 固定像素偏移在近大远小的透视里必然会压到大行星上
+            edge.copy(p.group.position).y += p.radius;
+            const se = projectToScreen(edge, camera, size.width, size.height, tmp2);
+            const rpx = Math.abs(se.y - s.y);
+            const node = labelRefs.current[i];
+            if (node) {
+              node.style.transform = `translate(-50%, 0) translate(${s.x}px, ${s.y + rpx + 12}px)`;
+              node.style.opacity = s.behind ? '0' : '1';
             }
           });
 

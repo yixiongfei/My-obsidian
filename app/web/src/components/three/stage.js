@@ -45,7 +45,7 @@ export function prefersReducedMotion() {
  * @param {(ctx) => (t: number, dt: number) => void} opts.build
  *        构建场景，返回每帧调用的 update
  */
-export function createStage(el, { fov = 38, cameraAt = [0, 0, 60], bloom = 0.7, build }) {
+export function createStage(el, { fov = 38, cameraAt = [0, 0, 60], bloom = 0.7, shadows = false, build }) {
   const dark = document.documentElement.getAttribute('data-theme') === 'dark';
   const colors = themeColors();
 
@@ -62,6 +62,12 @@ export function createStage(el, { fov = 38, cameraAt = [0, 0, 60], bloom = 0.7, 
   renderer.setClearColor(0x000000, 0);
   // 同理不做色调映射：ACES 会把暗部整体抬亮
   renderer.toneMapping = THREE.NoToneMapping;
+  if (shadows) {
+    renderer.shadowMap.enabled = true;
+    // r186 起 PCFSoftShadowMap 已被移除，写它只会拿到一句警告和静默回退。
+    // 柔和度改由各光源的 shadow.radius 控制。
+    renderer.shadowMap.type = THREE.PCFShadowMap;
+  }
   el.appendChild(renderer.domElement);
   renderer.domElement.style.display = 'block';
 
@@ -90,11 +96,18 @@ export function createStage(el, { fov = 38, cameraAt = [0, 0, 60], bloom = 0.7, 
     composer.addPass(new OutputPass());
   }
 
-  const update = build({ THREE, scene, camera, renderer, colors, dark, size: { width, height } });
+  /* 活的尺寸对象：resize 时就地改写，组件每帧直接读它。
+     组件千万别在 rAF 里读 clientWidth——读布局属性会强制同步 layout，
+     而同一个循环里又在写 transform，两者互相作废，每帧都触发强制重排。 */
+  const size = { width, height };
+
+  const update = build({ THREE, scene, camera, renderer, colors, dark, size });
 
   const resize = () => {
     const w = Math.max(1, el.clientWidth);
     const h = Math.max(1, el.clientHeight);
+    size.width = w;
+    size.height = h;
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
     renderer.setSize(w, h);

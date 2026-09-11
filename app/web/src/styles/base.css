@@ -158,30 +158,32 @@ body {
 
 /* ==================================================================
  * 整页氛围：星野
- * 三层不同疏密的点阵叠在一起，周期互质，扫过一屏不会看出重复。
- * 只动 background-position，合成器就能跑完，不碰布局也不掉帧。
+ *
+ * 动的是 transform 而不是 background-position。
+ * background-position 不是合成器属性，动它会让这个满视口的固定层每帧
+ * 重绘一次；transform 能直接交给合成线程，主线程零成本。
+ *
+ * 代价是三层只能一起平移（拿不到视差），所以三个点阵的周期取成
+ * 80/160/240，平移 240px 正好让三层同时回到原位，循环看不出接缝。
+ * 层本身放大到视口的 1.6 倍，平移时不会露边。
  * ================================================================== */
 body::before {
   content: '';
-  position: fixed; inset: 0; z-index: -1;
+  position: fixed; inset: -30%; z-index: -1;
   pointer-events: none;
   opacity: var(--star-op);
   background-image:
     radial-gradient(circle, var(--tick) 0.6px, transparent 0.7px),
     radial-gradient(circle, var(--tick) 0.9px, transparent 1px),
     radial-gradient(circle, var(--tick) 0.5px, transparent 0.6px);
-  background-size: 137px 137px, 251px 251px, 71px 71px;
-  background-position: 0 0, 60px 30px, 20px 80px;
-  animation: starfield 240s linear infinite;
+  background-size: 80px 80px, 160px 160px, 240px 240px;
+  background-position: 0 0, 37px 23px, 91px 148px;
+  will-change: transform;
+  animation: starfield 150s linear infinite;
 }
 @keyframes starfield {
-  to { background-position: 137px 411px, 251px -502px, -71px 213px; }
-}
-
-/* 页边刻度缓慢爬行，像仪表在走 */
-.main::before { animation: ticks 90s linear infinite; }
-@keyframes ticks {
-  to { background-position: 24px top, -24px bottom, left 24px, right -24px; }
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-240px, -240px, 0); }
 }
 
 /* 内容进场：换页时逐块浮起 */
