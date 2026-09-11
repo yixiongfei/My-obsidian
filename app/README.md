@@ -27,8 +27,8 @@ pnpm start            # 生产模式，后端同时托管前端：http://127.0.0
 | 英语词汇排期与复习历史 | `.kb/vocabulary.db` | **不能**，公开词表种子恢复不了个人进度 |
 | 公开词表与例句 | `app/server/data/*.json` | **能**，见 `scripts/` 下的两个导入脚本 |
 | 笔记复习日志 | `app/review_log.jsonl` | **不能**，只增不改的复习事件流 |
-| 真题题面与标签 | `.kb/exams/*.json` | **能**，`node scripts/import-exams.mjs` 重新抓取 |
-| 真题作答记录 | `.kb/index.db` 的 `exam_attempts` | **不能** |
+| 真题题面与标签 | `.kb/exams/*.json`（已进 git） | **能**，`node scripts/import-exams.mjs` 重新抓取 |
+| 真题作答记录、划的句子 | `.kb/index.db` 的 `exam_attempts` / `exam_marks` | **不能**（随仓库提交） |
 | 考点标签受控词表 | `app/tags.yaml` | —— 手写维护，思维导图与首页学科图的骨架 |
 
 `.kb/` 一直被 git 忽略，里面是你的私人 SQLite 数据。换电脑时手动复制 `index.db` 和
@@ -65,8 +65,9 @@ npm run electron:build   # 产出 release/ 里的安装包
 - 词表：ECDICT 考研标签 4801 条，例句来自 Tatoeba，全部离线，复习时不访问任何第三方网络
 - 排期：`again` 归零重来 / `hard` 缩短 / `good` 按难度系数推进 / `easy` 直接毕业，之后永不再出现
 - 翻卡不等磁盘：评分只写 SQLite 和一个脏标记就返回，Markdown 日志在闲置 30 秒或一轮结束后合并写一次
-- 日志落在 `英语/词汇复习/YYYY-MM-DD.md`，只替换 `<!-- kb:vocab:start -->` 到 `end` 之间的自动区，
-  区外你自己写的手记不会被覆盖
+- 日志按 ISO 周落在 `英语/词汇复习/YYYY-Www.md`（周内按日期分节），只替换 `<!-- kb:vocab:start -->` 到 `end` 之间的自动区，
+  区外你自己写的手记不会被覆盖；早期按天的文件若没有手写内容会自动并入周文件
+- 发音走系统语音合成（Web Speech），离线；开着时翻卡即读，例句旁可单独朗读
 
 数据来源与署名见 [`server/data/ATTRIBUTIONS.md`](server/data/ATTRIBUTIONS.md)。
 
@@ -96,6 +97,21 @@ node scripts/import-exams.mjs --reparse  # 不联网，用缓存重新解析
 - 知识点标签页（`/resources/tags/408`、`/resources/tags/math`）来自站点的真题标签页，点题号跳到对应卷子的那道题（`?q=题号`）
 
 源站数据本身有几处瑕疵（2010 英语一完形缺第 3 空、2023 英语一一句话重复、2026 数学三还没写完），脚本不猜，原样保留。
+
+**卷面上的两种留痕**
+
+- 生词：英语卷里双击一个词 → 记进词汇库。先做一轮粗糙的词形还原（criticized → criticize），
+  对得上考研词表的画红线、标在原词条上；对不上的建自定义词、画蓝线。标注词在 Anki 队列里插队。
+- 句子：选中一句右键「标记句子」→ 荧光笔。真相在 `exam_marks` 表，
+  投影到 `英语/语法/真题例句.md`——和词汇日志一个节奏：只落脏标记，闲置 30 秒或离开卷面时合并写一次。
+- 错题：每道题右侧「+md」把题干 / 选项 / 答案解析追加到 `<学科>/错题本/<年份 科目>.md`，
+  frontmatter 带知识点标签。公式没有 TeX 源，只能取 KaTeX 的渲染文本裹在反引号里；
+  图片不搬，换成回到原题的链接。答案只在那一单元交过卷之后才附。
+
+**数据随仓库走**：`.kb/*.db`（复习进度、真题作答、标注）和 `.kb/exams/*.json`、`img/` 都进 git，
+换电脑 clone 下来就能用；`raw/` 页面缓存和 `-wal/-shm` 不进。提交前跑一下
+`node scripts/checkpoint-db.mjs` 把 WAL 合并回主文件，否则最近的写入还留在 -wal 里。
+两台电脑**不要同时**改同一个 .db——SQLite 是二进制，git 合并不了。
 
 ## 两个图不是装饰
 
