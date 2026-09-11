@@ -4,6 +4,7 @@ import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import Prose from '../components/Prose.jsx';
 import MindMap from '../components/MindMap.jsx';
+import ReviewBar from '../components/ReviewBar.jsx';
 import { Loading, ErrorBox, Empty } from '../components/bits.jsx';
 
 /* ------------------------------------------------------------------ *
@@ -59,9 +60,10 @@ function Tree({ tree, activeId, filter }) {
  * 阅读页
  * ------------------------------------------------------------------ */
 
-function Reader({ id, version }) {
+function Reader({ id, version, onReviewed }) {
   const navigate = useNavigate();
   const scrollRef = useRef(null);
+  const reviewRef = useRef(null);
   const [active, setActive] = useState('');
   const { data: note, loading, error, reload } = useApi(() => api.note(id), [id, version]);
 
@@ -100,9 +102,11 @@ function Reader({ id, version }) {
             </div>
             <div className="rh-title">
               <h1>{note.title}</h1>
-              <button className="btn primary" title="进入复习界面"
-                      onClick={() => navigate(`/review/${encodeURIComponent(note.id)}`)}>
-                复习这篇　→
+              {/* 不再跳去 /review——那儿现在是英语词汇 Anki。
+                  深度复习就在这一页正文下方完成，按钮只负责把人送过去 */}
+              <button className="btn primary" title="滚动到本页的复习记录"
+                      onClick={() => reviewRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })}>
+                复习这篇　↓
               </button>
             </div>
             <div className="reader-meta">
@@ -120,6 +124,16 @@ function Reader({ id, version }) {
           {note.words === 0
             ? <Empty>这篇笔记还是空的，去 Obsidian 里补充内容吧</Empty>
             : <Prose html={note.html} />}
+
+          <section className="note-review" ref={reviewRef}>
+            <div className="band">
+              <span className="band-title">REVIEW · 复习记录</span>
+              <span className="band-meta">已复习 {note.reviewCount} 次</span>
+            </div>
+            <div style={{ marginTop: 18 }}>
+              <ReviewBar note={note} onDone={() => { reload(); onReviewed?.(); }} />
+            </div>
+          </section>
 
           {(note.backlinks.length > 0 || note.outlinks.length > 0) && (
             <div className="linkbar">
@@ -170,7 +184,7 @@ function slug(text, outline, index) {
  * 组合
  * ------------------------------------------------------------------ */
 
-export default function Notes({ version }) {
+export default function Notes({ version, onReviewed }) {
   const { id } = useParams();
   const noteId = id ? decodeURIComponent(id) : null;
   const [open, setOpen] = useState(() => localStorage.getItem('kb-tree') !== 'shut');
@@ -214,7 +228,7 @@ export default function Notes({ version }) {
       </aside>
 
       {noteId
-        ? <Reader id={noteId} version={version} />
+        ? <Reader id={noteId} version={version} onReviewed={onReviewed} />
         : (
           <div className="mind">
             <div className="mind-head">

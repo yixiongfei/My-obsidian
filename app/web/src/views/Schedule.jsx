@@ -227,7 +227,10 @@ function DayView({ version, date }) {
   if (error) return <ErrorBox error={error} onRetry={reload} />;
 
   const due = [...(data.overdue || []), ...data.due];
-  const nothing = !due.length && !data.reviewed.length && !data.created.length && !data.events.length;
+  const vocabDone = data.vocabReviewed?.done || 0;
+  // 只背了单词、没碰笔记的日子也是有安排的，不该显示成空白
+  const nothing = !due.length && !data.reviewed.length && !data.created.length
+    && !data.events.length && !vocabDone;
 
   return (
     <div className="scroll"><div className="page" style={{ maxWidth: 900 }}>
@@ -259,6 +262,7 @@ function DayView({ version, date }) {
         <div className="row" style={{ gap: 32, alignItems: 'flex-start' }}>
           <div><div className={`stat-v${due.length ? ' on' : ''}`}>{due.length}</div><div className="stat-k">待复习</div></div>
           <div><div className="stat-v">{data.reviewed.length}</div><div className="stat-k">已复习</div></div>
+          <div><div className="stat-v">{vocabDone}</div><div className="stat-k">已复习单词</div></div>
           <div><div className="stat-v">{data.daysToExam}</div><div className="stat-k">距初试</div></div>
         </div>
       </div>
@@ -273,9 +277,23 @@ function DayView({ version, date }) {
         </div>
       )}
 
-      {data.reviewed.length > 0 && (
+      {(data.reviewed.length > 0 || vocabDone > 0) && (
         <div style={{ marginTop: 40 }}>
-          <Band title="复习记录" meta={`${data.reviewed.length} 次`}>
+          <Band title="复习记录"
+                meta={`笔记 ${data.reviewed.length} 次 · 单词 ${vocabDone} 个`}>
+            {vocabDone > 0 && (
+              <div style={{ padding: '13px 0', borderBottom: 'var(--hair) solid var(--line)' }}>
+                <div className="row" style={{ gap: 12, flexWrap: 'wrap' }}>
+                  <span style={{ color: 'var(--text)', fontWeight: 500, fontSize: 13.5 }}>英语词汇</span>
+                  <span style={{ fontSize: 11, color: 'var(--accent)' }}>完成复习 {vocabDone} 个单词</span>
+                  {data.vocabReviewed?.mastered > 0 && (
+                    <span style={{ fontSize: 11, color: 'var(--dim)' }}>
+                      其中 {data.vocabReviewed.mastered} 个标为轻松
+                    </span>
+                  )}
+                </div>
+              </div>
+            )}
             {data.reviewed.map((e, i) => (
               <div key={`${e.note_path}-${i}`} style={{ padding: '13px 0', borderBottom: '1px solid var(--line)' }}>
                 <div className="row" style={{ gap: 12, flexWrap: 'wrap' }}>

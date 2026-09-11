@@ -17,6 +17,7 @@ const toMeta = (r) => ({
   nextReview: r.next_review,
   words: r.words,
   empty: r.words === 0,
+  reviewable: r.reviewable !== 0,
 });
 
 /** 把每篇笔记的标签聚成一列，省掉 N+1 次查询 */
@@ -112,6 +113,8 @@ export function search(rawQuery, limit = 30) {
 export function bucketNotes(today = todayStr()) {
   const due = [], upcoming = [], unscheduled = [], scheduled = [];
   for (const n of allNotes()) {
+    // 自动生成的词汇日志带 reviewable: false，能浏览能搜索，但不该出现在复习队列里
+    if (!n.reviewable) continue;
     if (n.empty) { unscheduled.push({ ...n, status: 'empty' }); continue; }
     if (!n.nextReview) { unscheduled.push({ ...n, status: 'new' }); continue; }
     const delta = daysBetween(today, n.nextReview);
@@ -163,7 +166,7 @@ export function dashboard(examDate) {
     SELECT t.tag                                                             AS tag,
            COUNT(*)                                                          AS notes,
            IFNULL(SUM(n.review_count), 0)                                    AS reviews,
-           IFNULL(SUM(n.next_review IS NOT NULL AND n.next_review <= ?), 0)  AS due,
+           IFNULL(SUM(n.reviewable = 1 AND n.next_review IS NOT NULL AND n.next_review <= ?), 0)  AS due,
            IFNULL(SUM(n.words = 0), 0)                                       AS empty
     FROM tags t JOIN notes n ON n.id = t.note_id
     GROUP BY t.tag ORDER BY notes DESC, tag`).all(today)

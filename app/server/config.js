@@ -15,10 +15,21 @@ export const VAULT_ROOT = path.resolve(process.env.VAULT_ROOT || path.resolve(AP
 
 export const PORT = Number(process.env.PORT) || 5174;
 
-/** 扫描时跳过的目录 */
+/** 扫描与监听时跳过的目录 */
 export const IGNORED_DIRS = new Set([
-  '.git', '.obsidian', '.claudian', 'app', 'node_modules', '.trash', '.vscode',
+  '.git', '.obsidian', '.claudian', '.kb', 'app',
+  'node_modules', 'dist', 'dist-web', 'release', '.trash', '.vscode',
 ]);
+
+/**
+ * 路径是否落在忽略目录里。
+ *
+ * 必须同时按 / 和 \ 拆：Windows 下 chokidar 给出的路径两种分隔符都可能出现，
+ * 只按 path.sep 拆的话，另一种形式会被当成**一整段**，于是什么都匹配不上——
+ * app/node_modules 里上万个文件就全进了监听器，卡顿和内存膨胀都从这儿来。
+ */
+export const isIgnoredPath = (p) =>
+  String(p).split(/[\\/]/).some((seg) => IGNORED_DIRS.has(seg));
 
 export const IMAGE_EXT = new Set(['.png', '.jpg', '.jpeg', '.gif', '.webp', '.svg', '.avif', '.bmp']);
 

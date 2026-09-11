@@ -6,7 +6,7 @@ import fs from 'node:fs';
 import yaml from 'js-yaml';
 import fsp from 'node:fs/promises';
 
-import { VAULT_ROOT, APP_ROOT, PORT, TAGS_FILE, IGNORED_DIRS } from './config.js';
+import { VAULT_ROOT, APP_ROOT, PORT, TAGS_FILE, isIgnoredPath } from './config.js';
 import { index, toAbs, toId } from './lib/vault.js';
 import { render } from './lib/markdown.js';
 import { recordReview, readLog, todayStr } from './lib/review.js';
@@ -15,6 +15,8 @@ import * as db from './lib/db.js';
 import { syncAll, syncNote } from './lib/sync.js';
 import * as schedule from './lib/schedule.js';
 import { mindmap } from './lib/mindmap.js';
+import * as vocab from './lib/vocabulary.js';
+import * as vocabDb from './lib/vocabulary-db.js';
 
 const app = express();
 app.use(cors());
@@ -101,11 +103,46 @@ app.get('/api/review/log', wrap(async (_req, res) => res.json(await readLog())))
 app.post('/api/review', wrap(async (req, res) => {
   const { path: id, result = 'good', addedContent = '', source } = req.body || {};
   if (!id) throw bad('缺少 path');
-  if (!['good', 'again'].includes(result)) throw bad('result 只能是 good 或 again');
+  if (!['again', 'hard', 'good', 'easy'].includes(result)) {
+    throw bad('result 只能是 again / hard / good / easy');
+  }
   const out = await recordReview(id, { result, addedContent, source });
   broadcast({ type: 'review', path: id });
   res.json(out);
 }));
+
+/* ------------------------------------------------------------------ *
+ * 英语词汇 Anki
+ *
+ * 与笔记复习严格分离：这里只出英语单词卡，数学/408 那类知识点仍然
+ * 回到笔记原文做深度复习，不做成卡片。
+ * ------------------------------------------------------------------ */
+
+app.get('/api/review/cards', (_req, res) => res.json(vocab.buildQueue()));
+
+app.post('/api/vocabulary/review', wrap(async (req, res) => {
+  const { id, rating } = req.body || {};
+  if (id === undefined || id === null || id === '') throw bad('缺少 id');
+  try {
+    res.json(vocab.rate(Number(id), String(rating)));
+  } catch (err) {
+    if (err.code === 'BAD_RATING') throw bad(err.message, 400);
+    if (err.code === 'NOT_FOUND') throw bad(err.message, 404);
+    // 已毕业：多半是这个词在别处已经完成了，前端安静地跳过就行
+    if (err.code === 'GRADUATED') throw bad(err.message, 409);
+    throw err;
+  }
+}));
+
+app.post('/api/vocabulary/sync-markdown', (_req, res) => {
+  // 202 + 立刻返回：绝不让 UI 等磁盘写入和索引重建
+  const queued = vocab.pendingDates();
+  vocab.flush().then((dates) => { if (dates.length) broadcast({ type: 'vault', version: index.version }); })
+    .catch((err) => console.error('[词汇] Markdown 写入失败', err));
+  res.status(202).json({ queued });
+});
+
+app.get('/api/vocabulary/overview', (_req, res) => res.json(vocab.overview()));
 
 /* ------------------------------------------------------------------ *
  * 日程：年 → 月 → 日
@@ -197,10 +234,29 @@ export async function start() {
   console.log(`[知识库] 索引 ${index.notes.size} 篇笔记 / ${index.images.size} 张图片`);
   console.log(`[知识库] SQLite ${db.DB_PATH}（全文检索 ${db.hasFts() ? '开启' : '降级为 LIKE'}，复习记录 +${synced.reviews}）`);
 
+  /* 词汇库。顺序不能换：
+     先从旧 index.db 迁移，再 seed——反过来的话 seed 会先把词条建出来，
+     迁移就分不清"这些词条是种子基线还是旧数据"了。 */
+  vocabDb.open();
+  const moved = vocab.migrateFromIndexDb(db.handle());
+  if (moved.status === 'conflict') {
+    console.warn(`[词汇] 迁移已停止：${moved.reason}`);
+  } else if (moved.status === 'migrated') {
+    console.log(`[词汇] 从 index.db 迁移了 ${moved.moved} 张卡片`);
+  }
+  const seeded = vocab.seed();
+  const vq = vocab.buildQueue().counts.words;
+  console.log(`[词汇] ${vocabDb.VOCAB_DB_PATH}（词条 ${vq.total}${seeded.skipped ? '' : '，本次已更新词表'}）`);
+  console.log(`[词汇] 到期 ${vq.due} · 新词 ${vq.new} · 已掌握 ${vq.mastered}`);
+
+  // 上次进程没来得及写完的日志，开机补上
+  const pending = vocab.recoverPendingLogs();
+  if (pending.length) console.log(`[词汇] 补写遗留日志：${pending.join(', ')}`);
+
   chokidar
     .watch(VAULT_ROOT, {
       ignoreInitial: true,
-      ignored: (p) => p.split(path.sep).some((seg) => IGNORED_DIRS.has(seg)),
+      ignored: isIgnoredPath,
       awaitWriteFinish: { stabilityThreshold: 150, pollInterval: 40 },
     })
     .on('add', (p) => onFsEvent('add', p))

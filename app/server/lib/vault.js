@@ -104,6 +104,10 @@ function parseNote(abs, id, raw) {
     reviewCount: Number.isFinite(Number(fm.review_count)) ? Number(fm.review_count) : 0,
     lastReviewed: toDateStr(fm.last_reviewed),
     nextReview: toDateStr(fm.next_review),
+    /* reviewable: false 的笔记仍可浏览和搜索，但不进笔记复习队列。
+       自动生成的词汇复习日志就带这个标记——它是投影产物，
+       不该再被当成一篇要复习的笔记推给用户。 */
+    reviewable: fm.reviewable !== false && String(fm.reviewable).toLowerCase() !== 'false',
     hasFrontmatter: Object.keys(fm).length > 0,
     frontmatter: fm,
     outline,

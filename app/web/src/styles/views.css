@@ -236,6 +236,9 @@ kbd {
 .toc a:hover { color: var(--text); }
 .toc a.active { color: var(--accent); }
 
+/* 正文下方的内嵌复习区：「复习这篇」按钮滚到这里，不再跳走 */
+.note-review { margin-top: 56px; scroll-margin-top: 80px; }
+
 .linkbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 44px; }
 
 
@@ -243,13 +246,83 @@ kbd {
  * 复习
  * ================================================================== */
 
-.review-stage { max-width: 920px; margin: 0 auto; padding: 34px 40px 60px; }
-.review-progress { display: flex; gap: 3px; margin-bottom: 28px; }
-.review-progress i { flex: 1; height: 2px; background: var(--line); border-radius: 99px; }
-.review-progress i.done { background: var(--accent-deep); }
-.review-progress i.current { background: var(--accent); }
-.review-card { border: var(--hair) solid var(--line); border-radius: var(--radius); background: var(--bg-1); padding: 36px 40px; box-shadow: var(--shadow); }
-.review-actions { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 30px; padding-top: 22px; border-top: var(--hair) solid var(--line); }
+/* ── 英语词汇 Anki ─────────────────────────────────── */
+
+.vocab-stage { max-width: 980px; margin: 0 auto; padding: 30px 40px 64px; }
+
+.vocab-top { margin-bottom: 22px; }
+.vocab-bar { height: 2px; background: var(--line); border-radius: 99px; overflow: hidden; }
+.vocab-bar > i { display: block; height: 2px; background: var(--accent); transition: width var(--dur-2) var(--ease); }
+.vocab-top-meta {
+  display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap;
+  margin-top: 12px; font-size: 11px; letter-spacing: 0.12em; color: var(--text-2);
+}
+.vocab-top-meta .due { color: var(--due); }
+
+/* 正面最小高度取视口 58%，让单词落在视线中间而不是顶到天花板 */
+.vocab-card {
+  display: block; width: 100%; text-align: left;
+  min-height: max(58vh, 500px);
+  padding: 56px 56px 48px;
+  background: var(--bg-1);
+  border: var(--hair) solid var(--line);
+  border-radius: var(--radius);
+  transition: border-color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
+}
+.vocab-card:hover { border-color: var(--line-2); transform: translateY(-2px); }
+.vocab-card.open { cursor: default; }
+
+.vocab-face { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 34vh; gap: 14px; }
+.vocab-term {
+  font-size: clamp(40px, 6vw, 72px); font-weight: 500;
+  letter-spacing: -0.02em; line-height: 1.1; color: var(--text);
+}
+.vocab-ph { font-family: var(--mono); font-size: 14px; color: var(--dim); letter-spacing: 0.04em; }
+.vocab-cue { margin-top: 22px; font-size: 11px; letter-spacing: 0.16em; color: var(--dim); }
+
+.vocab-back { margin-top: 34px; padding-top: 28px; border-top: var(--hair) solid var(--line); }
+.vocab-sense { display: flex; align-items: baseline; gap: 12px; padding: 11px 0; border-bottom: var(--hair) solid var(--line); }
+.vocab-sense:last-of-type { border-bottom: none; }
+.vocab-sense .vs-ord { font-size: 11px; color: var(--dim); width: 16px; flex: none; }
+.vocab-sense .vs-pos { font-size: 12px; color: var(--accent); font-style: italic; flex: none; min-width: 34px; }
+.vocab-sense .vs-gloss { font-size: 15px; color: var(--text); line-height: 1.7; }
+
+/* 英英长释义单独成区，不跟中文义项混在一起 */
+.vocab-usage { margin-top: 26px; padding: 18px 20px; background: var(--bg-2); border-radius: var(--radius-s); }
+.vocab-usage .vu-en { margin: 10px 0 0; font-size: 14.5px; line-height: 1.75; color: var(--text-2); }
+.vocab-usage .vu-cn { margin: 6px 0 0; font-size: 13px; color: var(--dim); }
+.vocab-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 22px; }
+
+.vocab-notice { margin-top: 14px; font-size: 12px; color: var(--due); }
+
+.vocab-actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 24px; }
+.vocab-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 16px 12px;
+  border: var(--hair) solid var(--line-2);
+  border-radius: var(--radius-s);
+  color: var(--text-2); font-size: 14px; font-weight: 500;
+  transition: color var(--dur-1), border-color var(--dur-1), background var(--dur-1), transform var(--dur-1) var(--ease);
+}
+.vocab-btn:hover:not(:disabled) { color: var(--text); border-color: var(--text-2); transform: translateY(-2px); }
+.vocab-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.vocab-btn .vb-h { font-size: 10px; letter-spacing: 0.1em; color: var(--dim); font-variant-numeric: tabular-nums; }
+.vocab-btn.v-again:hover:not(:disabled) { border-color: var(--due); color: var(--due); }
+.vocab-btn.v-easy:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.vocab-hint { margin-top: 14px; text-align: center; font-size: 11px; letter-spacing: 0.12em; color: var(--dim); }
+
+.vocab-done { max-width: 560px; margin: 12vh auto 0; text-align: center; }
+.vocab-done-n { font-size: clamp(64px, 9vw, 108px); font-weight: 500; line-height: 1; color: var(--accent); margin: 18px 0 10px; }
+.vocab-done-t { font-size: 15px; color: var(--text); margin: 0; }
+.vocab-done-s { font-size: 12.5px; color: var(--dim); margin: 10px 0 0; line-height: 1.8; }
+.vocab-done-meta { margin-top: 30px; font-size: 11px; letter-spacing: 0.12em; color: var(--dim); }
+
+@media (max-width: 720px) {
+  .vocab-stage { padding: 22px 18px 56px; }
+  .vocab-card { padding: 36px 24px 32px; min-height: max(52vh, 420px); }
+  /* 窄屏四个按钮横排会挤成一条，改两列 */
+  .vocab-actions { grid-template-columns: repeat(2, 1fr); }
+}
 
 /* ==================================================================
  * 日历

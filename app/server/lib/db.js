@@ -34,7 +34,9 @@ CREATE TABLE IF NOT EXISTS notes (
   words         INTEGER NOT NULL DEFAULT 0,
   mtime         INTEGER NOT NULL DEFAULT 0,
   body          TEXT NOT NULL DEFAULT '',
-  plain         TEXT NOT NULL DEFAULT ''
+  plain         TEXT NOT NULL DEFAULT '',
+  -- frontmatter 里 reviewable: false 的笔记不进复习队列（自动生成的词汇日志就是）
+  reviewable    INTEGER NOT NULL DEFAULT 1
 );
 CREATE INDEX IF NOT EXISTS idx_notes_next    ON notes(next_review);
 CREATE INDEX IF NOT EXISTS idx_notes_created ON notes(created);
@@ -109,6 +111,9 @@ export function open() {
   fs.mkdirSync(DB_DIR, { recursive: true });
   db = new DatabaseSync(DB_PATH);
   db.exec(SCHEMA);
+  /* CREATE TABLE IF NOT EXISTS 不会给已有的库补列，老库要单独 ALTER 一次。
+     列已存在时 SQLite 直接报错，吞掉即可——这里没有别的失败可能 */
+  try { db.exec('ALTER TABLE notes ADD COLUMN reviewable INTEGER NOT NULL DEFAULT 1'); } catch { /* 已经有了 */ }
   try {
     db.exec(FTS_SCHEMA);
     db.prepare('SELECT rowid FROM notes_fts LIMIT 1').get();

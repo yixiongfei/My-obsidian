@@ -4,18 +4,33 @@
 
 ## 跑起来
 
+推荐用 pnpm：
+
 ```bash
 cd app
-npm install
-npm run dev          # 前端 5173 + 后端 5174，打开 http://localhost:5173
+pnpm install
+pnpm run dev          # 前端 5173 + 后端 5174，打开 http://localhost:5173
+pnpm run build
+pnpm start            # 生产模式，后端同时托管前端：http://127.0.0.1:5174
 ```
 
-生产模式（后端同时托管前端，只需一个端口）：
+已经装好 Node/npm 的环境按项目兼容性用 npm 也可以，把上面的 `pnpm` 换成 `npm` 即可。
+脚本不依赖任何全局 shim：开发时直接用 Node 起服务端、用 Vite 起前端，Electron 打包也是直接调 `vite build`。
 
-```bash
-npm run build
-npm start            # http://127.0.0.1:5174
-```
+## 数据放在哪、哪些能重建
+
+| 数据 | 真相在哪 | 能否重建 |
+|---|---|---|
+| 笔记正文 | `.md` 文件 | —— 它本身就是真相 |
+| 笔记索引（notes/headings/links/全文检索） | `.kb/index.db` | **能**，删掉下次启动从 Markdown 原样长回来 |
+| 本机日程（events） | `.kb/index.db` | **不能**，属于持久数据 |
+| 英语词汇排期与复习历史 | `.kb/vocabulary.db` | **不能**，公开词表种子恢复不了个人进度 |
+| 公开词表与例句 | `app/server/data/*.json` | **能**，见 `scripts/` 下的两个导入脚本 |
+
+`.kb/` 一直被 git 忽略，里面是你的私人 SQLite 数据。换电脑时手动复制 `index.db` 和
+`vocabulary.db`；如果库里还有没 checkpoint 的写入，`-wal` / `-shm` 也要一起带上。
+
+重导公开词表**不会**重置你的卡片进度——种子只补充释义、音标、例句，一行都不碰 `vocab_cards`。
 
 ## 打包成 Windows 程序
 
@@ -33,8 +48,22 @@ npm run electron:build   # 产出 release/ 里的安装包
 | 首页 | 首屏是标题与学科图，往下滚是倒计时与四个入口 |
 | 仪表盘 | 倒计时、统计、今日待复习、复习热力图、标签分布、最近复习 |
 | 笔记 | 可折叠侧栏 + 思维导图 + 阅读页，支持 KaTeX、表格、callout 折叠、wiki 链接互跳、反向链接 |
-| 复习 | 到期笔记逐篇过，callout 默认折叠即天然自测；「已掌握 / 需重来」写回仓库。从阅读页标题右侧的按钮可以直接带着当前这篇进来 |
-| 日程 | 年表 → 月表 → 日表逐层下钻 |
+| 复习 | **英语词汇 Anki**：每轮最多 100 张到期卡 + 20 个新词，四档评分，Space 翻面、1/2/3/4 评分 |
+| 日程 | 年表 → 月表 → 日表逐层下钻，日视图含当天的词汇完成数 |
+
+笔记的深度复习**不在**「复习」页：数学和 408 这类知识点要回到笔记原文长时间琢磨，
+所以阅读页标题右侧的「复习这篇」会滚到正文下方的复习记录区，就地记一次，不跳走。
+只有英语单词才做成卡片。
+
+## 英语词汇 Anki
+
+- 词表：ECDICT 考研标签 4801 条，例句来自 Tatoeba，全部离线，复习时不访问任何第三方网络
+- 排期：`again` 归零重来 / `hard` 缩短 / `good` 按难度系数推进 / `easy` 直接毕业，之后永不再出现
+- 翻卡不等磁盘：评分只写 SQLite 和一个脏标记就返回，Markdown 日志在闲置 30 秒或一轮结束后合并写一次
+- 日志落在 `英语/词汇复习/YYYY-MM-DD.md`，只替换 `<!-- kb:vocab:start -->` 到 `end` 之间的自动区，
+  区外你自己写的手记不会被覆盖
+
+数据来源与署名见 [`server/data/ATTRIBUTIONS.md`](server/data/ATTRIBUTIONS.md)。
 
 `Ctrl / ⌘ + K` 全局搜索。
 

@@ -6,8 +6,14 @@ import { index, toAbs } from './vault.js';
 import { allNotes } from './query.js';
 import { todayStr, daysBetween } from './review.js';
 import { holidaysInMonth, holidayOn } from './holidays.js';
+import { dailyCount } from './vocabulary.js';
 
 const pad = (n) => String(n).padStart(2, '0');
+
+/** 词汇库还没建起来时（首次启动、或用户没用过词汇功能）不该让日历跟着报错 */
+const vocabDaily = (date) => {
+  try { return dailyCount(date); } catch { return { done: 0, mastered: 0 }; }
+};
 
 export const examDate = () => getMeta('exam_date') || DEFAULT_EXAM_DATE;
 export const setExamDate = (d) => setMeta('exam_date', d);
@@ -111,7 +117,7 @@ const countsByDay = (from, to) => {
     if (!map.has(date)) map.set(date, { due: 0, reviewed: 0, created: 0, events: 0 });
     map.get(date)[key] += n;
   };
-  for (const r of db.prepare('SELECT next_review d, COUNT(*) c FROM notes WHERE next_review BETWEEN ? AND ? GROUP BY d').all(from, to)) bump(r.d, 'due', r.c);
+  for (const r of db.prepare('SELECT next_review d, COUNT(*) c FROM notes WHERE reviewable = 1 AND next_review BETWEEN ? AND ? GROUP BY d').all(from, to)) bump(r.d, 'due', r.c);
   for (const r of db.prepare('SELECT date d, COUNT(*) c FROM reviews WHERE date BETWEEN ? AND ? GROUP BY d').all(from, to)) bump(r.d, 'reviewed', r.c);
   for (const r of db.prepare('SELECT created d, COUNT(*) c FROM notes WHERE created BETWEEN ? AND ? GROUP BY d').all(from, to)) bump(r.d, 'created', r.c);
   for (const r of db.prepare('SELECT date d, COUNT(*) c FROM events WHERE date BETWEEN ? AND ? GROUP BY d').all(from, to)) bump(r.d, 'events', r.c);
@@ -211,7 +217,7 @@ export function dayView(date) {
 
   const pick = (ids) => ids.map((r) => notes.get(r.id)).filter(Boolean);
 
-  const due = pick(db.prepare('SELECT id FROM notes WHERE next_review = ? ORDER BY id').all(date));
+  const due = pick(db.prepare('SELECT id FROM notes WHERE reviewable = 1 AND next_review = ? ORDER BY id').all(date));
   const created = pick(db.prepare('SELECT id FROM notes WHERE created = ? ORDER BY id').all(date));
 
   const reviewed = db.prepare(`
@@ -222,15 +228,18 @@ export function dayView(date) {
 
   // 今天要看的不只是当天到期的，还有之前欠下的
   const overdue = date === today
-    ? pick(db.prepare('SELECT id FROM notes WHERE next_review IS NOT NULL AND next_review < ? ORDER BY next_review').all(today))
+    ? pick(db.prepare('SELECT id FROM notes WHERE reviewable = 1 AND next_review IS NOT NULL AND next_review < ? ORDER BY next_review').all(today))
       .map((n) => ({ ...n, status: 'due', overdueDays: -daysBetween(today, n.nextReview) }))
     : [];
 
   const [y, m, d] = date.split('-').map(Number);
   const exam = examDate();
+  /* 词汇完成数从 vocabulary.db 现算，不往 index.db 里复制一份：
+     两处存同一个数，迟早会对不上 */
+  const vocabReviewed = vocabDaily(date);
   return {
     date,
-    due, created, reviewed, overdue,
+    due, created, reviewed, overdue, vocabReviewed,
     events: listEvents(date, date),
     isToday: date === today,
     weekday: new Date(y, m - 1, d).getDay(),

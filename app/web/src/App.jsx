@@ -1,5 +1,5 @@
 import { useCallback, useState } from 'react';
-import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate, useParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import Shell from './components/Shell.jsx';
@@ -47,10 +47,12 @@ export default function App() {
             <Routes location={location}>
               <Route path="/" element={<Home version={version} theme={theme} />} />
               <Route path="/dashboard" element={<Dashboard version={version} />} />
-              <Route path="/notes" element={<Notes version={version} />} />
-              <Route path="/note/:id" element={<Notes version={version} />} />
+              <Route path="/notes" element={<Notes version={version} onReviewed={reloadDash} />} />
+              <Route path="/note/:id" element={<Notes version={version} onReviewed={reloadDash} />} />
               <Route path="/review" element={<Review version={version} onReviewed={reloadDash} />} />
-              <Route path="/review/:id" element={<Review version={version} onReviewed={reloadDash} />} />
+              {/* 旧链接兼容：/review/:id 曾经是"按篇复习某条笔记"，
+                  现在 /review 是英语词汇 Anki，带 id 的一律送回笔记原文 */}
+              <Route path="/review/:id" element={<LegacyReviewRedirect />} />
               <Route path="/schedule" element={<Schedule version={version} />} />
               <Route path="/schedule/:year" element={<Schedule version={version} />} />
               <Route path="/schedule/:year/:month" element={<Schedule version={version} />} />
@@ -72,4 +74,13 @@ function routeKey(pathname) {
   if (pathname.startsWith('/schedule')) return 'schedule';
   if (pathname.startsWith('/review')) return 'review';
   return pathname;
+}
+
+/** 把 /review/:id 换算回 /note/:id。id 在 URL 里是编码过的，要先解码再重新编码 */
+function LegacyReviewRedirect() {
+  const { id } = useParams();
+  let decoded = id || '';
+  try { decoded = decodeURIComponent(id || ''); } catch { /* 编码坏了就按原样走 */ }
+  if (!decoded) return <Navigate to="/notes" replace />;
+  return <Navigate to={`/note/${encodeURIComponent(decoded)}`} replace />;
 }

@@ -24,6 +24,13 @@ export const api = {
   dashboard: () => j('/api/dashboard'),
   queue: () => j('/api/review/queue'),
   review: (payload) => j('/api/review', body('POST', payload)),
+
+  // 英语词汇 Anki
+  cards: () => j('/api/review/cards'),
+  rateWord: (id, rating) => j('/api/vocabulary/review', body('POST', { id, rating })),
+  // 发完就走，不等磁盘：失败也不该挡住用户翻下一张卡
+  syncVocabMarkdown: () => fetch('/api/vocabulary/sync-markdown', body('POST', {})).catch(() => {}),
+  vocabOverview: () => j('/api/vocabulary/overview'),
   year: (y) => j(`/api/schedule/year/${y}`),
   month: (m) => j(`/api/schedule/month/${m}`),
   day: (d) => j(`/api/schedule/day/${d}`),

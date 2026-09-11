@@ -53,7 +53,8 @@ export default function Home({ version, theme }) {
                 探索知识库　→
               </button>
               {counts.due > 0 && (
-                <button className="btn lg" onClick={() => navigate('/review')}>
+                // 送回笔记原文做深度复习，而不是进英语词汇 Anki
+                <button className="btn lg" onClick={() => navigate('/notes')}>
                   今天有 {counts.due} 篇到期
                 </button>
               )}

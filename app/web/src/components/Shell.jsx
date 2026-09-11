@@ -4,7 +4,9 @@ const NAV = [
   { to: '/',          label: '首页', end: true },
   { to: '/dashboard', label: '仪表盘' },
   { to: '/notes',     label: '笔记', match: ['/notes', '/note'] },
-  { to: '/review',    label: '复习', badgeKey: 'due' },
+  // 这里进的是英语词汇 Anki，不再挂"待复习笔记数"的徽标——
+  // 笔记的深度复习在笔记页里做，两条路径的计数混在一起会误导
+  { to: '/review',    label: '复习' },
   { to: '/schedule',  label: '日历' },
 ];
 

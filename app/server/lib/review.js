@@ -23,6 +23,25 @@ export const daysBetween = (a, b) => {
 /** 第 count 次复习之后，距下一次的天数（review_log_schema.md 的间隔表） */
 export const intervalAfter = (count) => INTERVALS[Math.min(count, INTERVALS.length - 1)];
 
+const DEFAULT_NOTE = {
+  again: '需重来，未完全掌握',
+  hard: '有点吃力，缩短间隔',
+  good: '完成一次复习',
+  easy: '很轻松，拉长间隔',
+};
+
+/**
+ * 笔记复习的四档间隔。都建立在原有的 1·2·4·7·15·30 表上，不另起一套：
+ *   again 明天重来 / hard 折半 / good 照表 / easy 跳到下一级
+ */
+function gapFor(result, reviewCount) {
+  const normal = intervalAfter(reviewCount);
+  if (result === 'again') return 1;
+  if (result === 'hard') return Math.max(1, Math.round(normal / 2));
+  if (result === 'easy') return INTERVALS[Math.min(reviewCount + 1, INTERVALS.length - 1)];
+  return normal;
+}
+
 /* ------------------------------------------------------------------ *
  * frontmatter 写回
  *
@@ -59,7 +78,7 @@ export function patchFrontmatter(raw, updates) {
 
 /**
  * @param {string} id            笔记相对路径
- * @param {'good'|'again'} result 已掌握 / 需重来
+ * @param {'again'|'hard'|'good'|'easy'} result
  * @param {string} addedContent  本次新增理解，写进 review_log.jsonl
  * @param {string} source        "白天复习" | "晚上首次学习"
  */
@@ -69,8 +88,7 @@ export async function recordReview(id, { result = 'good', addedContent = '', sou
 
   const today = todayStr();
   const countAfter = note.reviewCount + 1;
-  // 「需重来」也计入累计复习次数（schema 里 review_count 是累计值），但下次仍安排在明天
-  const gap = result === 'again' ? 1 : intervalAfter(note.reviewCount);
+  const gap = gapFor(result, note.reviewCount);
   const nextReview = addDays(today, gap);
 
   const abs = toAbs(id);
@@ -87,7 +105,7 @@ export async function recordReview(id, { result = 'good', addedContent = '', sou
     note_path: id,
     tags: note.tags,
     review_count_after: countAfter,
-    added_content: String(addedContent || '').trim() || (result === 'again' ? '需重来，未完全掌握' : '完成一次复习'),
+    added_content: String(addedContent || '').trim() || DEFAULT_NOTE[result] || '完成一次复习',
     source: source || (countAfter === 1 ? '晚上首次学习' : '白天复习'),
   };
   await fsp.appendFile(REVIEW_LOG, `${JSON.stringify(entry)}\n`, 'utf8');
