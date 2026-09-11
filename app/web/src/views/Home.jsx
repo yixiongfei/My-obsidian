@@ -1,10 +1,12 @@
-import { useRef } from 'react';
+import { lazy, Suspense, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import { Loading, ErrorBox } from '../components/bits.jsx';
-import OrbitMap from '../components/OrbitMap.jsx';
-import IsoStack from '../components/IsoStack.jsx';
+/* three.js 单独占约 200KB gzip，而首页这张图只是装饰，不该挡着首屏。
+   拆成独立分块后台加载，占位块尺寸和成品一致，不会有布局跳动。 */
+const Orrery3D = lazy(() => import('../components/three/Orrery3D.jsx'));
+const CubeStack3D = lazy(() => import('../components/three/CubeStack3D.jsx'));
 
 const dot = (d) => (d ? d.replaceAll('-', '.') : '—');
 
@@ -59,9 +61,11 @@ export default function Home({ version, theme }) {
           </div>
 
           <div className="card hero-art">
-            {theme === 'dark'
-              ? <IsoStack subjects={groups} nextReview={nextDue} examDate={examDate} />
-              : <OrbitMap subjects={groups} caption={groups.map((g) => g.name).join(' · ')} />}
+            <Suspense fallback={<div className="orbit3d-empty" />}>
+              {theme === 'dark'
+                ? <CubeStack3D subjects={groups} nextReview={nextDue} theme={theme} />
+                : <Orrery3D subjects={groups} theme={theme} />}
+            </Suspense>
           </div>
         </div>
 
@@ -79,7 +83,7 @@ export default function Home({ version, theme }) {
           <div style={{ gridColumn: 'span 5' }}>
             <div className="lbl-cn" style={{ marginBottom: 12 }}>距 {examDate?.slice(0, 4)} 初试</div>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 16 }}>
-              <span className="count-num serif">{daysToExam ?? '—'}</span>
+              <span className="count-num fig">{daysToExam ?? '—'}</span>
               <span style={{ fontSize: 16, color: 'var(--text-2)' }}>天</span>
             </div>
           </div>

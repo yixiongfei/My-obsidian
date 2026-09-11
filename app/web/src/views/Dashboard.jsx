@@ -17,7 +17,8 @@ export default function Dashboard({ version }) {
   const list = due.length ? due : upcoming;
 
   const STATS = [
-    ['待复习', counts.due, true],
+    // 琥珀只在真的有到期项时亮起；0 篇待复习不是警示状态
+    ['待复习', counts.due, counts.due > 0],
     ['今日已复习', counts.todayDone, false],
     ['连续天数', streak, false],
     ['笔记', counts.notes, false],
@@ -36,7 +37,7 @@ export default function Dashboard({ version }) {
         <div style={{ gridColumn: 'span 5' }}>
           <div className="lbl-cn" style={{ marginBottom: 12 }}>距 {examDate?.slice(0, 4)} 初试</div>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 16 }}>
-            <span className="count-num serif">{daysToExam ?? '—'}</span>
+            <span className="count-num fig">{daysToExam ?? '—'}</span>
             <span style={{ fontSize: 16, color: 'var(--text-2)' }}>天</span>
           </div>
           <div style={{ fontSize: 13, color: 'var(--text-2)', marginTop: 16, lineHeight: 1.8 }}>
@@ -117,7 +118,7 @@ export default function Dashboard({ version }) {
                 <div className="subject-row" key={s.tag}>
                   <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 13 }}>
                     {s.tag}
-                    {s.due > 0 && <span style={{ color: 'var(--accent)', marginLeft: 10, fontSize: 11 }}>{s.due} 待复习</span>}
+                    {s.due > 0 && <span style={{ color: 'var(--due)', marginLeft: 10, fontSize: 11 }}>{s.due} 待复习</span>}
                   </div>
                   <div style={{ color: 'var(--dim)', fontSize: 12, textAlign: 'right' }}>{s.notes}</div>
                   <div className="meter"><i style={{ width: `${Math.max(2, s.mastery * 100)}%` }} /></div>

@@ -1,100 +1,143 @@
 /* ==================================================================
- * 设计系统 · 两套语言共用一副骨架
+ * 设计系统 · 星历台 Ephemeris
  *
- *   深色 = 瑞士网格：直角、1px 线、电光蓝、无阴影
- *   浅色 = 日式纸感：暖纸底、墨绿、圆角、衬线标题、大留白
+ * 一句话：整站按天文年历的排版规范来——知识点是天体，复习周期是它的轨道周期。
  *
- * 两者只在下面这组变量上分岔，组件层不写死任何颜色、圆角和字体。
+ *   结构  发丝线 + 页边坐标刻度，而不是卡片边框和阴影
+ *   排版  Grotesque 无衬线，数字一律 tabular（星历表就是表格）
+ *   色彩  冷白/墨黑正文 + 琥珀（到期·逾期）+ 蓝（当前选中天体），此外无彩色
+ *   质感  无纹理、无渐变、无阴影；层级只靠亮度与线重
+ *   动效  匀速轨道，无弹性缓动；reduced-motion 时定格成静态星图
+ *
+ * 两套主题只在下面这组变量上分岔，组件层不写死任何颜色、圆角和字体。
  * ================================================================== */
 
+/* ── 夜 · 观测 ──────────────────────────────────────── */
 :root[data-theme='dark'] {
-  --bg:          #08090A;
-  --bg-1:        #0D0F13;
-  --bg-2:        #12151B;
-  --line:        #22242A;
-  --line-2:      #3A3D45;
-  --faint:       #2A2D34;
-  --text:        #F2F3F5;
-  --text-2:      #8B8F98;
-  --dim:         #5C606A;
+  --bg:          #070A12;   /* 夜空 */
+  --bg-1:        #0B0F1A;   /* 面板 */
+  --bg-2:        #111726;   /* 抬起 */
+  --line:        #1B2333;   /* 发丝线 */
+  --line-2:      #2E3950;   /* 结构线 */
+  --faint:       #161D2B;
+  --text:        #E8ECF5;   /* 冷白 */
+  --text-2:      #8D97AC;
+  --dim:         #5A6479;
+  --tick:        #2E3950;   /* 页边刻度 */
 
-  --accent:      #2C5CFF;
-  --accent-2:    #6E90FF;
-  --accent-deep: #1B3FBE;
-  --accent-soft: rgba(44, 92, 255, 0.13);
-  --on-accent:   #08090A;
-  --holiday:     #FF5C5C;
+  --accent:      #4C7DFF;   /* 只用于「当前选中天体」 */
+  --accent-2:    #7FA0FF;
+  --accent-deep: #2B54C4;
+  --accent-soft: rgba(76, 125, 255, 0.12);
+  --on-accent:   #070A12;
 
-  --heat-0: #16181C;
-  --heat-1: #1B2E5E;
-  --heat-2: #234099;
-  --heat-3: #2C5CFF;
+  --due:         #E8A33D;   /* 琥珀：到期 / 逾期 */
+  --due-soft:    rgba(232, 163, 61, 0.12);
+  --holiday:     #E05C5C;
 
-  /* 等距立柱的派生色：只有夜间会用到这张图 */
-  --iso-edge:   #FFFFFF;
-  --iso-grid:   #191C22;
-  --iso-blue-r: #2450DC;
-  --iso-blue-f: #1B3FBE;
-  --iso-dim-t:  #16233F;
-  --iso-dim-r:  #121D35;
-  --iso-dim-f:  #0E172A;
+  --heat-0: #10151F;
+  --heat-1: #1B2B52;
+  --heat-2: #2A4A9E;
+  --heat-3: #4C7DFF;
 
-  --radius:   0px;
-  --radius-s: 0px;
-  --grain:    none;
-  --grain-op: 0;
-  --shadow:   none;
-  --rule-hard: var(--line-2);
+  --glow: 0.26;    /* 星体光晕：夜空里才撑得住这个强度 */
+  --star-op: 0.5;  /* 整页星野强度 */
+
+  /* 等距立柱的派生色（组件保留，首页已统一改用轨道图） */
+  --iso-edge:   #E8ECF5;
+  --iso-grid:   #141A28;
+  --iso-blue-r: #3A63DD;
+  --iso-blue-f: #2B54C4;
+  --iso-dim-t:  #17223C;
+  --iso-dim-r:  #131C32;
+  --iso-dim-f:  #0F1727;
 
   color-scheme: dark;
 }
 
+/* ── 昼 · 星表纸 ────────────────────────────────────── */
 :root[data-theme='light'] {
-  --bg:          #EDEAE1;   /* 外层纸张 */
-  --bg-1:        #F6F4EE;   /* 卡片 */
-  --bg-2:        #FBFAF6;   /* 抬起 */
-  --line:        #E1DDD1;
-  --line-2:      #CAC4B4;
-  --faint:       #E7E3D8;
-  --text:        #1E2A24;
-  --text-2:      #56605A;
-  --dim:         #8C9189;
+  --bg:          #F4F5F8;   /* 冷白星表纸 */
+  --bg-1:        #FAFBFD;
+  --bg-2:        #FFFFFF;
+  --line:        #DFE3EC;
+  --line-2:      #C2C9D8;
+  --faint:       #E8EBF2;
+  --text:        #10141C;
+  --text-2:      #4A5364;
+  --dim:         #7C8598;
+  --tick:        #C2C9D8;
 
-  --accent:      #2E6B4F;
-  --accent-2:    #4C8A6B;
-  --accent-deep: #23533D;
-  --accent-soft: rgba(46, 107, 79, 0.09);
-  --on-accent:   #F6F4EE;
-  --holiday:     #B5403A;
+  --accent:      #2B4FD4;
+  --accent-2:    #5A78E8;
+  --accent-deep: #1E3AA8;
+  --accent-soft: rgba(43, 79, 212, 0.08);
+  --on-accent:   #FAFBFD;
 
-  --heat-0: #E7E3D8;
-  --heat-1: #C3D4C6;
-  --heat-2: #7FA98C;
-  --heat-3: #2E6B4F;
+  /* 纸上的琥珀要压深，#E8A33D 在冷白底上对比度不足 3:1，当不了文字色 */
+  --due:         #A9670F;
+  --due-soft:    rgba(169, 103, 15, 0.10);
+  --holiday:     #C0392B;
 
-  --radius:   8px;
-  --radius-s: 5px;
-  /* 纸纹：只调亮度、不带色相。
-     feTurbulence 默认对 R/G/B 各生成一套独立噪声，直接拿来铺会让每个像素的
-     三通道各偏几级，大面积纯色上看着就是「发花」。这里用 feColorMatrix 把
-     RGB 全压成 0、只把噪声喂给 alpha，于是它是一层纯黑的疏密变化，色相零偏移。 */
-  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 .55 .55 0 -.42'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
-  --grain-op: 0.045;
-  --shadow: 0 1px 2px rgba(30, 42, 36, 0.04);
-  --rule-hard: var(--line-2);
+  --heat-0: #E8EBF2;
+  --heat-1: #C4D0F0;
+  --heat-2: #7C96E0;
+  --heat-3: #2B4FD4;
+
+  /* 纸上同样强度的光晕会糊成一团蓝雾，压到三分之一 */
+  --glow: 0.09;
+  --star-op: 0.32;
+
+  --iso-edge:   #10141C;
+  --iso-grid:   #E8EBF2;
+  --iso-blue-r: #4C6FE0;
+  --iso-blue-f: #2B4FD4;
+  --iso-dim-t:  #DDE3F3;
+  --iso-dim-r:  #D2DAEE;
+  --iso-dim-f:  #C7D1E9;
 
   color-scheme: light;
 }
 
+/* ── 两套主题共用：形状、字体、间距、动效 ─────────────── */
 :root {
   --top: 72px;
+
+  /* 形状：星历表没有圆角卡片，层级靠线重 */
+  --radius:    2px;
+  --radius-s:  1px;
+  --shadow:    none;
+  --grain:     none;
+  --grain-op:  0;
+  --rule-hard: var(--line-2);
+
+  /* 发丝线：高分屏上给到真正的 0.5px，1x 屏退回 1px 免得渲染掉线 */
+  --hair: 1px;
+
+  /* 字体：正文与数字同宗，星历表的对齐感来自 tabular，不来自换字体 */
   --font: 'Archivo Variable', 'Archivo', -apple-system, BlinkMacSystemFont, 'Segoe UI',
           'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
-  /* 只给纯拉丁数字用（大号计数、月份）。中文标题和正文仍走无衬线——
-     参考稿本身就是无衬线，纸感来自底色与留白，不来自衬线。 */
-  --serif: 'Iowan Old Style', Georgia, 'Times New Roman', serif;
+  --display: var(--font);
   --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* 间距阶梯：4 的倍数，跨页面只许用这几档 */
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px;
+  --s5: 24px; --s6: 32px; --s7: 48px; --s8: 72px;
+
+  /* 动效边界（硬规则，组件层不得突破）：
+       1. 只动 transform / opacity / color / border-color，不动 layout 属性
+       2. 时长上限 320ms，状态反馈一律 120ms
+       3. 不许回弹、不许 overshoot、缩放不超过 1.02、悬浮上移不超过 2px
+       4. 轨道类动画必须匀速 linear——天体不会先快后慢          */
+  --ease:       cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-orbit: linear;
+  --dur-1: 120ms;
+  --dur-2: 200ms;
+  --dur-3: 320ms;
+}
+
+@media (min-resolution: 2dppx) {
+  :root { --hair: 0.5px; }
 }
 
 * { box-sizing: border-box; }
@@ -111,6 +154,45 @@ body {
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
+}
+
+/* ==================================================================
+ * 整页氛围：星野
+ * 三层不同疏密的点阵叠在一起，周期互质，扫过一屏不会看出重复。
+ * 只动 background-position，合成器就能跑完，不碰布局也不掉帧。
+ * ================================================================== */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: -1;
+  pointer-events: none;
+  opacity: var(--star-op);
+  background-image:
+    radial-gradient(circle, var(--tick) 0.6px, transparent 0.7px),
+    radial-gradient(circle, var(--tick) 0.9px, transparent 1px),
+    radial-gradient(circle, var(--tick) 0.5px, transparent 0.6px);
+  background-size: 137px 137px, 251px 251px, 71px 71px;
+  background-position: 0 0, 60px 30px, 20px 80px;
+  animation: starfield 240s linear infinite;
+}
+@keyframes starfield {
+  to { background-position: 137px 411px, 251px -502px, -71px 213px; }
+}
+
+/* 页边刻度缓慢爬行，像仪表在走 */
+.main::before { animation: ticks 90s linear infinite; }
+@keyframes ticks {
+  to { background-position: 24px top, -24px bottom, left 24px, right -24px; }
+}
+
+/* 内容进场：换页时逐块浮起 */
+.view .page > * { animation: rise var(--dur-3) var(--ease) both; }
+.view .page > *:nth-child(2) { animation-delay: 50ms; }
+.view .page > *:nth-child(3) { animation-delay: 100ms; }
+.view .page > *:nth-child(4) { animation-delay: 150ms; }
+.view .page > *:nth-child(n+5) { animation-delay: 200ms; }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
 }
 
 /* 纸纹层 */
@@ -137,11 +219,13 @@ button { cursor: pointer; background: none; border: none; padding: 0; }
 .lbl { font-size: 10px; letter-spacing: 0.2em; color: var(--dim); text-transform: uppercase; }
 .lbl-cn { font-size: 10px; letter-spacing: 0.18em; color: var(--dim); }
 .lbl.on, .lbl-cn.on { color: var(--accent); }
-.rule { height: 1px; background: var(--line); }
-.serif { font-family: var(--serif); }
+.rule { height: var(--hair); background: var(--line); }
+/* 星历表数字：大号计数、月份、天数。等宽字位 + 收紧字距 */
+.fig { font-family: var(--display); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
 .num { font-variant-numeric: tabular-nums; }
 .dim { color: var(--dim); }
 .t2 { color: var(--text-2); }
+.due { color: var(--due); }
 
 /* ==================================================================
  * 外壳：顶栏 + 主区
@@ -153,7 +237,7 @@ button { cursor: pointer; background: none; border: none; padding: 0; }
   height: var(--top); flex: none;
   display: flex; align-items: center; gap: 28px;
   padding: 0 28px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: var(--hair) solid var(--line);
   background: var(--bg-1);
 }
 
@@ -198,6 +282,22 @@ button { cursor: pointer; background: none; border: none; padding: 0; }
 .icon-btn:hover { color: var(--text-2); background: var(--bg-2); }
 
 .main { flex: 1; min-height: 0; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+
+/* 页边坐标刻度：星历表的图廓。四边各一排短刻度，每 24px 一格 */
+.main::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 40;
+  pointer-events: none;
+  background-repeat: no-repeat;
+  background-image:
+    repeating-linear-gradient(to right,  var(--tick) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(to right,  var(--tick) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(to bottom, var(--tick) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(to bottom, var(--tick) 0 1px, transparent 1px 24px);
+  background-size: 100% 4px, 100% 4px, 4px 100%, 4px 100%;
+  background-position: left top, left bottom, left top, right top;
+  opacity: 0.5;
+}
 .view { flex: 1; min-height: 0; display: flex; flex-direction: column; }
 .scroll { flex: 1; min-height: 0; overflow-y: auto; overflow-x: hidden; scroll-behavior: smooth; }
 .page { padding: 44px 56px 72px; max-width: 1480px; margin: 0 auto; width: 100%; }
@@ -208,14 +308,15 @@ button { cursor: pointer; background: none; border: none; padding: 0; }
 
 .card {
   background: var(--bg-1);
-  border: 1px solid var(--line);
+  border: var(--hair) solid var(--line);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
 }
 
 .band {
   display: flex; justify-content: space-between; align-items: baseline;
-  border-bottom: 1px solid var(--rule-hard);
+  gap: var(--s3); flex-wrap: wrap;
+  border-bottom: var(--hair) solid var(--rule-hard);
   padding-bottom: 10px;
 }
 .band-title { font-size: 10px; letter-spacing: 0.2em; color: var(--text); text-transform: uppercase; }
@@ -229,7 +330,7 @@ button { cursor: pointer; background: none; border: none; padding: 0; }
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 9px;
   padding: 11px 21px;
-  border: 1px solid var(--line-2);
+  border: var(--hair) solid var(--line-2);
   border-radius: var(--radius-s);
   color: var(--text-2); font-size: 13px; font-weight: 500;
   white-space: nowrap; flex: none;
@@ -246,7 +347,7 @@ button { cursor: pointer; background: none; border: none; padding: 0; }
 
 .tag {
   font-size: 11px; color: var(--dim);
-  border: 1px solid var(--line);
+  border: var(--hair) solid var(--line);
   border-radius: 99px;
   padding: 4px 11px;
   white-space: nowrap;
@@ -256,7 +357,7 @@ button { cursor: pointer; background: none; border: none; padding: 0; }
 
 .input {
   width: 100%; padding: 9px 0;
-  background: none; border: none; border-bottom: 1px solid var(--line);
+  background: none; border: none; border-bottom: var(--hair) solid var(--line);
   color: var(--text); outline: none;
   transition: border-color 0.15s;
 }
@@ -266,7 +367,7 @@ button { cursor: pointer; background: none; border: none; padding: 0; }
 .empty { padding: 56px 0; text-align: center; color: var(--dim); font-size: 13px; }
 .spinner {
   width: 14px; height: 14px; margin: 64px auto;
-  border: 1px solid var(--line-2); border-top-color: var(--accent);
+  border: var(--hair) solid var(--line-2); border-top-color: var(--accent);
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -275,15 +376,15 @@ button { cursor: pointer; background: none; border: none; padding: 0; }
 .meter { height: 2px; background: var(--line); border-radius: 99px; }
 .meter > i { display: block; height: 2px; background: var(--accent); border-radius: 99px; }
 
-.stat-v { font-size: 26px; font-weight: 500; letter-spacing: -0.03em; line-height: 1; }
-.stat-v.on { color: var(--accent); }
+.stat-v { font-size: 26px; font-weight: 500; letter-spacing: -0.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+.stat-v.on { color: var(--due); }
 .stat-k { font-size: 10px; letter-spacing: 0.14em; color: var(--dim); margin-top: 10px; }
 
 /* 圆形下滚提示 */
 .scroll-cue {
   position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%);
   width: 38px; height: 38px; border-radius: 50%;
-  border: 1px solid var(--line-2);
+  border: var(--hair) solid var(--line-2);
   background: var(--bg-1);
   display: grid; place-items: center;
   color: var(--text-2);
@@ -295,7 +396,44 @@ button { cursor: pointer; background: none; border: none; padding: 0; }
 @media (max-width: 900px) {
   .topbar { gap: 14px; padding: 0 16px; }
   .brand-text { display: none; }
-  .topnav { gap: 2px; }
-  .topnav a { padding: 8px 11px; font-size: 12.5px; }
+  .topnav { gap: 2px; min-width: 0; }
+  /* 不加 nowrap 的话「仪表盘」会被挤成竖着的三个字 */
+  .topnav a { padding: 8px 11px; font-size: 12.5px; white-space: nowrap; }
   .page { padding: 28px 18px 56px; }
+  /* 12 栏在手机上塌成单栏。各页的 span 是写在 JSX 内联样式里的，
+     只能用 !important 压过去 */
+  .g12 { grid-template-columns: 1fr; gap: var(--s5); }
+  .g12 > * { grid-column: 1 / -1 !important; }
+  /* 窄屏上刻度会压到内容，只留上下两条 */
+  .main::before { background-image:
+    repeating-linear-gradient(to right, var(--tick) 0 1px, transparent 1px 24px),
+    repeating-linear-gradient(to right, var(--tick) 0 1px, transparent 1px 24px); }
+}
+
+/* 手机：五个导航项 + 品牌 + 两个按钮塞不进 375px，让导航自己横向滚动 */
+@media (max-width: 620px) {
+  .topbar { gap: 8px; padding: 0 10px; }
+  .topnav { margin: 0; gap: 0; overflow-x: auto; scrollbar-width: none; }
+  .topnav::-webkit-scrollbar { display: none; }
+  .topnav a { padding: 8px 9px; }
+  .icon-btn { padding: 0 7px; letter-spacing: 0.04em; }
+  /* 手机上没有物理键盘，快捷键提示只占地方 */
+  .kbd-hint { display: none; }
+}
+
+/* ==================================================================
+ * 动效边界 · reduced-motion
+ * 系统开启「减少动态效果」时，循环动画与位移全部停掉，轨道图定格成静态星图。
+ * 压到 1ms 而不是 0：部分浏览器对 0s 过渡不再派发 transitionend，
+ * 依赖该回调的组件会卡在中间态。
+ * ================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
+  .entry:hover { transform: none !important; }
+  .scroll-cue:hover { transform: translateX(-50%) !important; }
 }

@@ -14,6 +14,13 @@ const Sparkle = (p) => (
   </svg>
 );
 
+const Search = (p) => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...p}>
+    <circle cx="11" cy="11" r="7" />
+    <path d="M20 20l-4.2-4.2" />
+  </svg>
+);
+
 export default function Shell({ children, meta, badges = {}, theme, onToggleTheme, onSearch }) {
   const { pathname } = useLocation();
   const isMac = typeof navigator !== 'undefined' && /Mac/i.test(navigator.platform || '');
@@ -49,7 +56,8 @@ export default function Shell({ children, meta, badges = {}, theme, onToggleThem
             {theme === 'dark' ? '白天' : '夜间'}
           </button>
           <button className="icon-btn" onClick={onSearch} title="搜索">
-            <span style={{ fontSize: 13 }}>{isMac ? '⌘' : 'Ctrl'}</span> K
+            <Search />
+            <span className="kbd-hint">{isMac ? '⌘' : 'Ctrl'} K</span>
           </button>
         </div>
       </header>

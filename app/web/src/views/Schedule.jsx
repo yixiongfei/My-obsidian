@@ -78,7 +78,7 @@ function YearView({ version, year }) {
                 <div className={`mc-stat${m.due ? ' on' : ''}`}><b>{m.due}</b>待复习</div>
                 <div className="mc-stat"><b>{m.reviewed}</b>已复习</div>
                 <div className="mc-stat"><b>{m.created}</b>新建</div>
-                {m.events > 0 && <div className="mc-stat on"><b>{m.events}</b>日程</div>}
+                {m.events > 0 && <div className="mc-stat"><b>{m.events}</b>日程</div>}
               </div>
             </div>
           );
@@ -108,9 +108,9 @@ function MonthView({ version, monthKey }) {
     <div className="scroll"><div className="page">
       <Crumbs items={[{ label: y, to: `/schedule/${y}` }, { label: `${Number(m)} 月` }]} />
 
-      <div style={{ borderTop: '1px solid var(--line-2)', paddingTop: 26, display: 'flex', alignItems: 'flex-end', gap: 40, flexWrap: 'wrap' }}>
+      <div style={{ borderTop: 'var(--hair) solid var(--line-2)', paddingTop: 26, display: 'flex', alignItems: 'flex-end', gap: 40, flexWrap: 'wrap' }}>
         <div className="row" style={{ alignItems: 'baseline', gap: 16 }}>
-          <span className="serif" style={{ fontSize: 96, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 0.85 }}>{m}</span>
+          <span className="fig" style={{ fontSize: 96, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 0.85 }}>{m}</span>
           <span style={{ fontSize: 14, color: 'var(--text-2)' }}>{y} 年</span>
         </div>
 
@@ -237,9 +237,9 @@ function DayView({ version, date }) {
         { label: `${Number(d)} 日` },
       ]} />
 
-      <div style={{ borderTop: '1px solid var(--line-2)', paddingTop: 26, display: 'flex', alignItems: 'flex-end', gap: 40, flexWrap: 'wrap', marginBottom: 8 }}>
+      <div style={{ borderTop: 'var(--hair) solid var(--line-2)', paddingTop: 26, display: 'flex', alignItems: 'flex-end', gap: 40, flexWrap: 'wrap', marginBottom: 8 }}>
         <div className="row" style={{ alignItems: 'baseline', gap: 14 }}>
-          <span className="serif" style={{ fontSize: 88, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 0.85, color: data.holiday ? 'var(--holiday)' : data.isToday ? 'var(--accent)' : 'var(--text)' }}>
+          <span className="fig" style={{ fontSize: 88, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 0.85, color: data.holiday ? 'var(--holiday)' : data.isToday ? 'var(--accent)' : 'var(--text)' }}>
             {pad(Number(d))}
           </span>
           <div>
@@ -257,7 +257,7 @@ function DayView({ version, date }) {
         </div>
         <div className="spacer" />
         <div className="row" style={{ gap: 32, alignItems: 'flex-start' }}>
-          <div><div className="stat-v on">{due.length}</div><div className="stat-k">待复习</div></div>
+          <div><div className={`stat-v${due.length ? ' on' : ''}`}>{due.length}</div><div className="stat-k">待复习</div></div>
           <div><div className="stat-v">{data.reviewed.length}</div><div className="stat-k">已复习</div></div>
           <div><div className="stat-v">{data.daysToExam}</div><div className="stat-k">距初试</div></div>
         </div>

@@ -13,11 +13,13 @@ import Schedule from './views/Schedule.jsx';
 import { api } from './api.js';
 import { useApi, useHotkey, useTheme, useVaultVersion } from './hooks.js';
 
+// 换页过渡：淡入 + 极轻微的上浮。位移控制在 6px 以内，
+// 再大就会和页内的逐块进场动画叠成"整页在晃"
 const fade = {
-  initial: { opacity: 0 },
-  animate: { opacity: 1 },
-  exit: { opacity: 0 },
-  transition: { duration: 0.18, ease: [0.22, 1, 0.36, 1] },
+  initial: { opacity: 0, y: 6 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -4 },
+  transition: { duration: 0.24, ease: [0.4, 0, 0.2, 1] },
 };
 
 export default function App() {

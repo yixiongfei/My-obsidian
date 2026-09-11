@@ -81,7 +81,7 @@ function layout(data, currentId) {
 }
 
 function Marker({ x, y, status }) {
-  if (status === 'due') return <rect x={x} y={y - 4} width="8" height="8" fill="var(--accent)" />;
+  if (status === 'due') return <rect x={x} y={y - 4} width="8" height="8" fill="var(--due)" />;
   if (status === 'empty') return <line x1={x} y1={y} x2={x + 8} y2={y} stroke="var(--line-2)" strokeWidth="1" />;
   return (
     <rect x={x + 0.5} y={y - 3.5} width="7" height="7" fill="none" strokeWidth="1"

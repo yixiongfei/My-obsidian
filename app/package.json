@@ -22,7 +22,8 @@
     "express": "^4.21.2",
     "gray-matter": "^4.0.3",
     "js-yaml": "^4.1.0",
-    "markdown-it": "^14.1.0"
+    "markdown-it": "^14.1.0",
+    "three": "^0.186.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
