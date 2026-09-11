@@ -20,6 +20,7 @@ import * as vocabDb from './lib/vocabulary-db.js';
 import * as exams from './lib/exams.js';
 import * as marks from './lib/vocab-marks.js';
 import * as examMarks from './lib/exam-marks.js';
+import * as tts from './lib/tts.js';
 
 const app = express();
 app.use(cors());
@@ -147,6 +148,13 @@ app.post('/api/vocabulary/sync-markdown', (_req, res) => {
 
 app.get('/api/vocabulary/overview', (_req, res) => res.json(vocab.overview()));
 
+/* 发音：Worker 合成 + 本地缓存；失败回 502，前端退回系统语音 */
+app.get('/api/tts', wrap(async (req, res) => {
+  const { file, cached } = await tts.synth(req.query.text, req.query.voice, req.query.speed);
+  res.setHeader('X-TTS-Cache', cached ? 'hit' : 'miss');
+  res.sendFile(file, { headers: { 'Content-Type': 'audio/mpeg', 'Cache-Control': 'public, max-age=31536000, immutable' } });
+}));
+
 /* 标注词：真题里双击标出来的、或在单词列表里手动加的。
    命中考研词表的标在原词条上（前端画红线），命中不了的建自定义词（蓝线）。 */
 app.get('/api/vocabulary/marks', (_req, res) => res.json(marks.marks()));
@@ -206,9 +214,10 @@ app.get('/api/exams/:id', (req, res) => {
 /* 荧光笔：只落库 + 脏标记，Markdown 闲置 30 秒或离开卷面时再合并写 */
 app.get('/api/exams/:id/marks', (req, res) => res.json(examMarks.listMarks(req.params.id)));
 app.post('/api/exams/:id/marks', (req, res) => {
-  const { section, text, q } = req.body || {};
-  res.json(examMarks.addMark(req.params.id, String(section || ''), String(text || ''), Number.isInteger(q) ? q : null));
+  const { section, text, q, color } = req.body || {};
+  res.json(examMarks.addMark(req.params.id, String(section || ''), String(text || ''), Number.isInteger(q) ? q : null, String(color || 'y')));
 });
+app.patch('/api/exams/marks/:mid', (req, res) => res.json(examMarks.recolorMark(Number(req.params.mid), String(req.body?.color || ''))));
 app.delete('/api/exams/marks/:mid', (req, res) => res.json(examMarks.removeMark(Number(req.params.mid))));
 app.post('/api/exams/marks/sync', (_req, res) => {
   examMarks.flush().then((wrote) => { if (wrote) broadcast({ type: 'vault', version: index.version }); }).catch((err) => console.error('[真题例句] 写入失败', err));

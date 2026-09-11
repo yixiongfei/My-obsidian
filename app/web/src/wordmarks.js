@@ -263,9 +263,16 @@ export function selectionTarget() {
  * 荧光笔的状态与画线。marks 来自服务端，按 sectionId 找到单元容器再按文本定位。
  * 单元重挂载（重做）后 DOM 是新的，所以每次 sections 变化都补画一遍；已画过的（有同 id 的 mark）跳过。
  */
+export const HL_COLORS = [
+  { key: 'y', label: '黄' }, { key: 'g', label: '绿' }, { key: 'b', label: '蓝' }, { key: 'p', label: '粉' },
+];
+const COLOR_KEY = 'kb-hl-color';
+
 export function useHighlights(rootRef, examId, enabled, notify) {
   const [marks, setMarks] = useState([]);
   const [menu, setMenu] = useState(null); // { x, y, target } | { x, y, existing }
+  const [color, setColorState] = useState(() => localStorage.getItem(COLOR_KEY) || 'y');
+  const setColor = useCallback((c) => { setColorState(c); localStorage.setItem(COLOR_KEY, c); }, []);
 
   useEffect(() => {
     if (!enabled) { setMarks([]); return; }
@@ -283,7 +290,7 @@ export function useHighlights(rootRef, examId, enabled, notify) {
       const unit = root.querySelector(`#unit-${CSS.escape(m.sectionId)}`);
       if (!unit) continue;
       const range = findTextRange(unit, m.text);
-      if (range) wrapRange(range, 'hl', { id: String(m.id) });
+      if (range) wrapRange(range, 'hl', { id: String(m.id), color: m.color || 'y' });
     }
   }, [marks, rootRef]);
 
@@ -305,21 +312,37 @@ export function useHighlights(rootRef, examId, enabled, notify) {
 
   const closeMenu = useCallback(() => setMenu(null), []);
 
-  const highlight = useCallback(async () => {
+  const highlight = useCallback(async (pick) => {
     const t = menu?.target;
+    const c = HL_COLORS.some((x) => x.key === pick) ? pick : color;
     setMenu(null);
     if (!t) return;
+    if (c !== color) setColor(c);
     try {
-      const saved = await api.addExamMark(examId, { section: t.sectionId, text: t.text, q: t.q });
+      const saved = await api.addExamMark(examId, { section: t.sectionId, text: t.text, q: t.q, color: c });
       // 先按当时的选区画，不等重新定位；下次进来再按文本找
-      try { wrapRange(t.range, 'hl', { id: String(saved.id) }); } catch { /* 选区已失效，靠 paintAll */ }
+      try { wrapRange(t.range, 'hl', { id: String(saved.id), color: c }); } catch { /* 选区已失效，靠 paintAll */ }
       window.getSelection?.()?.removeAllRanges();
       setMarks((ms) => (ms.some((m) => m.id === saved.id) ? ms : [...ms, saved]));
       notify?.('已标记，稍后合并写入 英语/语法/真题例句.md', 'hl');
     } catch (err) {
       notify?.(err.message, 'err');
     }
-  }, [menu, examId, notify]);
+  }, [menu, examId, notify, color, setColor]);
+
+  const recolor = useCallback(async (c) => {
+    const id = menu?.existing;
+    setMenu(null);
+    if (!id) return;
+    try {
+      await api.recolorExamMark(id, c);
+      setColor(c);
+      rootRef.current?.querySelectorAll(`mark.hl[data-id="${id}"]`).forEach((m) => { m.dataset.color = c; });
+      setMarks((ms) => ms.map((m) => (m.id === id ? { ...m, color: c } : m)));
+    } catch (err) {
+      notify?.(err.message, 'err');
+    }
+  }, [menu, rootRef, notify, setColor]);
 
   const unhighlight = useCallback(async () => {
     const id = menu?.existing;
@@ -341,5 +364,15 @@ export function useHighlights(rootRef, examId, enabled, notify) {
     if (t) navigator.clipboard?.writeText(t.text).catch(() => {});
   }, [menu]);
 
-  return { marks, menu, onContextMenu, closeMenu, highlight, unhighlight, copySelection };
+  /** 滚到某条标记（书签、?hl= 都走这里） */
+  const jumpTo = useCallback((id) => {
+    const el = rootRef.current?.querySelector(`mark.hl[data-id="${id}"]`);
+    if (!el) return false;
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    el.classList.add('hl-flash');
+    setTimeout(() => el.classList.remove('hl-flash'), 2400);
+    return true;
+  }, [rootRef]);
+
+  return { marks, menu, color, setColor, onContextMenu, closeMenu, highlight, recolor, unhighlight, copySelection, jumpTo };
 }

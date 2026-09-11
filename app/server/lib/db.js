@@ -111,6 +111,7 @@ CREATE TABLE IF NOT EXISTS exam_marks (
   q          INTEGER,                    -- 所在题号，划在正文上时为空
   text       TEXT NOT NULL,              -- 划中的原句（空白已归一）
   note       TEXT NOT NULL DEFAULT '',
+  color      TEXT NOT NULL DEFAULT 'y',   -- 荧光笔颜色：y 黄 g 绿 b 蓝 p 粉
   created_at TEXT NOT NULL,
   UNIQUE (exam_id, section_id, text)
 );
@@ -140,6 +141,7 @@ export function open() {
   /* CREATE TABLE IF NOT EXISTS 不会给已有的库补列，老库要单独 ALTER 一次。
      列已存在时 SQLite 直接报错，吞掉即可——这里没有别的失败可能 */
   try { db.exec('ALTER TABLE notes ADD COLUMN reviewable INTEGER NOT NULL DEFAULT 1'); } catch { /* 已经有了 */ }
+  try { db.exec("ALTER TABLE exam_marks ADD COLUMN color TEXT NOT NULL DEFAULT 'y'"); } catch { /* 已经有了 */ }
   try {
     db.exec(FTS_SCHEMA);
     db.prepare('SELECT rowid FROM notes_fts LIMIT 1').get();

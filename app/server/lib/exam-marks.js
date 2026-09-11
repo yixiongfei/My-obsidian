@@ -29,32 +29,40 @@ const KIND_NAME = {
 };
 const GROUP_FOLDER = { english: '英语', math: '数学', 408: '408' };
 
-const appUrl = (examId, q) => `http://127.0.0.1:${PORT}/#/resources/exam/${examId}${q ? `?q=${q}` : ''}`;
+const appUrl = (examId, q, hl) => `http://127.0.0.1:${PORT}/#/resources/exam/${examId}${hl ? `?hl=${hl}` : q ? `?q=${q}` : ''}`;
 const normText = (t) => String(t || '').replace(/\s+/g, ' ').trim();
 
 /* ------------------------------------------------------------------ *
  * 荧光笔
  * ------------------------------------------------------------------ */
 
-const rowOut = (r) => ({ id: r.id, examId: r.exam_id, sectionId: r.section_id, q: r.q, text: r.text, note: r.note, createdAt: r.created_at });
+const COLORS = new Set(['y', 'g', 'b', 'p']);
+const rowOut = (r) => ({ id: r.id, examId: r.exam_id, sectionId: r.section_id, q: r.q, text: r.text, note: r.note, color: r.color || 'y', createdAt: r.created_at });
 
 export function listMarks(examId) {
   return handle().prepare('SELECT * FROM exam_marks WHERE exam_id = ? ORDER BY id').all(examId).map(rowOut);
 }
 
-export function addMark(examId, sectionId, text, q = null) {
+export function addMark(examId, sectionId, text, q = null, color = 'y') {
   const t = normText(text);
   if (t.length < 2) throw Object.assign(new Error('没选中文字'), { status: 400 });
   if (t.length > 2000) throw Object.assign(new Error('选得太长了，一次最多 2000 字'), { status: 400 });
   const exam = getExam(examId);
   if (!exam?.sections.some((s) => s.id === sectionId)) throw Object.assign(new Error('单元不存在'), { status: 404 });
   const d = handle();
-  d.prepare(`INSERT INTO exam_marks (exam_id, section_id, q, text, created_at) VALUES (?, ?, ?, ?, ?)
-             ON CONFLICT(exam_id, section_id, text) DO NOTHING`)
-    .run(examId, sectionId, Number.isInteger(q) ? q : null, t, todayStr());
+  const c = COLORS.has(color) ? color : 'y';
+  d.prepare(`INSERT INTO exam_marks (exam_id, section_id, q, text, color, created_at) VALUES (?, ?, ?, ?, ?, ?)
+             ON CONFLICT(exam_id, section_id, text) DO UPDATE SET color = excluded.color`)
+    .run(examId, sectionId, Number.isInteger(q) ? q : null, t, c, todayStr());
   setMeta(DIRTY_KEY, '1');
   scheduleIdleFlush();
   return rowOut(d.prepare('SELECT * FROM exam_marks WHERE exam_id = ? AND section_id = ? AND text = ?').get(examId, sectionId, t));
+}
+
+export function recolorMark(id, color) {
+  if (!COLORS.has(color)) throw Object.assign(new Error('颜色只能是 y / g / b / p'), { status: 400 });
+  const r = handle().prepare('UPDATE exam_marks SET color = ? WHERE id = ?').run(color, id);
+  return { ok: r.changes > 0 };
 }
 
 export function removeMark(id) {
@@ -82,7 +90,8 @@ function renderSentences() {
       const sec = exam.sections.find((s) => s.id === r.section_id);
       if (r.section_id !== lastSec) { lines.push(`### ${sec?.label || r.section_id}`, ''); lastSec = r.section_id; }
       lines.push(`> ${r.text.replace(/\n/g, ' ')}`, '');
-      lines.push(`标于 ${r.created_at.replaceAll('-', '.')}${r.q ? ` · 第 ${r.q} 题` : ''} · [跳到原文](${appUrl(id, r.q)})`, '');
+      // 链接带 hl=标记 id：打开后直接滚到这一句并闪一下，像书签
+      lines.push(`标于 ${r.created_at.replaceAll('-', '.')}${r.q ? ` · 第 ${r.q} 题` : ''} · [跳到原句](${appUrl(id, r.q, r.id)})`, '');
     }
   }
   lines.push(AUTO_END);

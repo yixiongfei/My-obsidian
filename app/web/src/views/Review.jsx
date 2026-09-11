@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import { Loading, ErrorBox } from '../components/bits.jsx';
+import { speak, canSpeak } from '../tts.js';
 
 /**
  * 英语词汇 Anki。
@@ -22,27 +23,6 @@ const RATINGS = [
 ];
 
 const dot = (d) => (d ? d.replaceAll('-', '.') : '');
-
-/* 发音：用系统自带的语音合成（Web Speech API），离线、不访问网络。
-   选一个英语女声 / 英式音优先，没有就用默认英语声 */
-const canSpeak = typeof window !== 'undefined' && 'speechSynthesis' in window;
-function pickVoice() {
-  const voices = window.speechSynthesis.getVoices();
-  const en = voices.filter((v) => /^en(-|_)?/i.test(v.lang));
-  return en.find((v) => /en-GB/i.test(v.lang) && /female|Hazel|Sonia|Libby/i.test(v.name))
-    || en.find((v) => /en-US/i.test(v.lang) && /Zira|Aria|Jenny|Samantha/i.test(v.name))
-    || en.find((v) => /en-GB/i.test(v.lang)) || en[0] || null;
-}
-function speak(text, { rate = 0.92 } = {}) {
-  if (!canSpeak || !text) return;
-  window.speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  const v = pickVoice();
-  if (v) u.voice = v;
-  u.lang = v?.lang || 'en-US';
-  u.rate = rate;
-  window.speechSynthesis.speak(u);
-}
 
 const SpeakerIcon = ({ on }) => (
   <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">

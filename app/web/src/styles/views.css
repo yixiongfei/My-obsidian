@@ -537,8 +537,11 @@ kbd {
 .opt .opt-k {
   flex: none; width: 18px; height: 18px; border-radius: 50%;
   border: var(--hair) solid var(--line-2);
-  display: grid; place-items: center;
-  font-style: normal; font-size: 10.5px; font-weight: 600; color: var(--dim);
+  display: flex; align-items: center; justify-content: center;
+  font-style: normal; font-size: 10px; font-weight: 600; color: var(--dim);
+  line-height: 1; letter-spacing: 0;
+  /* 大写字母的视觉重心比字框中心略高，往下压半像素才看着正中 */
+  padding-top: 0.5px; box-sizing: border-box;
   margin-top: 1.5px;   /* (21 - 18) / 2：圆圈的中线对齐第一行文字的中线 */
   transition: background 0.12s, color 0.12s, border-color 0.12s;
 }
@@ -613,7 +616,7 @@ kbd {
 /* ── 408 / 数学：题干里有代码、公式、表格；填空题的短答；知识点标签 ── */
 .paper-link { font-size: 11px; color: var(--accent); letter-spacing: 0.04em; }
 .paper-link:hover { text-decoration: underline; }
-.q-stem { display: flex; align-items: flex-start; margin: 6px 0 8px; font-size: 14.5px; line-height: 1.7; color: var(--text); }
+.q-stem { display: flex; align-items: baseline; margin: 6px 0 8px; font-size: 14.5px; line-height: 1.7; color: var(--text); }
 .q-stem-body { flex: 1; min-width: 0; font-size: 14.5px; line-height: 1.75; }
 .q-stem-body > :first-child { margin-top: 0; }
 .q-stem-body > :last-child { margin-bottom: 0; }
@@ -730,13 +733,31 @@ kbd {
 
 /* ── 荧光笔（选中句子右键标记）、右键菜单、加入 md ─────────── */
 mark.hl {
-  background: color-mix(in srgb, var(--due) 22%, transparent);
+  --hl: var(--hl-y);
+  background: color-mix(in srgb, var(--hl) 30%, transparent);
   color: inherit; border-radius: 2px;
   box-decoration-break: clone; -webkit-box-decoration-break: clone;
   padding: 1px 0;
+  transition: background 0.15s;
 }
-mark.hl:hover { background: color-mix(in srgb, var(--due) 34%, transparent); }
-.hl-swatch { display: inline-block; width: 12px; height: 8px; margin-right: 9px; border-radius: 2px; background: color-mix(in srgb, var(--due) 45%, transparent); vertical-align: middle; }
+mark.hl[data-color='g'] { --hl: var(--hl-g); }
+mark.hl[data-color='b'] { --hl: var(--hl-b); }
+mark.hl[data-color='p'] { --hl: var(--hl-p); }
+mark.hl:hover { background: color-mix(in srgb, var(--hl) 44%, transparent); }
+@keyframes hl-flash { 0%, 50% { background: color-mix(in srgb, var(--hl) 62%, transparent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--hl) 40%, transparent); } 100% { background: color-mix(in srgb, var(--hl) 30%, transparent); box-shadow: none; } }
+mark.hl.hl-flash { animation: hl-flash 2.4s var(--ease) both; }
+.ctx-row { display: flex; align-items: center; justify-content: space-between; gap: 14px; padding: 6px 12px 4px; font-size: 12.5px; color: var(--text); }
+.ctx-swatches { display: flex; gap: 6px; }
+.hl-sw { width: 18px; height: 18px; border-radius: 50%; border: 2px solid transparent; background: color-mix(in srgb, var(--hl) 70%, var(--bg-1)); --hl: var(--hl-y); transition: transform 0.12s, border-color 0.12s; }
+.hl-sw[data-color='g'] { --hl: var(--hl-g); } .hl-sw[data-color='b'] { --hl: var(--hl-b); } .hl-sw[data-color='p'] { --hl: var(--hl-p); }
+.hl-sw:hover { transform: scale(1.12); }
+.hl-sw.on { border-color: var(--text); }
+.rail-marks { margin-top: 4px; }
+.rail-mark { display: flex; align-items: flex-start; gap: 8px; width: 100%; text-align: left; padding: 6px 0; border-bottom: var(--hair) solid var(--line); font-size: 11.5px; color: var(--text-2); line-height: 1.45; --hl: var(--hl-y); }
+.rail-mark[data-color='g'] { --hl: var(--hl-g); } .rail-mark[data-color='b'] { --hl: var(--hl-b); } .rail-mark[data-color='p'] { --hl: var(--hl-p); }
+.rail-mark:hover { color: var(--text); }
+.rail-mark span { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.rail-mark-sw { flex: none; width: 4px; height: 26px; border-radius: 2px; background: color-mix(in srgb, var(--hl) 70%, transparent); margin-top: 1px; }
 .ctx-menu {
   position: fixed; z-index: 80; min-width: 150px;
   padding: 5px; background: var(--bg-1);

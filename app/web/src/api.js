@@ -48,6 +48,7 @@ export const api = {
   examMarks: (id) => j(`/api/exams/${encodeURIComponent(id)}/marks`),
   addExamMark: (id, payload) => j(`/api/exams/${encodeURIComponent(id)}/marks`, body('POST', payload)),
   removeExamMark: (mid) => j(`/api/exams/marks/${mid}`, { method: 'DELETE' }),
+  recolorExamMark: (mid, color) => j(`/api/exams/marks/${mid}`, body('PATCH', { color })),
   syncExamMarks: () => fetch('/api/exams/marks/sync', body('POST', {})).catch(() => {}),
   exportQuestion: (id, section, n) => j(`/api/exams/${encodeURIComponent(id)}/${section}/export`, body('POST', { n })),
   year: (y) => j(`/api/schedule/year/${y}`),

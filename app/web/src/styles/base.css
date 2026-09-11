@@ -51,6 +51,9 @@
   --hue-5: #A98DF2;   /* 紫 */
   --hue-6: #EF8B5B;   /* 橙   · 个人 */
 
+  /* 荧光笔四色：夜里要亮一点才透得出来 */
+  --hl-y: #F5C542; --hl-g: #5FD39A; --hl-b: #6AA7FF; --hl-p: #F58BB8;
+
   /* 等距立柱的派生色（组件保留，首页已统一改用轨道图） */
   --iso-edge:   #E8ECF5;
   --iso-grid:   #141A28;
@@ -103,6 +106,8 @@
   --hue-4: #2E8540;
   --hue-5: #6A47C8;
   --hue-6: #C8561F;
+
+  --hl-y: #F2C230; --hl-g: #3FBF7F; --hl-b: #4D8DEB; --hl-p: #EC6FA4;
 
   --iso-edge:   #10141C;
   --iso-grid:   #E8EBF2;

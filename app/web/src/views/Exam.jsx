@@ -3,7 +3,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import { Loading, ErrorBox } from '../components/bits.jsx';
-import { useWordMarks, useHighlights } from '../wordmarks.js';
+import { useWordMarks, useHighlights, HL_COLORS } from '../wordmarks.js';
 
 /**
  * 一张真卷。按真题的版式铺：
@@ -62,8 +62,17 @@ export default function Exam() {
   useEffect(() => { setSections(data && data.id === id ? data.sections : null); }, [data, id]);
   useEffect(() => { scrollRef.current?.scrollTo({ top: 0 }); jumpedTo.current = ''; }, [id]);
 
+  // ?hl=标记id → 滚到那一句（真题例句.md 里的「跳到原句」）；找不到再退回 ?q=
+  const wantHl = Number(params.get('hl')) || 0;
+  const hlDone = useRef('');
+  useEffect(() => {
+    if (!wantHl || !sections || hlDone.current === `${id}:${wantHl}`) return undefined;
+    const t = setTimeout(() => { if (hl.jumpTo(wantHl)) hlDone.current = `${id}:${wantHl}`; }, 260);
+    return () => clearTimeout(t);
+  });
+
   // ?q=10 → 滚到第 10 题所在位置
-  const wantQ = Number(params.get('q')) || 0;
+  const wantQ = Number(params.get('q')) || (wantHl ? Number(hl.marks.find((m) => m.id === wantHl)?.q) || 0 : 0);
   useEffect(() => {
     if (!sections || !wantQ || jumpedTo.current === `${id}:${wantQ}`) return;
     const unit = sections.find((s) => numbersOf(s).includes(wantQ));
@@ -148,7 +157,8 @@ export default function Exam() {
 
         {toast && <div className={`mark-toast ${toast.kind}`}>{toast.text}</div>}
         {hl.menu && (
-          <CtxMenu menu={hl.menu} onClose={hl.closeMenu} onHighlight={hl.highlight} onUnhighlight={hl.unhighlight} onCopy={hl.copySelection} />
+          <CtxMenu menu={hl.menu} color={hl.color} onClose={hl.closeMenu} onHighlight={hl.highlight}
+                   onRecolor={hl.recolor} onUnhighlight={hl.unhighlight} onCopy={hl.copySelection} />
         )}
 
         <nav className="toc paper-rail">
@@ -171,6 +181,17 @@ export default function Exam() {
             <span>客观题</span>
             <span className="fig">{fmt(objScore)} / {objTotal}</span>
           </div>
+          {hl.marks.length > 0 && (
+            <div className="rail-marks">
+              <div className="toc-label" style={{ marginTop: 22 }}>书签 · {hl.marks.length}</div>
+              {hl.marks.map((m) => (
+                <button key={m.id} className="rail-mark" data-color={m.color || 'y'} title={m.text} onClick={() => hl.jumpTo(m.id)}>
+                  <i className="rail-mark-sw" />
+                  <span>{m.text}</span>
+                </button>
+              ))}
+            </div>
+          )}
         </nav>
       </div>
     </div>
@@ -235,24 +256,33 @@ function UnitHead({ section, right }) {
   );
 }
 
-/** 选中文字后的右键菜单：划荧光笔 / 复制；点在已有荧光笔上则是取消 */
-function CtxMenu({ menu, onClose, onHighlight, onUnhighlight, onCopy }) {
+/** 选中文字后的右键菜单：选一支颜色划荧光笔 / 复制；点在已有荧光笔上则是换色 / 取消 */
+function CtxMenu({ menu, color, onClose, onHighlight, onRecolor, onUnhighlight, onCopy }) {
   useEffect(() => {
     const off = (e) => { if (!e.target.closest?.('.ctx-menu')) onClose(); };
     const key = (e) => { if (e.key === 'Escape') onClose(); };
     window.addEventListener('mousedown', off, true);
     window.addEventListener('keydown', key);
-    window.addEventListener('scroll', onClose, true);
-    return () => { window.removeEventListener('mousedown', off, true); window.removeEventListener('keydown', key); window.removeEventListener('scroll', onClose, true); };
+    return () => { window.removeEventListener('mousedown', off, true); window.removeEventListener('keydown', key); };
   }, [onClose]);
   const x = Math.min(menu.x, window.innerWidth - 180);
   const y = Math.min(menu.y, window.innerHeight - 100);
+  const swatches = (onPick, current) => (
+    <div className="ctx-swatches">
+      {HL_COLORS.map((c) => (
+        <button key={c.key} className={`hl-sw${current === c.key ? ' on' : ''}`} data-color={c.key} title={c.label} onClick={() => onPick(c.key)} />
+      ))}
+    </div>
+  );
   return (
     <div className="ctx-menu" style={{ left: x, top: y }}>
       {menu.existing
-        ? <button onClick={onUnhighlight}><i className="hl-swatch" />取消标记</button>
+        ? <>
+            <div className="ctx-row"><span>换颜色</span>{swatches(onRecolor, null)}</div>
+            <button onClick={onUnhighlight}>取消标记</button>
+          </>
         : <>
-            <button onClick={onHighlight}><i className="hl-swatch" />标记句子</button>
+            <div className="ctx-row"><span>标记句子</span>{swatches(onHighlight, color)}</div>
             <button onClick={onCopy}>复制</button>
           </>}
     </div>
@@ -365,7 +395,7 @@ function ChoiceUnit({ section, examId, onSubmit, onReset, onExport }) {
                       {mine === right ? '✓' : mine ? '✗' : '—'}　解析
                     </button>
                   )}
-                  <button className="q-md-btn" title="加入错题本（Markdown）" onClick={() => onExport(section.id, q.n)}>+md</button>
+                  <button className="q-md-btn" title="加入错题本（Markdown）" onClick={() => onExport(section.id, q.n)}>错题</button>
                 </div>
               </div>
               {key && open.has(q.n) && (
@@ -525,7 +555,7 @@ function FillUnit({ section, examId, onSubmit, onReset, onExport }) {
             <div className="fill-row">
               <input className="fill-input" value={answers[q.n] || ''} readOnly={locked} placeholder="答案"
                      onChange={(e) => update((prev) => ({ ...prev, [q.n]: e.target.value }))} />
-              <button className="q-md-btn" title="加入错题本（Markdown）" onClick={() => onExport(section.id, q.n)}>+md</button>
+              <button className="q-md-btn" title="加入错题本（Markdown）" onClick={() => onExport(section.id, q.n)}>错题</button>
             </div>
             {key && (
               <div className="q-exp">
@@ -565,7 +595,7 @@ function FreeUnit({ section, examId, onSubmit, onReset, onExport }) {
 
   return (
     <section className={`unit${locked ? ' locked' : ''}`} id={n ? `q-${section.id}-${n}` : undefined}>
-      <UnitHead section={section} right={<button className="q-md-btn" title="加入错题本（Markdown）" onClick={() => onExport(section.id, n ?? null)}>+md</button>} />
+      <UnitHead section={section} right={<button className="q-md-btn" title="加入错题本（Markdown）" onClick={() => onExport(section.id, n ?? null)}>错题</button>} />
       {section.directions && <div className="paper-directions" dangerouslySetInnerHTML={html(section.directions)} />}
       <div className="paper-body" dangerouslySetInnerHTML={html(section.body)} />
 

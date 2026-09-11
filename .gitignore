@@ -23,3 +23,4 @@ app/design/kaoyan-knowledge-base.html
 # 真题抓取脚本的产物在 .kb/exams/（已被 .kb/ 覆盖）；截图辅助脚本不进库
 app/.shot.cjs
 .vscode/
+.kb/tts/
