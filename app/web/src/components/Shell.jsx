@@ -1,12 +1,10 @@
 import { NavLink, useLocation } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { Icon } from './Icons.jsx';
 
 const NAV = [
-  { to: '/', icon: 'dash', label: '仪表盘', end: true },
-  { to: '/notes', icon: 'notes', label: '笔记' },
-  { to: '/review', icon: 'review', label: '复习', badgeKey: 'due' },
-  { to: '/schedule', icon: 'calendar', label: '日程' },
+  { to: '/',         label: '仪表盘', end: true },
+  { to: '/notes',    label: '笔记' },
+  { to: '/review',   label: '复习', badgeKey: 'due' },
+  { to: '/schedule', label: '日程' },
 ];
 
 export default function Shell({ children, meta, badges = {}, theme, onToggleTheme, onSearch }) {
@@ -17,39 +15,34 @@ export default function Shell({ children, meta, badges = {}, theme, onToggleThem
     <div className="shell">
       <aside className="rail">
         <div className="brand">
-          <div className="brand-mark" />
           <div className="brand-text">
             <div className="brand-name">知识库</div>
-            <div className="brand-sub num">{meta ? `${meta.notes} 篇` : '—'}</div>
+            <div className="brand-sub">KNOWLEDGE BASE</div>
           </div>
         </div>
 
-        <div className="nav-group">导航</div>
-        {NAV.map((item) => {
+        {NAV.map((item, i) => {
           const active = item.end ? pathname === item.to : pathname.startsWith(item.to);
-          const Ico = Icon[item.icon];
           const badge = badges[item.badgeKey];
           return (
             <NavLink key={item.to} to={item.to} className={`nav-item${active ? ' active' : ''}`}>
-              {active && <motion.span layoutId="nav-pill" className="nav-pill" transition={{ type: 'spring', stiffness: 420, damping: 34 }} />}
-              <Ico className="ic" />
+              <span className="ord">{String(i + 1).padStart(2, '0')}</span>
               <span>{item.label}</span>
-              {badge > 0 && <span className="badge num">{badge}</span>}
+              {badge > 0 && <span className="badge">{badge}</span>}
             </NavLink>
           );
         })}
 
         <div className="rail-foot">
-          <button className="kbd-hint" onClick={onSearch}>
-            <Icon.search width={15} height={15} />
+          <button className="rail-btn" onClick={onSearch}>
             <span>搜索</span>
-            <span className="spacer" />
-            <kbd>{isMac ? '⌘' : 'Ctrl'} K</kbd>
+            <kbd>{isMac ? '⌘K' : 'Ctrl K'}</kbd>
           </button>
-          <button className="nav-item" onClick={onToggleTheme}>
-            {theme === 'dark' ? <Icon.sun className="ic" /> : <Icon.moon className="ic" />}
+          <button className="rail-btn" onClick={onToggleTheme}>
             <span>{theme === 'dark' ? '浅色' : '深色'}</span>
+            <kbd>{theme === 'dark' ? 'LIGHT' : 'DARK'}</kbd>
           </button>
+          {meta && <div className="rail-btn" style={{ pointerEvents: 'none' }}><span>笔记</span><kbd>{meta.notes}</kbd></div>}
         </div>
       </aside>
 

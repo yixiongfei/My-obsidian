@@ -15,6 +15,7 @@
     "electron:build": "npm run build && electron-builder --win"
   },
   "dependencies": {
+    "@fontsource-variable/archivo": "^5.3.0",
     "@vscode/markdown-it-katex": "^1.1.1",
     "chokidar": "^3.6.0",
     "cors": "^2.8.5",

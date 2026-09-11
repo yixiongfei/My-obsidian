@@ -1,6 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 import { HashRouter } from 'react-router-dom';
+import '@fontsource-variable/archivo';
 import 'katex/dist/katex.min.css';
 import './styles/base.css';
 import './styles/markdown.css';

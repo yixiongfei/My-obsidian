@@ -14,6 +14,7 @@ import { search, dashboard, bucketNotes, allNotes, getNoteMeta } from './lib/que
 import * as db from './lib/db.js';
 import { syncAll, syncNote } from './lib/sync.js';
 import * as schedule from './lib/schedule.js';
+import { mindmap } from './lib/mindmap.js';
 
 const app = express();
 app.use(cors());
@@ -86,6 +87,7 @@ app.get('/api/tags', wrap(async (_req, res) => {
 }));
 
 app.get('/api/search', (req, res) => res.json(search(req.query.q, Number(req.query.limit) || 30)));
+app.get('/api/mindmap', wrap(async (_req, res) => res.json(await mindmap())));
 
 /* ------------------------------------------------------------------ *
  * 复习

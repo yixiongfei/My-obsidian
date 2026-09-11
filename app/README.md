@@ -30,14 +30,25 @@ npm run electron:build   # 产出 release/ 里的安装包
 
 | 视图 | 做什么 |
 |---|---|
-| 仪表盘 | 初试倒计时、今日待复习、复习热力图、各学科掌握度 |
-| 笔记 | 可折叠目录树 + 阅读页，支持 KaTeX、表格、callout 折叠、wiki 链接互跳、反向链接 |
+| 仪表盘 | 初试倒计时、等距立柱、今日待复习、复习热力图 |
+| 笔记 | 可折叠侧栏 + 思维导图 + 阅读页，支持 KaTeX、表格、callout 折叠、wiki 链接互跳、反向链接 |
 | 复习 | 到期笔记逐篇过，callout 默认折叠即天然自测；「已掌握 / 需重来」写回仓库 |
-| 日程 | 年表 → 月表 → 日表逐层下钻，带共享元素动画 |
+| 日程 | 年表 → 月表 → 日表逐层下钻 |
 
 `Ctrl / ⌘ + K` 全局搜索。
 
 wiki 链接的关系图没有做——Obsidian 自带的 graph view 已经覆盖了。
+
+## 两个图不是装饰
+
+**首屏的等距立柱**：一段 = tags.yaml 里的一个一级学科，笔记最多的那科在最上面并涂成实心蓝，没有笔记的是纯线框；外圈虚线是 1/2/4/7/15/30 天的复习周期，轨道上的小方块是下一次复习。
+
+**笔记页的思维导图**以受控词表为骨架，不按目录结构。于是：
+
+- 词表里声明了、还没有笔记的考点（408 那四门）会**先占好位置**，用虚线标成「待填充」
+- 只打了大类标签、没打分支标签的笔记会落在「未归类到分支」，顺手查出打标签的漏网
+
+这和 Obsidian 的 graph view 不重叠——那个画 `[[wiki 链接]]`，这个画从属关系。
 
 ## 数据怎么流动
 
@@ -100,6 +111,18 @@ next_review: 2026-09-17
 
 年表和月表顶部的阶段目标，实时解析 `个人/考研倒计时.canvas`——在 Obsidian 里改画布、勾选任务，网站跟着变。
 
+## 设计
+
+配色只有黑、白、蓝三族，全部定义在 `web/src/styles/base.css` 顶部的 CSS 变量里，改那一处就能整站换肤。深浅两套主题，左下角切换。
+
+三条硬规矩，整站不破例：
+
+1. **直角** —— `border-radius` 一律为 0
+2. **只有 1px 线** —— 不用阴影、不用渐变分隔
+3. **蓝色只用在三处** —— 当前项 / 待办数 / 链接
+
+西文和数字用自托管的 Archivo（latin 子集 35KB，离线可用），中文走系统字体栈（PingFang SC / 微软雅黑），所以 Electron 里不依赖任何在线字体。设计稿源文件在 `app/design/*.dc.html`。
+
 ## 目录结构
 
 ```
@@ -114,11 +137,11 @@ app/
     lib/sync.js          .md / review_log.jsonl → SQLite 的同步
     lib/schedule.js     年/月/日聚合 + 画布路线图解析
     lib/query.js        全文检索、复习分桶、仪表盘统计
+  server/lib/mindmap.js   按 tags.yaml 词表组装的从属关系树
   web/src/
     views/              Dashboard / Notes / Review / Schedule
-    components/         Shell、命令面板、Prose、复习浮条
+    components/         Shell、命令面板、Prose、复习浮条、IsoStack（等距立柱）、MindMap（思维导图）
     styles/             base（设计系统）· markdown（正文）· views（各视图）
+  design/               设计稿源文件（.dc.html 画板 + canvas.json）
   electron/main.cjs     选仓库 → 起服务 → 开窗口
 ```
-
-配色只有黑、白、蓝三族，全部定义在 `styles/base.css` 顶部的 CSS 变量里，改那一处就能整站换肤。深浅两套主题，左下角切换。
