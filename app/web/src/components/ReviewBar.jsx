@@ -41,7 +41,7 @@ export default function ReviewBar({ note, onDone, compact = false }) {
         <span style={{ color: 'var(--text)', fontSize: 13 }}>
           第 {done.reviewCount} 次复习
         </span>
-        <span style={{ color: 'var(--blue)', fontSize: 12 }}>
+        <span style={{ color: 'var(--accent)', fontSize: 12 }}>
           下次 {done.nextReview.replaceAll('-', '.')}　{done.gap} 天后
         </span>
       </div>
@@ -69,7 +69,7 @@ export default function ReviewBar({ note, onDone, compact = false }) {
           → {plusDays(nextGap(note.reviewCount))}
         </span>
       )}
-      {error && <span style={{ color: 'var(--blue)', fontSize: 12 }}>{error}</span>}
+      {error && <span style={{ color: 'var(--accent)', fontSize: 12 }}>{error}</span>}
     </div>
   );
 }

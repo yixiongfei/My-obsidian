@@ -4,8 +4,9 @@ import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import { Band, Loading, ErrorBox, Empty, Item } from '../components/bits.jsx';
 
-const WEEK = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
-const WEEK_CN = ['周日', '周一', '周二', '周三', '周四', '周五', '周六'];
+// 周日起头，和日本日历一致
+const WEEK = ['日', '月', '火', '水', '木', '金', '土'];
+const WEEK_CN = ['日', '月', '火', '水', '木', '金', '土'];
 const pad = (n) => String(n).padStart(2, '0');
 
 export default function Schedule({ version }) {
@@ -109,7 +110,7 @@ function MonthView({ version, monthKey }) {
 
       <div style={{ borderTop: '1px solid var(--line-2)', paddingTop: 26, display: 'flex', alignItems: 'flex-end', gap: 40, flexWrap: 'wrap' }}>
         <div className="row" style={{ alignItems: 'baseline', gap: 16 }}>
-          <span style={{ fontSize: 104, fontWeight: 500, letterSpacing: '-0.055em', lineHeight: 0.8 }}>{m}</span>
+          <span className="serif" style={{ fontSize: 96, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 0.85 }}>{m}</span>
           <span style={{ fontSize: 14, color: 'var(--text-2)' }}>{y} 年</span>
         </div>
 
@@ -135,6 +136,19 @@ function MonthView({ version, monthKey }) {
             </div>
           )}
 
+          {data.holidays?.length > 0 && (
+            <div style={{ borderLeft: '1px solid var(--line)', paddingLeft: 16 }}>
+              <div className="stat-k" style={{ marginTop: 0, marginBottom: 6 }}>本月の祝日</div>
+              {data.holidays.map((h) => (
+                <div className="row" key={h.day} style={{ gap: 9, padding: '2px 0' }}>
+                  <span style={{ width: 6, height: 6, borderRadius: 9, background: 'var(--holiday)', flex: 'none' }} />
+                  <span style={{ fontSize: 12, color: 'var(--text-2)' }}>{h.day} 日</span>
+                  <span style={{ fontSize: 12, color: 'var(--dim)' }}>{h.name}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
           <div style={{ borderLeft: '1px solid var(--line)', paddingLeft: 16 }}>
             <div className="stat-k" style={{ marginTop: 0, marginBottom: 10 }}>本月合计</div>
             <div className="row" style={{ gap: 24, alignItems: 'flex-start' }}>
@@ -145,22 +159,46 @@ function MonthView({ version, monthKey }) {
         </div>
       </div>
 
-      <div className="cal-head" style={{ marginTop: 40 }}>
-        {WEEK.map((w) => <div key={w}>{w}</div>)}
+      <div className="row" style={{ justifyContent: 'flex-end', margin: '40px 0 14px' }}>
+        <div className="cal-legend">
+          <span className="lg"><i style={{ background: 'var(--accent)' }} />待复习</span>
+          <span className="lg"><i style={{ background: 'var(--accent-2)' }} />已复习</span>
+          <span className="lg"><i style={{ background: 'var(--line-2)' }} />新建</span>
+          <span className="lg"><i style={{ background: 'var(--holiday)' }} />日本の祝日</span>
+        </div>
+      </div>
+
+      <div className="cal-head">
+        {WEEK.map((w, i) => (
+          <div key={w} className={i === 0 ? 'sun' : i === 6 ? 'sat' : undefined}>{w}</div>
+        ))}
       </div>
 
       <div className="cal">
         {Array.from({ length: data.leadingBlanks }).map((_, i) => <div className="day-cell blank" key={`b${i}`} />)}
         {data.days.map((d) => (
           <div key={d.date}
-               className={`day-cell${d.isToday ? ' today' : ''}${d.isPast && !d.isToday ? ' past' : ''}`}
+               title={d.holiday || undefined}
+               className={[
+                 'day-cell',
+                 d.isToday ? 'today' : '',
+                 d.isPast && !d.isToday ? 'past' : '',
+                 d.weekday === 0 ? 'sun' : '',
+                 d.holiday ? 'holiday' : '',
+               ].filter(Boolean).join(' ')}
                onClick={() => navigate(`/schedule/${y}/${m}/${pad(d.day)}`)}>
             <div className="dc-n">{pad(d.day)}</div>
-            <div className="dc-rows">
-              {d.due > 0 && <div className="dc-row" style={{ color: 'var(--blue)' }}><span>待复习</span><span>{d.due}</span></div>}
+            {d.holiday && <div className="dc-hol">{d.holiday}</div>}
+            <div className="dc-dots">
+              {d.holiday && <i className="hol" />}
+              {d.due > 0 && <i className="due" />}
+              {d.reviewed > 0 && <i className="rev" />}
+              {d.created > 0 && <i className="new" />}
+              {d.events > 0 && <i className="due" />}
+            </div>
+            <div className="dc-rows" style={{ marginTop: 0 }}>
+              {d.due > 0 && <div className="dc-row" style={{ color: 'var(--accent)' }}><span>待复习</span><span>{d.due}</span></div>}
               {d.reviewed > 0 && <div className="dc-row" style={{ color: 'var(--text-2)' }}><span>已复习</span><span>{d.reviewed}</span></div>}
-              {d.created > 0 && <div className="dc-row" style={{ color: 'var(--dim)' }}><span>新建</span><span>{d.created}</span></div>}
-              {d.events > 0 && <div className="dc-row" style={{ color: 'var(--blue)' }}><span>日程</span><span>{d.events}</span></div>}
             </div>
           </div>
         ))}
@@ -201,12 +239,20 @@ function DayView({ version, date }) {
 
       <div style={{ borderTop: '1px solid var(--line-2)', paddingTop: 26, display: 'flex', alignItems: 'flex-end', gap: 40, flexWrap: 'wrap', marginBottom: 8 }}>
         <div className="row" style={{ alignItems: 'baseline', gap: 14 }}>
-          <span style={{ fontSize: 92, fontWeight: 500, letterSpacing: '-0.055em', lineHeight: 0.8, color: data.isToday ? 'var(--blue)' : 'var(--text)' }}>
+          <span className="serif" style={{ fontSize: 88, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 0.85, color: data.holiday ? 'var(--holiday)' : data.isToday ? 'var(--accent)' : 'var(--text)' }}>
             {pad(Number(d))}
           </span>
           <div>
             <div style={{ color: 'var(--text-2)', fontSize: 13 }}>{y}.{m}</div>
-            <div style={{ color: 'var(--dim)', fontSize: 11 }}>{WEEK_CN[data.weekday]}{data.isToday ? ' · 今天' : ''}</div>
+            <div style={{ color: 'var(--dim)', fontSize: 11 }}>
+              {WEEK_CN[data.weekday]}曜日{data.isToday ? ' · 今天' : ''}
+            </div>
+            {data.holiday && (
+              <div className="row" style={{ gap: 7, marginTop: 5 }}>
+                <span style={{ width: 6, height: 6, borderRadius: 9, background: 'var(--holiday)', flex: 'none' }} />
+                <span style={{ fontSize: 12, color: 'var(--holiday)' }}>{data.holiday}</span>
+              </div>
+            )}
           </div>
         </div>
         <div className="spacer" />
@@ -234,7 +280,7 @@ function DayView({ version, date }) {
               <div key={`${e.note_path}-${i}`} style={{ padding: '13px 0', borderBottom: '1px solid var(--line)' }}>
                 <div className="row" style={{ gap: 12, flexWrap: 'wrap' }}>
                   <span style={{ color: 'var(--text)', fontWeight: 500, fontSize: 13.5 }}>{e.title}</span>
-                  <span style={{ fontSize: 11, color: 'var(--blue)' }}>第 {e.review_count_after} 次</span>
+                  <span style={{ fontSize: 11, color: 'var(--accent)' }}>第 {e.review_count_after} 次</span>
                   <span style={{ fontSize: 11, color: 'var(--dim)' }}>{e.source}</span>
                 </div>
                 {e.added_content && <div style={{ color: 'var(--dim)', fontSize: 12, marginTop: 4 }}>{e.added_content}</div>}

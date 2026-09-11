@@ -36,7 +36,7 @@ function Tree({ tree, activeId, filter }) {
            className={`tree-note${n.id === activeId ? ' active' : ''}`}
            onClick={() => navigate(`/note/${encodeURIComponent(n.id)}`)}>
         <span className="tw">{n.title}</span>
-        {due && <span style={{ width: 6, height: 6, background: 'var(--blue)', flex: 'none' }} />}
+        {due && <span style={{ width: 6, height: 6, background: 'var(--accent)', flex: 'none' }} />}
         {n.empty && <span style={{ fontSize: 10, color: 'var(--dim)' }}>空</span>}
       </div>,
     ];
@@ -105,7 +105,7 @@ function Reader({ id, version, onReviewed }) {
               {note.created && <span>{note.created.replaceAll('-', '.')} 创建</span>}
               <span>复习 {note.reviewCount} 次</span>
               {note.nextReview && (
-                <span style={{ marginLeft: 'auto', color: 'var(--blue)' }}>
+                <span style={{ marginLeft: 'auto', color: 'var(--accent)' }}>
                   下次 {note.nextReview.replaceAll('-', '.')}
                 </span>
               )}
@@ -226,12 +226,12 @@ export default function Notes({ version, onReviewed }) {
             {mindLoading && !mind ? <Loading /> : mind ? <MindMap data={mind} currentId={noteId} /> : null}
 
             <div className="mind-foot">
-              <span className="lg"><i style={{ width: 8, height: 8, background: 'var(--blue)' }} />待复习</span>
+              <span className="lg"><i style={{ width: 8, height: 8, background: 'var(--accent)' }} />待复习</span>
               <span className="lg"><i style={{ width: 7, height: 7, border: '1px solid var(--text-2)' }} />已排期</span>
-              <span className="lg"><i style={{ width: 7, height: 7, border: '1px solid var(--faint)' }} />未纳入</span>
-              <span className="lg"><i style={{ width: 8, height: 1, background: 'var(--faint)' }} />空笔记</span>
-              <span className="lg"><i style={{ width: 12, height: 1, background: 'repeating-linear-gradient(90deg,var(--faint) 0 2px,transparent 2px 7px)' }} />词表已声明 · 待填充</span>
-              <span className="lg"><i style={{ width: 5, height: 5, borderRadius: 5, background: 'var(--blue)' }} />未归类到分支</span>
+              <span className="lg"><i style={{ width: 7, height: 7, border: '1px solid var(--line-2)' }} />未纳入</span>
+              <span className="lg"><i style={{ width: 8, height: 1, background: 'var(--line-2)' }} />空笔记</span>
+              <span className="lg"><i style={{ width: 12, height: 1, background: 'repeating-linear-gradient(90deg,var(--line-2) 0 2px,transparent 2px 7px)' }} />词表已声明 · 待填充</span>
+              <span className="lg"><i style={{ width: 5, height: 5, borderRadius: 5, background: 'var(--accent)' }} />未归类到分支</span>
               <span style={{ marginLeft: 'auto' }}>点击节点进入笔记　·　拖拽平移　·　滚轮缩放</span>
             </div>
           </div>

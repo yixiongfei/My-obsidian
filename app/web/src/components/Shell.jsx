@@ -1,50 +1,57 @@
 import { NavLink, useLocation } from 'react-router-dom';
 
 const NAV = [
-  { to: '/',         label: '仪表盘', end: true },
-  { to: '/notes',    label: '笔记' },
+  { to: '/',         label: '首页', end: true },
+  { to: '/notes',    label: '笔记', match: ['/notes', '/note'] },
   { to: '/review',   label: '复习', badgeKey: 'due' },
-  { to: '/schedule', label: '日程' },
+  { to: '/schedule', label: '日历' },
 ];
+
+const Sparkle = (p) => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" {...p}>
+    <path d="M12 2c.5 4.6 2.9 7.4 8 8-5.1.6-7.5 3.4-8 8-.5-4.6-2.9-7.4-8-8 5.1-.6 7.5-3.4 8-8z" />
+  </svg>
+);
 
 export default function Shell({ children, meta, badges = {}, theme, onToggleTheme, onSearch }) {
   const { pathname } = useLocation();
   const isMac = typeof navigator !== 'undefined' && /Mac/i.test(navigator.platform || '');
 
   return (
-    <div className="shell">
-      <aside className="rail">
+    <div className="app">
+      <header className="topbar">
         <div className="brand">
+          <div className="brand-mark"><Sparkle /></div>
           <div className="brand-text">
-            <div className="brand-name">知识库</div>
-            <div className="brand-sub">KNOWLEDGE BASE</div>
+            <div className="brand-name">星图知识库</div>
+            <div className="brand-sub">PERSONAL LEARNING SYSTEM</div>
           </div>
         </div>
 
-        {NAV.map((item, i) => {
-          const active = item.end ? pathname === item.to : pathname.startsWith(item.to);
-          const badge = badges[item.badgeKey];
-          return (
-            <NavLink key={item.to} to={item.to} className={`nav-item${active ? ' active' : ''}`}>
-              <span className="ord">{String(i + 1).padStart(2, '0')}</span>
-              <span>{item.label}</span>
-              {badge > 0 && <span className="badge">{badge}</span>}
-            </NavLink>
-          );
-        })}
+        <nav className="topnav">
+          {NAV.map((item) => {
+            const active = item.end
+              ? pathname === item.to
+              : (item.match || [item.to]).some((m) => pathname.startsWith(m));
+            const badge = badges[item.badgeKey];
+            return (
+              <NavLink key={item.to} to={item.to} className={active ? 'active' : undefined}>
+                {item.label}
+                {badge > 0 && <span className="badge">{badge}</span>}
+              </NavLink>
+            );
+          })}
+        </nav>
 
-        <div className="rail-foot">
-          <button className="rail-btn" onClick={onSearch}>
-            <span>搜索</span>
-            <kbd>{isMac ? '⌘K' : 'Ctrl K'}</kbd>
+        <div className="topbar-right">
+          <button className="icon-btn" onClick={onToggleTheme} title="切换日夜模式">
+            {theme === 'dark' ? '白天' : '夜间'}
           </button>
-          <button className="rail-btn" onClick={onToggleTheme}>
-            <span>{theme === 'dark' ? '浅色' : '深色'}</span>
-            <kbd>{theme === 'dark' ? 'LIGHT' : 'DARK'}</kbd>
+          <button className="icon-btn" onClick={onSearch} title="搜索">
+            <span style={{ fontSize: 13 }}>{isMac ? '⌘' : 'Ctrl'}</span> K
           </button>
-          {meta && <div className="rail-btn" style={{ pointerEvents: 'none' }}><span>笔记</span><kbd>{meta.notes}</kbd></div>}
         </div>
-      </aside>
+      </header>
 
       <main className="main">{children}</main>
     </div>

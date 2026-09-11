@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 
 import Shell from './components/Shell.jsx';
 import CommandPalette from './components/CommandPalette.jsx';
-import Dashboard from './views/Dashboard.jsx';
+import Home from './views/Home.jsx';
 import Notes from './views/Notes.jsx';
 import Review from './views/Review.jsx';
 import Schedule from './views/Schedule.jsx';
@@ -42,7 +42,7 @@ export default function App() {
         <AnimatePresence mode="wait">
           <motion.div key={routeKey(location.pathname)} className="view" {...fade}>
             <Routes location={location}>
-              <Route path="/" element={<Dashboard version={version} onChanged={reloadDash} />} />
+              <Route path="/" element={<Home version={version} />} />
               <Route path="/notes" element={<Notes version={version} onReviewed={reloadDash} />} />
               <Route path="/note/:id" element={<Notes version={version} onReviewed={reloadDash} />} />
               <Route path="/review" element={<Review version={version} onReviewed={reloadDash} />} />

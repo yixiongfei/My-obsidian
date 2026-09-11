@@ -55,7 +55,7 @@ export default function CommandPalette({ open, onClose }) {
     <div className="overlay" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div className="palette">
         <div className="palette-input">
-          <span className="lbl-cn" style={{ color: 'var(--blue)' }}>搜索</span>
+          <span className="lbl-cn" style={{ color: 'var(--accent)' }}>搜索</span>
           <input ref={inputRef} value={q} placeholder="笔记标题、标签、正文…"
                  onChange={(e) => setQ(e.target.value)} onKeyDown={onKeyDown} />
         </div>

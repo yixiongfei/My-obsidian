@@ -5,6 +5,7 @@ import { DEFAULT_EXAM_DATE } from '../config.js';
 import { index, toAbs } from './vault.js';
 import { allNotes } from './query.js';
 import { todayStr, daysBetween } from './review.js';
+import { holidaysInMonth, holidayOn } from './holidays.js';
 
 const pad = (n) => String(n).padStart(2, '0');
 
@@ -174,14 +175,17 @@ export async function monthView(monthKey) {
   const daysInMonth = new Date(y, m, 0).getDate();
   const counts = countsByDay(`${monthKey}-01`, `${monthKey}-${pad(daysInMonth)}`);
 
+  const jp = holidaysInMonth(y, m);
   const days = [];
   for (let d = 1; d <= daysInMonth; d++) {
     const date = `${y}-${pad(m)}-${pad(d)}`;
     const c = counts.get(date) || { due: 0, reviewed: 0, created: 0, events: 0 };
+    const weekday = new Date(y, m - 1, d).getDay();
     days.push({
-      date, day: d,
-      weekday: new Date(y, m - 1, d).getDay(),
+      date, day: d, weekday,
       ...c,
+      holiday: jp.get(d) || null,
+      isWeekend: weekday === 0 || weekday === 6,
       isToday: date === today,
       isPast: date < today,
     });
@@ -190,9 +194,10 @@ export async function monthView(monthKey) {
   return {
     month: monthKey,
     year: y,
-    // 周一为一周之首：把周日(0)排到第 7 位
-    leadingBlanks: (new Date(y, m - 1, 1).getDay() + 6) % 7,
+    // 周日为一周之首，和日本日历一致（日 月 火 水 木 金 土）
+    leadingBlanks: new Date(y, m - 1, 1).getDay(),
     days,
+    holidays: [...jp.entries()].map(([d, name]) => ({ day: d, name })).sort((a, b) => a.day - b.day),
     milestone: plan[monthKey] || null,
     examDate: examDate(),
   };
@@ -229,6 +234,7 @@ export function dayView(date) {
     events: listEvents(date, date),
     isToday: date === today,
     weekday: new Date(y, m - 1, d).getDay(),
+    holiday: holidayOn(date),
     examDate: exam,
     daysToExam: daysBetween(date, exam),
   };

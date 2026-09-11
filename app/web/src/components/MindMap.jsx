@@ -44,7 +44,7 @@ function layout(data, currentId) {
       } else {
         by = y;
         paths.push({ d: `M ${PORT.b} ${by} H ${X.n + 26}`, dashed: true });
-        texts.push({ x: X.n + 36, y: by + 4, size: 11.5, fill: 'var(--faint)', text: '待填充' });
+        texts.push({ x: X.n + 36, y: by + 4, size: 11.5, fill: 'var(--dim)', text: '待填充' });
         y += ROW;
       }
 
@@ -55,7 +55,7 @@ function layout(data, currentId) {
       });
       texts.push({
         x: X.b, y: by + 19, size: 10, ls: 1.4,
-        fill: b.notes.length ? 'var(--dim)' : 'var(--faint)',
+        fill: 'var(--dim)',
         text: `${b.notes.length} 篇`,
       });
       if (isDirect) texts.push({ dot: true, x: X.b - 13, y: by });
@@ -81,11 +81,11 @@ function layout(data, currentId) {
 }
 
 function Marker({ x, y, status }) {
-  if (status === 'due') return <rect x={x} y={y - 4} width="8" height="8" fill="var(--blue)" />;
-  if (status === 'empty') return <line x1={x} y1={y} x2={x + 8} y2={y} stroke="var(--faint)" strokeWidth="1" />;
+  if (status === 'due') return <rect x={x} y={y - 4} width="8" height="8" fill="var(--accent)" />;
+  if (status === 'empty') return <line x1={x} y1={y} x2={x + 8} y2={y} stroke="var(--line-2)" strokeWidth="1" />;
   return (
     <rect x={x + 0.5} y={y - 3.5} width="7" height="7" fill="none" strokeWidth="1"
-          stroke={status === 'sched' ? 'var(--text-2)' : 'var(--faint)'} />
+          stroke={status === 'sched' ? 'var(--text-2)' : 'var(--line-2)'} />
   );
 }
 
@@ -139,29 +139,29 @@ export default function MindMap({ data, currentId }) {
         <g transform={`translate(${t.x} ${t.y}) scale(${t.k})`}>
           {tree.paths.map((p, i) => (
             <path key={i} d={p.d} fill="none" strokeWidth="1"
-                  stroke={p.hot ? 'var(--blue)' : 'var(--faint)'}
+                  stroke={p.hot ? 'var(--accent)' : 'var(--line-2)'}
                   strokeDasharray={p.dashed ? '2 5' : undefined} />
           ))}
 
           {tree.texts.map((tx, i) => (tx.dot
-            ? <circle key={i} cx={tx.x} cy={tx.y} r="2.5" fill="var(--blue)" />
+            ? <circle key={i} cx={tx.x} cy={tx.y} r="2.5" fill="var(--accent)" />
             : <text key={i} x={tx.x} y={tx.y} fontSize={tx.size} fontWeight={tx.weight || 400}
                     letterSpacing={tx.ls} fill={tx.fill}>{tx.text}</text>
           ))}
 
-          <circle cx={X.root + 6} cy={tree.rootY} r="5" fill="var(--blue)" />
+          <circle cx={X.root + 6} cy={tree.rootY} r="5" fill="var(--accent)" />
 
           {tree.leaves.map((n) => (
             <g key={n.id} className="mind-node" onClick={() => navigate(`/note/${encodeURIComponent(n.id)}`)}>
               <rect className="mind-hit" x={X.n - 4} y={n.y - 13} width="420" height="26" fill="transparent" />
               <Marker x={X.n} y={n.y} status={n.status} />
               <text x={X.n + 18} y={n.y + 4} fontSize="12.5" fontWeight={n.current ? 600 : 400}
-                    fill={n.current ? 'var(--blue)' : n.status === 'new' || n.status === 'empty' ? 'var(--dim)' : 'var(--text)'}>
+                    fill={n.current ? 'var(--accent)' : n.status === 'new' || n.status === 'empty' ? 'var(--dim)' : 'var(--text)'}>
                 {n.title}
               </text>
               {n.current && (
                 <line x1={X.n + 18} y1={n.y + 11} x2={X.n + 18 + n.title.length * 13} y2={n.y + 11}
-                      stroke="var(--blue)" strokeWidth="1" />
+                      stroke="var(--accent)" strokeWidth="1" />
               )}
             </g>
           ))}
