@@ -30,6 +30,15 @@
   --heat-2: #234099;
   --heat-3: #2C5CFF;
 
+  /* 等距立柱的派生色：只有夜间会用到这张图 */
+  --iso-edge:   #FFFFFF;
+  --iso-grid:   #191C22;
+  --iso-blue-r: #2450DC;
+  --iso-blue-f: #1B3FBE;
+  --iso-dim-t:  #16233F;
+  --iso-dim-r:  #121D35;
+  --iso-dim-f:  #0E172A;
+
   --radius:   0px;
   --radius-s: 0px;
   --grain:    none;

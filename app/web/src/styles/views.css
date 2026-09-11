@@ -64,7 +64,8 @@ kbd {
   margin: 26px 0 0; max-width: 34em;
 }
 
-.hero-art { padding: 24px; align-self: center; }
+.hero-art { padding: 24px; align-self: center; display: flex; justify-content: center; }
+.orbit { flex: 1; min-width: 0; }
 .orbit svg { display: block; width: 100%; height: auto; }
 .orbit-cap {
   font-size: 12.5px; color: var(--dim); letter-spacing: 0.1em;
@@ -296,4 +297,53 @@ kbd {
   .notes-layout.open, .notes-layout.shut { grid-template-columns: 1fr; }
   .tree-pane { display: none; }
   .day-cell { min-height: 72px; }
+}
+
+/* ── 首页折线以下的四个入口 ─────────────────────────── */
+.entry-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(232px, 1fr));
+  gap: 14px; margin-top: 52px;
+}
+.entry {
+  position: relative; text-align: left;
+  display: grid; grid-template-rows: auto auto auto;
+  gap: 0; padding: 22px 24px 24px;
+  background: var(--bg-1);
+  border: 1px solid var(--line); border-radius: var(--radius);
+  transition: border-color 0.18s var(--ease), background 0.18s, transform 0.18s var(--ease);
+}
+.entry:hover { border-color: var(--accent); background: var(--bg-2); transform: translateY(-2px); }
+.entry .en-ord { font-size: 10px; letter-spacing: 0.16em; color: var(--dim); }
+.entry .en-k { font-size: 15px; font-weight: 600; color: var(--text); margin-top: 12px; }
+.entry .en-v {
+  font-family: var(--serif); font-size: 34px; font-weight: 500;
+  line-height: 1.1; color: var(--accent); margin-top: 12px;
+}
+.entry .en-v em {
+  font-family: var(--font); font-style: normal;
+  font-size: 11px; letter-spacing: 0.12em; color: var(--dim); margin-left: 8px;
+}
+.entry .en-d { font-size: 11.5px; color: var(--dim); margin-top: 10px; line-height: 1.7; }
+.entry .en-go {
+  position: absolute; right: 22px; top: 20px;
+  font-size: 14px; color: var(--line-2);
+  transition: color 0.18s, transform 0.18s var(--ease);
+}
+.entry:hover .en-go { color: var(--accent); transform: translateX(3px); }
+
+/* ── 等距立柱（仅夜间使用） ────────────────────────── */
+.iso-wrap { position: relative; flex: none; }
+.iso-label {
+  position: absolute; display: flex; align-items: center; gap: 12px;
+  white-space: nowrap; pointer-events: none;
+  transform: translateY(-50%);
+}
+.iso-label i { width: 34px; height: 1px; background: var(--line-2); flex: none; }
+.iso-label.on i { background: var(--accent); }
+.iso-label .n { font-size: 12.5px; color: var(--text-2); }
+.iso-label.on .n { color: var(--text); font-weight: 600; }
+.iso-label .s { font-size: 10.5px; color: var(--dim); margin-left: 10px; }
+.iso-note {
+  position: absolute; font-size: 10px; letter-spacing: 0.14em;
+  color: var(--dim); white-space: nowrap; pointer-events: none;
 }

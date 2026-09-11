@@ -1,10 +1,11 @@
 import { NavLink, useLocation } from 'react-router-dom';
 
 const NAV = [
-  { to: '/',         label: '首页', end: true },
-  { to: '/notes',    label: '笔记', match: ['/notes', '/note'] },
-  { to: '/review',   label: '复习', badgeKey: 'due' },
-  { to: '/schedule', label: '日历' },
+  { to: '/',          label: '首页', end: true },
+  { to: '/dashboard', label: '仪表盘' },
+  { to: '/notes',     label: '笔记', match: ['/notes', '/note'] },
+  { to: '/review',    label: '复习', badgeKey: 'due' },
+  { to: '/schedule',  label: '日历' },
 ];
 
 const Sparkle = (p) => (
