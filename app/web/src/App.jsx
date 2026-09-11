@@ -9,6 +9,10 @@ import Dashboard from './views/Dashboard.jsx';
 import Notes from './views/Notes.jsx';
 import Review from './views/Review.jsx';
 import Schedule from './views/Schedule.jsx';
+import Resources from './views/Resources.jsx';
+import Exam from './views/Exam.jsx';
+import ExamTags from './views/ExamTags.jsx';
+import Words from './views/Words.jsx';
 
 import { api } from './api.js';
 import { useApi, useHotkey, useTheme, useVaultVersion } from './hooks.js';
@@ -50,6 +54,7 @@ export default function App() {
               <Route path="/notes" element={<Notes version={version} onReviewed={reloadDash} />} />
               <Route path="/note/:id" element={<Notes version={version} onReviewed={reloadDash} />} />
               <Route path="/review" element={<Review version={version} onReviewed={reloadDash} />} />
+              <Route path="/review/words" element={<Words />} />
               {/* 旧链接兼容：/review/:id 曾经是"按篇复习某条笔记"，
                   现在 /review 是英语词汇 Anki，带 id 的一律送回笔记原文 */}
               <Route path="/review/:id" element={<LegacyReviewRedirect />} />
@@ -57,6 +62,9 @@ export default function App() {
               <Route path="/schedule/:year" element={<Schedule version={version} />} />
               <Route path="/schedule/:year/:month" element={<Schedule version={version} />} />
               <Route path="/schedule/:year/:month/:day" element={<Schedule version={version} />} />
+              <Route path="/resources" element={<Resources />} />
+              <Route path="/resources/exam/:id" element={<Exam />} />
+              <Route path="/resources/tags/:group" element={<ExamTags />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </motion.div>
@@ -72,7 +80,9 @@ export default function App() {
 function routeKey(pathname) {
   if (pathname.startsWith('/note')) return 'notes';
   if (pathname.startsWith('/schedule')) return 'schedule';
+  if (pathname.startsWith('/review/words')) return 'words';
   if (pathname.startsWith('/review')) return 'review';
+  if (pathname.startsWith('/resources')) return 'resources';
   return pathname;
 }
 

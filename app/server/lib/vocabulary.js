@@ -205,7 +205,7 @@ export function migrateFromIndexDb(indexDb) {
 
 const CARD_SELECT = `
   SELECT w.id, w.term, w.term_key, w.phonetic, w.frequency, w.translation, w.definition,
-         c.state, c.due, c.interval, c.repetitions, c.ease, c.lapses, c.last_review
+         c.state, c.due, c.interval, c.repetitions, c.ease, c.lapses, c.last_review, c.important
   FROM vocab_words w JOIN vocab_cards c ON c.word_id = w.id`;
 
 function decorate(d, row, today) {
@@ -239,6 +239,7 @@ function decorate(d, row, today) {
     interval: row.interval,
     reviewCount: row.repetitions,
     lapses: row.lapses,
+    important: !!row.important,
     overdueDays,
   };
 }
@@ -254,11 +255,12 @@ export function buildQueue() {
 
   const due = d.prepare(`${CARD_SELECT}
     WHERE c.state <> 'mastered' AND c.state <> 'new' AND c.due <= ?
-    ORDER BY c.due ASC, w.frequency DESC, w.term ASC LIMIT ?`).all(today, SESSION_DUE_LIMIT);
+    ORDER BY c.due ASC, c.important DESC, w.frequency DESC, w.term ASC LIMIT ?`).all(today, SESSION_DUE_LIMIT);
 
+  // 标注词（真题里双击标的、手动加的）插队排在新词最前面
   const fresh = d.prepare(`${CARD_SELECT}
     WHERE c.state = 'new'
-    ORDER BY w.frequency DESC, w.term ASC LIMIT ?`).all(SESSION_NEW_LIMIT);
+    ORDER BY c.important DESC, w.frequency DESC, w.term ASC LIMIT ?`).all(SESSION_NEW_LIMIT);
 
   const counts = d.prepare(`
     SELECT
@@ -266,6 +268,7 @@ export function buildQueue() {
       SUM(CASE WHEN state = 'new' THEN 1 ELSE 0 END) AS new,
       SUM(CASE WHEN state <> 'mastered' AND state <> 'new' AND due > ? THEN 1 ELSE 0 END) AS upcoming,
       SUM(CASE WHEN state = 'mastered' THEN 1 ELSE 0 END) AS mastered,
+      SUM(CASE WHEN important = 1 AND state <> 'mastered' THEN 1 ELSE 0 END) AS important,
       COUNT(*) AS total
     FROM vocab_cards`).get(today, today);
 
@@ -279,6 +282,7 @@ export function buildQueue() {
         new: counts.new || 0,
         upcoming: counts.upcoming || 0,
         mastered: counts.mastered || 0,
+        important: counts.important || 0,
         total: counts.total || 0,
         sessionNewLimit: SESSION_NEW_LIMIT,
       },

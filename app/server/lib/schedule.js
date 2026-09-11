@@ -7,6 +7,7 @@ import { allNotes } from './query.js';
 import { todayStr, daysBetween } from './review.js';
 import { holidaysInMonth, holidayOn } from './holidays.js';
 import { dailyCount } from './vocabulary.js';
+import { statsBetween } from './exams.js';
 
 const pad = (n) => String(n).padStart(2, '0');
 
@@ -206,7 +207,14 @@ export async function monthView(monthKey) {
     holidays: [...jp.entries()].map(([d, name]) => ({ day: d, name })).sort((a, b) => a.day - b.day),
     milestone: plan[monthKey] || null,
     examDate: examDate(),
+    // 本月做过的真题题数，按学科分（英语 / 数学 / 408 四门）
+    exams: examsSafe(`${monthKey}-01`, `${monthKey}-${pad(daysInMonth)}`),
   };
+}
+
+/** 真题数据没抓、或 JSON 坏了都不该让日历报错 */
+function examsSafe(from, to) {
+  try { return statsBetween(from, to); } catch { return { total: 0, bySubject: {}, byDate: {} }; }
 }
 
 /** 日表：当天全部安排 */

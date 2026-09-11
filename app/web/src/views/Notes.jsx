@@ -5,56 +5,8 @@ import { useApi } from '../hooks.js';
 import Prose from '../components/Prose.jsx';
 import MindMap from '../components/MindMap.jsx';
 import ReviewBar from '../components/ReviewBar.jsx';
+import FolderTree from '../components/FolderTree.jsx';
 import { Loading, ErrorBox, Empty } from '../components/bits.jsx';
-
-/* ------------------------------------------------------------------ *
- * 侧栏：可折叠的目录树
- * ------------------------------------------------------------------ */
-
-function Tree({ tree, activeId, filter }) {
-  const navigate = useNavigate();
-  const today = new Date().toISOString().slice(0, 10);
-
-  const walk = (nodes, depth = 0) => nodes.flatMap((n) => {
-    if (n.type === 'folder') {
-      const kids = walk(n.children, depth + 1);
-      if (!kids.length) return [];
-      // 只有子目录、没有直属笔记的中间层级不单独出标题，省掉「数学 0」这种空行
-      const own = n.children.filter((c) => c.type === 'note').length;
-      if (!own) return kids;
-      return [
-        <div className="tree-group" key={n.path}>
-          <span>{n.path}</span><span className="c">{own}</span>
-        </div>,
-        ...kids,
-      ];
-    }
-    if (filter && !`${n.title} ${n.id} ${(n.tags || []).join(' ')}`.toLowerCase().includes(filter)) return [];
-    const due = n.nextReview && n.nextReview <= today;
-    return [
-      <div key={n.id} title={n.title}
-           className={`tree-note${n.id === activeId ? ' active' : ''}`}
-           onClick={() => navigate(`/note/${encodeURIComponent(n.id)}`)}>
-        <span className="tw">{n.title}</span>
-        {due && <span style={{ width: 6, height: 6, background: 'var(--accent)', flex: 'none' }} />}
-        {n.empty && <span style={{ fontSize: 10, color: 'var(--dim)' }}>空</span>}
-      </div>,
-    ];
-  });
-
-  const root = tree.filter((n) => n.type === 'note');
-  return (
-    <>
-      {walk(tree.filter((n) => n.type === 'folder'))}
-      {root.length > 0 && (
-        <>
-          <div className="tree-group"><span>根目录</span><span className="c">{root.length}</span></div>
-          {walk(root)}
-        </>
-      )}
-    </>
-  );
-}
 
 /* ------------------------------------------------------------------ *
  * 阅读页
@@ -94,7 +46,7 @@ function Reader({ id, version, onReviewed }) {
   return (
     <div className="reader scroll" ref={scrollRef}>
       <div className="reader-inner">
-        <div style={{ minWidth: 0 }}>
+        <div className="reader-article">
           <header className="reader-head">
             <div className="rh-crumb">
               <button onClick={() => navigate('/notes')} style={{ color: 'var(--dim)', letterSpacing: 'inherit' }}>结构图</button>
@@ -214,7 +166,7 @@ export default function Notes({ version, onReviewed }) {
               <input className="input" placeholder="筛选…" value={filter}
                      onChange={(e) => setFilter(e.target.value)} />
             </div>
-            {!tree ? <Loading /> : <Tree tree={flat} activeId={noteId} filter={filter.trim().toLowerCase()} />}
+            {!tree ? <Loading /> : <FolderTree tree={flat} activeId={noteId} filter={filter.trim().toLowerCase()} />}
           </div>
         ) : (
           <div className="tree-rail">
@@ -236,7 +188,7 @@ export default function Notes({ version, onReviewed }) {
                 <button className="on">结构</button>
               </div>
               <span style={{ fontSize: 11, color: 'var(--text-2)' }}>
-                {mind ? `按 tags.yaml 受控词表　·　${mind.counts.emptyBranches} 个考点尚无笔记` : ''}
+                {mind ? `${mind.counts.emptyBranches} 个考点尚无笔记` : ''}
               </span>
             </div>
 
@@ -249,7 +201,6 @@ export default function Notes({ version, onReviewed }) {
               <span className="lg"><i style={{ width: 8, height: 1, background: 'var(--line-2)' }} />空笔记</span>
               <span className="lg"><i style={{ width: 12, height: 1, background: 'repeating-linear-gradient(90deg,var(--line-2) 0 2px,transparent 2px 7px)' }} />词表已声明 · 待填充</span>
               <span className="lg"><i style={{ width: 5, height: 5, borderRadius: 5, background: 'var(--accent)' }} />未归类到分支</span>
-              <span style={{ marginLeft: 'auto' }}>点击节点进入笔记　·　拖拽平移　·　滚轮缩放</span>
             </div>
           </div>
         )}

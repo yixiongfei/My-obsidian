@@ -43,6 +43,14 @@
   --glow: 0.26;    /* 星体光晕：夜空里才撑得住这个强度 */
   --star-op: 0.5;  /* 整页星野强度 */
 
+  /* 学科色：目录树的色条、真题分栏的记号。只当标识用，不当文字色；夜里亮一档 */
+  --hue-1: #5B8DEF;   /* 蓝   · 数学（琥珀留给到期 / 逾期，不再混用） */
+  --hue-2: #E2617C;   /* 玫红 · 408 */
+  --hue-3: #3FC0C8;   /* 青   · 英语 */
+  --hue-4: #6FC076;   /* 绿   · 图像 */
+  --hue-5: #A98DF2;   /* 紫 */
+  --hue-6: #EF8B5B;   /* 橙   · 个人 */
+
   /* 等距立柱的派生色（组件保留，首页已统一改用轨道图） */
   --iso-edge:   #E8ECF5;
   --iso-grid:   #141A28;
@@ -87,6 +95,14 @@
   /* 纸上同样强度的光晕会糊成一团蓝雾，压到三分之一 */
   --glow: 0.09;
   --star-op: 0.32;
+
+  /* 纸上压深一档，保证在冷白底上仍有 3:1 以上对比 */
+  --hue-1: #2F6BD8;
+  --hue-2: #C23B5C;
+  --hue-3: #14808A;
+  --hue-4: #2E8540;
+  --hue-5: #6A47C8;
+  --hue-6: #C8561F;
 
   --iso-edge:   #10141C;
   --iso-grid:   #E8EBF2;
@@ -216,6 +232,11 @@ body::after {
 a { color: var(--accent); text-decoration: none; }
 button, input, textarea, select { font: inherit; color: inherit; }
 button { cursor: pointer; background: none; border: none; padding: 0; }
+
+/* ── 学科色挂载：容器挂一个 .hue-N，里面用 var(--hue) 取色 ── */
+.hue-1 { --hue: var(--hue-1); } .hue-2 { --hue: var(--hue-2); } .hue-3 { --hue: var(--hue-3); }
+.hue-4 { --hue: var(--hue-4); } .hue-5 { --hue: var(--hue-5); } .hue-6 { --hue: var(--hue-6); }
+.hue-math { --hue: var(--hue-1); } .hue-408 { --hue: var(--hue-2); } .hue-english { --hue: var(--hue-3); }
 
 /* ── 排版原子 ───────────────────────────────────────── */
 .lbl { font-size: 10px; letter-spacing: 0.2em; color: var(--dim); text-transform: uppercase; }

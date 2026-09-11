@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
 import matter from 'gray-matter';
-import { VAULT_ROOT, IGNORED_DIRS, IMAGE_EXT } from '../config.js';
+import { VAULT_ROOT, IGNORED_DIRS, IMAGE_EXT, isNotePath } from '../config.js';
 
 /* ------------------------------------------------------------------ *
  * 小工具
@@ -162,6 +162,8 @@ class VaultIndex {
         const ext = path.extname(e.name).toLowerCase();
         const id = toId(abs);
         if (ext === '.md') {
+          // 只收 NOTE_DIRS 里的 .md；图片和 .canvas 不受此限制
+          if (!isNotePath(id)) continue;
           try {
             const raw = await fsp.readFile(abs, 'utf8');
             this.notes.set(id, parseNote(abs, id, raw));
@@ -221,6 +223,8 @@ class VaultIndex {
     if (id.startsWith('..')) return false;
     const ext = path.extname(abs).toLowerCase();
     if (ext !== '.md' && !IMAGE_EXT.has(ext) && ext !== '.canvas') return false;
+    // 允许目录之外新建/修改的 .md 一律当作不存在，和全量扫描口径一致
+    if (ext === '.md' && !isNotePath(id)) return false;
     try {
       if (ext === '.md') {
         const raw = await fsp.readFile(abs, 'utf8');

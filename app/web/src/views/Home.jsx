@@ -15,6 +15,8 @@ export default function Home({ version, theme }) {
   const bodyRef = useRef(null);
   const { data, loading, error, reload } = useApi(() => api.dashboard(), [version]);
   const { data: mind } = useApi(() => api.mindmap(), [version]);
+  const { data: examList } = useApi(() => api.exams(), []);
+  const exams = examList?.exams;
 
   if (loading && !data) return <Loading />;
   if (error) return <ErrorBox error={error} onRetry={reload} />;
@@ -32,6 +34,7 @@ export default function Home({ version, theme }) {
     { to: '/notes', k: '笔记', v: counts.notes, unit: '篇', d: '按词表铺开的结构图与阅读页' },
     { to: '/review', k: '复习', v: counts.reviews, unit: '次', d: '到期笔记逐篇过，折叠即自测' },
     { to: '/schedule', k: '日历', v: Math.round((daysToExam || 0) / 7), unit: '周', d: '年 → 月 → 日，含日本の祝日' },
+    { to: '/resources', k: '资源', v: exams?.filter((e) => e.submitted >= e.units).length ?? 0, unit: `/ ${exams?.length ?? 0} 套真题`, d: '英语一 / 英语二历年真题，整卷作答再对答案' },
   ];
 
   return (
@@ -45,8 +48,6 @@ export default function Home({ version, theme }) {
               <span style={{ color: 'var(--accent)' }}>可生长的理解。</span>
             </h1>
             <p className="hero-lede">
-              从一篇笔记、一道真题或一次推导开始，让它们互相连接，
-              按 1 · 2 · 4 · 7 · 15 · 30 天的节律回到你面前。
             </p>
             <div className="row" style={{ gap: 20, marginTop: 34, flexWrap: 'wrap' }}>
               <button className="btn primary lg" onClick={() => navigate('/notes')}>

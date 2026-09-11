@@ -20,7 +20,7 @@ export const daysBetween = (a, b) => {
   return Math.round((p(b) - p(a)) / 86400000);
 };
 
-/** 第 count 次复习之后，距下一次的天数（review_log_schema.md 的间隔表） */
+/** 第 count 次复习之后，距下一次的天数（config.js 的 INTERVALS 间隔表） */
 export const intervalAfter = (count) => INTERVALS[Math.min(count, INTERVALS.length - 1)];
 
 const DEFAULT_NOTE = {

@@ -64,7 +64,7 @@ export default function ReviewBar({ note, onDone }) {
       <button className="btn primary" onClick={() => submit('good')} disabled={!!busy}>
         已掌握　{nextGap(note.reviewCount)} 天
       </button>
-      <span style={{ fontSize: 11, color: 'var(--dim)' }} title="按 review_log_schema.md 的间隔表推算">
+      <span style={{ fontSize: 11, color: 'var(--dim)' }} title="按 1 / 2 / 4 / 7 / 15 / 30 天的间隔表推算">
         → {plusDays(nextGap(note.reviewCount))}
       </span>
       {error && <span style={{ color: 'var(--accent)', fontSize: 12 }}>{error}</span>}

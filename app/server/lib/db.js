@@ -90,6 +90,19 @@ CREATE TABLE IF NOT EXISTS events (
 );
 CREATE INDEX IF NOT EXISTS idx_events_date ON events(date);
 
+-- 真题作答：一份卷子的一个单元（完形 / 某篇阅读 / 新题型 / 翻译 / 作文）一行。
+-- 交卷前 answers 是草稿，交卷后锁定并记分；重做就删行。本库是唯一真相
+CREATE TABLE IF NOT EXISTS exam_attempts (
+  exam_id      TEXT NOT NULL,
+  section_id   TEXT NOT NULL,
+  answers      TEXT NOT NULL DEFAULT '{}',   -- JSON：选择题 {"1":"C"}，主观题 {"text":"…"}
+  submitted_at TEXT,                         -- ISO 时间；NULL = 还在作答
+  score        REAL,
+  total        REAL,
+  updated_at   TEXT NOT NULL,
+  PRIMARY KEY (exam_id, section_id)
+);
+
 CREATE TABLE IF NOT EXISTS meta (k TEXT PRIMARY KEY, v TEXT NOT NULL);
 `;
 

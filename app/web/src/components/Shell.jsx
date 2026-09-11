@@ -8,6 +8,7 @@ const NAV = [
   // 笔记的深度复习在笔记页里做，两条路径的计数混在一起会误导
   { to: '/review',    label: '复习' },
   { to: '/schedule',  label: '日历' },
+  { to: '/resources', label: '资源' },
 ];
 
 const Sparkle = (p) => (

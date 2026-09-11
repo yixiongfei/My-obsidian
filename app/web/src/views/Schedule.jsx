@@ -154,7 +154,15 @@ function MonthView({ version, monthKey }) {
             <div className="row" style={{ gap: 24, alignItems: 'flex-start' }}>
               <div><div className="stat-v on">{totals.due}</div><div className="stat-k">待复习</div></div>
               <div><div className="stat-v">{totals.reviewed}</div><div className="stat-k">已复习</div></div>
+              <div><div className="stat-v">{data.exams?.total ?? 0}</div><div className="stat-k">已做题</div></div>
             </div>
+            {data.exams?.total > 0 && (
+              <div className="done-by">
+                {Object.entries(data.exams.bySubject).sort((a, b) => b[1] - a[1]).map(([k, v]) => (
+                  <span key={k}><b className="fig">{v}</b>{k}</span>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>

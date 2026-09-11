@@ -1,4 +1,7 @@
 {
-  "theme": "moonstone",
-  "cssTheme": "Blue Topaz"
+  "theme": "obsidian",
+  "cssTheme": "Blue Topaz",
+  "accentColor": "",
+  "interfaceFontFamily": "",
+  "textFontFamily": ""
 }

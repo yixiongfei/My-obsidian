@@ -18,7 +18,7 @@ import { VAULT_ROOT } from '../config.js';
 const DB_DIR = path.join(VAULT_ROOT, '.kb');
 export const VOCAB_DB_PATH = process.env.KB_VOCAB_DB || path.join(DB_DIR, 'vocabulary.db');
 
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2;
 
 let db = null;
 
@@ -164,6 +164,18 @@ export function open() {
   // 索引重建和批量 seed 期间可能有并发读，给一点等待余量
   db.exec('PRAGMA busy_timeout = 5000;');
   db.exec(SCHEMA);
+  /* v2：标注词。important 是「我在真题里双击标出来的 / 手动加的」，排队时优先；
+     marked_at 记哪天标的，进「今日」列表用；added_at 只有手动加的自定义词才有。
+     CREATE TABLE IF NOT EXISTS 不会给老库补列，逐条 ALTER，列已存在就吞掉报错。 */
+  for (const sql of [
+    'ALTER TABLE vocab_cards ADD COLUMN important INTEGER NOT NULL DEFAULT 0',
+    'ALTER TABLE vocab_cards ADD COLUMN marked_at TEXT',
+    'ALTER TABLE vocab_cards ADD COLUMN mark_source TEXT',
+    'ALTER TABLE vocab_words ADD COLUMN added_at TEXT',
+  ]) {
+    try { db.exec(sql); } catch { /* 已经有了 */ }
+  }
+  db.exec('CREATE INDEX IF NOT EXISTS idx_vc_important ON vocab_cards(important)');
   setMeta('schema_version', SCHEMA_VERSION);
   return db;
 }

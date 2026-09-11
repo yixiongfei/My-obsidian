@@ -53,3 +53,13 @@ Tatoeba 没覆盖到的词由项目自己补一条占位例句，保证每个词
 
 `seek-bzip@2.0.0` 仅用于 `import-tatoeba-ky-examples.mjs` 解压官方导出包，
 是 devDependency，**不进入服务端运行时和浏览器打包产物**。
+
+---
+
+## 历年真题（不在本目录，位于 vault 的 `.kb/exams/`）
+
+- **来源**：[计算机考研杂货铺](https://www.csgraduates.com/study_methods/) 的 英语 / 数学 / 408 历年真题页与真题标签页
+- **许可**：站点声明「保留所有权利」。真题本身是公开考试内容，解析、范文与标签是站点作者的整理成果，
+  因此抓取结果**只作个人练习使用**，存放在被 git 忽略的 `.kb/exams/`，不随仓库分发
+- **重新生成**：`node scripts/import-exams.mjs`（每个 JSON 都保留 `source` 字段指回原页面）
+- **依赖**：`node-html-parser@9` 仅用于这个脚本解析页面，是 devDependency，不进入服务端运行时和浏览器打包产物

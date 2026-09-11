@@ -17,6 +17,8 @@ import * as schedule from './lib/schedule.js';
 import { mindmap } from './lib/mindmap.js';
 import * as vocab from './lib/vocabulary.js';
 import * as vocabDb from './lib/vocabulary-db.js';
+import * as exams from './lib/exams.js';
+import * as marks from './lib/vocab-marks.js';
 
 const app = express();
 app.use(cors());
@@ -143,6 +145,74 @@ app.post('/api/vocabulary/sync-markdown', (_req, res) => {
 });
 
 app.get('/api/vocabulary/overview', (_req, res) => res.json(vocab.overview()));
+
+/* 标注词：真题里双击标出来的、或在单词列表里手动加的。
+   命中考研词表的标在原词条上（前端画红线），命中不了的建自定义词（蓝线）。 */
+app.get('/api/vocabulary/marks', (_req, res) => res.json(marks.marks()));
+
+app.post('/api/vocabulary/mark', (req, res) => {
+  const { term, source = '', meaning = '', on = true } = req.body || {};
+  try {
+    res.json(marks.mark(String(term || ''), { source: String(source || ''), meaning: String(meaning || ''), on: on !== false }));
+  } catch (err) {
+    if (err.code === 'BAD_TERM') throw bad(err.message, 400);
+    throw err;
+  }
+});
+
+app.get('/api/vocabulary/words', (req, res) => {
+  res.json(marks.list({
+    view: String(req.query.view || 'today'),
+    q: String(req.query.q || ''),
+    limit: Number(req.query.limit) || 200,
+    offset: Number(req.query.offset) || 0,
+  }));
+});
+
+app.patch('/api/vocabulary/words/:id', (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id)) throw bad('id 不合法');
+  res.json(marks.setImportant(id, !!req.body?.important));
+});
+
+/* ------------------------------------------------------------------ *
+ * 学习资源：历年真题（英语一 / 二、408、数学一 / 二 / 三）与真题标签
+ *
+ * 题面从 .kb/exams/*.json 来（scripts/import-exams.mjs 抓的），答案与解析
+ * 只在某个单元交卷之后才随响应下发——前端拿不到，模拟真卷的「做完再对」。
+ * ------------------------------------------------------------------ */
+
+app.get('/api/exams', (_req, res) => res.json(exams.listExams()));
+
+app.get('/api/exams/tags/:group', (req, res) => {
+  const tags = exams.getTags(req.params.group);
+  if (!tags) throw bad('还没有这一科的标签数据，先运行 scripts/import-exams.mjs tags', 404);
+  res.json(tags);
+});
+
+app.get('/api/exams/assets/:file', (req, res, next) => {
+  const abs = path.join(exams.EXAMS_IMG_DIR, path.basename(req.params.file));
+  if (!fs.existsSync(abs)) return next();
+  res.sendFile(abs, { headers: { 'Cache-Control': 'public, max-age=86400' } });
+});
+
+app.get('/api/exams/:id', (req, res) => {
+  const exam = exams.publicExam(req.params.id);
+  if (!exam) throw bad('这份真题不存在，先运行 scripts/import-exams.mjs 抓取', 404);
+  res.json(exam);
+});
+
+app.put('/api/exams/:id/:section/answers', (req, res) => {
+  res.json(exams.saveDraft(req.params.id, req.params.section, req.body?.answers));
+});
+
+app.post('/api/exams/:id/:section/submit', (req, res) => {
+  res.json(exams.submit(req.params.id, req.params.section, req.body?.answers));
+});
+
+app.post('/api/exams/:id/:section/reset', (req, res) => {
+  res.json(exams.reset(req.params.id, req.params.section));
+});
 
 /* ------------------------------------------------------------------ *
  * 日程：年 → 月 → 日

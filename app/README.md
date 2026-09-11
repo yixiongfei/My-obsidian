@@ -26,6 +26,10 @@ pnpm start            # 生产模式，后端同时托管前端：http://127.0.0
 | 本机日程（events） | `.kb/index.db` | **不能**，属于持久数据 |
 | 英语词汇排期与复习历史 | `.kb/vocabulary.db` | **不能**，公开词表种子恢复不了个人进度 |
 | 公开词表与例句 | `app/server/data/*.json` | **能**，见 `scripts/` 下的两个导入脚本 |
+| 笔记复习日志 | `app/review_log.jsonl` | **不能**，只增不改的复习事件流 |
+| 真题题面与标签 | `.kb/exams/*.json` | **能**，`node scripts/import-exams.mjs` 重新抓取 |
+| 真题作答记录 | `.kb/index.db` 的 `exam_attempts` | **不能** |
+| 考点标签受控词表 | `app/tags.yaml` | —— 手写维护，思维导图与首页学科图的骨架 |
 
 `.kb/` 一直被 git 忽略，里面是你的私人 SQLite 数据。换电脑时手动复制 `index.db` 和
 `vocabulary.db`；如果库里还有没 checkpoint 的写入，`-wal` / `-shm` 也要一起带上。
@@ -41,15 +45,16 @@ npm run electron:build   # 产出 release/ 里的安装包
 
 打包后第一次启动会让你选 Obsidian 仓库文件夹，选过一次就记住了；菜单里可以随时切换。
 
-## 五个视图
+## 六个视图
 
 | 视图 | 做什么 |
 |---|---|
-| 首页 | 首屏是标题与学科图，往下滚是倒计时与四个入口 |
+| 首页 | 首屏是标题与学科图，往下滚是倒计时与五个入口 |
 | 仪表盘 | 倒计时、统计、今日待复习、复习热力图、标签分布、最近复习 |
-| 笔记 | 可折叠侧栏 + 思维导图 + 阅读页，支持 KaTeX、表格、callout 折叠、wiki 链接互跳、反向链接 |
+| 笔记 | 可折叠的文件树（一级目录带学科色）+ 思维导图 + 阅读页，支持 KaTeX、表格、callout 折叠、wiki 链接互跳、反向链接 |
 | 复习 | **英语词汇 Anki**：每轮最多 100 张到期卡 + 20 个新词，四档评分，Space 翻面、1/2/3/4 评分 |
 | 日程 | 年表 → 月表 → 日表逐层下钻，日视图含当天的词汇完成数 |
+| 资源 | **历年真题**：英语一 / 二、数学一 / 二 / 三、408，按真卷版式出题，整单元交卷后才给答案；408 与数学另有知识点标签页 |
 
 笔记的深度复习**不在**「复习」页：数学和 408 这类知识点要回到笔记原文长时间琢磨，
 所以阅读页标题右侧的「复习这篇」会滚到正文下方的复习记录区，就地记一次，不跳走。
@@ -68,6 +73,29 @@ npm run electron:build   # 产出 release/ 里的安装包
 `Ctrl / ⌘ + K` 全局搜索。
 
 wiki 链接的关系图没有做——Obsidian 自带的 graph view 已经覆盖了。
+
+## 历年真题
+
+题面抓自 [计算机考研杂货铺](https://www.csgraduates.com/study_methods/)，一次抓完放在 `.kb/exams/`（英语 34 套、数学 57 套、408 18 套，
+加两份知识点标签）。该站声明保留所有权利，抓下来只作个人练习，所以数据和 SQLite 一样留在 `.kb/` 里、不进 git：
+
+```bash
+node scripts/import-exams.mjs            # 全部，约 180MB（含原始页面缓存与图片）
+node scripts/import-exams.mjs 408        # 只抓一科：english1 english2 408 math1 math2 math3 tags
+node scripts/import-exams.mjs --reparse  # 不联网，用缓存重新解析
+```
+
+**答案由服务端把关**：`/api/exams/:id` 交卷前不下发答案、解析和知识点标签，DevTools 里也看不到；
+`POST …/submit` 之后才随响应返回。「交卷」的粒度是单元——英语的完形 / 每篇阅读 / 新题型 / 翻译 / 作文，
+408 的四门选择题各一块 + 综合题逐题，数学的选择 / 填空各一块 + 解答题逐题。草稿边做边存，刷新不丢；重做就清掉这一单元。
+
+- 完形的空是可回填的：选了词就写进正文的下划线上，判完卷再打对错
+- 新题型（英语 Part B）的答案格式站点每年都不一样，脚本尽力提取；提不出来时前端退化为「对照解析自评」
+- 数学公式是站点 KaTeX 渲染好的 HTML，原样保留；408 的代码块去掉了 Chroma 高亮只留纯文本
+- 主观题分值按题面里的「本题满分 N 分」「（4 分）」相加得来，写没写就不显示、也不计总分
+- 知识点标签页（`/resources/tags/408`、`/resources/tags/math`）来自站点的真题标签页，点题号跳到对应卷子的那道题（`?q=题号`）
+
+源站数据本身有几处瑕疵（2010 英语一完形缺第 3 空、2023 英语一一句话重复、2026 数学三还没写完），脚本不猜，原样保留。
 
 ## 两个图不是装饰
 
@@ -97,6 +125,11 @@ Node 重解析这一个文件 → 写进 SQLite
 
 删掉 `.kb/index.db` 下次启动会原样重建，所以它不进 git。
 
+**只有 `server/config.js` 里 `NOTE_DIRS` 列出的顶层目录会被当成笔记来源**（目前是 数学 / 英语 / 408 / 图像）。
+「个人」里的随笔、工具目录里的说明文档不进索引、不进目录树、不进复习队列；要多收一个学科就在那个数组里加一项，
+或者启动时用 `NOTE_DIRS=数学,英语,408,政治` 环境变量覆盖。这个限制只针对 `.md`，图片和 `.canvas` 仍然全库扫描——
+路线图画布就在「个人」里。
+
 用的是 Node 22 内置的 `node:sqlite`——零依赖，不用编译原生模块，Electron 37+ 同样是 Node 22，桌面端和服务端共用一份代码。
 
 库里存三类东西：
@@ -107,6 +140,7 @@ Node 重解析这一个文件 → 写进 SQLite
 | `notes_fts` | 全文检索（FTS5 trigram 分词） | 同上 |
 | `reviews` | 复习历史 | `review_log.jsonl` 的镜像 |
 | `events` | 自定义日程 | **本库是唯一真相** |
+| `exam_attempts` | 真题作答（草稿 / 交卷时间 / 得分） | **本库是唯一真相** |
 
 全文检索用 trigram 分词器：中文没有词边界，默认的 unicode61 切不开。代价是查询词必须 ≥ 3 个字符，所以「矩阵」「极限」这类两字词自动退回 `LIKE` 匹配。
 
@@ -120,7 +154,7 @@ last_reviewed: 2026-09-10
 next_review: 2026-09-17
 ```
 
-正文一个字节都不改（用的是逐行替换，不是 YAML 重新序列化，所以 `tags: [a, b]` 这种写法也会原样保留）。同时向 `review_log.jsonl` 追加一行，字段和间隔表完全遵循仓库根目录的 `review_log_schema.md`：
+正文一个字节都不改（用的是逐行替换，不是 YAML 重新序列化，所以 `tags: [a, b]` 这种写法也会原样保留）。同时向 `app/review_log.jsonl` 追加一行（每行一条 JSON：`date` / `note_path` / `tags` / `review_count_after` / `added_content` / `source`），间隔表如下：
 
 | 已复习次数 | 距下次天数 |
 |---|---|
@@ -193,9 +227,11 @@ app/
     lib/query.js        全文检索、复习分桶、仪表盘统计
   server/lib/mindmap.js   按 tags.yaml 词表组装的从属关系树
   server/lib/holidays.js  日本の祝日推算
+  server/lib/exams.js     真题：按需加载卷子、作答记录、交卷判分、答案把关
+  scripts/import-exams.mjs  抓取并整理真题（英语 / 408 / 数学 + 知识点标签）
   web/src/
-    views/              Home（首页）/ Notes / Review / Schedule
-    components/         Shell（顶栏）、命令面板、Prose、复习浮条、OrbitMap（轨道图）、MindMap（思维导图）
+    views/              Home（首页）/ Notes / Review / Schedule / Resources（真题列表）/ Exam（卷面）/ ExamTags（知识点标签）
+    components/         Shell（顶栏）、命令面板、Prose、复习浮条、FolderTree（文件树）、OrbitMap（轨道图）、MindMap（思维导图）
     styles/             base（设计系统）· markdown（正文）· views（各视图）
   design/               设计稿源文件（.dc.html 画板 + canvas.json）
   electron/main.cjs     选仓库 → 起服务 → 开窗口

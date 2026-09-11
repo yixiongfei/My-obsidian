@@ -16,3 +16,7 @@ schedule.json.migrated
 
 # 设计稿的合成产物（约 2MB，由 app/design/*.dc.html 重新生成）
 app/design/kaoyan-knowledge-base.html
+
+# 真题抓取脚本的产物在 .kb/exams/（已被 .kb/ 覆盖）；截图辅助脚本不进库
+app/.shot.cjs
+.vscode/

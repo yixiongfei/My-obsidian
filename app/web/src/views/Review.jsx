@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import { Loading, ErrorBox } from '../components/bits.jsx';
@@ -23,6 +24,7 @@ const RATINGS = [
 const dot = (d) => (d ? d.replaceAll('-', '.') : '');
 
 export default function Review({ version, onReviewed }) {
+  const navigate = useNavigate();
   const { data, loading, error, reload } = useApi(() => api.cards(), [version]);
 
   // 本轮的不可变快照。只在开新一轮时整体替换
@@ -135,6 +137,7 @@ export default function Review({ version, onReviewed }) {
           )}
           <div className="row" style={{ gap: 12, marginTop: 28, justifyContent: 'center' }}>
             <button className="btn primary lg" onClick={newRound}>开始新一轮　→</button>
+            <button className="btn lg" onClick={() => navigate('/review/words')}>单词列表</button>
           </div>
           <div className="vocab-done-meta">
             剩余到期 {counts.due ?? 0} · 未学新词 {counts.new ?? 0} · 已掌握 {counts.mastered ?? 0}
@@ -165,6 +168,7 @@ export default function Review({ version, onReviewed }) {
             : card.due ? <span className="dim">下次 {dot(card.due)}</span> : <span className="dim">新词</span>}
           <span className="dim">复习 {card.reviewCount} 次</span>
           <span className="dim">已掌握 {counts.mastered ?? 0}</span>
+          <button className="vocab-link" onClick={() => navigate('/review/words')}>单词列表 →</button>
         </div>
       </div>
 
@@ -172,13 +176,14 @@ export default function Review({ version, onReviewed }) {
               onClick={() => setFlipped((f) => !f)}
               aria-label={flipped ? '收起释义' : '查看释义'}>
         <div className="vocab-face">
-          <div className="vocab-term">{card.term}</div>
+          <div className="vocab-term">{card.term}{card.important && <span className="vocab-imp" title="标注词">★</span>}</div>
           {card.phonetic && <div className="vocab-ph">/{card.phonetic}/</div>}
           {!flipped && <div className="vocab-cue">点击卡片或按 Space 查看释义</div>}
         </div>
 
         {flipped && (
-          <div className="vocab-back">
+          /* 释义区自己会滚动，点它不该把卡片合上；要收起点顶部的单词那一行 */
+          <div className="vocab-back" onClick={(e) => e.stopPropagation()}>
             {senses.map((s, i) => (
               <div className="vocab-sense" key={i}>
                 <span className="vs-ord fig">{i + 1}</span>
@@ -219,7 +224,6 @@ export default function Review({ version, onReviewed }) {
           </button>
         ))}
       </div>
-      {!flipped && <div className="vocab-hint">先翻面再评分　·　Space 翻面，1 / 2 / 3 / 4 评分</div>}
     </div></div>
   );
 }

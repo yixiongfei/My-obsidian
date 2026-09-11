@@ -31,6 +31,19 @@ export const api = {
   // 发完就走，不等磁盘：失败也不该挡住用户翻下一张卡
   syncVocabMarkdown: () => fetch('/api/vocabulary/sync-markdown', body('POST', {})).catch(() => {}),
   vocabOverview: () => j('/api/vocabulary/overview'),
+  // 标注词与单词列表
+  vocabMarks: () => j('/api/vocabulary/marks'),
+  markWord: (term, opts = {}) => j('/api/vocabulary/mark', body('POST', { term, ...opts })),
+  words: (view, q = '') => j(`/api/vocabulary/words?view=${encodeURIComponent(view)}&q=${encodeURIComponent(q)}`),
+  setWordImportant: (id, important) => j(`/api/vocabulary/words/${id}`, body('PATCH', { important })),
+
+  // 学习资源：历年真题。答案只在 submit 之后随响应下发
+  exams: () => j('/api/exams'),
+  exam: (id) => j(`/api/exams/${encodeURIComponent(id)}`),
+  examTags: (group) => j(`/api/exams/tags/${encodeURIComponent(group)}`),
+  saveExamDraft: (id, section, answers) => j(`/api/exams/${encodeURIComponent(id)}/${section}/answers`, body('PUT', { answers })),
+  submitExam: (id, section, answers) => j(`/api/exams/${encodeURIComponent(id)}/${section}/submit`, body('POST', { answers })),
+  resetExam: (id, section) => j(`/api/exams/${encodeURIComponent(id)}/${section}/reset`, body('POST', {})),
   year: (y) => j(`/api/schedule/year/${y}`),
   month: (m) => j(`/api/schedule/month/${m}`),
   day: (d) => j(`/api/schedule/day/${d}`),
