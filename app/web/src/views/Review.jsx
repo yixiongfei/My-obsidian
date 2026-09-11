@@ -197,9 +197,11 @@ export default function Review({ version, onReviewed }) {
           <div className="vocab-term">{card.term}{card.important && <span className="vocab-imp" title="标注词">★</span>}</div>
           {card.phonetic && <div className="vocab-ph">/{card.phonetic}/</div>}
           {voice && (
-            <button className="voice-btn sm" title="再读一遍" onClick={(e) => { e.stopPropagation(); speak(card.term); }}>
+            <span role="button" tabIndex={0} className="voice-btn sm" title="再读一遍"
+                  onClick={(e) => { e.stopPropagation(); speak(card.term); }}
+                  onKeyDown={(e) => { if (e.key === 'Enter') { e.stopPropagation(); speak(card.term); } }}>
               <SpeakerIcon on />
-            </button>
+            </span>
           )}
           {!flipped && <div className="vocab-cue">点击卡片或按 Space 查看释义</div>}
         </div>
@@ -221,9 +223,11 @@ export default function Review({ version, onReviewed }) {
                 <div className="row" style={{ gap: 10 }}>
                   <div className="lbl">USAGE EXAMPLE</div>
                   {voice && (
-                    <button className="voice-btn sm" title="朗读例句" onClick={(e) => { e.stopPropagation(); speak(card.example.text, { rate: 0.95 }); }}>
+                    <span role="button" tabIndex={0} className="voice-btn sm" title="朗读例句"
+                          onClick={(e) => { e.stopPropagation(); speak(card.example.text, { rate: 0.95 }); }}
+                          onKeyDown={(e) => { if (e.key === 'Enter') { e.stopPropagation(); speak(card.example.text, { rate: 0.95 }); } }}>
                       <SpeakerIcon on />
-                    </button>
+                    </span>
                   )}
                 </div>
                 <p className="vu-en">{card.example.text}</p>

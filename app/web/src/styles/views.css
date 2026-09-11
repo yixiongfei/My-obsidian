@@ -778,17 +778,17 @@ mark.hl.hl-flash { animation: hl-flash 2.4s var(--ease) both; }
 .q-md-btn {
   padding: 3px 7px; border-radius: var(--radius-s);
   font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.02em;
-  color: var(--dim); border: var(--hair) solid transparent;
-  opacity: 0; transition: opacity 0.12s, color 0.12s, border-color 0.12s, background 0.12s;
+  color: var(--dim); border: var(--hair) solid var(--line);
+  opacity: 0.7; transition: opacity 0.12s, color 0.12s, border-color 0.12s, background 0.12s;
+  font-family: var(--font); font-size: 11px; white-space: nowrap;
 }
 .q:hover .q-md-btn, .fill-row:hover .q-md-btn, .unit-head:hover .q-md-btn, .q-md-btn:focus-visible { opacity: 1; }
-.q-md-btn:hover { color: var(--accent); border-color: var(--line-2); background: var(--bg-1); }
+.q-md-btn:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
 .fill-row { display: flex; align-items: center; gap: 10px; }
-.unit-head .q-md-btn { opacity: 0.6; }
 
 /* ── 词卡发音 ─────────────────────────────────────────── */
 .voice-btn {
-  display: inline-grid; place-items: center; width: 26px; height: 26px;
+  display: inline-grid; place-items: center; width: 26px; height: 26px; cursor: pointer;
   border-radius: 50%; color: var(--dim); border: var(--hair) solid transparent;
   transition: color 0.12s, border-color 0.12s, background 0.12s;
 }
