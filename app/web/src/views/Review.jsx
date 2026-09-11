@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import Prose from '../components/Prose.jsx';
@@ -11,6 +11,8 @@ const weight = (n) => (n.tags.includes('考研') ? 2 : 0) + (n.folder.startsWith
 
 export default function Review({ version, onReviewed }) {
   const navigate = useNavigate();
+  const { id } = useParams();
+  const startId = id ? decodeURIComponent(id) : null;
   const [cursor, setCursor] = useState(0);
   const [finished, setFinished] = useState([]);
   const { data: queue, loading, error, reload } = useApi(() => api.queue(), [version]);
@@ -18,8 +20,19 @@ export default function Review({ version, onReviewed }) {
   const list = useMemo(() => {
     if (!queue) return [];
     const fresh = queue.unscheduled.filter((n) => n.status === 'new').sort((a, b) => weight(b) - weight(a));
-    return [...queue.due, ...fresh].filter((n) => !finished.includes(n.id));
-  }, [queue, finished]);
+    const pool = [...queue.due, ...fresh];
+
+    // 从某篇笔记点进来时，把它顶到队首（哪怕还没到期），记完再接着走队列
+    if (startId) {
+      const all = [...pool, ...queue.upcoming, ...queue.done, ...queue.unscheduled];
+      const head = all.find((n) => n.id === startId);
+      if (head) {
+        const rest = pool.filter((n) => n.id !== startId);
+        return [head, ...rest].filter((n) => !finished.includes(n.id));
+      }
+    }
+    return pool.filter((n) => !finished.includes(n.id));
+  }, [queue, finished, startId]);
 
   const current = list[cursor] || null;
   const { data: note } = useApi(() => api.note(current.id), [current?.id], { skip: !current });
@@ -85,7 +98,7 @@ export default function Review({ version, onReviewed }) {
         {note ? <Prose html={note.html} /> : <Loading />}
 
         <div className="review-actions">
-          <ReviewBar note={current} compact onDone={advance} />
+          <ReviewBar note={current} onDone={advance} />
         </div>
       </article>
 

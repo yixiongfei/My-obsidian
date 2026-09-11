@@ -3,7 +3,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import Prose from '../components/Prose.jsx';
-import ReviewBar from '../components/ReviewBar.jsx';
 import MindMap from '../components/MindMap.jsx';
 import { Loading, ErrorBox, Empty } from '../components/bits.jsx';
 
@@ -60,7 +59,7 @@ function Tree({ tree, activeId, filter }) {
  * 阅读页
  * ------------------------------------------------------------------ */
 
-function Reader({ id, version, onReviewed }) {
+function Reader({ id, version }) {
   const navigate = useNavigate();
   const scrollRef = useRef(null);
   const [active, setActive] = useState('');
@@ -99,7 +98,13 @@ function Reader({ id, version, onReviewed }) {
               <button onClick={() => navigate('/notes')} style={{ color: 'var(--dim)', letterSpacing: 'inherit' }}>结构图</button>
               {'　/　'}{note.folder || '根目录'}
             </div>
-            <h1>{note.title}</h1>
+            <div className="rh-title">
+              <h1>{note.title}</h1>
+              <button className="btn primary" title="进入复习界面"
+                      onClick={() => navigate(`/review/${encodeURIComponent(note.id)}`)}>
+                复习这篇　→
+              </button>
+            </div>
             <div className="reader-meta">
               <span>{note.words} 字</span>
               {note.created && <span>{note.created.replaceAll('-', '.')} 创建</span>}
@@ -126,8 +131,6 @@ function Reader({ id, version, onReviewed }) {
               ))}
             </div>
           )}
-
-          <ReviewBar note={note} onDone={() => { reload(); onReviewed?.(); }} />
         </div>
 
         {note.outline.length > 1 && (
@@ -167,7 +170,7 @@ function slug(text, outline, index) {
  * 组合
  * ------------------------------------------------------------------ */
 
-export default function Notes({ version, onReviewed }) {
+export default function Notes({ version }) {
   const { id } = useParams();
   const noteId = id ? decodeURIComponent(id) : null;
   const [open, setOpen] = useState(() => localStorage.getItem('kb-tree') !== 'shut');
@@ -211,7 +214,7 @@ export default function Notes({ version, onReviewed }) {
       </aside>
 
       {noteId
-        ? <Reader id={noteId} version={version} onReviewed={onReviewed} />
+        ? <Reader id={noteId} version={version} />
         : (
           <div className="mind">
             <div className="mind-head">

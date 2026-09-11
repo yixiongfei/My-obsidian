@@ -13,7 +13,7 @@ const plusDays = (n) => {
  * 记一次复习：写回笔记 frontmatter、追加 review_log.jsonl、同步进 SQLite。
  * 只动 review_count / last_reviewed / next_review 三个字段，正文一个字不改。
  */
-export default function ReviewBar({ note, onDone, compact = false }) {
+export default function ReviewBar({ note, onDone }) {
   const [added, setAdded] = useState('');
   const [busy, setBusy] = useState(null);
   const [done, setDone] = useState(null);
@@ -36,7 +36,7 @@ export default function ReviewBar({ note, onDone, compact = false }) {
 
   if (done) {
     return (
-      <div className={compact ? 'row' : 'review-bar'} style={{ gap: 16 }}>
+      <div className="row" style={{ gap: 16 }}>
         <span className="lbl-cn">已记录</span>
         <span style={{ color: 'var(--text)', fontSize: 13 }}>
           第 {done.reviewCount} 次复习
@@ -49,7 +49,7 @@ export default function ReviewBar({ note, onDone, compact = false }) {
   }
 
   return (
-    <div className={compact ? 'row' : 'review-bar'} style={compact ? { gap: 16, flexWrap: 'wrap' } : undefined}>
+    <div className="row" style={{ gap: 16, flexWrap: 'wrap' }}>
       <span className="lbl-cn" style={{ flex: 'none' }}>记一次复习</span>
       <input
         className="input" style={{ flex: 1, minWidth: 200 }}
@@ -64,11 +64,9 @@ export default function ReviewBar({ note, onDone, compact = false }) {
       <button className="btn primary" onClick={() => submit('good')} disabled={!!busy}>
         已掌握　{nextGap(note.reviewCount)} 天
       </button>
-      {!compact && (
-        <span style={{ fontSize: 11, color: 'var(--dim)' }} title="按 review_log_schema.md 的间隔表推算">
-          → {plusDays(nextGap(note.reviewCount))}
-        </span>
-      )}
+      <span style={{ fontSize: 11, color: 'var(--dim)' }} title="按 review_log_schema.md 的间隔表推算">
+        → {plusDays(nextGap(note.reviewCount))}
+      </span>
       {error && <span style={{ color: 'var(--accent)', fontSize: 12 }}>{error}</span>}
     </div>
   );

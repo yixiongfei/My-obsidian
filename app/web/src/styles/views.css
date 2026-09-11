@@ -166,12 +166,17 @@ kbd {
 
 /* 阅读页 */
 .reader { overflow-y: auto; }
-.reader-inner { display: grid; grid-template-columns: minmax(0, 1fr) 208px; gap: 52px; max-width: 1180px; padding: 40px 48px 0; margin: 0 auto; }
+.reader-inner { display: grid; grid-template-columns: minmax(0, 1fr) 208px; gap: 52px; max-width: 1180px; padding: 40px 48px 96px; margin: 0 auto; }
 .reader-head .rh-crumb { font-size: 10px; letter-spacing: 0.18em; color: var(--dim); }
+.reader-head .rh-title {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: 28px; flex-wrap: wrap; margin: 16px 0 20px;
+}
 .reader-head h1 {
   font-size: 42px; font-weight: 500; letter-spacing: 0; line-height: 1.28;
-  margin: 16px 0 20px;
+  margin: 0; flex: 1; min-width: 0;
 }
+.reader-head .rh-title .btn { margin-bottom: 6px; }
 .reader-meta {
   display: flex; gap: 28px; flex-wrap: wrap;
   border-top: 1px solid var(--rule-hard); border-bottom: 1px solid var(--line);
@@ -191,12 +196,6 @@ kbd {
 
 .linkbar { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 44px; }
 
-.review-bar {
-  position: sticky; bottom: 0; z-index: 20;
-  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-  margin: 44px -48px 0; padding: 16px 48px;
-  background: var(--bg-1); border-top: 1px solid var(--line-2);
-}
 
 /* ==================================================================
  * 复习
@@ -293,7 +292,7 @@ kbd {
 @media (max-width: 900px) {
   .hero { padding: 32px 18px 72px; }
   .reader-inner, .mind-head, .mind-foot { padding-left: 20px; padding-right: 20px; }
-  .review-bar { margin-left: -20px; margin-right: -20px; padding-left: 20px; padding-right: 20px; }
+  .reader-head .rh-title { align-items: flex-start; }
   .notes-layout.open, .notes-layout.shut { grid-template-columns: 1fr; }
   .tree-pane { display: none; }
   .day-cell { min-height: 72px; }

@@ -45,9 +45,10 @@ export default function App() {
             <Routes location={location}>
               <Route path="/" element={<Home version={version} theme={theme} />} />
               <Route path="/dashboard" element={<Dashboard version={version} />} />
-              <Route path="/notes" element={<Notes version={version} onReviewed={reloadDash} />} />
-              <Route path="/note/:id" element={<Notes version={version} onReviewed={reloadDash} />} />
+              <Route path="/notes" element={<Notes version={version} />} />
+              <Route path="/note/:id" element={<Notes version={version} />} />
               <Route path="/review" element={<Review version={version} onReviewed={reloadDash} />} />
+              <Route path="/review/:id" element={<Review version={version} onReviewed={reloadDash} />} />
               <Route path="/schedule" element={<Schedule version={version} />} />
               <Route path="/schedule/:year" element={<Schedule version={version} />} />
               <Route path="/schedule/:year/:month" element={<Schedule version={version} />} />
@@ -67,5 +68,6 @@ export default function App() {
 function routeKey(pathname) {
   if (pathname.startsWith('/note')) return 'notes';
   if (pathname.startsWith('/schedule')) return 'schedule';
+  if (pathname.startsWith('/review')) return 'review';
   return pathname;
 }
