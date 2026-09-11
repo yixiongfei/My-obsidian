@@ -138,6 +138,7 @@ const VIEWS = {
   new: () => ({ where: "c.state = 'new'", args: [], order: 'c.important DESC, w.frequency DESC, w.term_key' }),
   learning: () => ({ where: "c.state = 'review'", args: [], order: 'c.due ASC, c.important DESC, w.term_key' }),
   known: () => ({ where: "c.state = 'mastered'", args: [], order: 'c.last_review DESC, w.term_key' }),
+  all: () => ({ where: '1 = 1', args: [], order: 'c.important DESC, w.frequency DESC, w.term_key' }),
 };
 
 export function list({ view = 'today', q = '', limit = 200, offset = 0 } = {}) {

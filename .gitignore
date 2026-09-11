@@ -10,8 +10,11 @@ app/node_modules/
 app/dist-web/
 app/release/
 
-# SQLite 索引：由 .md 文件派生，删掉会自动重建
-.kb/
+# .kb/ 里的个人数据：两个 SQLite 库（复习进度、真题作答、标注）和抓好的真题 JSON 一起进库，
+# 换电脑 clone 下来就能用；WAL/SHM 是运行时文件、原始页面缓存能重抓，都不进
+.kb/*.db-wal
+.kb/*.db-shm
+.kb/exams/raw/
 schedule.json.migrated
 
 # 设计稿的合成产物（约 2MB，由 app/design/*.dc.html 重新生成）

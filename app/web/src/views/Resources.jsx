@@ -7,7 +7,7 @@ import { Loading, ErrorBox, Empty } from '../components/bits.jsx';
 /**
  * 学习资源：三类历年真题 + 两份知识点标签。
  * 题面由 scripts/import-exams.mjs 抓到 .kb/exams/，这里按科目分栏、按年份铺开，点进去就是一张卷子。
- * 颜色跟侧栏目录树的学科色一致：英语青、数学琥珀、408 玫红。
+ * 颜色跟侧栏目录树的学科色一致：英语青、数学蓝、408 玫红。
  */
 
 const GROUPS = [
@@ -20,6 +20,7 @@ const fmt = (n) => (Number.isInteger(n) ? String(n) : n.toFixed(1));
 
 export default function Resources() {
   const { data, loading, error, reload } = useApi(() => api.exams(), []);
+  const { data: marked } = useApi(() => api.vocabMarks(), []);
   const [picked, setPicked] = useState(() => {
     try { return JSON.parse(localStorage.getItem('kb-exam-kinds') || '{}'); } catch { return {}; }
   });
@@ -61,14 +62,16 @@ export default function Resources() {
         const tagInfo = g.tags && data?.tags?.[g.tags];
         return (
           <ResGroup key={g.key} group={g} index={gi} kind={kind} list={list}
-                    stats={{ total: all.length, done, doing }} tagInfo={tagInfo} onPick={(k) => pick(g.key, k)} />
+                    stats={{ total: all.length, done, doing }} tagInfo={tagInfo} onPick={(k) => pick(g.key, k)}>
+            {g.key === 'english' && <MarkedWords words={marked || []} />}
+          </ResGroup>
         );
       })}
     </div></div>
   );
 }
 
-function ResGroup({ group, index, kind, list, stats, tagInfo, onPick }) {
+function ResGroup({ group, index, kind, list, stats, tagInfo, onPick, children }) {
   const navigate = useNavigate();
   return (
     <section className={`res-group hue-${group.hue}`}>
@@ -112,6 +115,36 @@ function ResGroup({ group, index, kind, list, stats, tagInfo, onPick }) {
           );
         })}
       </div>
+      {children}
     </section>
+  );
+}
+
+/** 真题里双击标出来的生词：词表内红、词表外蓝，点一个就去单词列表里看它 */
+function MarkedWords({ words }) {
+  const navigate = useNavigate();
+  const ky = words.filter((w) => w.inList);
+  const own = words.filter((w) => !w.inList);
+  return (
+    <div className="marked-words">
+      <div className="mw-head">
+        <span className="lbl-cn">我的标注词　{words.length}</span>
+        <button className="paper-link" onClick={() => navigate('/review/words?view=today')}>单词列表 →</button>
+      </div>
+      {!words.length ? (
+        <div className="dim" style={{ fontSize: 12, padding: '6px 0 2px' }}>还没有标注。做英语卷时双击一个单词就会记到这里。</div>
+      ) : (
+        <>
+          <div className="mw-row">
+            <span className="mw-l">考研词表内 <b className="fig">{ky.length}</b></span>
+            <span className="mw-chips">{ky.map((w) => <button key={w.id} className="mw-chip ky" onClick={() => navigate(`/review/words?q=${encodeURIComponent(w.term)}&view=all`)}>{w.term}</button>)}</span>
+          </div>
+          <div className="mw-row">
+            <span className="mw-l">词表外 <b className="fig">{own.length}</b></span>
+            <span className="mw-chips">{own.length ? own.map((w) => <button key={w.id} className="mw-chip own" onClick={() => navigate(`/review/words?q=${encodeURIComponent(w.term)}&view=all`)}>{w.term}</button>) : <span className="dim" style={{ fontSize: 12 }}>—</span>}</span>
+          </div>
+        </>
+      )}
+    </div>
   );
 }

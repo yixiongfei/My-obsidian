@@ -1,0 +1,1388 @@
+{
+ "id": "english2-2025",
+ "kind": "english2",
+ "kindLabel": "英语二",
+ "group": "english",
+ "year": 2025,
+ "title": "2025 年真题",
+ "source": "https://www.csgraduates.com/study_methods/english/english2/2025/",
+ "fetchedAt": "2026-09-11T17:46:08.728Z",
+ "sections": [
+  {
+   "id": "cloze",
+   "label": "完形填空",
+   "title": "完形填空",
+   "heading": "Section I  Use of English",
+   "type": "choice",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>Read the following text.Choose the best word(s) for each numbered blank and mark A, B, Cor D on the ANSWER SHEET.(10 points)</p>",
+   "passage": [
+    {
+     "segs": [
+      "There are many understandable reasons why you might find it difficult to ask for help when you need it. Psychologists have been interested in this\n",
+      {
+       "n": 1
+      },
+      "\nfor decades, not least because people’s widespread\n",
+      {
+       "n": 2
+      },
+      "\nto ask for help has led to some high - profile failures. Asking for help takes\n",
+      {
+       "n": 3
+      },
+      "\n. It involves communicating a need on your part—there’s something you can’t do.\n",
+      {
+       "n": 4
+      },
+      "\n, you’re broadcasting your own weaknesses, which can be\n",
+      {
+       "n": 5
+      },
+      "\n. You might worry about coming across as incompetent. You might have\n",
+      {
+       "n": 6
+      },
+      "\nabout losing control of whatever it is you’re asking for help with.\n",
+      {
+       "n": 7
+      },
+      "\nsomeone starts to help, perhaps they’ll take over, or get credit for your earlier efforts. Yet another\n",
+      {
+       "n": 8
+      },
+      "\nthat you might be worried about is being a nuisance or\n",
+      {
+       "n": 9
+      },
+      "\nthe person you go to for help. If you struggle with low self - esteem, you might find it especially difficult to\n",
+      {
+       "n": 10
+      },
+      "\nfor help because you have the added worry of the other person\n",
+      {
+       "n": 11
+      },
+      "\nyour request. You might see such refusals as implying something\n",
+      {
+       "n": 12
+      },
+      "\nabout the status of your relationship with them. To\n",
+      {
+       "n": 13
+      },
+      "\nthese difficulties, try to remind yourself that everyone needs help sometimes. Nobody knows everything and can do everything all by themselves. And while you might\n",
+      {
+       "n": 14
+      },
+      "\ncoming across as incompetent, there’s actually research that shows that advice - seekers are\n",
+      {
+       "n": 15
+      },
+      "\nas more competent, not less. Perhaps most encouraging of all is a paper from 2022 by researchers at Stanford University, in California, that involved a mix of contrived help - seeking interactions and asking people to\n",
+      {
+       "n": 16
+      },
+      "\ntimes they’d sought help in the past. The findings showed that help - seekers generally underestimate how\n",
+      {
+       "n": 17
+      },
+      "\nother people will be to help and how good it’ll make the help - giver feel (for most people, having the chance to help someone is highly\n",
+      {
+       "n": 18
+      },
+      "\n). So, bear all this in mind the next time you need to ask for help.\n",
+      {
+       "n": 19
+      },
+      "\n, take care over who you ask and when you ask them. And if someone can’t help right now, avoid taking it personally. They might just be too\n",
+      {
+       "n": 20
+      },
+      "\n, or they might not feel confident about their ability to help."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 1,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "illusion"
+      },
+      {
+       "k": "B",
+       "text": "discussion"
+      },
+      {
+       "k": "C",
+       "text": "tradition"
+      },
+      {
+       "k": "D",
+       "text": "question"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>上下文线索</strong></p><ul><li>前一句提到“There are many understandable reasons why you might find it difficult to ask for help”，说明这是一个值得探讨的问题。</li><li>后文提到“Psychologists have been interested in this ___ for decades”，心理学家感兴趣的对象应是一个<strong>问题或现象</strong>，而不是“illusion（错觉）”“discussion（讨论）”或“tradition（传统）”。</li></ul></li><li><p><strong>词语搭配与逻辑</strong></p><ul><li>“interested in this question” 表示“对这个问题的兴趣”，符合心理学家研究某个心理现象的习惯表达。</li><li>其他选项：<ul><li>A. illusion（错觉）—— 与“reasons why it’s difficult to ask for help”不匹配，心理学家不是对“错觉”感兴趣，而是对“为什么人们不愿求助”这一现象感兴趣。</li><li>B. discussion（讨论）—— 此处不是指对“讨论”感兴趣，而是对“问题”本身感兴趣。</li><li>C. tradition（传统）—— 上下文未涉及文化或传统的描述。</li></ul></li></ul></li><li><p><strong>综合判断</strong><br>整段围绕“为什么人们不愿求助”这一<strong>问题</strong>展开，因此选 <strong>D. question</strong> 最为准确。</p></li></ol><p><strong>答案：D</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 2,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "reluctance"
+      },
+      {
+       "k": "B",
+       "text": "ambition"
+      },
+      {
+       "k": "C",
+       "text": "tendency"
+      },
+      {
+       "k": "D",
+       "text": "enthusiasm"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 2 题所在句为：</p><blockquote><p>Psychologists have been interested in this ___ for decades, not least because people’s widespread ___ to ask for help has led to some high-profile failures.</p></blockquote><ul><li>前文提到 “find it difficult to ask for help”，说明人们<strong>不愿意</strong>求助。</li><li>这里 “widespread ___ to ask for help” 应填入一个表示“不愿意”或“抗拒”的词。</li><li><strong>A. reluctance</strong>（不情愿）符合语境。</li><li>B. ambition（雄心）、C. tendency（倾向）、D. enthusiasm（热情）均与“不愿意求助”的语义不符。</li></ul><p>因此正确答案是 <strong>A. reluctance</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 3,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "attention"
+      },
+      {
+       "k": "B",
+       "text": "talent"
+      },
+      {
+       "k": "C",
+       "text": "courage"
+      },
+      {
+       "k": "D",
+       "text": "patience"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 3 题空格所在句为：</p><blockquote><p>Asking for help takes <strong>______</strong>.</p></blockquote><p>结合上下文，前文提到“人们普遍不愿意求助”，后文解释求助意味着“暴露自己的弱点”“担心显得无能”“担心失去控制”等，这些都说明求助需要克服心理障碍，是一种需要勇气的行为。</p><ul><li><strong>A. attention</strong>（注意力）—— 与心理障碍无关</li><li><strong>B. talent</strong>（天赋）—— 求助不是天赋问题</li><li><strong>C. courage</strong>（勇气）—— 符合语境，因为暴露弱点、担心被拒绝等都需要勇气</li><li><strong>D. patience</strong>（耐心）—— 文中未强调等待或忍耐的过程</li></ul><p>因此正确答案是 <strong>C. courage</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 4,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "At any time"
+      },
+      {
+       "k": "B",
+       "text": "In other words"
+      },
+      {
+       "k": "C",
+       "text": "By all means"
+      },
+      {
+       "k": "D",
+       "text": "On the contrary"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 4 题所在的句子是：</p><blockquote><p>It involves communicating a need on your part—there’s something you can’t do. ____, you’re broadcasting your own weaknesses, which can be ____.</p></blockquote><ul><li>前一句说“这涉及表达你的需求——有些事你做不到”，后一句说“你是在暴露自己的弱点”。</li><li>这两句话表达的是相似的意思，只是后一句换了一种更直接、更形象的说法（“暴露弱点”是对“表达自己做不到”的进一步解释）。</li><li>这种关系是“换言”或“进一步解释说明”，所以应该用 <strong>In other words</strong>（换句话说）。</li></ul><p>其他选项分析：</p><ul><li><strong>A. At any time</strong>（在任何时候） → 不符合逻辑关系。</li><li><strong>C. By all means</strong>（当然可以 / 务必） → 表示同意或许可，不符合上下文。</li><li><strong>D. On the contrary</strong>（相反） → 表示转折或对立，但这里不是对立关系，而是同义复述。</li></ul><p>因此正确答案是 <strong>B. In other words</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 5,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "unrealistic"
+      },
+      {
+       "k": "B",
+       "text": "deceptive"
+      },
+      {
+       "k": "C",
+       "text": "tiresome"
+      },
+      {
+       "k": "D",
+       "text": "uncomfortable"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第5题所在的句子是：</p><blockquote><p>It involves communicating a need on your part—there’s something you can’t do. ____, you’re broadcasting your own weaknesses, which can be ____.</p></blockquote><p>第一个空（第4题）与第二个空（第5题）有逻辑联系。<br>第4题应该填一个表示“实际上、事实上”或“而且”之类的词，比如 <strong>Furthermore</strong> 或 <strong>In effect</strong>，表示进一步说明。<br>第5题则是说“暴露自己的弱点”这件事会让人感觉如何。</p><p>从情感与心理角度看，暴露弱点会让人感到 <strong>尴尬、不安、不舒服</strong>，而不是“不现实”（A）、“欺骗性的”（B）或“令人厌倦的”（C）。<br>因此 <strong>D. uncomfortable</strong>（令人不舒服的）最符合语境。</p><p><strong>答案：D</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 6,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "doubts"
+      },
+      {
+       "k": "B",
+       "text": "concerns"
+      },
+      {
+       "k": "C",
+       "text": "suggestions"
+      },
+      {
+       "k": "D",
+       "text": "secrets"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>第 6 题空格所在的句子是：</p><blockquote><p>You might have\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>6</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nabout losing control of whatever it is you’re asking for help with.</p></blockquote><p>这句话的意思是：“你可能会 <strong>担心</strong> 失去对你请求帮助的事情的控制。”</p><ul><li><strong>A. doubts</strong>（怀疑）—— 通常表示不确定某事是否真实或正确，但这里不是怀疑“失去控制”这件事是否会发生，而是担心它发生。</li><li><strong>B. concerns</strong>（担忧，顾虑）—— 符合语境，表示对可能发生的不利情况的忧虑。</li><li><strong>C. suggestions</strong>（建议）—— 语义不符。</li><li><strong>D. secrets</strong>（秘密）—— 语义不符。</li></ul><p>因此，正确选项是 <strong>B. concerns</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 7,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Once"
+      },
+      {
+       "k": "B",
+       "text": "Unless"
+      },
+      {
+       "k": "C",
+       "text": "Although"
+      },
+      {
+       "k": "D",
+       "text": "Before"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 7 题所在句子为：<br>“You might have worries about losing control of whatever it is you’re asking for help with. <strong>7</strong> someone starts to help, perhaps they’ll take over, or get credit for your earlier efforts.”</p><ul><li>逻辑关系：前一句说“担心失去控制”，后一句说“某人开始帮忙后，可能会接管，或抢走你之前努力的功劳”，这是时间先后与条件关系。</li><li>选项分析：<ul><li><strong>A. Once</strong>（一旦）→ 表示“一旦某人开始帮忙，就可能接管”，逻辑通顺，符合“开始帮助”这个时间点之后可能发生的事。</li><li>B. Unless（除非）→ 代入后意思变成“除非某人开始帮忙，否则他们会接管”，逻辑矛盾。</li><li>C. Although（虽然）→ 代入后表示“虽然某人开始帮忙，但他们会接管”，转折关系不自然，因为“帮忙”和“接管”不是对立关系，而是可能的结果。</li><li>D. Before（在…之前）→ 代入后意思变成“在某人开始帮忙之前，他们会接管”，不符合常理，因为接管一般发生在开始帮忙之后。</li></ul></li></ul><p>因此，最符合上下文逻辑的选项是 <strong>A. Once</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 8,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "theory"
+      },
+      {
+       "k": "B",
+       "text": "choice"
+      },
+      {
+       "k": "C",
+       "text": "factor"
+      },
+      {
+       "k": "D",
+       "text": "context"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 8 题空格所在的句子是：</p><blockquote><p>Yet another\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>8</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nthat you might be worried about is being a nuisance or\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>9</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nthe person you go to for help.</p></blockquote><p>这里的意思是“你可能担心的<strong>另一个____<strong>是成为别人的麻烦，或者____你要寻求帮助的人”。<br>前文列举了一系列</strong>原因</strong>或<strong>因素</strong>（担心显得无能、担心失去控制、担心别人抢功等），这里用 “Yet another” 表示“还有一个<strong>因素</strong>”，所以 8 空应填入表示“因素、原因”的词。</p><ul><li><strong>A. theory</strong>（理论）—— 不符合，这里不是讲理论，而是讲担心的具体因素。</li><li><strong>B. choice</strong>（选择）—— 不符合，这里不是选择，而是原因之一。</li><li><strong>C. factor</strong>（因素）—— 符合，指另一个担心的因素。</li><li><strong>D. context</strong>（背景、情境）—— 不符合，这里不是指情境，而是具体的担忧点。</li></ul><p>因此正确答案是 <strong>C. factor</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 9,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "overpraising"
+      },
+      {
+       "k": "B",
+       "text": "outperforming"
+      },
+      {
+       "k": "C",
+       "text": "reassessing"
+      },
+      {
+       "k": "D",
+       "text": "inconveniencing"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 9 题空格所在的句子是：</p><blockquote><p>Yet another ______ that you might be worried about is being a nuisance or ______ the person you go to for help.</p></blockquote><p>这里 “being a nuisance” 和 “or” 后面的词应该是<strong>近义或并列关系</strong>，表示“打扰、麻烦别人”。</p><ul><li><strong>A. overpraising</strong>（过度赞扬）——与“being a nuisance”意思无关</li><li><strong>B. outperforming</strong>（胜过、表现更好）——不符合语境</li><li><strong>C. reassessing</strong>（重新评估）——与“麻烦别人”无关</li><li><strong>D. inconveniencing</strong>（给……带来不便）——与“being a nuisance”语义一致，都是表示“麻烦别人”</li></ul><p>因此，正确答案是 <strong>D. inconveniencing</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 10,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "reach out"
+      },
+      {
+       "k": "B",
+       "text": "settle down"
+      },
+      {
+       "k": "C",
+       "text": "turn over"
+      },
+      {
+       "k": "D",
+       "text": "look back"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 10 题所在句子为：</p><blockquote><p>If you struggle with low self-esteem, you might find it especially difficult to <strong><em><strong>10</strong></em> for help</strong> because you have the added worry of the other person refusing your request.</p></blockquote><p>四个选项为：<br>A. reach out<br>B. settle down<br>C. turn over<br>D. look back</p><hr><p><strong>1. 语义搭配分析</strong></p><ul><li><strong>reach out for help</strong> 是固定搭配，意为“向他人求助”，符合上下文“因自尊心低而难以寻求帮助”的意思。</li><li><strong>settle down</strong> 意为“安定下来”，与“寻求帮助”无关。</li><li><strong>turn over</strong> 意为“翻转；移交”，不搭配“for help”。</li><li><strong>look back</strong> 意为“回顾”，也不符合语境。</li></ul><hr><p><strong>2. 上下文逻辑</strong><br>前文一直在讨论“ask for help”的困难，这里用 <strong>reach out for help</strong> 是同义替换，避免重复，且更强调“主动联系、请求”的动作，符合低自尊者不敢主动的心理。</p><hr><p><strong>3. 结论</strong><br>因此正确答案是 <strong>A. reach out</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 11,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "declining"
+      },
+      {
+       "k": "B",
+       "text": "considering"
+      },
+      {
+       "k": "C",
+       "text": "criticizing"
+      },
+      {
+       "k": "D",
+       "text": "evaluating"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 11 题空格所在的句子是：</p><blockquote><p>If you struggle with low self-esteem, you might find it especially difficult to ask for help because you have the added worry of the other person ______ your request.</p></blockquote><p><strong>句意理解</strong>：</p><ul><li>这句话讨论的是“低自尊的人更难求助”的原因。</li><li>他们除了有一般求助时的顾虑外，还有“额外的担心”——担心对方 <strong>拒绝</strong> 自己的请求。</li><li>从逻辑上看，低自尊的人会过度担心别人说“不”，这种拒绝会让他们觉得自己的关系地位更低。</li></ul><p><strong>选项分析</strong>：</p><ul><li><strong>A. declining</strong>（拒绝）——符合“担心对方拒绝”的语义，与后文“see such refusals as…”直接呼应。</li><li><strong>B. considering</strong>（考虑）——与“额外的担心”不符，考虑请求并不会特别加重低自尊者的焦虑。</li><li><strong>C. criticizing</strong>（批评）——虽然可能发生，但原文没有提到对方会批评请求本身，而是强调“拒绝”行为。</li><li><strong>D. evaluating</strong>（评估）——评估请求并不必然带来负面感受，也不直接与后文“refusals”对应。</li></ul><p><strong>因此正确答案是 A. declining</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 12,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "unnecessary"
+      },
+      {
+       "k": "B",
+       "text": "negative"
+      },
+      {
+       "k": "C",
+       "text": "strange"
+      },
+      {
+       "k": "D",
+       "text": "impractical"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 12 题题干为：</p><blockquote><p>You might see such refusals as implying something <strong>______</strong> about the status of your relationship with them.</p></blockquote><p>这句话的意思是：<br>你可能会把这种拒绝理解为暗示了你们之间关系的某种 <strong>______</strong> 的东西。</p><ul><li><strong>A. unnecessary</strong>（不必要的）—— 拒绝并不直接暗示关系“不必要”，逻辑不通。</li><li><strong>B. negative</strong>（负面的）—— 拒绝可能让人感觉对方不重视自己，或关系不够好，这是一种负面解读，符合上下文心理描述。</li><li><strong>C. strange</strong>（奇怪的）—— 拒绝并不一定表示关系“奇怪”，语气不符。</li><li><strong>D. impractical</strong>（不切实际的）—— 与关系状态无关。</li></ul><p>前文提到“担心对方拒绝你的请求”，并认为这种拒绝可能暗示关系出了问题，这是一种<strong>负面</strong>的解读，因此选 <strong>B</strong> 最合适。</p><p><strong>答案：B</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 13,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "explain"
+      },
+      {
+       "k": "B",
+       "text": "identify"
+      },
+      {
+       "k": "C",
+       "text": "predict"
+      },
+      {
+       "k": "D",
+       "text": "overcome"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 13 题空格所在的句子是：</p><blockquote><p>To\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>13</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nthese difficulties, try to remind yourself that everyone needs help sometimes.</p></blockquote><p>这里的意思是“为了 ______ 这些困难，试着提醒自己每个人有时都需要帮助”。</p><ul><li>前文列举了人们在求助时可能遇到的各种心理障碍（如害怕显得无能、担心被拒绝等）。</li><li>后文则给出建议，教人们如何调整心态、克服这些障碍。</li><li>因此，这里应填入表示“克服、解决”之意的词。</li></ul><p>选项分析：</p><ul><li><strong>A. explain</strong>（解释）——不符合语境，这里不是解释困难，而是应对困难。</li><li><strong>B. identify</strong>（识别）——不符合，因为困难在前文已经明确指出了。</li><li><strong>C. predict</strong>（预测）——不符合，这里不是预测困难，而是应对已经存在的困难。</li><li><strong>D. overcome</strong>（克服）——符合逻辑，与后文的建议相呼应。</li></ul><p>因此，正确答案是 <strong>D. overcome</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 14,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "deny"
+      },
+      {
+       "k": "B",
+       "text": "forget"
+      },
+      {
+       "k": "C",
+       "text": "miss"
+      },
+      {
+       "k": "D",
+       "text": "fear"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 14 题空格所在的句子是：</p><blockquote><p>And while you might <strong>14</strong> coming across as incompetent, there’s actually research that shows that advice-seekers are perceived as more competent, not less.</p></blockquote><p><strong>分析：</strong></p><ol><li>前文提到“寻求帮助会暴露弱点，可能让人担心显得无能”，这是常见的心理障碍。</li><li>这里的 “while” 表示“尽管”，引导一个让步状语从句，说明“虽然你可能 ______ 显得无能，但研究显示求助者反而会被认为更有能力”。</li><li>逻辑上，这里应填入一个表示“担心、害怕”的词，与前面的 “worry about coming across as incompetent” 呼应。</li><li>选项分析：<ul><li>A. deny（否认）—— 不符合上下文担忧的心理</li><li>B. forget（忘记）—— 与语境不符</li><li>C. miss（错过/想念）—— 语义不通</li><li>D. fear（害怕）—— 与“担心显得无能”完全对应</li></ul></li></ol><p>因此，正确答案是 <strong>D. fear</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 15,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "disguised"
+      },
+      {
+       "k": "B",
+       "text": "perceived"
+      },
+      {
+       "k": "C",
+       "text": "followed"
+      },
+      {
+       "k": "D",
+       "text": "introduced"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 15 题所在句子为：</p><blockquote><p>And while you might worry about coming across as incompetent, there’s actually research that shows that advice - seekers are ______ as more competent, not less.</p></blockquote><p><strong>句意分析：</strong><br>这句话的意思是：虽然你可能担心自己显得无能，但实际上有研究表明，寻求建议的人会被<strong>认为</strong>更有能力，而不是更无能。</p><p><strong>选项分析：</strong></p><ul><li>A. disguised（伪装）—— 不符合语境，这里不是指“伪装成更有能力”，而是指“被他人如何看待”。</li><li>B. perceived（被看作，被认为）—— 符合语境，表示在别人眼中，寻求建议的人显得更有能力。</li><li>C. followed（被跟随）—— 语义不通。</li><li>D. introduced（被介绍）—— 与文意无关。</li></ul><p><strong>语法与搭配：</strong><br>“be perceived as” 是常见搭配，意为“被视作……”，符合研究结果描述的“别人如何看待他们”。</p><p>因此，正确答案是 <strong>B. perceived</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 16,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "recall"
+      },
+      {
+       "k": "B",
+       "text": "classify"
+      },
+      {
+       "k": "C",
+       "text": "analyse"
+      },
+      {
+       "k": "D",
+       "text": "compare"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 16 题空格所在的句子是：</p><blockquote><p>&mldr; a paper from 2022 &mldr; involved a mix of contrived help-seeking interactions and asking people to ______ times they’d sought help in the past.</p></blockquote><p>这里描述的是研究方法的两个部分：</p><ol><li>人为设计的求助互动（contrived help-seeking interactions）</li><li>让参与者 <strong>回忆</strong> 过去曾经寻求帮助的经历</li></ol><p>四个选项的意思：</p><ul><li>A. recall 回忆</li><li>B. classify 分类</li><li>C. analyse 分析</li><li>D. compare 比较</li></ul><p>从语境来看，研究者是让参与者回想（recall）过去的求助经历，而不是分类、分析或比较这些经历。<br>因此 <strong>A. recall</strong> 是正确答案。</p>",
+     "tags": []
+    },
+    {
+     "n": 17,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "brave"
+      },
+      {
+       "k": "B",
+       "text": "disapproving"
+      },
+      {
+       "k": "C",
+       "text": "willing"
+      },
+      {
+       "k": "D",
+       "text": "hesitant"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 17 题空格所在的句子是：</p><blockquote><p>The findings showed that help - seekers generally underestimate how ______ other people will be to help&mldr;</p></blockquote><p>这句话的意思是“研究结果显示，求助者通常会低估别人提供帮助的______程度”。</p><p>四个选项：</p><ul><li>A. brave（勇敢的）—— 与“愿意帮助”没有直接对应，帮助别人一般不用“勇敢”来形容。</li><li>B. disapproving（不赞成的）—— 意思相反，不符合上下文逻辑。</li><li>C. willing（愿意的）—— 符合语境，表示求助者低估了别人愿意帮忙的程度。</li><li>D. hesitant（犹豫的）—— 意思与上下文相反，因为这里要说的是求助者低估了别人帮助的积极性。</li></ul><p>从后文 “how good it’ll make the help - giver feel” 也能看出，这里强调的是对方其实很乐意帮忙，因此选 <strong>C. willing</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 18,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "relaxing"
+      },
+      {
+       "k": "B",
+       "text": "surprising"
+      },
+      {
+       "k": "C",
+       "text": "rewarding"
+      },
+      {
+       "k": "D",
+       "text": "demanding"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>第 18 题所在句为：</p><blockquote><p>… having the chance to help someone is highly ______.</p></blockquote><p>前文提到，寻求帮助的人通常会低估别人愿意帮忙的程度，以及<strong>帮助别人会让对方感觉多好</strong>。<br>因此，这里要表达的意思是“对大多数人来说，有机会帮助别人是<strong>很有回报的、令人满足的</strong>”。</p><p>选项分析：</p><ul><li><strong>A. relaxing</strong>（放松的）—— 帮助别人不一定是放松的，有时反而需要付出精力，不符合语境。</li><li><strong>B. surprising</strong>（令人惊讶的）—— 这里不是强调“意外”，而是强调“感觉良好”。</li><li><strong>C. rewarding</strong>（有回报的、值得的）—— 符合“帮助别人带来心理满足”的语义。</li><li><strong>D. demanding</strong>（要求高的）—— 与文意相反，这里强调积极感受，而不是困难。</li></ul><p>因此正确答案是 <strong>C. rewarding</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 19,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Thus"
+      },
+      {
+       "k": "B",
+       "text": "Also"
+      },
+      {
+       "k": "C",
+       "text": "Finally"
+      },
+      {
+       "k": "D",
+       "text": "Instead"
+      }
+     ],
+     "explanation": "<p>好的，我们来看第 19 题。</p><p><strong>原文位置</strong>：</p><blockquote><p>So, bear all this in mind the next time you need to ask for help. ______, take care over who you ask and when you ask them.</p></blockquote><p><strong>选项</strong>：<br>A. Thus（因此，表示因果）<br>B. Also（而且，表示补充）<br>C. Finally（最后，表示顺序上的最后一点）<br>D. Instead（相反，表示替代或转折）</p><hr><p><strong>解析</strong>：</p><ol><li>前文主要讲了求助时的一些心理障碍，并给出了一些建议（提醒自己人人有时需要帮助、研究表明求助者会被认为更有能力等），然后用 “So, bear all this in mind&mldr;” 总结。</li><li>空格后的内容 “take care over who you ask and when you ask them” 是另一个建议，不是对前文的因果推论，也不是替代前文，也不是列举的最后一点（因为后面还有一句 “And if someone can’t help&mldr;” 才是最后一点）。</li><li>这里是在前文建议的基础上<strong>补充</strong>另一个注意事项，所以用 “Also” 最合适。</li></ol><hr><p><strong>答案</strong>：B. Also</p>",
+     "tags": []
+    },
+    {
+     "n": 20,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "polite"
+      },
+      {
+       "k": "B",
+       "text": "proud"
+      },
+      {
+       "k": "C",
+       "text": "busy"
+      },
+      {
+       "k": "D",
+       "text": "lazy"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 20 题空格所在的句子是：</p><blockquote><p>And if someone can’t help right now, avoid taking it personally. They might just be too ______, or they might not feel confident about their ability to help.</p></blockquote><p>这里解释了别人不能帮忙的可能原因：</p><ul><li>他们可能“太忙了”（too busy）</li><li>或者他们对自己的能力没信心</li></ul><p>选项分析：</p><ul><li>A. polite（礼貌的）—— 与“不能帮忙”的直接原因不符</li><li>B. proud（骄傲的）—— 与上下文逻辑不匹配</li><li>C. busy（忙碌的）—— 符合常理，别人可能因为忙而无法立刻帮忙</li><li>D. lazy（懒惰的）—— 语气与文章劝人“不要往心里去”的安慰意图不符</li></ul><p>因此，正确答案是 <strong>C. busy</strong>。</p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-1",
+   "label": "阅读 Text 1",
+   "title": "Part A · Text 1",
+   "heading": "Section II  Reading Comprehension",
+   "type": "choice",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>Read the following four texts. Answer the questions after each text by choosing A, B, Cor\nMark your answers on the ANSWER SHEET.(40 points)</p>",
+   "passage": [
+    {
+     "segs": [
+      "U.S. customers historicall tipped people they assumed were earning most of their income via tips,such as restaurant servers earning less than the minimum wage. In the early 2010s, a wide range of businesses started processing purchases with iPads and other digital payment systems. These systems often prompted customers to tip for services that were not previously tipped."
+     ]
+    },
+    {
+     "segs": [
+      "Today&rsquo;s tip requests are often not connected to the salary and service norms that used to determine when and how people tip. Customers in the past nearly always paid tips after receiving a service, such as at the conclusion of a restaurant meal, after getting a haircut or once a pizza was delivered. That timing could reward high-quality service and give workers an incentive to provide it."
+     ]
+    },
+    {
+     "segs": [
+      "It&rsquo;s becoming more common for tips to be requested beforehand. And new tipping technology may even automatically add tips"
+     ]
+    },
+    {
+     "segs": [
+      "The prevalence of digital payment devices has made it easier to ask customers for a tip. That helps explain why tip requests are creeping into new kinds of services.Customers now routinely see menus of suggested default options often well above 20% of what they owe. The amounts have risen from 10% or less in the 1950s to 15% around the year 2000 to 20% or higher today. This increase is sometimes called tipflation-the expectation of ever-higher tip amounts."
+     ]
+    },
+    {
+     "segs": [
+      "Tipping has always been a vital source of income for workers in historically tipped services, like restaurants,where the tipped minimum wage can be as low as USS2.13 an hour.Tip creep and tipflation are now further supplementing the income of many low-wage service workers."
+     ]
+    },
+    {
+     "segs": [
+      "Notably, tipping primarily benefits some of these workers,such as waiters, but not others,such as cooks and dishwashers. To ensure that all employees were paid fair wages, some restaurants banned tipping and increased prices, but this movement toward no-tipping services has largely fizzled out."
+     ]
+    },
+    {
+     "segs": [
+      "So, to increase employee wages without raising prices, more employers are succumbing to the temptations of tip creep and tipflation. However, many customers are frustrated because they feel they are being asked for too high of a tip, too often."
+     ]
+    },
+    {
+     "segs": [
+      "And, as our research emphasizes, tipping now seems to be more coercive, less generous and often completely disassociated from service guality."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 21,
+     "stem": "<p>According to Paragraph 1, he practice of tipping in the U.S.</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "was regarded as a sign of generosity"
+      },
+      {
+       "k": "B",
+       "text": "was considered essential for waiters"
+      },
+      {
+       "k": "C",
+       "text": "was a way of rewarding diligence"
+      },
+      {
+       "k": "D",
+       "text": "was optional in most businesses"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目要求根据第一段内容判断美国小费惯例的特点。第一段原文关键信息为：</p><blockquote><p>U.S. customers historically tipped people they assumed were earning most of their income via tips, such as restaurant servers earning less than the minimum wage.</p></blockquote><p>这句话说明：</p><ul><li>历史上美国顾客给小费的对象是那些<strong>主要收入依赖小费</strong>的人；</li><li>例如餐厅服务员，他们的工资<strong>低于最低工资标准</strong>，因此小费对他们的收入至关重要。</li></ul><p>由此可知，给小费对于这类服务人员（如服务员）来说<strong>是维持生计的重要来源</strong>，因此选项 <strong>B. was considered essential for waiters</strong>（对服务员来说是必不可少的）符合文意。</p><p>其他选项分析：</p><ul><li>A. 慷慨的标志：文中未强调这是“慷慨”的表现，而是基于对服务人员收入结构的认知。</li><li>C. 奖励勤奋的方式：虽然小费在传统上与服务相关，但第一段强调的是收入结构，而非直接奖励勤奋。</li><li>D. 在大多数企业中是可选的：第一段未提及“optional”这一特点，且强调的是历史惯例，而非选择性问题。</li></ul><p><strong>正确答案：B</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 22,
+     "stem": "<p>Compared with tips in the past, today&rsquo;s tips</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "are paid much less frequently"
+      },
+      {
+       "k": "B",
+       "text": "are less often requested in advance"
+      },
+      {
+       "k": "C",
+       "text": "have less to do with service quality"
+      },
+      {
+       "k": "D",
+       "text": "contribute less to workers&rsquo; income"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是“与过去的小费相比，今天的小费”有什么不同。<br>文章中提到几个关键对比：</p><ol><li><p><strong>过去的小费与服务质量和时机相关</strong></p><ul><li>原文：“Customers in the past nearly always paid tips after receiving a service &mldr; That timing could reward high-quality service and give workers an incentive to provide it.”</li><li>说明过去小费与服务质量和事后激励有关。</li></ul></li><li><p><strong>现在的小费特点</strong></p><ul><li>“It&rsquo;s becoming more common for tips to be requested beforehand.”（提前要求小费更常见）</li><li>“tipping now seems to be more coercive, less generous and often completely disassociated from service quality.”（现在的小费似乎更带有强制性、更不慷慨，而且常常与服务质量完全无关）</li></ul></li></ol><p><strong>选项分析：</strong></p><ul><li><strong>A</strong>：付小费的频率比以前低？错，文章说现在小费请求更普遍，甚至出现在以前不收小费的服务中，所以频率是增加。</li><li><strong>B</strong>：更少提前要求？错，文章说现在提前要求更常见。</li><li><strong>C</strong>：与服务质量关系更小？对，因为文章明确说现在小费常与服务质量完全无关。</li><li><strong>D</strong>：对工人收入贡献更小？错，文章说 tipflation 和 tip creep 增加了许多低薪服务人员的收入。</li></ul><p>因此正确答案是 <strong>C</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 23,
+     "stem": "<p>Tip requests are creeping into new kinds of services as a result of</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "the advancement of technology"
+      },
+      {
+       "k": "B",
+       "text": "the desire for income increase"
+      },
+      {
+       "k": "C",
+       "text": "the diversification of business"
+      },
+      {
+       "k": "D",
+       "text": "the emergence of tipflation"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是“小费请求逐渐进入新型服务的原因是什么”。</p><p>文章第三段第一句明确提到：<br><strong>“The prevalence of digital payment devices has made it easier to ask customers for a tip. That helps explain why tip requests are creeping into new kinds of services.”</strong><br>（数字支付设备的普及使得向顾客索要小费更加容易。这有助于解释为什么小费请求正逐渐进入新型服务。）</p><p>这句话直接表明，<strong>数字支付技术（如 iPad 等）的普及</strong>是小费请求扩展到新服务领域的原因。<br>因此，选项 <strong>A. the advancement of technology</strong>（技术进步）是正确答案。</p><hr><p>其他选项分析：</p><ul><li><strong>B. the desire for income increase</strong>（增加收入的愿望）：虽然雇主和员工可能希望增加收入，但文中强调的是技术普及直接促成了小费请求的扩展，而不是动机本身。</li><li><strong>C. the diversification of business</strong>（业务多样化）：文中未提及业务多样化是直接原因。</li><li><strong>D. the emergence of tipflation</strong>（小费膨胀的出现）：tipflation 是结果之一，不是小费请求进入新服务的主要原因。</li></ul><hr><p><strong>答案：A</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 24,
+     "stem": "<p>The movement toward no-tipping services was intended to</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "promote consumption"
+      },
+      {
+       "k": "B",
+       "text": "enrich income sources"
+      },
+      {
+       "k": "C",
+       "text": "maintain reasonable prices"
+      },
+      {
+       "k": "D",
+       "text": "guarantee income fairness"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是“取消小费的运动旨在……”，即该运动的初衷是什么。</p><p>根据原文第六段：</p><blockquote><p>To ensure that all employees were paid fair wages, some restaurants banned tipping and increased prices, but this movement toward no-tipping services has largely fizzled out.</p></blockquote><p>这句话明确指出，取消小费的目的是 <strong>确保所有员工都能获得公平的工资</strong>，也就是保证收入分配的公平性（不仅服务员有小费，厨师、洗碗工等后厨人员也能有公平的收入）。</p><p>对应选项：</p><ul><li><strong>A. promote consumption</strong>（促进消费）—— 原文未提及。</li><li><strong>B. enrich income sources</strong>（丰富收入来源）—— 与原文目的不符。</li><li><strong>C. maintain reasonable prices</strong>（维持合理价格）—— 原文说取消小费后反而提高了价格，因此不是维持价格。</li><li><strong>D. guarantee income fairness</strong>（保证收入公平）—— 与原文“ensure that all employees were paid fair wages”一致。</li></ul><p>因此正确答案是 <strong>D</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 25,
+     "stem": "<p>It can be learned from the last paragraph that tipping</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "is becoming a burden for customers"
+      },
+      {
+       "k": "B",
+       "text": "helps encourage quality service"
+      },
+      {
+       "k": "C",
+       "text": "is vital to business development"
+      },
+      {
+       "k": "D",
+       "text": "reflects the need to reduce prices"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>最后一段的关键信息是：</p><ul><li>许多顾客感到沮丧，因为他们觉得被要求支付过高、过频繁的小费。</li><li>小费现在似乎更具<strong>强制性</strong>，更少慷慨，且常常与服务质量完全脱钩。</li></ul><p>选项分析：</p><ul><li><strong>A. 正成为顾客的负担</strong> —— 与原文中“顾客感到沮丧”“被要求支付过高、过频繁的小费”相符。</li><li><strong>B. 有助于鼓励优质服务</strong> —— 与最后一句“常常与服务质量完全脱钩”矛盾。</li><li><strong>C. 对业务发展至关重要</strong> —— 最后一段未提及。</li><li><strong>D. 反映了降低价格的需求</strong> —— 最后一段未提及。</li></ul><p>因此，正确答案是 <strong>A</strong>。</p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-2",
+   "label": "阅读 Text 2",
+   "title": "Text 2",
+   "heading": null,
+   "type": "choice",
+   "points": 10,
+   "directions": "",
+   "passage": [
+    {
+     "segs": [
+      "When it was established, the National Health Service (NHS) was visionary: offering high-qualiy, timely care to meet the dominant needs of the population it served. Nearly 75 years on, with the UK facing very different heath hallenges,.it is clear that the model is out of date."
+     ]
+    },
+    {
+     "segs": [
+      "From life expectancy to cancer and infant mortality rates,we are lagging behind many of our peers, With more than 6.8 milio on wailist, halthcare is becoming increasingly inaccessible for those who cannot opt to pay for private treatment; and the cost of providing healthcare is increasingly squeezing out investment in other public services. As demand for healthcare continues to grow. pressures on the workforce-which is already near breaking point-will only become more acute."
+     ]
+    },
+    {
+     "segs": [
+      "Many of the answers to the crisis in health and care are well rehearsed. We need to be much better at reucing and diverting demand on health services, rather than simply managing it. Much more needs to be invested in communities and primary care to reduce our reliance on hospials, And capacity in social care needs to be greater, to support the growing number of people living with long-term conditions."
+     ]
+    },
+    {
+     "segs": [
+      "Yet despite two decades of srategies and a number of major health reforms, we have failed to make meaningful progress on any of these aims. That is why the Reform think ank is launching a new programme of work entile &ldquo;Reimagining health&rdquo;, upported by ten former health ministers. Together,we are calling for a much more open and honest conversation about the future of health in the UK,and an &ldquo;urgent rethink&rdquo; of the hospital-centric model we retain."
+     ]
+    },
+    {
+     "segs": [
+      "This must begin with the question of how we maximnise the health of the nation, rather than &ldquo;fi&rdquo; the NHS. It is stimated, for example,that healthcare accounts for only about 20% of health outcomes. Much more important are the places we live, work and socialise-yet there is no clear cross-government strategy for improving these social determinants of health. Worse, when policies like the national obesity strategy are scrapped, taxpayers are left wih the heavy price tag of treating the ilees, ikedabes, ta esu"
+     ]
+    },
+    {
+     "segs": [
+      "Reform wants to ask how power and resources should be distributed in our health system. What health functions should remain at the centre, and what should be given to local leaders, ofien responsible for services that rate health,and with a much better understanding of the needs of their populations?"
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 26,
+     "stem": "<p>According to the first two paragraphs, the NHS</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "is troubled by funding deficiencies"
+      },
+      {
+       "k": "B",
+       "text": "can hardly satisfy people&rsquo;s needs"
+      },
+      {
+       "k": "C",
+       "text": "can barely retain its current employees"
+      },
+      {
+       "k": "D",
+       "text": "is rivalled by private medical services"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目要求根据文章前两段判断关于NHS的正确描述。</p><p><strong>第一段</strong>指出：</p><ul><li>NHS 建立时是富有远见的，能提供高质量、及时的医疗。</li><li>但近 75 年后，英国面临的健康挑战已不同，<strong>该模式已经过时</strong>。</li></ul><p><strong>第二段</strong>指出：</p><ul><li>在预期寿命、癌症和婴儿死亡率等方面，英国落后于许多同类国家。</li><li>超过 680 万人在等候名单上，对于无法选择私人医疗的人来说，医疗越来越难以获得。</li><li>医疗成本挤压了其他公共服务的投资。</li><li>需求增长，而医疗人员压力巨大，接近崩溃点。</li></ul><p>综合来看，前两段的核心意思是：NHS 已经不能满足当前人们的医疗需求，无论是从服务质量、等待时间、医疗结果还是系统压力来看。</p><p><strong>选项分析：</strong></p><ul><li><strong>A. 受资金不足困扰</strong>：文中提到成本挤压其他公共服务，但未明确说 NHS 资金不足，而是说资金分配和需求管理有问题。</li><li><strong>B. 几乎不能满足人们的需求</strong>：与原文“医疗越来越难以获得”“落后于同类国家”“模式过时”等内容一致。</li><li><strong>C. 几乎留不住现有员工</strong>：文中只说 workforce 压力大，但未明确说员工流失问题。</li><li><strong>D. 被私人医疗服务竞争</strong>：文中只说无法选择私人医疗的人难以获得 NHS 服务，并未强调私人医疗是竞争对手。</li></ul><p>因此，<strong>B</strong> 是正确选项。</p>",
+     "tags": []
+    },
+    {
+     "n": 27,
+     "stem": "<p>One answer to the crisis in health and care is to</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "boost the efficiency of hospitals"
+      },
+      {
+       "k": "B",
+       "text": "lighten the burden on social care"
+      },
+      {
+       "k": "C",
+       "text": "increase resources for primary care"
+      },
+      {
+       "k": "D",
+       "text": "reduce the pressure on communities"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是“应对医疗和护理危机的一个解决办法是什么”。</p><p>文章第三段明确提到：</p><blockquote><p>Much more needs to be invested in communities and <strong>primary care</strong> to reduce our reliance on hospitals.</p></blockquote><p>这句话的意思是：需要在社区和<strong>初级保健</strong>上投入更多资源，以减少对医院的依赖。</p><p>对应选项：</p><ul><li>A. 提高医院效率 —— 文章强调减少对医院的依赖，而不是提高医院效率。</li><li>B. 减轻社会护理的负担 —— 文中提到社会护理需要增加能力（capacity），而不是减轻负担。</li><li>C. 增加初级保健的资源 —— 与原文“invested in … primary care”一致。</li><li>D. 减轻社区压力 —— 文中说要在社区投入更多，而不是减轻其压力。</li></ul><p>因此正确答案是 <strong>C</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 28,
+     "stem": "<p>&ldquo;Reimagining health&rdquo; is aimed to</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "reinforce hospital management"
+      },
+      {
+       "k": "B",
+       "text": "readjust healthcare regulations"
+      },
+      {
+       "k": "C",
+       "text": "restructure the health system"
+      },
+      {
+       "k": "D",
+       "text": "resume suspended health reforms"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>定位关键信息</strong><br>文章第四段提到：</p><blockquote><p>That is why the Reform think tank is launching a new programme of work entitled &ldquo;Reimagining health&rdquo; … Together, we are calling for a much more open and honest conversation about the future of health in the UK, and an &ldquo;urgent rethink&rdquo; of the hospital-centric model we retain.</p></blockquote><p>这说明 “Reimagining health” 的目标是重新思考目前以医院为中心的医疗体系。</p></li><li><p><strong>理解深层意图</strong><br>第五段进一步说明：</p><blockquote><p>This must begin with the question of how we maximise the health of the nation, rather than &ldquo;fix&rdquo; the NHS.<br>以及第六段：<br>Reform wants to ask how power and resources should be distributed in our health system. What health functions should remain at the centre, and what should be given to local leaders…</p></blockquote><p>这表明该项目不只是调整规章（B）或恢复暂停的改革（D），而是从根本上重新设计医疗系统的权力和资源配置，即<strong>重构医疗系统</strong>。</p></li><li><p><strong>排除干扰项</strong></p><ul><li>A 加强医院管理：与“减少对医院的依赖”相矛盾。</li><li>B 调整医疗规章：范围太窄，该项目涉及的是整体体系重构。</li><li>D 恢复暂停的改革：文中未提“恢复”过去改革，而是呼吁全新思路。</li></ul></li></ol><p>因此，正确选项是 <strong>C. restructure the health system</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 29,
+     "stem": "<p>To maximise the nation&rsquo;s health, the author suggests</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "introducing relevant taxation policies"
+      },
+      {
+       "k": "B",
+       "text": "paying due attention to social factors"
+      },
+      {
+       "k": "C",
+       "text": "reevaluating major health outcomes"
+      },
+      {
+       "k": "D",
+       "text": "enhancing the guality of health care"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问：“为了最大化国民健康，作者建议______。”</p><p>文章第五段明确提到：</p><blockquote><p>This must begin with the question of how we maximise the health of the nation, rather than &ldquo;fix&rdquo; the NHS. It is estimated, for example, that healthcare accounts for only about 20% of health outcomes. Much more important are the places we live, work and socialise — yet there is no clear cross-government strategy for improving these social determinants of health.</p></blockquote><p>这段话的核心意思是：</p><ul><li>医疗保健只占健康结果的 20% 左右。</li><li>更重要的是我们生活、工作和社交的场所（即社会因素）。</li><li>目前缺乏改善这些“健康的社会决定因素”的跨政府战略。</li></ul><p>因此，作者的建议是：<strong>要重视社会因素（social factors）</strong>，而不仅仅是医疗系统本身。</p><p>选项分析：</p><ul><li><strong>A. 引入相关的税收政策</strong>：文中未直接建议税收政策，只提到政策取消（如肥胖战略）会让纳税人承担医疗成本，但这不是建议。</li><li><strong>B. 对社会因素给予应有的关注</strong>：与原文“Much more important are the places we live, work and socialise”对应，正确。</li><li><strong>C. 重新评估主要的健康结果</strong>：文中未强调重新评估健康结果，而是强调健康结果的主要决定因素是社会因素。</li><li><strong>D. 提高医疗保健质量</strong>：作者认为只关注 NHS 本身是不够的，重点应转向社会因素。</li></ul><p>因此，正确答案是 <strong>B</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 30,
+     "stem": "<p>It can be inferred that local leaders should</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "exercise their power more reasonably"
+      },
+      {
+       "k": "B",
+       "text": "develop a stronger sense of responsibility"
+      },
+      {
+       "k": "C",
+       "text": "play a bigger role in the health system"
+      },
+      {
+       "k": "D",
+       "text": "understand people&rsquo;s health needs better"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目要求推断“地方领导应该”做什么。文章最后一段明确提到：</p><blockquote><p>What health functions should remain at the centre, and what should be given to local leaders, often responsible for services that rate health, and with a much better understanding of the needs of their populations?</p></blockquote><p>这句话的意思是：哪些卫生职能应该保留在中央，哪些应该交给地方领导？地方领导通常负责与健康相关的服务，并且更了解当地人口的需求。</p><p>由此可以推断，作者认为地方领导应该在卫生系统中承担更多责任、发挥更大作用，而不是仅仅由中央集中管理。<br>因此，<strong>C. play a bigger role in the health system</strong>（在卫生系统中发挥更大作用）是合理的推断。</p><p>A 和 B 在文中没有直接依据；D 虽然提到地方领导更了解需求，但这只是现状描述，不是“应该”做的事，而“发挥更大作用”才是作者的建议。</p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-3",
+   "label": "阅读 Text 3",
+   "title": "Text 3",
+   "heading": null,
+   "type": "choice",
+   "points": 10,
+   "directions": "",
+   "passage": [
+    {
+     "segs": [
+      "Heat action plans, or HAPs, have been proliferating in India in the past few years. In general, an HAP spells out when and how officials should issue heat warnings and alert hospitals and other institutions. Nagpur&rsquo;s plan, for instance, calls for hospirals to set aside &ldquo;cold wards&rdquo; in the summer for treating heatstroke patient, and advises builders to give construction laborers a break from work on very hot days."
+     ]
+    },
+    {
+     "segs": [
+      "But implementation of existing HAPs has been uneven, according to a report from the Center for Policy Research. Many Iack adequate funding, it found. And their triggering thresholds ofien are not customized to the local climate.In some areas, high daytime temperatures alone might serve as an adequate trigger for alerts. But in other places, nightime temperatures or humidity might be as important a gauge of risk as daytime highs."
+     ]
+    },
+    {
+     "segs": [
+      "Mumbai&rsquo;s April heat stroke deaths highlighted the need for more nuanced and localized warings, researchers say. That day&rsquo;s high temperature of roughly 36°C was 1℃C shy of the heat wave alert threshold for coastal cities set by national meteorological authorities. But the effects of the heat were amplified by humidity-an often neglected factor in heat alert systems-and the lack of shade at the late-morning outdoor ceremony."
+     ]
+    },
+    {
+     "segs": [
+      "To help improve HAPs,urban planner Kotharkar&rsquo;s team is working on a model plan that outlines best practices and could be adapted to local condions. Among other things, she says, all icshoud ceat a ueraliy wap to elp focus responses on the populations most at risk."
+     ]
+    },
+    {
+     "segs": [
+      "Such mapping doesn&rsquo;t need to be complex, Kotharkar says.&ldquo;A useful map can be created by looking at even a few key parameters.&rdquo; Por eample, neighborhoods with a large elderly population or informal dwellings that cope poorly with heat could get special warnings or be bolstered with cooling centers. The Nagpur project has already created a risk and vulnerability map, which enabled Kotharkar to tell officials which neighborhoods to focus on in the event of a heat wave this summer."
+     ]
+    },
+    {
+     "segs": [
+      "HAPs shouldn&rsquo;t just include short-term emergency responses, esearchers say,but also recommend medium- to long-term measures that could make communities cooler. In Nagpur, for example, Kotharkar&rsquo;s team has been able to advise city officials about where to plant trees to provide shade. HAPs could als guide efforts to retofit homes or modify building regulations.&ldquo;Reducing deaths in an emergency is good target to have, but it&rsquo;s the lowest target,&ldquo;says climate researcher Chandni Singh"
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 31,
+     "stem": "<p>According to Paragraph 1, Nagpur&rsquo;s plan proposes measures to</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "tackle extreme weather"
+      },
+      {
+       "k": "B",
+       "text": "ensure construction quality"
+      },
+      {
+       "k": "C",
+       "text": "monitor emergency warnings"
+      },
+      {
+       "k": "D",
+       "text": "address excessive workloads"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是<strong>第一段中 Nagpur 的计划提出的措施</strong>。</p><p>第一段原文提到：</p><blockquote><p>Nagpur&rsquo;s plan, for instance, calls for hospitals to set aside &ldquo;cold wards&rdquo; in the summer for treating heatstroke patients, and advises builders to give construction laborers a break from work on very hot days.</p></blockquote><p>意思是：</p><ul><li>医院设立“冷病房”治疗中暑病人</li><li>建议建筑商在酷热天气让建筑工人停工休息</li></ul><p>这些措施都是针对<strong>高温天气</strong>的应对措施，而高温天气属于**极端天气（extreme weather）**的一种。</p><p>选项分析：</p><ul><li><strong>A. tackle extreme weather</strong>（应对极端天气）—— 符合原文，高温是极端天气的一种，措施正是为了应对它。</li><li><strong>B. ensure construction quality</strong>（确保建筑质量）—— 原文只提到让工人停工，并未涉及建筑质量。</li><li><strong>C. monitor emergency warnings</strong>（监测紧急警报）—— 原文未提及监测警报，而是执行措施。</li><li><strong>D. address excessive workloads</strong>（解决工作量过大）—— 原文只提到高温天停工，不是因为工作量大，而是因为高温风险。</li></ul><p>因此正确答案是 <strong>A</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 32,
+     "stem": "<p>One problem with existing HAPs is that they</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "prove too costly to be implemented"
+      },
+      {
+       "k": "B",
+       "text": "lack localized allert-issuing criteria"
+      },
+      {
+       "k": "C",
+       "text": "give delayed responses to heat waves"
+      },
+      {
+       "k": "D",
+       "text": "keep hospitals under great pressure"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是“现有 HAPs（高温行动计划）的一个问题是什么”。</p><p>文章第二段提到：</p><blockquote><p>their triggering thresholds often are not customized to the local climate. In some areas, high daytime temperatures alone might serve as an adequate trigger for alerts. But in other places, nighttime temperatures or humidity might be as important a gauge of risk as daytime highs.</p></blockquote><p>这说明触发高温警报的阈值没有根据当地气候特点进行定制，即缺乏本地化的预警标准。</p><p>第三段又用孟买的例子说明：</p><blockquote><p>That day&rsquo;s high temperature of roughly 36°C was 1°C shy of the heat wave alert threshold for coastal cities set by national meteorological authorities. But the effects of the heat were amplified by humidity—an often neglected factor in heat alert systems&mldr;</p></blockquote><p>这进一步说明现有 HAPs 没有考虑地方具体因素（如湿度），因此 <strong>B. lack localized alert-issuing criteria</strong>（缺乏本地化的预警标准）是正确选项。</p><p>A 选项说“实施成本太高”，虽然文中提到“many lack adequate funding”，但这是资金问题，不是题干问的“现有 HAPs 的一个问题”的核心（核心是触发阈值不适合当地气候）。<br>C 选项“对热浪反应延迟”未提及。<br>D 选项“使医院承受巨大压力”不是文中指出的 HAPs 本身的问题。</p><p>因此正确答案是 <strong>B</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 33,
+     "stem": "<p>Mumbai&rsquo;s case shows that India&rsquo;s heat alert systems need to</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "include other factors besides temperature"
+      },
+      {
+       "k": "B",
+       "text": "take subtle weather changes into account"
+      },
+      {
+       "k": "C",
+       "text": "prioritize potentially disastrous heat waves"
+      },
+      {
+       "k": "D",
+       "text": "draw further support from local authorities"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>题干定位</strong><br>题干问的是“Mumbai 的案例表明印度的热浪预警系统需要……”，因此需要回到原文找到 Mumbai 案例的细节。</p></li><li><p><strong>原文对应内容</strong><br>第三段提到：</p><ul><li>孟买 4 月份的热射病死亡事件，当天最高气温约 36°C，比国家气象部门设定的沿海城市热浪预警阈值低 1°C。</li><li>但高温的影响因 <strong>湿度</strong> 和 <strong>缺乏遮荫</strong> 而被放大，而 <strong>湿度</strong> 在热浪预警系统中经常被忽略。</li></ul></li><li><p><strong>逻辑推导</strong><br>这说明，仅依据“最高气温”作为预警阈值是不够的，应该把 <strong>湿度</strong> 等其他因素也考虑进去。<br>选项 A “include other factors besides temperature” 与此完全对应。</p></li><li><p><strong>排除其他选项</strong></p><ul><li>B 项 “考虑微妙的天气变化” 过于笼统，原文强调的是需要加入湿度等具体因素，不是泛指“微妙变化”。</li><li>C 项 “优先考虑潜在灾难性热浪” 在文中未体现。</li><li>D 项 “从地方政府获得进一步支持” 不是 Mumbai 案例直接说明的问题。</li></ul></li></ol><p><strong>因此正确答案是 A。</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 34,
+     "stem": "<p>Kotharkar holds that a vulnerability map can help</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "prevent the harm of high humidity"
+      },
+      {
+       "k": "B",
+       "text": "target areas needing special attention"
+      },
+      {
+       "k": "C",
+       "text": "expand the Nagpur project&rsquo;s coverage"
+      },
+      {
+       "k": "D",
+       "text": "make relief plans for heat-stricken people"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是Kotharkar 认为脆弱性地图（vulnerability map）能帮助什么。</p><p>从原文第五段可以找到对应信息：</p><blockquote><p>The Nagpur project has already created a risk and vulnerability map, which enabled Kotharkar to tell officials <strong>which neighborhoods to focus on</strong> in the event of a heat wave this summer.</p></blockquote><p>这句话明确说明，脆弱性地图的作用是<strong>告诉官员在热浪期间应重点关注哪些社区</strong>，也就是<strong>锁定需要特别关注的区域</strong>。</p><p>选项分析：</p><ul><li><strong>A. prevent the harm of high humidity</strong> → 地图本身不能防止湿度危害，只是识别风险区域，且文中未强调地图直接用于防湿度危害。</li><li><strong>B. target areas needing special attention</strong> → 与原文 “which neighborhoods to focus on” 对应，正确。</li><li><strong>C. expand the Nagpur project&rsquo;s coverage</strong> → 原文未提及扩大项目覆盖范围。</li><li><strong>D. make relief plans for heat-stricken people</strong> → 地图是帮助确定重点区域，不是直接制定救援计划，这是后续行动。</li></ul><p>因此正确答案是 <strong>B</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 35,
+     "stem": "<p>According to the last paragraph, researchers suggest that HAPs should</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "focus more on the heatstroke treatment"
+      },
+      {
+       "k": "B",
+       "text": "invite wider publi participation"
+      },
+      {
+       "k": "C",
+       "text": "apply for more government grants"
+      },
+      {
+       "k": "D",
+       "text": "serve a broader range of purposes"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是“根据最后一段，研究人员建议 HAPs 应该……”。最后一段的内容是：</p><blockquote><p>“HAPs shouldn&rsquo;t just include short-term emergency responses, researchers say, but also recommend medium- to long-term measures that could make communities cooler.”</p></blockquote><p>这句话明确指出，HAPs 不应只包含短期应急措施，还应推荐中长期措施来降低社区温度。接着，文章举例说明，例如建议在哪里植树、改造房屋或修改建筑规范等。最后引用专家的话强调：“在紧急情况下减少死亡是一个好目标，但这是最低目标。”</p><p>由此可知，研究人员认为 HAPs 的目标不应局限于应急响应（如治疗中暑、发布预警），而应扩展至更广泛的中长期规划和建设，使社区更具耐热性。</p><p>选项分析：</p><ul><li><strong>A. focus more on the heatstroke treatment</strong>（更关注中暑治疗）—— 这只是短期应急措施的一部分，与文中强调“不应只关注短期”相悖。</li><li><strong>B. invite wider public participation</strong>（邀请更广泛的公众参与）—— 最后一段未提及公众参与。</li><li><strong>C. apply for more government grants</strong>（申请更多政府拨款）—— 文中未涉及资金申请问题。</li><li><strong>D. serve a broader range of purposes</strong>（服务于更广泛的目标）—— 与文中“不只短期，还要中长期”的意思一致，即 HAPs 的目标应更广泛。</li></ul><p>因此，正确答案是 <strong>D</strong>。</p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-4",
+   "label": "阅读 Text 4",
+   "title": "Text 4",
+   "heading": null,
+   "type": "choice",
+   "points": 10,
+   "directions": "",
+   "passage": [
+    {
+     "segs": [
+      "Navigating beyond the organised pavements and parks of our urban spaces, desire paths are the nofficia fopits f commi,y reaing the npoen preferences, hared shortcuts and collective choices of humans. Ofien apparing as trodden dirt tracks through otherwise neat green spaces, these routes of colletive disobedience cut comners, bist awns and cross hil, epesenting the natural capabiy of people and animals to go from point A to point B most effeitvety."
+     ]
+    },
+    {
+     "segs": [
+      "Urban planners interpret desire paths as more than just convenient shortcuts; they offer valuable insights into the dynamics between planning and behaviour. Ohio State University allowed is students to navigate the Oval, a lawn in the centre of campus, freely then procced to pave the desire paths, creating a web of effecive rutes students had established."
+     ]
+    },
+    {
+     "segs": [
+      "Yet, reluctance persists among other planners to integrate desire paths into formal plans, citing concerns about safety, environmental impact, or primarily, aesthetics. A Reddit webpage devoted to the phenomenon, boasting nearly 50,000 members, showcases images of local desire paths adorned with signs instructing pedestrians to adhere to designated walkways,underscoring the rebelius nature inherent in these human-made tracks. This clash highlights an ongoing struggle between the organic, user-driven evolution of public spaces and the desire for a visually curated and controlled urban envionment."
+     ]
+    },
+    {
+     "segs": [
+      "The Wickquasgeck Trail is an example of a historical desire path, created by Native Americans to cross he forsts f anhatan nd me betwen setlements quickly. This trai, when Dutch colonists arived,was widened and made into one of the main trade roads across the island, known at the time as de Heere Straat, or Gentlemen&rsquo;s Street. Folwin the British assumpion of contol in New York, the street was renamed Broadway. Notably, Broadway stands out as one of the few areas in NYC that defies the grid-based system applied to the rest of the city, cutting a diagonal across parts of the city.\nIn online spaces, desire paths have sparked a fascination that can approach obsession, with the Reddit page serving as a hub. Contributors offer a wide array of stories, from little-known new shortcuts to long-established alternate routes."
+     ]
+    },
+    {
+     "segs": [
+      "Animal desire paths, such as ducks forging rails through frozen ponds or dogs carving direct routes in gardens,highlight the adaptability of these trails in both human and animal experiences. As desire paths criss-cross through both physical and virtual landscapes, they stand as a proof of the colleive nistnc on forging unconventional routes and embracing the spirit of communal choice."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 36,
+     "stem": "<p>According to Paragraph 1, desire paths are a result of</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "the curiosity to explore surrounding hills"
+      },
+      {
+       "k": "B",
+       "text": "the necessity to preserve green spaces"
+      },
+      {
+       "k": "C",
+       "text": "the tendency to pursue convenience"
+      },
+      {
+       "k": "D",
+       "text": "the wish to find comfort in solitude"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 1 段提到，desire paths 是“非官方的人行小径”，反映了人们“从 A 点到 B 点最有效的方式”（go from point A to point B most effectively）。这些路径通常表现为草坪上被踩出来的泥土小径，是人们为了走捷径而自然形成的。</p><p>选项分析：</p><ul><li><strong>A</strong> 探索周围山丘的好奇心——文中未强调好奇心，而是强调“高效通行”。</li><li><strong>B</strong> 保护绿地的必要性——与文意相反，desire paths 会破坏整齐的绿地。</li><li><strong>C</strong> 追求便利的倾向——符合文中“走捷径、高效通行”的核心原因。</li><li><strong>D</strong> 在独处中寻找舒适的愿望——文中未提及独处或舒适，而是强调集体选择与效率。</li></ul><p>因此，正确选项是 <strong>C</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 37,
+     "stem": "<p>It can be inferred that Ohio State University</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "intends to improve its desire paths"
+      },
+      {
+       "k": "B",
+       "text": "leads in the research on desire paths"
+      },
+      {
+       "k": "C",
+       "text": "guides the creation of its desire paths"
+      },
+      {
+       "k": "D",
+       "text": "takes a positive view of desire paths"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目要求推断俄亥俄州立大学对 desire paths 的态度。</p><p>原文第二段提到：</p><blockquote><p>Urban planners interpret desire paths as more than just convenient shortcuts; they offer valuable insights into the dynamics between planning and behaviour. Ohio State University allowed its students to navigate the Oval, a lawn in the centre of campus, freely then proceeded to pave the desire paths, creating a web of effective routes students had established.</p></blockquote><p>这段话说明：</p><ul><li>城市规划者认为 desire paths 不只是方便的捷径，还提供了对规划与行为之间关系的宝贵见解。</li><li>俄亥俄州立大学允许学生在校园中心的草坪上自由行走形成路径，然后<strong>直接把这些路径铺成了正式道路</strong>。</li></ul><p>这一做法表明学校<strong>认可并采纳</strong>了学生自然走出来的路线，把非正式路径转化为正式设施，说明学校对 desire paths 持<strong>肯定态度</strong>。</p><p>选项分析：</p><ul><li><strong>A. intends to improve its desire paths</strong>：原文是已经铺好了，不是“打算改善”，而且“improve”不一定准确，因为铺成正式道路就是采纳，不是改善。</li><li><strong>B. leads in the research on desire paths</strong>：没有提到它在研究方面领先。</li><li><strong>C. guides the creation of its desire paths</strong>：desire paths 是自然形成的，不是校方引导创建的，与事实相反。</li><li><strong>D. takes a positive view of desire paths</strong>：把自然路径铺成正式道路，说明持积极看法，正确。</li></ul><p>因此答案是 <strong>D</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 38,
+     "stem": "<p>The images on the Reddit webpage reflect</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "conflicting opinions on the use of desire paths"
+      },
+      {
+       "k": "B",
+       "text": "the call toupgrade the designing of public spaces"
+      },
+      {
+       "k": "C",
+       "text": "the demand for proper planning of desire paths"
+      },
+      {
+       "k": "D",
+       "text": "growing concerns over the loss of public spaces"
+      }
+     ],
+     "explanation": "<p>让我们先定位原文中关于 Reddit 网页的内容。</p><p>原文第三段提到：</p><blockquote><p>A Reddit webpage … showcases images of local desire paths adorned with signs instructing pedestrians to adhere to designated walkways, underscoring the rebellious nature inherent in these human-made tracks. This clash highlights an ongoing struggle between the organic, user-driven evolution of public spaces and the desire for a visually curated and controlled urban environment.</p></blockquote><p>这里的核心是 <strong>signs instructing pedestrians to adhere to designated walkways</strong>（官方指示牌让人们走规定路线）与 <strong>人们仍然走出来的 desire paths</strong> 之间的对比。<br>这种对比体现的是 <strong>两种观点的冲突</strong>：</p><ul><li>官方/规划者：希望人们走设计好的路，出于安全、环境、美观。</li><li>使用者：选择更便捷、自然的路线。</li></ul><p>因此，Reddit 上的图片反映的是 <strong>对 desire paths 使用上的不同意见</strong>，即冲突。</p><p>选项分析：<br>A. conflicting opinions on the use of desire paths → 符合原文 “clash” 和 “struggle” 的描述。<br>B. the call to upgrade the designing of public spaces → 文中未强调“升级设计”的呼吁，只是对比两种做法。<br>C. the demand for proper planning of desire paths → 没有强调“要求合理规划”这种主动诉求。<br>D. growing concerns over the loss of public spaces → 与“公共空间丧失”无关。</p><p>所以正确答案是 <strong>A</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 39,
+     "stem": "<p>The example of the Wickquasgeck Trail illustrates</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "the growth of New York City"
+      },
+      {
+       "k": "B",
+       "text": "the Dutch origin of desire paths"
+      },
+      {
+       "k": "C",
+       "text": "the importance of urban planning"
+      },
+      {
+       "k": "D",
+       "text": "the recognition of desire paths"
+      }
+     ],
+     "explanation": "<p>让我们一步步分析这个题目。</p><hr><p><strong>1. 题干回顾</strong></p><blockquote><p>The example of the Wickquasgeck Trail illustrates &mldr;<br>A. the growth of New York City<br>B. the Dutch origin of desire paths<br>C. the importance of urban planning<br>D. the recognition of desire paths</p></blockquote><hr><p><strong>2. 原文定位</strong><br>文章第四段：</p><blockquote><p>The Wickquasgeck Trail is an example of a historical desire path, created by Native Americans to cross the forests of Manhattan &mldr; This trail, when Dutch colonists arrived, was widened and made into one of the main trade roads across the island &mldr; Following the British assumption of control in New York, the street was renamed Broadway. Notably, Broadway stands out as one of the few areas in NYC that defies the grid-based system applied to the rest of the city, cutting a diagonal across parts of the city.</p></blockquote><hr><p><strong>3. 段落主旨</strong></p><ul><li>第一句就说明它是 <strong>a historical desire path</strong>。</li><li>接着说明它被殖民者 <strong>recognized</strong>（承认、采纳）并拓宽成正式道路。</li><li>最后强调它至今仍是不同于规划网格的斜向道路，说明它源于自然路径，但被正式化并保留下来。</li></ul><hr><p><strong>4. 选项分析</strong></p><ul><li><strong>A. the growth of New York City</strong>：虽然提到纽约，但例子重点不是讲城市发展过程，而是讲一条 desire path 如何被认可并成为正式街道。</li><li><strong>B. the Dutch origin of desire paths</strong>：错误，desire paths 并非荷兰起源，荷兰人只是利用了已有的原住民路径。</li><li><strong>C. the importance of urban planning</strong>：这里强调的是 desire path 被采纳，而不是强调规划的重要性，甚至例子说明它打破了后来的规划网格。</li><li><strong>D. the recognition of desire paths</strong>：正确。例子展示了一个 desire path 被殖民者认可并正式化为重要道路，说明人们可以承认并采纳这些自然形成的路径。</li></ul><hr><p><strong>5. 结合上下文</strong><br>文章第二段提到城市规划者有时会正式铺设 desire paths（如俄亥俄州立大学的例子），第三段提到有些规划者不愿采纳，第四段这个例子则是历史上的采纳案例，因此它支持的是 <strong>desire paths 被认可</strong> 这一观点。</p><hr><p><strong>答案：D</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 40,
+     "stem": "<p>It can be learned from the last paragraph that desire paths</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "reveal humans&rsquo; deep respect for nature"
+      },
+      {
+       "k": "B",
+       "text": "are crucial to humans&rsquo; mental well-being"
+      },
+      {
+       "k": "C",
+       "text": "are a human imitation of animal behaviour"
+      },
+      {
+       "k": "D",
+       "text": "show a shared rait in humans and animals"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>最后一段的关键句子是：</p><blockquote><p>Animal desire paths, such as ducks forging rails through frozen ponds or dogs carving direct routes in gardens, highlight the adaptability of these trails in both human and animal experiences.</p></blockquote><p>这句话明确说明，动物也会形成 desire paths（愿望路径），并且这种路径在人类和动物的经历中都有体现，说明这是一种<strong>共同特征</strong>。</p><ul><li><strong>A 选项</strong> “reveal humans&rsquo; deep respect for nature” 在最后一段没有提到人类对自然的尊重。</li><li><strong>B 选项</strong> “are crucial to humans&rsquo; mental well-being” 没有提到心理健康。</li><li><strong>C 选项</strong> “are a human imitation of animal behaviour” 文中没有说人类模仿动物，而是说两者都有这种行为。</li><li><strong>D 选项</strong> “show a shared trait in humans and animals” 与原文意思一致，说明这是人类和动物共有的特点。</li></ul><p>因此正确答案是 <strong>D</strong>。</p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-b",
+   "label": "新题型",
+   "title": "Part B",
+   "heading": null,
+   "type": "match",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>Read the following text and answer the questions by choosing the most suitable subheading from the list A-G for each of the numbered paragraphs (41-45). There are two extra subheadings which you do not need to use. Mark your answers on the ANSWER SHEET.(10 points)</p>",
+   "body": "<p>A.Stay positive</p><p>B. Respect the past</p><p>C. Use channels</p><p>D. Give it time</p><p>E. Invite resistance</p><p>F. Be a salesman</p><p>G. Be humble</p><p>Five Steps to Suggesting a Change at Work That&rsquo;ll Actually Get Taken Seriously</p><p>Everyone wants to be that person—the one who looks at the same information as everyone else, but who sees a fresh, innovative solution. However, it takes more than simply having a good idea. How you share it is as important as the suggestion itself. Why? Because writing a new script—literally or figuratively—means that other team members will have to adapt to something new. So whether you’re suggesting a (seemingly) benign change like streamlining outdated protocol, or a bigger change like adding an hour to each workday so people can leave early on Fridays, you’re asking others to reimagine their workflow or schedule. Not to mention, if the process you’re scrapping is one someone else suggested, there’s the possibility of hurt feelings. To gain buy - in on an innovative, new idea, follow these steps:</p><p>(41) __________</p><p>Great ideas don’t stand alone. In other words, you can’t mention your suggestion once and expect it to be adopted. To see a change, you’ll need to champion your plan and sell its merits. In addition, you need to be willing to stand up to scrutiny and criticism and be prepared to explain your innovation in different ways for various audiences.</p><p>(42) __________</p><p>Sometimes it makes sense to go to your boss first. But other times, it’s useful to build a coalition among your co - workers or other stakeholders. When it works, it works great—because you’re ready for your stubborn supervisor’s pushback with answers like, “Actually, I connected with a few people in our tech department to discuss how much time these kinds of website updates would take, and they suggested they have the bandwidth.”</p><p>(43) __________</p><p>One of the biggest barriers to gaining buy - in occurs when the owner of an idea is viewed as argumentative, defensive, or close - minded. Because, let’s be honest: No one likes a know - it - all. So, if people disagree with you, don’t be indignant. Instead, listen to their concerns fully, try to understand their perspective, and include their concerns (and possible remedies) in future discussions. So, instead of saying, “Martha, our current slogan is confusing and should be updated,” you could try, “Martha raises a great point that our current slogan has a long history for our stakeholders, but I wonder if we might be able to brainstorm a tagline that could build on that—and be clearer for new customers.”</p><p>(44) __________</p><p>New ideas are the grandchildren of old ones. In other words, don’t throw old solutions under the bus to make your improvement stand out. Remember that in light of whatever the problem the old system solved—or, maybe, has failed to solve in recent memory—it was a great idea at the time. Appreciating the older contributions as you suggest future innovations helps bolster the credibility of your idea.</p><p>(45) __________</p><p>When pitching a new idea, it’s important to use the language of abundance instead of the language of deficit. Instead of saying what is wrong, broken, or suboptimal, talk about what is right, fixable, or ideal. For example, try, “I can see lots of applications for this new approach” rather than, “This innovation is the only way.” Be optimistic but realistic, and you will stand out.</p>",
+   "solution": "<ol start=\"41\"><li><p><strong>【答案】F</strong><br><strong>【解析】</strong> 本段强调好的想法需要持续推广和辩护，作者指出要“champion your plan and sell its merits”，并准备好应对不同受众的质疑。这与“Be a salesman”（成为推销员）的核心含义高度契合，即主动推销观点、争取支持。</p></li><li><p><strong>【答案】C</strong><br><strong>【解析】</strong> 本段提出根据情况选择沟通对象：有时先向上司提出，有时则应在同事或相关部门中建立联盟。这体现了有策略地“使用渠道”（Use channels）来争取支持，从而更有效地推动想法。</p></li><li><p><strong>【答案】G</strong><br><strong>【解析】</strong> 本段指出，若提出想法的人显得固执或防御性强，会阻碍他人接受建议。因此作者建议倾听反对意见、理解对方立场，并融入其关切。这种开放、谦逊的态度正对应“Be humble”（保持谦逊）。</p></li><li><p><strong>【答案】B</strong><br><strong>【解析】</strong> 本段强调新想法往往脱胎于旧方案，不应全盘否定过去的做法，而应承认其在当时的价值。这种对历史贡献的认可与“Respect the past”（尊重过去）完全一致。</p></li><li><p><strong>【答案】A</strong><br><strong>【解析】</strong> 本段倡导在提出想法时使用积极、建设性的语言，强调可能性与改进空间，而非一味批评现状。这种正向表达方式与“Stay positive”（保持积极）的主旨相符。</p></li></ol>",
+   "numbers": [
+    41,
+    42,
+    43,
+    44,
+    45
+   ],
+   "letters": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G"
+   ],
+   "answers": [
+    "F",
+    "C",
+    "G",
+    "B",
+    "A"
+   ]
+  },
+  {
+   "id": "translation",
+   "label": "翻译",
+   "title": "Part C",
+   "heading": null,
+   "type": "free",
+   "points": 15,
+   "directions": "<p><strong>Directions</strong></p><p>Translate the following text into Chinese. Write your translation on the ANSWER SHEET. (15 points)</p>",
+   "body": "<p>You know the moment—the conversation slows, then there&rsquo;s a pause. It&rsquo;s awkward, and so awkward that some people will panic and say anything. Do we all find such silences so stressful?</p><p>Researchers analysed the frequency and impact of gaps greater than 2 seconds during conversations, including an overview of previous studies which indicate that the fear of awkward silences can be so extreme that people avoid talking to strangers, even though doing so is likely to be an enjoyable experience.</p><p>During conversations with short gaps, people feel more connected to their conversation partners. But such feelings of connection markedly dip when entering a long gap. Long gaps between strangers are likely to be followed by a change in topic.</p><p>But the opposite seems to be true for conversations between friends. Long gaps there saw increased connection. Between friends, longer gaps seem to provide natural moments for reflection and expression.</p>",
+   "solution": "<p><strong>参考译文</strong><br>你知道那一刻——对话慢了下来，接着出现停顿。这很尴尬，尴尬到有些人会惊慌失措，没话找话。我们所有人都觉得这样的沉默如此令人压抑吗？</p><p>研究人员分析了对话中超过2秒的停顿出现的频率及其影响，并综述了以往的研究。这些研究表明，人们对尴尬沉默的恐惧可能非常强烈，以至于宁愿避免与陌生人交谈——尽管这样的交谈实际上很可能令人愉快。</p><p>在停顿较短的对话中，人们感觉与对话伙伴更亲近。然而，一旦出现长时间的停顿，这种亲近感便会显著下降。陌生人之间的长时间停顿往往会导致话题的转变。</p><p>但在朋友之间的对话中，情况似乎恰恰相反。长时间的停顿反而增强了彼此的亲近感。对朋友而言，较长的停顿似乎为反思与表达提供了自然的空间。</p><hr><p><strong>改写说明</strong>：</p><ul><li><strong>优化句式结构和逻辑衔接</strong>：对原文句式进行了合理拆分与合并，增强语句之间的逻辑连贯性，使表达更自然流畅。</li><li><strong>统一和规范术语表达</strong>：将“停顿”“沉默”等关键词汇统一表述，确保术语在全文中的一致性和专业性。</li><li><strong>提升书面语风格和正式感</strong>：调整用词和语气，使整体风格更符合学术或正式文本的表达习惯。</li></ul><p>如果您需要其他风格或语气的译文，我可以继续为您优化调整。</p>",
+   "numbers": [
+    46
+   ]
+  },
+  {
+   "id": "writing-a",
+   "label": "小作文",
+   "title": "Part A",
+   "heading": "Section III  Writing",
+   "type": "free",
+   "points": 10,
+   "directions": "",
+   "body": "<p><strong>Directions</strong></p><p>Suppose you are planning a short play based on a classic Chinese novel. Write your friend John an email to</p><ol><li><p>introduce the play, and</p></li><li><p>invite him to take part in it.</p></li></ol><p>Write your answer in about 100 words on the ANSWER SHEET.</p><p>Do not sign your own name in your email; use “Li Ming” instead. (10 points)</p>",
+   "solution": "<p><strong>【行文思路】</strong></p><ol><li><strong>开头问候与目的</strong>：问候对方，并直接表明写信目的——介绍短剧并发出邀请。</li><li><strong>主体内容介绍</strong>：清晰说明短剧的基本信息（如时间、地点）及其核心内容与特色。</li><li><strong>结尾重申与期待</strong>：再次发出邀请，表达期待，并留下联系方式以便进一步沟通。</li></ol><hr><p><strong>【参考范文】</strong></p><p>Dear John,</p><p>I&rsquo;m writing to tell you about a short play we&rsquo;re planning and to invite you to join us. It&rsquo;s based on the classic Chinese novel &ldquo;Journey to the West&rdquo;.</p><p>The play will be held at the Student Activity Center on June 20th at 7:00 PM. We think it&rsquo;s a fantastic opportunity to share this story in a fun way. We would be delighted to have you as part of our team, perhaps in a role or helping backstage.</p><p>I really hope you can make it. Looking forward to your reply!</p><p>Best regards,\nLi Ming</p><hr><p><strong>【万能句型】</strong></p><ul><li><strong>开头表明目的</strong>：<ul><li><code>I'm writing to tell you about... and to invite you to join us.</code></li></ul></li><li><strong>介绍活动细节</strong>：<ul><li><code>The play is based on... and will be held at (地点) on (日期).</code></li><li><code>It features...</code></li></ul></li><li><strong>发出邀请</strong>：<ul><li><code>We would be delighted to have you as part of our team.</code></li><li><code>Your participation would be a great addition.</code></li></ul></li><li><strong>结尾表达期待</strong>：<ul><li><code>I really hope you can make it.</code></li><li><code>Looking forward to your reply.</code></li></ul></li></ul>",
+   "numbers": [
+    47
+   ]
+  },
+  {
+   "id": "writing-b",
+   "label": "大作文",
+   "title": "Part B",
+   "heading": null,
+   "type": "free",
+   "points": 15,
+   "directions": "",
+   "body": "<p><strong>Directions</strong></p><p>Write an essay based on the chart below. In your essay, you should</p><ol><li><p>describe and interpret the chart, and</p></li><li><p>give your comments.</p></li></ol><p>Write your answer in about 150 words on the ANSWER SHEET. (15 points) </p><p>（注：图片内容为某社区老年人主要日常休闲活动调查，看电视 90.8%，散步 68.3%，养花 34.7%，阅读 31.8%，下棋 18.4% ）</p><img src=\"/api/exams/assets/e2_2025_48.png\" alt=\"\">",
+   "solution": "<p><strong>【行文思路】</strong></p><ol><li><strong>描述图表</strong>：开门见山概括图表主题，并按照数据从高到低的顺序依次列出主要活动的占比。</li><li><strong>分析原因</strong>：针对图中占比较高的主要活动（如看电视、散步）分析其流行的原因。</li><li><strong>总结展望</strong>：总结当前现状，并对未来老年人休闲活动可能的发展趋势进行合理预测。</li></ol><p><strong>【参考范文】</strong></p><p>The bar chart presents a survey on the main leisure activities of the elderly in a community. Astonishingly, 90.8% of the elderly choose to watch TV, followed by walking at 68.3%. Flower cultivation, reading, and chess playing occupy relatively smaller shares, accounting for 34.7%, 31.8%, and 18.4% respectively.</p><p>There are several reasons for this distribution. In the first place, watching TV is highly favored as it provides a great variety of entertainment and information, which can be easily accessed at home. In addition, walking is a simple and effective way to keep fit and is suitable for most elderly people. Last but not least, activities like chess playing, though less common, can stimulate their minds and offer opportunities for social interaction.</p><p>In conclusion, currently, watching TV dominates the leisure time of the elderly. However, with the promotion of healthy lifestyles and cultural activities, it is predicted that more diverse and active leisure pursuits will gradually gain popularity among the elderly in the future.</p><p><strong>【万能句型】</strong></p><ul><li><strong>开头：</strong><ul><li>The bar chart presents a survey on&mldr;</li><li>The chart illustrates the distribution of&mldr;</li></ul></li><li><strong>描述数据：</strong><ul><li>&mldr;, followed by&mldr; at [DATA].</li><li>&mldr;, accounting for [DATA] respectively.</li></ul></li><li><strong>分析原因：</strong><ul><li>There are several reasons for&mldr;</li><li>In the first place, it is not difficult to notice that&mldr;</li><li>One more point that cannot be overlooked is that&mldr;</li><li>Last but not least, we have to admit that&mldr;</li></ul></li><li><strong>总结展望：</strong><ul><li>In conclusion, currently&mldr; dominates.</li><li>However, with the promotion of&mldr;, it is predicted that&mldr; will gradually gain popularity.</li></ul></li></ul>",
+   "numbers": [
+    48
+   ]
+  }
+ ]
+}

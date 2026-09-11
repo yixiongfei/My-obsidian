@@ -1,0 +1,1368 @@
+{
+ "id": "english1-2024",
+ "kind": "english1",
+ "kindLabel": "英语一",
+ "group": "english",
+ "year": 2024,
+ "title": "2024 年真题",
+ "source": "https://www.csgraduates.com/study_methods/english/english1/2024/",
+ "fetchedAt": "2026-09-11T17:46:08.204Z",
+ "sections": [
+  {
+   "id": "cloze",
+   "label": "完形填空",
+   "title": "完形填空",
+   "heading": "Section I  Use of English",
+   "type": "choice",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>Read the following text. Choose the best word(s) for each numbered blank and mark A, B, C or D on the ANSWER SHEET. (10 points)</p>",
+   "passage": [
+    {
+     "segs": [
+      "There&rsquo;s nothing more welcoming than opening a door for you.\n",
+      {
+       "n": 1
+      },
+      "\nthe need to be touched to open or close, automatic doors are essential in\n",
+      {
+       "n": 2
+      },
+      "\ndisabled access to buildings and helping provide general\n",
+      {
+       "n": 3
+      },
+      "\nto commercial buildings."
+     ]
+    },
+    {
+     "segs": [
+      "Self-sliding doors began to emerge as a commercial product in 1960 after being invented six years\n",
+      {
+       "n": 4
+      },
+      "\nby two Americans Dee Horton and Lew Hewitt. They\n",
+      {
+       "n": 5
+      },
+      "\nas a novelty feature, but as their use has grown, their\n",
+      {
+       "n": 6
+      },
+      "\nhave extended within our technologically advanced world. Particularly\n",
+      {
+       "n": 7
+      },
+      "\nin busy locations and during times of emergency, the doors\n",
+      {
+       "n": 8
+      },
+      "\ncrowd management by reducing the obstacles put in people&rsquo;s way."
+     ]
+    },
+    {
+     "segs": [
+      {
+       "n": 9
+      },
+      "\nmaking access both in and out buildings easier for people, the difference in the way many of these doors open helps to reduce the total area\n",
+      {
+       "n": 10
+      },
+      "\nby them. Automatic doors often open to the side, with the panels sliding across one another. Replacing swing doors, these\n",
+      {
+       "n": 11
+      },
+      "\nsmaller buildings to maximise the usable space inside without having to\n",
+      {
+       "n": 12
+      },
+      "\nthe way for a large, sticking-out door. There are many different types of automatic door, with each\n",
+      {
+       "n": 13
+      },
+      "\nspecific signals to tell them when to open.\n",
+      {
+       "n": 14
+      },
+      "\nthese methods differ, the main\n",
+      {
+       "n": 15
+      },
+      "\nremain the same."
+     ]
+    },
+    {
+     "segs": [
+      "Each automatic door system\n",
+      {
+       "n": 16
+      },
+      "\nthe light, sound, weight or movement in their vicinity as a signal. Sensor-types are chosen to\n",
+      {
+       "n": 17
+      },
+      "\nthe different environments they are needed in.\n",
+      {
+       "n": 18
+      },
+      "\na busy road might not\n",
+      {
+       "n": 19
+      },
+      "\na motion-sensored door, as it would constantly be opening for passers-by. A pressure-sensitive mat would be more\n",
+      {
+       "n": 20
+      },
+      "\nto limit the surveyed area."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 1,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Though"
+      },
+      {
+       "k": "B",
+       "text": "Despite"
+      },
+      {
+       "k": "C",
+       "text": "Besides"
+      },
+      {
+       "k": "D",
+       "text": "Without"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 1 题题干：</p><blockquote><p>There&rsquo;s nothing more welcoming than opening a door for you.\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>1</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nthe need to be touched to open or close, automatic doors are essential in &mldr;</p></blockquote><p><strong>1. 句意理解</strong><br>第一句说“为你开门是最令人感到欢迎的”，第二句说“______ 需要触碰才能开关，自动门对于……是必要的”。<br>这里要表达的是自动门的优点——不需要人去推或拉，因此逻辑上应是 <strong>“没有/不需要触碰”</strong> 才能体现自动门的便利性。</p><p><strong>2. 选项分析</strong></p><ul><li><strong>A. Though</strong>（虽然）→ 逻辑上“虽然需要触碰”与后文“自动门很重要”矛盾。</li><li><strong>B. Despite</strong>（尽管）→ 后接名词或动名词，但“尽管需要触碰”同样与自动门的便利性相悖。</li><li><strong>C. Besides</strong>（除了…之外）→ 语义不通，不表示“免除”的意思。</li><li><strong>D. Without</strong>（没有）→ “无需触碰就能开关”，符合自动门的特性，且与后文“对残疾人通道很重要”逻辑一致。</li></ul><p><strong>3. 确定答案</strong><br>只有 <strong>Without</strong> 能表达“不需要人为触碰”的含义，因此正确答案是 <strong>D</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 2,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "revealing"
+      },
+      {
+       "k": "B",
+       "text": "demanding"
+      },
+      {
+       "k": "C",
+       "text": "improving"
+      },
+      {
+       "k": "D",
+       "text": "tracing"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 2 题所在句子为：</p><blockquote><p>Automatic doors are essential in ______ disabled access to buildings and helping provide general ______ to commercial buildings.</p></blockquote><p>空格处需要填入一个动词的 -ing 形式，与 “in” 构成介词短语，表示自动门在某个方面是必需的。<br>逻辑上，自动门的作用应该是 <strong>改善</strong> 残疾人进出建筑物的条件，而不是“揭露”、“要求”或“追踪”这种条件。</p><ul><li>A. revealing（揭示）—— 语义不符。</li><li>B. demanding（要求）—— 自动门不会“要求”残疾人通道，而是帮助实现或改善它。</li><li>C. improving（改善）—— 符合文意，自动门有助于提升残疾人的通行便利性。</li><li>D. tracing（追踪）—— 语义不符。</li></ul><p>因此正确答案是 <strong>C. improving</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 3,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "experience"
+      },
+      {
+       "k": "B",
+       "text": "convenience"
+      },
+      {
+       "k": "C",
+       "text": "guidance"
+      },
+      {
+       "k": "D",
+       "text": "reference"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 3 题空格所在的句子是：</p><blockquote><p>automatic doors are essential in &mldr; disabled access to buildings and helping provide general ___ to commercial buildings.</p></blockquote><ul><li><strong>结构分析</strong>：and 连接两个并列的功能，一是“帮助残障人士进入建筑物”，二是“为商业建筑提供普遍的 ___”。</li><li><strong>语义搭配</strong>：前半部分讲的是无障碍通道（disabled access），后半部分讲的是对普通大众的便利性，因此 general <strong>convenience</strong>（普遍便利）最符合逻辑。</li><li><strong>选项分析</strong>：<ul><li>A. experience（体验）—— 与“开门”的直接好处关系不大。</li><li><strong>B. convenience（便利）</strong> —— 自动门的主要作用之一就是提供便利，符合句意。</li><li>C. guidance（引导）—— 自动门并不提供引导功能。</li><li>D. reference（参考）—— 语义不符。</li></ul></li></ul><p>因此正确答案是 <strong>B. convenience</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 4,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "previously"
+      },
+      {
+       "k": "B",
+       "text": "temporarily"
+      },
+      {
+       "k": "C",
+       "text": "successively"
+      },
+      {
+       "k": "D",
+       "text": "eventually"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 4 题空格所在的句子是：</p><blockquote><p>Self-sliding doors began to emerge as a commercial product in 1960 after being invented six years ______ by two Americans Dee Horton and Lew Hewitt.</p></blockquote><p>句意是：<br>自动门在 1960 年开始作为商业产品出现，而它是在此 <strong>六年 ______</strong> 由两位美国人发明的。</p><ul><li><strong>A. previously</strong> 表示“之前”，six years previously 意为“六年前”，符合时间顺序逻辑。</li><li>B. temporarily（暂时地）—— 与时间长度搭配不合理。</li><li>C. successively（连续地）—— 不表示时间先后关系。</li><li>D. eventually（最终）—— 不符合“发明在商业产品出现之前”的语境。</li></ul><p>因此，<strong>A. previously</strong> 正确，表示“在 1960 年的六年前（即 1954 年）被发明”。</p>",
+     "tags": []
+    },
+    {
+     "n": 5,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "held on"
+      },
+      {
+       "k": "B",
+       "text": "started out"
+      },
+      {
+       "k": "C",
+       "text": "settled down"
+      },
+      {
+       "k": "D",
+       "text": "went by"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>本句意为：“它们 <strong>起初</strong> 作为一种新奇的功能出现，但随着使用增加，它们的好处在我们技术先进的世界中扩展了。”</p><ul><li><strong>A. held on</strong>（坚持）→ 不符合“起初作为新奇功能”的语境。</li><li><strong>B. started out</strong>（起初是，开始时是）→ 符合语境，表示最初的状态。</li><li><strong>C. settled down</strong>（安定下来）→ 不适用于描述产品的初期角色。</li><li><strong>D. went by</strong>（时间流逝）→ 主语一般是时间，不适用于此。</li></ul><p>因此，<strong>B. started out</strong> 正确。</p>",
+     "tags": []
+    },
+    {
+     "n": 6,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "relations"
+      },
+      {
+       "k": "B",
+       "text": "volumes"
+      },
+      {
+       "k": "C",
+       "text": "benefits"
+      },
+      {
+       "k": "D",
+       "text": "sources"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>上下文逻辑</strong><br>前文提到自动门最初是作为新奇产品出现的（as a novelty feature），接着用“but”转折，说明随着使用增加，它们的好处（benefits）在技术先进的世界中扩展了。</p></li><li><p><strong>词义辨析</strong></p><ul><li>A. relations 关系</li><li>B. volumes 体积；容量</li><li>C. benefits 好处</li><li>D. sources 来源</li></ul><p>这里要表达的是自动门的“好处/益处”在扩展，而不是关系、体积或来源在扩展。</p></li><li><p><strong>语义搭配</strong><br>“their benefits have extended” 意为“它们的好处已经扩展”，符合上下文对自动门优势的描述（如方便出入、节省空间、帮助人群管理等）。</p></li></ol><p><strong>因此正确答案是 C. benefits。</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 7,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "useful"
+      },
+      {
+       "k": "B",
+       "text": "simple"
+      },
+      {
+       "k": "C",
+       "text": "flexible"
+      },
+      {
+       "k": "D",
+       "text": "stable"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 7 题所在的句子是：</p><blockquote><p>Particularly ______ in busy locations and during times of emergency, the doors ______ crowd management by reducing the obstacles put in people&rsquo;s way.</p></blockquote><p>这里需要一个形容词，描述自动门在<strong>繁忙地点和紧急情况下</strong>的特点。</p><ul><li><strong>useful</strong>（有用的）符合语境，因为在这些情况下自动门能帮助人群管理，减少障碍，因此特别“有用”。</li><li><strong>simple</strong>（简单的）、<strong>flexible</strong>（灵活的）、<strong>stable</strong>（稳定的）虽然也可以形容门，但上下文强调的是它们在这些场合的<strong>实际作用</strong>，而不是简单性、灵活性或稳定性。</li></ul><p>因此，最佳答案是 <strong>A. useful</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 8,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "call for"
+      },
+      {
+       "k": "B",
+       "text": "yield to"
+      },
+      {
+       "k": "C",
+       "text": "insist on"
+      },
+      {
+       "k": "D",
+       "text": "act as"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>第 8 题所在句子为：</p><blockquote><p>Particularly in busy locations and during times of emergency, the doors ______ crowd management by reducing the obstacles put in people&rsquo;s way.</p></blockquote><p><strong>1. 句意理解</strong><br>该句意思是：在繁忙地点和紧急情况下，这种门通过减少人们行进中的障碍物，起到人群管理的作用。<br>空格处应填入一个表示“充当、起…作用”或“有助于”的短语。</p><p><strong>2. 选项分析</strong></p><ul><li><strong>A. call for</strong> 意为“要求、需要”，主语一般是事物时表示“需要某种措施”，但这里主语是“门”，不能“要求”人群管理，逻辑不通。</li><li><strong>B. yield to</strong> 意为“屈服于”，与句意不符。</li><li><strong>C. insist on</strong> 意为“坚持”，主语通常是人，不能用于门。</li><li><strong>D. act as</strong> 意为“充当、作为”，符合句意：门“起到”人群管理的作用。</li></ul><p><strong>3. 搭配与语境</strong><br>“act as crowd management” 意思是“起到人群管理的作用”，符合自动门在紧急情况下帮助疏导人群的功能描述。</p><p>因此，正确答案是 <strong>D. act as</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 9,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "As well as"
+      },
+      {
+       "k": "B",
+       "text": "In terms of"
+      },
+      {
+       "k": "C",
+       "text": "Thanks to"
+      },
+      {
+       "k": "D",
+       "text": "Rather than"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 9 题位于第三段开头，原文是：</p><blockquote><p>______ making access both in and out buildings easier for people, the difference in the way many of these doors open helps to reduce the total area ______ by them.</p></blockquote><p>四个选项：<br>A. As well as<br>B. In terms of<br>C. Thanks to<br>D. Rather than</p><p><strong>句意分析</strong>：</p><ul><li>前半部分说“使人们进出建筑物更容易”，后半部分说“这些门的开启方式不同有助于减少它们占用的总面积”。</li><li>逻辑上，这两部分都是自动门的优点，是并列关系，不是因果关系（所以不选 C Thanks to），也不是对比取舍（所以不选 D Rather than）。</li><li>B “In terms of” 意为“在……方面”，但这里并不是在限定讨论范围，而是补充另一个好处。</li><li><strong>A “As well as”</strong> 意思是“除了……之外（还）”，表示在已经提到的好处之外，还有另一个好处，符合上下文逻辑。</li></ul><p>因此正确答案是 <strong>A</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 10,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "connected"
+      },
+      {
+       "k": "B",
+       "text": "shared"
+      },
+      {
+       "k": "C",
+       "text": "represented"
+      },
+      {
+       "k": "D",
+       "text": "occupied"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 10 题题干为：</p><blockquote><p>&mldr; the difference in the way many of these doors open helps to reduce the total area\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>10</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nby them.</p></blockquote><p><strong>1. 句意理解</strong><br>这句话意思是：自动门的开启方式有助于减少它们 <strong>占用的</strong> 总面积。<br>这里是在比较自动门（侧滑式）与传统平开门（swing doors）在空间占用上的区别。平开门打开时需要一定的扇形区域，而滑动门只需要沿着墙滑动，因此占用的空间更少。</p><p><strong>2. 选项分析</strong></p><ul><li><strong>A. connected</strong>（连接） → 不符合“面积被连接”的逻辑。</li><li><strong>B. shared</strong>（共享） → 面积被共享？这里不是说共享，而是说“被占据/占用”。</li><li><strong>C. represented</strong>（代表） → 面积被代表？语义不通。</li><li><strong>D. occupied</strong>（占用） → “area occupied by them” 即“被它们占用的面积”，符合句意。</li></ul><p><strong>3. 确定答案</strong><br>在建筑或空间设计中，“occupied area” 是常见表达，指物体所占用的空间。<br>因此正确答案是 <strong>D. occupied</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 11,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "allow"
+      },
+      {
+       "k": "B",
+       "text": "expect"
+      },
+      {
+       "k": "C",
+       "text": "require"
+      },
+      {
+       "k": "D",
+       "text": "direct"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 11 题所在句子是：</p><blockquote><p>Replacing swing doors, these\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>11</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nsmaller buildings to maximise the usable space inside without having to\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>12</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nthe way for a large, sticking-out door.</p></blockquote><p>句意为：<br>“这些（自动门）<strong>允许</strong>较小的建筑物最大化内部可用空间，而不必为一个大而突出的门<strong>让路</strong>。”</p><ul><li><strong>A. allow</strong>（允许）——自动门“允许”小建筑最大化空间，符合逻辑。</li><li><strong>B. expect</strong>（期望）——语义不通，建筑物不会“期望”最大化空间。</li><li><strong>C. require</strong>（要求）——自动门不会“要求”小建筑最大化空间，逻辑不对。</li><li><strong>D. direct</strong>（指导）——搭配不当，自动门不能“指导”建筑物。</li></ul><p>因此，<strong>A. allow</strong> 正确，表示自动门使得小建筑能够实现空间最大化。</p><p><strong>答案：A</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 12,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "adopt"
+      },
+      {
+       "k": "B",
+       "text": "lead"
+      },
+      {
+       "k": "C",
+       "text": "clear"
+      },
+      {
+       "k": "D",
+       "text": "change"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 12 题所在句子为：</p><blockquote><p>Replacing swing doors, these\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>12</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nsmaller buildings to maximise the usable space inside without having to\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>12</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nthe way for a large, sticking-out door.</p></blockquote><p>这里 “without having to ______ the way” 是一个固定搭配，表示“不必为……腾出空间/让路”。</p><ul><li><strong>clear the way</strong> 意为“清除道路、让路”，符合句意：不需要为一个大的、突出的门让出空间。</li><li>adopt（采用）、lead（带领）、change（改变）与 “the way” 搭配时，均不表达“腾出空间”的意思。</li></ul><p>因此正确答案是 <strong>C. clear</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 13,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "adapting to"
+      },
+      {
+       "k": "B",
+       "text": "deriving from"
+      },
+      {
+       "k": "C",
+       "text": "relying on"
+      },
+      {
+       "k": "D",
+       "text": "pointing at"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 13 题的句子是：</p><blockquote><p>There are many different types of automatic door, with each\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>13</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nspecific signals to tell them when to open.</p></blockquote><p>意思是：<br>“自动门有很多不同类型，每一种都 ______ 特定的信号来告诉它们何时打开。”</p><hr><p><strong>选项分析：</strong></p><ul><li><p><strong>A. adapting to</strong>（适应）<br>强调适应环境或变化，而这里说的是“依赖信号来触发开门”，不是“适应信号”，逻辑不符。</p></li><li><p><strong>B. deriving from</strong>（来源于）<br>自动门并不是“从信号中衍生出来”，而是依赖信号工作，所以语义不对。</p></li><li><p><strong>C. relying on</strong>（依赖，依靠）<br>自动门需要依靠特定信号（如运动、光线等）来触发开门，符合上下文逻辑。</p></li><li><p><strong>D. pointing at</strong>（指向）<br>自动门不会“指向”信号，搭配不当。</p></li></ul><hr><p><strong>因此正确答案是 C. relying on</strong>。<br>句子意为“每一种自动门都依赖特定的信号来告知它们何时打开”。</p>",
+     "tags": []
+    },
+    {
+     "n": 14,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Once"
+      },
+      {
+       "k": "B",
+       "text": "Since"
+      },
+      {
+       "k": "C",
+       "text": "Unless"
+      },
+      {
+       "k": "D",
+       "text": "Although"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>上下文逻辑关系</strong><br>前一句说“自动门有多种类型，每种都响应特定信号来开门”，后一句说“这些方法不同，但主要____是相同的”。<br>这里明显是<strong>转折关系</strong>：尽管开门方式不同，但基本原理相同。</p></li><li><p><strong>选项分析</strong></p><ul><li><strong>A. Once</strong>（一旦）→ 表示条件或时间，不符合转折逻辑。</li><li><strong>B. Since</strong>（因为/既然）→ 表示因果关系，不符合句意。</li><li><strong>C. Unless</strong>（除非）→ 表示条件，不符合。</li><li><strong>D. Although</strong>（尽管）→ 表示让步转折，符合“尽管方法不同，但原理相同”的逻辑。</li></ul></li><li><p><strong>语法与搭配</strong><br>“Although these methods differ, the main &mldr; remain the same.” 是典型的让步状语从句结构，语义通顺。</p></li></ol><p><strong>答案：D</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 15,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "records"
+      },
+      {
+       "k": "B",
+       "text": "positions"
+      },
+      {
+       "k": "C",
+       "text": "principles"
+      },
+      {
+       "k": "D",
+       "text": "resources"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 15 题所在句子为：</p><blockquote><p><strong>______ these methods differ, the main ______ remain the same.</strong></p></blockquote><p>前半句说“尽管这些方法不同”，后半句说“主要的 ______ 仍然相同”。<br>逻辑上，这里需要一个表示“原理、原则、基本要素”的词，因为自动门虽然感应方式不同（光、声音、重量、运动等），但基本工作原理是相似的。</p><ul><li><strong>A. records</strong>（记录）—— 与句意不符。</li><li><strong>B. positions</strong>（位置）—— 与工作原理无关。</li><li><strong>C. principles</strong>（原理、原则）—— 符合语境，表示基本工作原理相同。</li><li><strong>D. resources</strong>（资源）—— 不适用。</li></ul><p>因此正确答案是 <strong>C. principles</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 16,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "controls"
+      },
+      {
+       "k": "B",
+       "text": "analyses"
+      },
+      {
+       "k": "C",
+       "text": "produces"
+      },
+      {
+       "k": "D",
+       "text": "mixes"
+      }
+     ],
+     "explanation": "<p>好的，我们先看第 16 题的句子：</p><blockquote><p>Each automatic door system ______ the light, sound, weight or movement in their vicinity as a signal.</p></blockquote><p><strong>句子分析</strong></p><ul><li>这里说自动门系统把“光线、声音、重量或运动”作为信号。</li><li>逻辑上，系统需要先“检测、分析”这些信号，才能做出开门动作。</li><li>选项：<ul><li>A. controls（控制） — 系统不是控制光、声音等，而是感知它们。</li><li>B. analyses（分析） — 系统检测并分析这些信号，判断是否要开门，符合语境。</li><li>C. produces（产生） — 系统不会产生光、声音等作为信号，而是接收它们。</li><li>D. mixes（混合） — 不符合自动门工作原理。</li></ul></li></ul><p>因此，<strong>B. analyses</strong> 正确，表示系统分析周围的光、声音、重量或运动这些信号。</p>",
+     "tags": []
+    },
+    {
+     "n": 17,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "decorate"
+      },
+      {
+       "k": "B",
+       "text": "compare"
+      },
+      {
+       "k": "C",
+       "text": "protect"
+      },
+      {
+       "k": "D",
+       "text": "complement"
+      }
+     ],
+     "explanation": "<p>好的，我们先看第 17 题的上下文。</p><p>原文相关句子是：</p><blockquote><p>Sensor-types are chosen to <strong>17</strong> the different environments they are needed in.</p></blockquote><hr><p><strong>选项分析</strong></p><ul><li><strong>A. decorate</strong>（装饰） → 传感器类型不是为了“装饰”环境，不符合逻辑。</li><li><strong>B. compare</strong>（比较） → 选传感器不是为了“比较”环境，语义不通。</li><li><strong>C. protect</strong>（保护） → 传感器可以用于保护，但这里说的是“适应不同环境”，不是主要目的。</li><li><strong>D. complement</strong>（补充；与…相配） → 可以引申为“配合、适应”，即选择不同类型的传感器来配合不同环境的需求，符合语境。</li></ul><hr><p><strong>逻辑验证</strong><br>前文说自动门系统通过感知光线、声音、重量或运动来作为信号，不同环境需要不同的传感器类型，所以选择传感器是为了 <strong>complement</strong>（适应/配合）不同环境。</p><p>因此正确答案是 <strong>D. complement</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 18,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "In conclusion"
+      },
+      {
+       "k": "B",
+       "text": "By contrast"
+      },
+      {
+       "k": "C",
+       "text": "For example"
+      },
+      {
+       "k": "D",
+       "text": "Above all"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 18 题位于最后一段的中间部分，前一句说 “Sensor-types are chosen to suit the different environments they are needed in.”（选择不同类型的传感器是为了适应它们所需的不同环境），接着就举了一个例子：在繁忙的路边，如果安装运动感应门，它会因为感应到路人而频繁开启，因此不适合。</p><p>这里明显是在用具体情境来举例说明“不同环境需要不同传感器”的观点，所以逻辑上应该填入 <strong>For example</strong>（例如）。</p><p>其他选项分析：</p><ul><li><strong>A. In conclusion</strong>（总之）→ 用于总结，但这里不是总结段落。</li><li><strong>B. By contrast</strong>（相比之下）→ 用于对比不同情况，但这里没有对比，只是举例。</li><li><strong>D. Above all</strong>（最重要的是）→ 用于强调重要性，不符合语境。</li></ul><p>因此正确答案是 <strong>C. For example</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 19,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "identify"
+      },
+      {
+       "k": "B",
+       "text": "suit"
+      },
+      {
+       "k": "C",
+       "text": "secure"
+      },
+      {
+       "k": "D",
+       "text": "include"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 19 题所在句子为：</p><blockquote><p>A busy road might not ______ a motion-sensored door, as it would constantly be opening for passers-by.</p></blockquote><p><strong>句意理解</strong>：<br>这句话的意思是“繁忙的道路可能<strong>不适合</strong>使用动作感应门，因为它会一直为路人打开”。<br>这里强调的是“环境不适合某种类型的门”，而不是“识别”“保护”或“包括”。</p><p><strong>选项分析</strong>：</p><ul><li><strong>A. identify</strong>（识别） → 不符合句意，主语是“a busy road”，不能与“identify”合理搭配。</li><li><strong>B. suit</strong>（适合） → “might not suit” 意为“可能不适合”，符合逻辑与语境。</li><li><strong>C. secure</strong>（保护，获得） → 语义不通。</li><li><strong>D. include</strong>（包含） → 不合逻辑。</li></ul><p>因此，正确答案是 <strong>B. suit</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 20,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "appropriate"
+      },
+      {
+       "k": "B",
+       "text": "obvious"
+      },
+      {
+       "k": "C",
+       "text": "impressive"
+      },
+      {
+       "k": "D",
+       "text": "delicate"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 20 题空格所在句为：</p><blockquote><p>A pressure-sensitive mat would be more ______ to limit the surveyed area.</p></blockquote><p><strong>语境分析：</strong><br>前文提到，在繁忙的路边，使用运动感应门会因频繁感应到路人而不断开启，这显然不合适。因此，这里提出使用<strong>压力感应垫</strong>来<strong>限制检测区域</strong>，只有有人踩上去才会开门。<br>这种方案更<strong>合适</strong>、更<strong>恰当</strong>。</p><p><strong>选项分析：</strong></p><ul><li>A. <strong>appropriate</strong> → 合适的，恰当的，符合语境。</li><li>B. obvious → 明显的，不符合“更适合”的逻辑。</li><li>C. impressive → 令人印象深刻的，与功能需求无关。</li><li>D. delicate → 精密的，易碎的，不贴合“更适合限制检测区域”的意思。</li></ul><p>因此，<strong>A. appropriate</strong> 是正确答案。</p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-1",
+   "label": "阅读 Text 1",
+   "title": "Part A · Text 1",
+   "heading": "Section II  Reading Comprehension",
+   "type": "choice",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>Read the following four texts. Answer the questions below each text by choosing A, B, C, or D. Mark your answers on the ANSWER SHEET. (40 points)</p>",
+   "passage": [
+    {
+     "segs": [
+      "Nearly 2000 years ago, as the Romans began to pull out of Scotland, they left behind a curious treasure:10 tons of nails, nearly a million of the things. The nail hoard was discovered in 1960 in a four- metre- deep pit covered by two metres of gravel. Why had the Romans buried a million nails? The likely explanation is that the withdrawal was rushed, and they didn&rsquo;t want the local Caledonians getting their hands on 10 tons of weapons grade iron. The Romans buried the nails so deep that they would not be discovered for almost two millennia. Later civilizations would value the skilled blacksmith&rsquo;s labour in a nail even more than the raw material. As Roma Agrawal explains in her new delightful book Nuts and Bolts, early 17th-century Virginians would sometimes burn down their homes if they were planning to relocate. This was an attempt to recover the valuable nails, which could be reused after sifting the ashes. The idea that one might burn down an entire house just to reclaim the nails underlines how scarce, costly and valuable the simple-seeming technology was. The price of nails fell by 90% between the late 1700s and mid-1900s, as economist Daniel Sichel points out in a research paper. According to Sichel, although the falling price of nails was driven partly by cheaper iron and cheaper energy, most of the credit goes to nail manufacturers who simply found more efficient ways to turn steel into nails. Nails themselves have changed over the years, but Sichel studied them because they haven&rsquo;t changed much. Roman lamps and Roman chariots are very different from LED strips and sports cars, but Roman nails are still clearly nails. It would be absurd to try to track the changing price of sports cars since 1695, but to ask the same question of nails makes perfect sense. I make no apology for being obsessed by a particular feature of everyday objects: their price. I am an economist, after all. After writing two books about the history of inventions, one thing I&rsquo;ve learnt is that while it is the enchantingly sophisticated technologies that get all the hype, it&rsquo;s the cheap technologies that change the world. The Gutenberg printing press transformed civilisation not by changing the nature of writing but by changing its cost—and it would have achieved little without a parallel collapse in the price of surfaces to write on, thanks to an often overlooked technology called paper. Solar panels had a few niche uses until they became cheap; now they are transforming the global energy system."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 21,
+     "stem": "<p>Romans buried the nails probably for the sake of .</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "saving them for future use"
+      },
+      {
+       "k": "B",
+       "text": "keeping them from rusting"
+      },
+      {
+       "k": "C",
+       "text": "letting them grow in value"
+      },
+      {
+       "k": "D",
+       "text": "hiding them from locals"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问：罗马人埋藏这些钉子很可能是因为什么目的？</p><p>根据原文信息：</p><blockquote><p>Why had the Romans buried a million nails? The likely explanation is that the withdrawal was rushed, and they didn&rsquo;t want the local Caledonians getting their hands on 10 tons of weapons grade iron.</p></blockquote><p>关键句是 <strong>they didn&rsquo;t want the local Caledonians getting their hands on</strong>（他们不想让当地的 Caledonians 人得到这些铁）。</p><ul><li><strong>A</strong>（为将来使用而保存）—— 原文没有提到将来要挖出来用，而是匆忙撤退时埋藏。</li><li><strong>B</strong>（防止生锈）—— 未提及。</li><li><strong>C</strong>（让它们增值）—— 未提及。</li><li><strong>D</strong>（不让当地人得到）—— 与原文“不想让当地人得到这些可用于武器的铁”一致。</li></ul><p>因此正确答案是 <strong>D</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 22,
+     "stem": "<p>The example of early 17th-century Virginians is used to</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "highlight the thriftiness of early American colonists"
+      },
+      {
+       "k": "B",
+       "text": "illustrate the high status of blacksmiths in that period"
+      },
+      {
+       "k": "C",
+       "text": "contrast the attitudes of different civilizations toward nails"
+      },
+      {
+       "k": "D",
+       "text": "show the preciousness of nail-making technology at that time"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是“17 世纪初弗吉尼亚人的例子”在文中的作用。</p><p>原文提到：</p><blockquote><p>early 17th-century Virginians would sometimes burn down their homes if they were planning to relocate. This was an attempt to recover the valuable nails, which could be reused after sifting the ashes. The idea that one might burn down an entire house just to reclaim the nails underlines how scarce, costly and valuable the simple-seeming technology was.</p></blockquote><p>这里的关键是作者在例子后面直接给出了解释——<strong>为了强调钉子在当时是多么稀缺、昂贵和有价值</strong>。</p><p>选项分析：</p><ul><li><strong>A</strong>（突出早期美洲殖民者的节俭）：虽然烧房子回收钉子看似节俭，但作者重点不是赞扬他们的节俭品质，而是强调钉子的价值。</li><li><strong>B</strong>（说明当时铁匠地位高）：文中没有直接讨论铁匠的社会地位。</li><li><strong>C</strong>（对比不同文明对钉子的态度）：文中虽有提到罗马人和后来文明对钉子的重视，但弗吉尼亚人的例子并不是为了对比，而是为了说明钉子的珍贵。</li><li><strong>D</strong>（显示当时制钉技术的珍贵）：与原文主旨一致，因为钉子制作技术在当时成本高、工艺难，所以钉子很宝贵。</li></ul><p>因此正确答案是 <strong>D</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 23,
+     "stem": "<p>What played the major role in lowering the price of nail after the late 1700?</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Increased productivity"
+      },
+      {
+       "k": "B",
+       "text": "wider use of new energies"
+      },
+      {
+       "k": "C",
+       "text": "Fierce market competition"
+      },
+      {
+       "k": "D",
+       "text": "reduced cost of raw material"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是“18世纪末之后，钉子的价格下降主要归因于什么？”</p><p>文章中提到：</p><blockquote><p>The price of nails fell by 90% between the late 1700s and mid-1900s, as economist Daniel Sichel points out in a research paper. According to Sichel, although the falling price of nails was driven partly by cheaper iron and cheaper energy, most of the credit goes to nail manufacturers who simply found more efficient ways to turn steel into nails.</p></blockquote><p>关键信息是：</p><ul><li>价格下降部分原因是 <strong>更便宜的铁（原材料）</strong> 和 <strong>更便宜的能源</strong>；</li><li>但 <strong>主要的功劳（most of the credit）</strong> 属于制造商找到了 <strong>更高效的方法</strong> 将钢材制成钉子。</li></ul><p>“更高效的方法”意味着 <strong>生产效率提高</strong>，对应选项 <strong>A. Increased productivity</strong>。</p><p>B 项“新能源的广泛使用”只是部分原因，不是主要因素；<br>C 项“激烈的市场竞争”文中未提及；<br>D 项“原材料成本降低”虽有提及，但不是主要原因。</p><p>因此正确答案是 <strong>A</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 24,
+     "stem": "<p>It can be learned from Paragraph 5 that nails .</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "have undergone many technological improvements"
+      },
+      {
+       "k": "B",
+       "text": "have remained basically the same since Roman times"
+      },
+      {
+       "k": "C",
+       "text": "are less studied than other everyday product"
+      },
+      {
+       "k": "D",
+       "text": "are one of the world&rsquo;s most significant inventions"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目要求从第5段推断关于钉子的信息。我们来看第5段的关键句：</p><blockquote><p>Nails themselves have changed over the years, but Sichel studied them because they haven&rsquo;t changed much. Roman lamps and Roman chariots are very different from LED strips and sports cars, but Roman nails are still clearly nails.</p></blockquote><ul><li>这句话明确说明，虽然钉子在历史上有所变化，但<strong>变化不大</strong>（haven&rsquo;t changed much），而且罗马时期的钉子和今天的钉子在本质上仍然是同一种东西（still clearly nails）。</li><li>作者特意将钉子与罗马灯具、战车等物品对比，强调其他物品技术变化巨大，而钉子的基本形态和功能保持稳定。</li></ul><p>因此，<strong>B 项“自罗马时代以来基本保持不变”</strong> 是符合段落内容的正确推断。</p><p>A 项“经历了许多技术改进”虽然部分正确，但段落重点在于强调变化不大，而不是强调改进。<br>C 项“比其他日常产品研究得少”在段落中未提及。<br>D 项“是世界上最重要的发明之一”虽然文章整体可能暗示钉子的重要性，但第5段并未直接表达这一点。</p><p><strong>答案：B</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 25,
+     "stem": "<p>Which of the following one best summaries the last 2 paragraphs?</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "cheap technologies bring about revolutionary change"
+      },
+      {
+       "k": "B",
+       "text": "technological innovation is integral to economic success"
+      },
+      {
+       "k": "C",
+       "text": "technology defines people&rsquo;s understanding of the world"
+      },
+      {
+       "k": "D",
+       "text": "Sophisticated technology developed small inventions"
+      }
+     ],
+     "explanation": "<p>好的，我们先来梳理最后两段的核心内容。</p><hr><p><strong>倒数第二段要点</strong></p><ul><li>作者是经济学家，关注日常用品的<strong>价格</strong>变化。</li><li>从发明史中学到：虽然<strong>精巧复杂的技术</strong>得到大量宣传，但真正改变世界的是<strong>便宜的技术</strong>。</li><li>举例：古腾堡印刷机改变文明，不是因为改变了写作的本质，而是因为<strong>降低了成本</strong>；同时纸张价格下降也很关键。</li></ul><p><strong>最后一段要点</strong></p><ul><li>太阳能电池板在<strong>便宜之前</strong>只有小众用途，<strong>便宜之后</strong>改变了全球能源系统。</li><li>再次强调<strong>价格下降</strong>使技术产生大规模影响。</li></ul><hr><p><strong>选项分析</strong><br>A. cheap technologies bring about revolutionary change<br>→ 与原文主旨一致，强调“便宜”带来的革命性变化。</p><p>B. technological innovation is integral to economic success<br>→ 原文重点不是“技术创新对经济成功必不可少”，而是“便宜的技术改变世界”，侧重点不同。</p><p>C. technology defines people&rsquo;s understanding of the world<br>→ 文中未讨论“技术定义人们对世界的理解”，偏离主题。</p><p>D. Sophisticated technology developed small inventions<br>→ 原文说精巧技术得到宣传，但改变世界的是便宜技术，不是精巧技术发展了小发明。</p><hr><p><strong>因此</strong>，最后两段的核心是：便宜技术（价格大幅下降）带来革命性变化。</p><p><strong>答案：A</strong></p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-2",
+   "label": "阅读 Text 2",
+   "title": "Text 2",
+   "heading": null,
+   "type": "choice",
+   "points": 10,
+   "directions": "",
+   "passage": [
+    {
+     "segs": [
+      "Parenting tips obtained from hunter-gatherers in Africa may be the key to bringing up more contented children, researchers have suggested. The idea is based on studies of communities such as the Kung of Botswana, where each child is cared for by many adults. Kung children as young as four will help to look after younger ones and &ldquo;baby-wearing&rdquo;, in which infants are carried in slings, is considered the norm."
+     ]
+    },
+    {
+     "segs": [
+      "According to Dr Nikhil Chaudhary, an evolutionary anthropologist at Cambridge University, these practices, known as alloparenting, could lead to less anxiety for children and parents."
+     ]
+    },
+    {
+     "segs": [
+      "Dr Annie Swanepoel, a child psychiatrist, believes that there are ways to incorporate them into western life. In Germany, one scheme has paired an old people&rsquo;s home with a nursery. The residents help to look after the children, an arrangement akin to alloparenting. Another measure could be encouraging friendships between children in different school years to mimic the supervised mixed-age play groups in hunter-gatherer communities."
+     ]
+    },
+    {
+     "segs": [
+      "In a paper published in the Journal of Child Psychology and Psychiatry, researchers said that the western nuclear family was a recent invention which broke with evolutionary history. This abrupt shift to an &ldquo;intensive mothering narrative&rdquo; which suggests that mothers should manage child care alone, was likely to have been harmful. &ldquo;Such narratives can lead to maternal exhaustion and have dangerous consequences,&rdquo; they wrote."
+     ]
+    },
+    {
+     "segs": [
+      "By contrast, in hunter-gatherer societies adults other than the parents can provide almost half of a child&rsquo;s care. One previous study looked at the people of the Democratic Republic of Congo. It found that infants had an average of 14 alloparents a day by the time they were 18 weeks old and were passed between caregivers eight times an hour."
+     ]
+    },
+    {
+     "segs": [
+      "Chaudhary said that parents now had less child care support from family and social networks than during most of humans evolutionary history, but introducing additional caregivers could reduce stress and maternal depression, which could have a &ldquo;knock-on&rdquo; benefit to child&rsquo;s wellbeing. And infant born to a hunter-gatherer society could have more than ten caregivers—this contrasts starkly to nursery setting in the UK where regulation can for a ratio of one carer to four children aged two to three."
+     ]
+    },
+    {
+     "segs": [
+      "While hunter-gatherer children learn from observation and imitation in mixed-age playgroups, researchers said that western &ldquo;instructive teaching&rdquo;, where pupils are asked to sit still, may contribute to conditions such as attention deficit hyperactivity disorder. Chaudhary said that Britain should explore the possibility that older siblings helping their parents might also enhance their own social development."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 26,
+     "stem": "<p>According to the first two paragraphs, alloparenting refers to the practice of .</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "sharing childcare among community members"
+      },
+      {
+       "k": "B",
+       "text": "assigning babies to specific adult categories"
+      },
+      {
+       "k": "C",
+       "text": "teaching parenting skills to older children"
+      },
+      {
+       "k": "D",
+       "text": "carrying infants around by their parents"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是根据前两段，<strong>“alloparenting”</strong> 指的是什么做法。</p><hr><p><strong>第一段</strong>提到：</p><ul><li>非洲狩猎采集部落（如博茨瓦纳的 Kung 族）中，<strong>每个孩子由许多成年人照顾</strong>。</li><li>四岁的孩子会帮忙照顾更小的孩子。</li><li>“baby-wearing”（用背带背婴儿）是常态。</li></ul><p><strong>第二段</strong>提到：</p><ul><li>这些做法被称为 <strong>alloparenting</strong>，可能减少孩子和父母的焦虑。</li></ul><hr><p>从这些信息可以归纳出：</p><ul><li><strong>alloparenting</strong> 的核心是 <strong>多个成年人共同照顾孩子</strong>，而不是只有父母。</li><li>选项分析：<ul><li><strong>A. sharing childcare among community members</strong>（社区成员之间分担育儿） → 符合原文“每个孩子由许多成年人照顾”的描述。</li><li>B. assigning babies to specific adult categories → 原文未提及按类别分配婴儿。</li><li>C. teaching parenting skills to older children → 虽然提到大孩子帮忙照顾，但 alloparenting 本身不是教技能，而是分担育儿。</li><li>D. carrying infants around by their parents → 这只是其中一个具体做法，不是 alloparenting 的定义。</li></ul></li></ul><p>因此正确答案是 <strong>A</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 27,
+     "stem": "<p>The scheme in Germany is mentioned to illustrate .</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "an attempt to facilitate intergenerational communication"
+      },
+      {
+       "k": "B",
+       "text": "an approach to integrating into western society"
+      },
+      {
+       "k": "C",
+       "text": "the conventional parenting style in western culture"
+      },
+      {
+       "k": "D",
+       "text": "the differences between western and African ways of living"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是“文中提到德国的方案是为了说明什么”，我们需要根据上下文判断作者的写作目的。</p><ol><li><p><strong>定位原文</strong>：<br>第三段提到：“In Germany, one scheme has paired an old people&rsquo;s home with a nursery. The residents help to look after the children, an arrangement akin to alloparenting.”<br>这个例子紧跟在“Dr Annie Swanepoel believes that there are ways to incorporate them into western life”之后。</p></li><li><p><strong>逻辑关系</strong>：<br>文章先提出“非洲狩猎采集社会的育儿方式（alloparenting）可能有助于减轻父母和孩子的焦虑”，然后说“有办法把这些做法融入西方生活”，接着举了德国的例子。<br>因此，德国的方案是作为<strong>将 alloparenting 引入西方社会的一个实际例子</strong>。</p></li><li><p><strong>选项分析</strong>：</p><ul><li><strong>A</strong>：促进代际交流——虽然这个方案确实涉及老人与小孩互动，但这不是作者举例的主要目的，而是为了说明如何将非洲的育儿方式引入西方。</li><li><strong>B</strong>：融入西方社会的一种方法——这与原文“incorporate them into western life”一致。</li><li><strong>C</strong>：西方传统育儿方式——错误，这是新的尝试，不是传统的。</li><li><strong>D</strong>：西方与非洲生活方式的差异——错误，这里强调的是借鉴与融合，不是对比差异。</li></ul></li></ol><p><strong>因此正确答案是 B</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 28,
+     "stem": "<p>According to paragraph 4, the “intensive mothering narrative .</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "alleviates parenting pressures"
+      },
+      {
+       "k": "B",
+       "text": "consolidates family relationships"
+      },
+      {
+       "k": "C",
+       "text": "results in the child-centered family"
+      },
+      {
+       "k": "D",
+       "text": "departs from the course of evolution"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目要求根据第4段判断关于“密集母职叙事”（intensive mothering narrative）的正确描述。</p><p>第4段原文关键句：</p><blockquote><p>&mldr; the western nuclear family was a recent invention which broke with evolutionary history. This abrupt shift to an &ldquo;intensive mothering narrative&rdquo; which suggests that mothers should manage child care alone, was likely to have been harmful.</p></blockquote><p>这里明确提到：</p><ol><li>西方核心家庭是近期才出现的，<strong>打破了进化历史</strong>（broke with evolutionary history）。</li><li>突然转向“密集母职叙事”<strong>可能是有害的</strong>。</li></ol><p>因此，“intensive mothering narrative”是<strong>背离进化历程</strong>的，对应选项 <strong>D. departs from the course of evolution</strong>。</p><p>其他选项分析：</p><ul><li>A（减轻育儿压力）—— 与原文相反，原文说它导致母亲精疲力竭。</li><li>B（巩固家庭关系）—— 未提及。</li><li>C（导致以孩子为中心的家庭）—— 原文未强调这一点，且与段落主旨不符。</li></ul><p><strong>正确答案：D</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 29,
+     "stem": "<p>what can be inferred about the nurseries in the UK?</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "They tend to fall short of official requirements."
+      },
+      {
+       "k": "B",
+       "text": "They have difficulty finding enough caregivers."
+      },
+      {
+       "k": "C",
+       "text": "They ought to improve their carer-to-child ratio."
+      },
+      {
+       "k": "D",
+       "text": "They should try to prevent parental depression."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目要求推断关于英国托儿所的信息。原文中与英国托儿所有关的关键信息出现在第六段末尾：</p><blockquote><p>&ldquo;&mldr;this contrasts starkly to nursery setting in the UK where regulation can for a ratio of one carer to four children aged two to three.&rdquo;</p></blockquote><p>这句话的意思是：这与英国托儿所的情况形成鲜明对比，英国的规定是<strong>一名看护人照看四名2-3岁的儿童</strong>。</p><p>这个信息是在与非洲狩猎采集社会的育儿方式进行对比的语境中提出的。作者之前详细描述了狩猎采集社会中有大量的“共同父母”参与育儿（例如，一个婴儿每天有14个共同父母，每小时被传递8次），并指出这种模式能减少父母压力、有益儿童健康。</p><p>因此，将英国的<strong>1:4</strong>的看护比例与狩猎采集社会的<strong>高比例、多看护人</strong>模式进行对比，其隐含的推论是：英国的托儿所看护比例相对较高（即每个看护人照看的孩子较多），这不如狩猎采集社会的模式理想。为了更接近那种有益的模式，英国托儿所<strong>应该改善（即降低）看护人与儿童的比例</strong>。</p><p>让我们分析选项：</p><ul><li><p><strong>A. They tend to fall short of official requirements.</strong> (它们往往达不到官方要求。)<br>原文只提到了官方的规定比例，并没有说托儿所普遍达不到这个规定。属于无中生有。</p></li><li><p><strong>B. They have difficulty finding enough caregivers.</strong> (他们难以找到足够的看护人。)<br>原文没有讨论招聘看护人的难度问题。属于无中生有。</p></li><li><p><strong>C. They ought to improve their carer-to-child ratio.</strong> (他们应该改善其看护人与儿童的比例。)<br>这与原文的逻辑一致。通过将英国现状与更优模式对比，可以合理推断出“应该改善比例”的建议。改善比例通常意味着降低比例，即让每个看护人照顾更少的孩子。</p></li><li><p><strong>D. They should try to prevent parental depression.</strong> (他们应该努力预防父母抑郁。)<br>虽然文章提到引入额外看护人可以减少母亲抑郁，但这是针对整个育儿支持体系的建议，并非直接、具体地推断出“英国托儿所应该预防父母抑郁”。托儿所的主要职责是照看孩子，预防父母抑郁是一个更间接和宏观的目标。</p></li></ul><p>因此，最直接、最合理的推断是 <strong>C</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 30,
+     "stem": "<p>Which of the following would be the best title for the text?</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Instructive teaching: a dilemma for anxious parents"
+      },
+      {
+       "k": "B",
+       "text": "For a happier family learn from the hunter gatherers"
+      },
+      {
+       "k": "C",
+       "text": "Mixed-aged playgroup. a better choice for lonely children"
+      },
+      {
+       "k": "D",
+       "text": "Tracing the history of parenting: from Africa to Europe"
+      }
+     ],
+     "explanation": "<p>好的，我们来逐步分析这道题。</p><hr><p><strong>1. 文章主旨概括</strong><br>文章开头提出：来自非洲狩猎采集部落的育儿经验可能有助于养育出更快乐的孩子。<br>接着介绍了“alloparenting”（多位成人共同育儿）的概念，并举例说明这种模式在狩猎采集社会很常见。<br>然后指出西方核心家庭是近期产物，母亲独自承担育儿责任容易导致疲惫和不良后果。<br>文章还对比了西方教育方式与狩猎采集社会中混龄游戏、观察模仿学习的不同，并建议西方社会可以借鉴这些做法来减轻父母压力、促进孩子发展。</p><hr><p><strong>2. 选项分析</strong></p><ul><li><p><strong>A. Instructive teaching: a dilemma for anxious parents</strong><br>文中虽然提到西方“教导式教学”可能不利于某些孩子，但这只是文章的一个细节，不是全文核心。</p></li><li><p><strong>B. For a happier family learn from the hunter gatherers</strong><br>这与文章主旨一致：借鉴狩猎采集部落的育儿方式，让家庭更快乐、孩子更满足。</p></li><li><p><strong>C. Mixed-aged playgroup: a better choice for lonely children</strong><br>混龄游戏组是文中提到的一个具体做法，但只是建议之一，不能概括全文。</p></li><li><p><strong>D. Tracing the history of parenting: from Africa to Europe</strong><br>文章并非按时间顺序追溯育儿史，而是对比两种模式并提出建议。</p></li></ul><hr><p><strong>3. 结论</strong><br>文章核心是：狩猎采集部落的育儿方式（多位成人照顾、混龄互动、观察学习）可以给西方家庭带来启发，以减轻父母压力、促进孩子幸福感。<br>因此最佳标题是 <strong>B</strong>。</p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-3",
+   "label": "阅读 Text 3",
+   "title": "Text 3",
+   "heading": null,
+   "type": "choice",
+   "points": 10,
+   "directions": "",
+   "passage": [
+    {
+     "segs": [
+      "Rutkowski is a Polish digital artist who uses classical painting styles to create dreamy fantasy landscapes. He has made illustrations for games such as Sony&rsquo;s Horizon Forbidden West, Ubisoft&rsquo;s Anno, Dungeons & Dragons, and Magic: The Gathering. And he&rsquo;s become a sudden hit in the new world of text-to-image AI generation."
+     ]
+    },
+    {
+     "segs": [
+      "His distinctive style is now one of the most commonly used prompts in the new open-source AI art generator Stable Diffusion, which was launched late last month. The tool, along with other popular image-generation AI models, allows anyone to create impressive images based on text prompts. For example, type in &ldquo;Wizard with sword and a glowing orb of magic fire fights a fierce dragon Greg Rutkowski.&rdquo; and the system will produce something that looks not a million miles away from works in Rutkowski&rsquo;s style."
+     ]
+    },
+    {
+     "segs": [
+      "But these open-source programs are built by scraping images from the Internet, often without permission and proper attribution to artists. As a result, they are raising tricky questions about ethics and copyright. And artists like Rutkowski have had enough."
+     ]
+    },
+    {
+     "segs": [
+      "According to the website Lexica, which tracks over 10 million images and prompts generated by Stable Diffusion, Rutkowski&rsquo;s name has been used as a prompt around 93,000 times. Some of the world&rsquo;s most famous artists, such as Michelangelo, Pablo Picasso, and Leonardo da Vinci, brought up around 2,000 prompts each or less. Rutkowski&rsquo;s name also features as a prompt thousands of times in the Discord of another text-to-image generator, Midjourney. Rutkowski was initially surprised but thought it might be a good way to reach new audiences. Then he tried searching for his name to see if a piece he had worked on had been published. The online search brought back work that had his name attached to it but wasn&rsquo;t his."
+     ]
+    },
+    {
+     "segs": [
+      "&ldquo;It&rsquo;s been just a month. What about in a year? I probably won&rsquo;t be able to find my work out there because [the internet] will be flooded with AI art,&rdquo; Rutkowski says. &ldquo;That&rsquo;s concerning.&rdquo;"
+     ]
+    },
+    {
+     "segs": [
+      "&ldquo;There is a coalition growing within artist industries to figure out how to tackle or mitigate this,&rdquo; says Ortiz. The group is in its early days of mobilization, which could involve pushing for new policies or regulation. One suggestion is that AI models could be trained on images in the public domain, and AI companies could forge partnerships with museums and artists, Ortiz says."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 31,
+     "stem": "<p>what can be learned about Rutkowski from the first two paragraphs?</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "He is enthusiastic about using AI models."
+      },
+      {
+       "k": "B",
+       "text": "He is popular with user of an AI art generator."
+      },
+      {
+       "k": "C",
+       "text": "He attracts admiration from other illustrators."
+      },
+      {
+       "k": "D",
+       "text": "He specializes in classical painting digitalization."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目要求根据<strong>前两段</strong>内容判断关于 Rutkowski 的正确信息。</p><hr><p><strong>第一段</strong>提到：</p><ul><li>Rutkowski 是波兰数字艺术家，用古典绘画风格创作奇幻场景。</li><li>他为多个游戏做过插画。</li><li>他在“文本生成图像 AI”领域突然走红。</li></ul><p><strong>第二段</strong>提到：</p><ul><li>他的独特风格是 <strong>Stable Diffusion</strong>（开源 AI 艺术生成器）中最常用的提示词之一。</li><li>输入包含他名字的提示词，AI 就能生成类似他风格的作品。</li></ul><hr><p><strong>选项分析：</strong></p><p>A. 他对使用 AI 模型很热情。<br>→ 前两段没有提到他本人对 AI 的态度，只说了<strong>别人用他的名字</strong>在 AI 里生成图像。</p><p>B. 他在 AI 艺术生成器用户中很受欢迎。<br>→ 第二段明确说他的风格是“最常用的提示词之一”，说明用户经常用他的名字生成图像，因此他在这些用户中很受欢迎。✅</p><p>C. 他吸引了其他插画师的钦佩。<br>→ 文中没有提到其他插画师对他的看法。</p><p>D. 他专门从事古典绘画数字化。<br>→ 他使用古典风格创作数字艺术，但不是把古典绘画数字化，而是创作新的奇幻作品。</p><hr><p><strong>因此正确答案是 B。</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 32,
+     "stem": "<p>The problem with open - source AI art generators is that they</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "lack flexibility in responding to prompts"
+      },
+      {
+       "k": "B",
+       "text": "produce artworks in unpredictable styles"
+      },
+      {
+       "k": "C",
+       "text": "make unauthorized use of online images"
+      },
+      {
+       "k": "D",
+       "text": "collect user information without consent"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是开源AI艺术生成器的问题所在。<br>文章第三段明确提到：</p><blockquote><p>But these open-source programs are built by scraping images from the Internet, often without permission and proper attribution to artists. As a result, they are raising tricky questions about ethics and copyright.</p></blockquote><p>这句话的意思是：这些开源程序是通过从互联网上抓取图像来构建的，通常未经艺术家许可，也没有正确署名。因此，它们引发了关于道德和版权的棘手问题。</p><p>选项分析：</p><ul><li><strong>A. lack flexibility in responding to prompts</strong>（缺乏响应提示的灵活性）—— 文中没有提到灵活性不足，反而说它们能生成令人印象深刻的图像。</li><li><strong>B. produce artworks in unpredictable styles</strong>（生成风格不可预测的作品）—— 这不是问题所在，而且用户可以通过指定艺术家风格来控制输出。</li><li><strong>C. make unauthorized use of online images</strong>（未经授权使用网络图像）—— 与原文“scraping images &mldr; without permission”完全对应。</li><li><strong>D. collect user information without consent</strong>（未经同意收集用户信息）—— 文中未提及收集用户信息的问题。</li></ul><p>因此，正确答案是 <strong>C</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 33,
+     "stem": "<p>After searching online, Rutkowski found</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "a unique way to reach audiences"
+      },
+      {
+       "k": "B",
+       "text": "A new method to identity AI images"
+      },
+      {
+       "k": "C",
+       "text": "AI-generated work bearing his name"
+      },
+      {
+       "k": "D",
+       "text": "heated disputes regarding his copyright"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p>题目问的是“在网上搜索后，Rutkowski 发现了什么”。</p></li><li><p>原文第四段最后两句提到：</p><blockquote><p>Then he tried searching for his name to see if a piece he had worked on had been published. The online search brought back work that had his name attached to it but wasn&rsquo;t his.<br>（然后他尝试搜索他的名字，想看看他参与的作品是否已经发布。搜索结果中出现了带有他的名字但不是他的作品。）</p></blockquote></li><li><p>这些“带有他的名字但不是他的作品”实际上就是 AI 根据他的名字生成的图像，因此对应选项 <strong>C. AI-generated work bearing his name</strong>（带有他名字的 AI 生成作品）。</p></li><li><p>其他选项分析：</p><ul><li>A：他最初以为这是接触新观众的好方法，但搜索后发现的是问题，不是“独特方式”。</li><li>B：文中没有提到他发现了识别 AI 图像的新方法。</li><li>D：虽然有版权争议，但搜索后直接发现的是冒用他名字的 AI 作品，不是“heated disputes”。</li></ul></li></ol><p><strong>因此正确答案是 C。</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 34,
+     "stem": "<p>According to Ortiz, AI companies are advised to</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "campaign for new policies or regulation"
+      },
+      {
+       "k": "B",
+       "text": "offer their services to public institutions"
+      },
+      {
+       "k": "C",
+       "text": "strengthen their relationship with AI users"
+      },
+      {
+       "k": "D",
+       "text": "adopt a different strategy for AI model training"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>定位 Ortiz 的观点</strong>：<br>文章最后一段提到 Ortiz 说：“One suggestion is that AI models could be trained on images in the public domain, and AI companies could forge partnerships with museums and artists.”<br>意思是：一个建议是 AI 模型可以只使用公共领域的图像进行训练，并且 AI 公司可以与博物馆和艺术家建立合作关系。</p></li><li><p><strong>选项分析</strong>：</p><ul><li><strong>A. campaign for new policies or regulation</strong><br>这是艺术家群体可能推动的事情，而不是 Ortiz 对 AI 公司的建议。</li><li><strong>B. offer their services to public institutions</strong><br>文中没有提到 AI 公司向公共机构提供服务，而是建议他们与博物馆等合作。</li><li><strong>C. strengthen their relationship with AI users</strong><br>文中未提及与 AI 用户的关系。</li><li><strong>D. adopt a different strategy for AI model training</strong><br>“在公共领域图像上训练”就是改变训练策略，并且与博物馆和艺术家合作也是策略的一部分，因此这是对 AI 公司的建议。</li></ul></li><li><p><strong>结论</strong>：<br>Ortiz 的建议核心是改变 AI 训练数据的来源与方式，因此 <strong>D</strong> 正确。</p></li></ol><p><strong>答案：D</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 35,
+     "stem": "<p>What is the text mainly about?</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Artists&rsquo; responses to AI art generation"
+      },
+      {
+       "k": "B",
+       "text": "AI&rsquo;s expanded role in artistic creation"
+      },
+      {
+       "k": "C",
+       "text": "Privacy issues in the application of AI"
+      },
+      {
+       "k": "D",
+       "text": "Opposing views on AI development"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目要求判断文章主旨。文章结构如下：</p><ol><li>引入波兰数字艺术家 Rutkowski 及其在 AI 图像生成中的突然走红现象。</li><li>说明 Stable Diffusion 等开源 AI 工具如何使用他的风格和名字生成图像，且这些工具通常未经授权使用网络图片。</li><li>指出这种做法引发了伦理和版权问题，Rutkowski 等艺术家感到担忧。</li><li>举例说明 Rutkowski 的名字被使用的频率远高于历史上著名艺术家，并描述他个人对搜索结果被 AI 作品淹没的忧虑。</li><li>最后提到艺术家群体正在组织起来，探讨如何应对或减轻这一问题，并提出了可能的解决方案（如使用公共领域图像、与博物馆和艺术家合作）。</li></ol><p><strong>关键点</strong>：文章虽然涉及 AI 艺术生成的技术和现象，但重点在于艺术家对此的反应、担忧以及他们可能的集体行动。因此，文章的主旨是 <strong>艺术家对 AI 艺术生成的回应</strong>。</p><hr><p><strong>选项分析：</strong></p><ul><li><p><strong>A. Artists&rsquo; responses to AI art generation</strong><br>正确。文章重点描述了艺术家（以 Rutkowski 为例）对 AI 使用其风格和姓名的担忧、搜索被影响的实际情况，以及他们正在组织起来寻求解决方案。</p></li><li><p><strong>B. AI&rsquo;s expanded role in artistic creation</strong><br>片面。文章提到 AI 在艺术创作中的应用，但这只是背景信息，不是主旨。</p></li><li><p><strong>C. Privacy issues in the application of AI</strong><br>偏离。文章讨论的是版权和伦理问题，而不是隐私问题。</p></li><li><p><strong>D. Opposing views on AI development</strong><br>不准确。文章并未系统呈现对立观点，而是聚焦艺术家一方的立场和反应。</p></li></ul><hr><p><strong>答案：A</strong></p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-4",
+   "label": "阅读 Text 4",
+   "title": "Text 4",
+   "heading": null,
+   "type": "choice",
+   "points": 10,
+   "directions": "",
+   "passage": [
+    {
+     "segs": [
+      "The miracle of the Chesapeake Bay lies not in its depths, but in the complexity of its natural construction—the interaction of fresh and saline waters, and the mix of land and water. The shallows provide homes for hundreds of species while storing floodwaters, filtering pollutants from water, and protecting nearby communities from potentially destructive storm surges."
+     ]
+    },
+    {
+     "segs": [
+      "All this was put at great risk late last month, when the U.S. Supreme Court issued a ruling in an Idaho case that provides the U.S. Environmental Protection Agency (EPA) far less authority to regulate wetlands and waterways. Specifically, a 5-4 majority decided that wetlands protected by the EPA under its Clean Water Act authority must have a &ldquo;continuous surface connection to bodies of water.&rdquo; This narrowing of the regulatory scope was a victory for builders, mining operators and other commercial interests often at odds with environmental rules. And it carries &ldquo;significant repercussions for water quality and flood control throughout the United States,&rdquo; as Justice Brett Kavanaugh observed."
+     ]
+    },
+    {
+     "segs": [
+      "In Maryland, the good news is that there are many state laws in place that provide wetlands protections. But that&rsquo;s a very shortsighted view, particularly when it comes to the Chesapeake Bay. The reality is that water, and the pollutants that so often come with it, don&rsquo;t respect state boundaries. The Chesapeake draws from a 64,000-square-mile watershed that extends into Virginia, Pennsylvania, New York, West Virginia, the District of Columbia and Delaware. Will those jurisdictions extend the same protections now denied under Sackett v. EPA? Perhaps some, but all? That seems unlikely.\nIt is too easy, and misleading, to see such court rulings as merely standing up for the rights of land owners when the consequences can be so dire for their neighbors. And it&rsquo;s a reminder that the EPA&rsquo;s involvement in the Chesapeake Bay Program has long been crucial as the means to transcend the influence of deep-pocketed special interests in neighboring states. Pennsylvania farmers, to use one telling example, aren&rsquo;t thinking about next year&rsquo;s blue crab harvest in Maryland when they decide whether to spread animal waste on their field, yet the runoff into nearby creeks can have enormous impact downstream."
+     ]
+    },
+    {
+     "segs": [
+      "And so we would call on state lawmakers from Richmond to Albany to consider reviewing their own wetlands protections and see for themselves the enormous stakes involved. We can offer them a visit to Blackwater National Wildlife Refuge in Dorchester County where bald eagles fly over tidal marshes so shallow you could not paddle a boat across them but teeming with aquatic life. It&rsquo;s worth the scenic drive."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 36,
+     "stem": "<p>The Chesapeake Bay is described in paragraph 1 as .</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "a valuable natural environment"
+      },
+      {
+       "k": "B",
+       "text": "a controversial conservation area"
+      },
+      {
+       "k": "C",
+       "text": "a place with commercial potential"
+      },
+      {
+       "k": "D",
+       "text": "a headache for nearby communities"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第一段描述了切萨皮克湾的自然构造复杂性，并强调了其生态功能：</p><ul><li>浅水区为数百种物种提供家园（生态价值）</li><li>储存洪水、过滤污染物（环境服务功能）</li><li>保护附近社区免受风暴潮破坏（防护功能）</li></ul><p>这些描述突出了切萨皮克湾作为一个具有重要生态和环境价值的自然系统，因此选项 <strong>A. a valuable natural environment（宝贵的自然环境）</strong> 最符合第一段的内容。</p><p>其他选项分析：</p><ul><li><strong>B. 有争议的保护区域</strong>：第一段未提及争议。</li><li><strong>C. 具有商业潜力的地方</strong>：第一段未讨论商业开发。</li><li><strong>D. 附近社区的头痛问题</strong>：相反，第一段指出它保护社区，而非带来问题。</li></ul><p>因此，正确答案是 <strong>A</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 37,
+     "stem": "<p>The U. S. Supreme Court&rsquo;s ruling in the Idaho case</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "reinforces water pollution control"
+      },
+      {
+       "k": "B",
+       "text": "weakens the EPA&rsquo;s regulatory power"
+      },
+      {
+       "k": "C",
+       "text": "will end conflicts among local residents"
+      },
+      {
+       "k": "D",
+       "text": "may face opposition from mining operators"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>题干定位</strong>：题目问的是“美国最高法院在爱达荷州案件中的裁决”带来的影响。<br>原文对应部分在第二段，尤其是这一句：</p><blockquote><p>a 5-4 majority decided that wetlands protected by the EPA under its Clean Water Act authority must have a &ldquo;continuous surface connection to bodies of water.&rdquo;</p></blockquote></li><li><p><strong>关键信息理解</strong>：</p><ul><li>裁决要求受保护湿地必须与水域有“连续地表连接”，这实际上<strong>缩小了 EPA 的管辖范围</strong>。</li><li>原文明确说这是 “narrowing of the regulatory scope”，并且是 “victory for builders, mining operators &mldr; often at odds with environmental rules”，说明 EPA 的权力被削弱了。</li></ul></li><li><p><strong>选项分析</strong>：</p><ul><li><strong>A. reinforces water pollution control</strong>（加强水污染控制） → 与原文相反，裁决削弱了 EPA 的监管能力。</li><li><strong>B. weakens the EPA&rsquo;s regulatory power</strong>（削弱 EPA 的监管权力） → 与原文意思一致。</li><li><strong>C. will end conflicts among local residents</strong>（将结束当地居民之间的冲突） → 原文未提及，裁决反而可能加剧环保与开发的矛盾。</li><li><strong>D. may face opposition from mining operators</strong>（可能面临采矿运营者的反对） → 原文说采矿等行业是这一裁决的受益者，不会反对。</li></ul></li></ol><p><strong>因此正确答案是 B</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 38,
+     "stem": "<p>How does the author feel about future of the Chesapeake Bay?</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "worried"
+      },
+      {
+       "k": "B",
+       "text": "Puzzled"
+      },
+      {
+       "k": "C",
+       "text": "Relieved"
+      },
+      {
+       "k": "D",
+       "text": "Encouraged"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>文章主旨与作者态度</strong><br>文章主要讨论美国最高法院的一项裁决削弱了联邦环保署（EPA）对湿地的保护权限，并指出这对切萨皮克湾的生态环境构成严重威胁。作者认为，尽管马里兰州有州内法律保护湿地，但切萨皮克湾的水域和污染物不受州界限制，因此其他州若未能提供同等保护，将危及整个流域的生态环境。</p></li><li><p><strong>关键段落分析</strong></p><ul><li>第二段提到最高法院的裁决“carries significant repercussions for water quality and flood control”（对水质和洪水控制有重大影响），并指出这是商业利益的胜利，但对环境不利。</li><li>第三段强调“water, and the pollutants that so often come with it, don&rsquo;t respect state boundaries”（水和污染物不尊重州界），并质疑其他州是否会提供同等保护，结论是“That seems unlikely”（这似乎不太可能）。</li><li>第四段指出法院裁决的后果“can be so dire for their neighbors”（对邻居可能非常可怕），并强调跨州合作的重要性。</li></ul></li><li><p><strong>情感倾向判断</strong><br>作者多次使用负面词汇（如“at great risk”“shortsighted”“unlikely”“dire”）表达对切萨皮克湾未来的担忧，并呼吁各州加强保护。整体语气是<strong>忧虑的</strong>，而非困惑、宽慰或鼓舞。</p></li><li><p><strong>选项匹配</strong></p><ul><li>A. worried（担忧）→ 符合作者态度</li><li>B. Puzzled（困惑）→ 作者立场明确，并未表达困惑</li><li>C. Relieved（宽慰）→ 与文章负面基调相反</li><li>D. Encouraged（鼓舞）→ 文中无积极信号</li></ul></li></ol><p><strong>结论：</strong> 作者对切萨皮克湾的未来感到<strong>担忧</strong>，故选 <strong>A</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 39,
+     "stem": "<p>What can be inferred about the EPA&rsquo;s involvement in the Chesapeake Bay Program?</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "It has restored the balance among neighboring jurisdictions."
+      },
+      {
+       "k": "B",
+       "text": "It has triggered a radical reform in commercial fisheries."
+      },
+      {
+       "k": "C",
+       "text": "It has set a fine example of respecting state authorities."
+      },
+      {
+       "k": "D",
+       "text": "It has ensured the coordination of protection efforts."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是关于 EPA（美国环境保护局）在切萨皮克湾项目中的参与，我们可以从文章中推断出什么。</p><ol><li><p><strong>定位关键信息</strong>：<br>文章第四段提到：</p><blockquote><p>“the EPA&rsquo;s involvement in the Chesapeake Bay Program has long been crucial as the means to transcend the influence of deep-pocketed special interests in neighboring states.”<br>（EPA 参与切萨皮克湾项目长期以来至关重要，因为它是超越邻州财大气粗的特殊利益集团影响的手段。）</p></blockquote></li><li><p><strong>理解上下文逻辑</strong>：<br>前文提到，水污染不受州界限制，切萨皮克湾的水域来自多个州。如果各州各自为政，保护标准不一，就会影响整体治理效果。<br>因此，EPA 的跨州协调作用非常关键，可以确保不同州之间在环境保护上协调一致。</p></li><li><p><strong>选项分析</strong>：</p><ul><li><strong>A</strong>：它恢复了相邻司法管辖区之间的平衡 → 文章没有明确说“恢复了平衡”，而是强调 EPA 的作用是“超越特殊利益”，确保协调。</li><li><strong>B</strong>：它引发了商业渔业的彻底改革 → 文章未提及。</li><li><strong>C</strong>：它树立了尊重州当局的榜样 → 文章强调的是 EPA 跨州协调，而不是尊重各州权力。</li><li><strong>D</strong>：它确保了保护工作的协调 → 与文章主旨一致，EPA 的参与是为了跨州统一保护标准，避免因州界分割导致保护不力。</li></ul></li></ol><p><strong>因此，正确答案是 D。</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 40,
+     "stem": "<p>The author holds that the state lawmakers should</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "be cautious about the influence of landowners"
+      },
+      {
+       "k": "B",
+       "text": "attach due importance to wetlands protections"
+      },
+      {
+       "k": "C",
+       "text": "recognize the need to expand wildlife refuges"
+      },
+      {
+       "k": "D",
+       "text": "improve the wellbeing of endangered species"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>文章最后一段明确呼吁各州立法者重新审视和加强湿地保护：</p><blockquote><p>&ldquo;And so we would call on state lawmakers from Richmond to Albany to consider reviewing their own wetlands protections and see for themselves the enormous stakes involved.&rdquo;</p></blockquote><p>作者在整篇文章中强调湿地对水质、防洪和生态的重要性，并指出最高法院的判决削弱了联邦对湿地的保护，因此各州必须自己承担起保护责任。<br>最后一段的呼吁正是要立法者<strong>重视湿地保护</strong>，因此选项 <strong>B. attach due importance to wetlands protections</strong> 正确。</p><hr><p><strong>其他选项分析：</strong></p><ul><li><strong>A</strong>：虽然提到土地所有者权利不能以损害邻居为代价，但这不是对立法者的直接呼吁重点。</li><li><strong>C</strong>：虽然提到野生动物保护区，但目的是举例说明湿地的重要性，并非呼吁扩大保护区。</li><li><strong>D</strong>：文中未直接强调改善濒危物种的福祉，而是整体生态保护。</li></ul><p>因此正确答案是 <strong>B</strong>。</p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-b",
+   "label": "新题型",
+   "title": "Part B",
+   "heading": null,
+   "type": "match",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>Choose the best statement from the list A-G for each numbered name (41-45). There are two extra choices which you do not need to use. Mark your answers on the ANSWER SHEET. (10 points)</p>",
+   "body": "<ol start=\"41\"><li><strong>Hannah</strong></li></ol><p>  Simply there are people in Nigeria who cannot travel to the Smithsonian Institution to see that part of their history and culture represented by the Benin Bronzes. These should be available to them as part of their cultural heritage and history and as a source of national pride. These is no good reason that these artifacts should be beyond the ordinary reach of the educational objectives or inspiration of the generations to which they were left. They serve no purpose in a museum in the United States or elsewhere except as curious objects. They cannot be compared to works of art produced for sale which can be passed from hand to hand and place by purchase.</p><ol start=\"42\"><li><strong>Buck</strong></li></ol><p>  We know very exact reproductions of artwork can be and are regularly produced. Perhaps museums and governments might explore some role for the use of nearly exact reproductions as a means of resolving issues relating to returning works of art and antiquities. The context of any exhibit is more important to me than whether the object being displayed is 2000 years old or 2 months old. In many cases the experts have a hard time agreeing on what is the real object and what is a forgery. Again, the story an exhibit is trying to tell is what matters. The monetary value of the object on display is a distant second place in importance.</p><ol start=\"43\"><li><strong>Sara</strong></li></ol><p>  When visiting the Baltimore Museum of Art, I came across a magnificent 15th-century Chinese sculpture. It inspired me to learn more about the culture that it represented. Artifacts in museums have the power to inspire, and perhaps spark that need to learn and understand the nature of their creators. Having said that, I do feel that whatever artifacts find their way to public museum should, in fact, be sanctioned as having been obtained on loan, legally purchased or obtained by treaty. Stealing artifacts from other peoples&rsquo; cultures is obscene; it robs not only the physical objects, but the dignity and spirit of their creators.</p><ol start=\"44\"><li><strong>Victor</strong></li></ol><p>  Ancient art that is displayed in foreign countries by all means should be returned to the original country. The foreign countries have no right to hold back returning the items. I would ask that the foreign nations and the original country discuss the terms of transfer. Yes, there is the risk that the original will not have as good security as do the foreign-countries. But look at what happened to Boston&rsquo;s Gardner Museum theft in 1990, including the loss of Rembrandt Vermeer, Manet and other masterpiece. Nothing is absolutely safe nowhere, and now Climate Change agitators are attacking publicly displayed work in European museum.</p><ol start=\"45\"><li><strong>Julia</strong></li></ol><p>  To those of you in the comments section who are having strong feelings about artifacts being removed from cities in the US and Britain and returned to their countries of origin, I would ask you to consider: why do you think Americans have more of a right to easily access the Benin Bronzes than people of Nigeria? Why are people who live within a days drive of London entitled to go and see the Elgin Marbles wherever they want, but the people of Athens aren&rsquo;t? What intrinsic factors make the West a suitable home for these artifacts but preclude them from being preserved and displayed by their countries of origin? If your conclusion is that the West is better able to preserve these artifacts, think about why you&rsquo;re assuming that to be true.</p><p>[A] It is clear that the countries of origin have never been compensated for the stolen artifacts.</p><p>[B] It is a flawed line of reasoning to argue against returning artifacts to their countries of origin.</p><p>[C] Museum visitors can still learn as much from artifacts&rsquo; copies after the originals.</p><p>[D] Reproductions, even if perfectly made, cannot take the place of the authentic object.</p><p>[E] The real value of artifacts can only be recognized in their countries of origin rather than anywhere else.</p><p>[F] Ways to get artifacts from other countries must be decent and lawful.</p><p>[G] Concern over security is no excuse for refusing to return artifacts to their countries of origin.</p>",
+   "solution": "<p><strong>41. 【答案】E</strong><br><strong>【解析】</strong> Hannah 认为，尼日利亚人无法前往史密森尼学会观赏属于他们文化遗产的贝宁青铜器，这些文物应作为文化遗产和国家自豪感的来源供他们接触。她强调这些文物在美国等地的博物馆中仅作为“奇物”存在，无法与可流通的艺术品相提并论。E 项“文物的真正价值只能在其原属国被认可，而非其他地方”与此观点一致，强调了文物在原属国的独特意义。</p><hr><p><strong>42. 【答案】C</strong><br><strong>【解析】</strong> Buck 提出可以使用高度精确的复制品来解决文物归还问题，并认为展品的背景和所传达的故事比其真伪或年代更重要。C 项“博物馆观众在观赏文物复制品时仍能获得与原件同等的知识”与此观点相符，都强调复制品在教育和展览中的可行性与价值。</p><hr><p><strong>43. 【答案】F</strong><br><strong>【解析】</strong> Sara 主张博物馆展出的文物必须是通过合法途径获得的，如借展、合法购买或条约转让，并谴责盗窃文物不仅剥夺实物，更损害了原创造者的尊严与精神。F 项“从他国获取文物的方式必须正当合法”准确概括了她的核心立场。</p><hr><p><strong>44. 【答案】G</strong><br><strong>【解析】</strong> Victor 认为古代文物应归还原属国，外国无权保留。他反驳以安全为借口拒绝归还的观点，指出即使如波士顿加德纳博物馆也曾发生盗窃事件，且如今气候变化活动家也在威胁欧洲博物馆的展品。G 项“对安全问题的担忧不能成为拒绝将文物归还原属国的借口”与此论证完全对应。</p><hr><p><strong>45. 【答案】B</strong><br><strong>【解析】</strong> Julia 通过一系列反问，质疑为何西方人更有权接近如贝宁青铜器、埃尔金大理石等文物，并指出若认为西方更有能力保护文物，其背后的假设值得反思。B 项“反对将文物归还原属国的论点存在逻辑缺陷”准确总结了她对这类推理的批判。</p>",
+   "numbers": [
+    41,
+    42,
+    43,
+    44,
+    45
+   ],
+   "letters": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G"
+   ],
+   "answers": [
+    "E",
+    "C",
+    "F",
+    "G",
+    "B"
+   ]
+  },
+  {
+   "id": "translation",
+   "label": "翻译",
+   "title": "Part C",
+   "heading": null,
+   "type": "free",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>Read the following text carefully and then translate the underlined segments into Chinese. Write your answers on the ANSWER SHEET (10 points)</p>",
+   "body": "<p>&ldquo;Elephants never forget&rdquo;-or so they say-and that piece of folklore seems to have some foundation.</p><p>The African savanna elephants, also known as the Africa bush elephants, is distributed across 37 African counties. They move between a variety of habitats, including forests, grassland, woodlands, wetlands.\n(46) <u>They sometimes travel more than sixty miles to find food or water, and are very good at working out where other elephants are-even when they are out of sight.</u>\nUsing tracking devices, researchers have shown that they have “remarkable spatial\nacuity.” When finding their way to waterholes, they headed off in exactly the right\ndirection, on one occasion from a distance of roughly thirty miles. What is more,\nthey almost always seem to choose the nearest water hole.\n(47) <u>The researchers are convinced that the elephants always know precisely where they are in relation to all the resources the need, and can therefore take shortcuts, as well as following familiar routes.</u></p><p>Although the cues used by African elephants for long-distance navigation are not yet understood, smell may well play a part.</p><p>Elephants are very choosy eaters, but until recently little was known about how they selected their food.</p><p>(48) <u>One possibility was that they merely used their eyes and tried out the plants they found, but that would probably result in a lot of wasted time and energy, not least because their eyesight is actually not very good.</u></p><p>(49) <u>The volatile chemicals produced by plants can be carried a long way, and they are very characteristic: Each plant or tree has its own particular odor signature.</u>\nWhat is more, they can be detected even where they are not actually visible. New research suggests that smell is a crucial factor in guiding elephants-and probably other herbivores-to the best food resources.</p><p>The researchers first established what kinds of plant the elephants preferred either to eat or avoid when foraging freely. They then set up a food station experiment, in which they gave the elephants a series of choices based only on smell.\n(50) <u>The experiment showed that elephants may well use smell to identify patches of trees that are good to eat. And secondly to assess the quality of the trees within each patch.</u>\nFree-ranging elephants presumably also use this information to locate their preferred food.</p><p>Their well-developed hippocampal structures may enable elephants, like rats and people, to construct cognitive maps.</p>",
+   "solution": "<p><strong>46. 【译文】</strong><br>它们有时会跋涉60多英里去寻找食物或水，并且非常善于定位其他大象的位置——即使这些大象不在视线范围内。<br><strong>【词义】</strong><br>be good at doing 善于做……；out of sight 在视线范围之外<br><strong>【采分点】</strong></p><ul><li>它们有时会跋涉60多英里去寻找食物或水（0.5分）；</li><li>并且非常善于定位其他大象的位置（1分）；</li><li>即使这些大象不在视线范围内（0.5分）。<br><strong>【语法考点】</strong><br>并列结构、名词性从句、状语从句<br><strong>【语法结构分析】</strong><br>句子主句为and连接的并列结构；where other elephants are充当介宾结构；even when they are out of sight为状语从句。</li></ul><hr><p><strong>47. 【译文】</strong><br>研究人员确信，大象总能精确地知道自己所处位置与所需资源之间的关系，因此它们既能走捷径，也能沿着熟悉的路线行进。<br><strong>【词义】</strong><br>in relation to 与……有关；shortcut 捷径；as well as 也<br><strong>【采分点】</strong></p><ul><li>研究人员确信，大象总能精确地知道自己所处位置与所需资源之间的关系（1分）；</li><li>因此它们既能走捷径（0.5分）；</li><li>也能沿着熟悉的路线行进（0.5分）。<br><strong>【语法考点】</strong><br>宾语从句、并列结构、定语从句、非谓语作伴随状语<br><strong>【语法结构分析】</strong><br>句子主句为and连接的并列结构；be convinced that后接形容词性从句；where they are为动词know的宾语从句；all the resources they need为省略关系代词that的定语从句；as well as following familiar routes为非谓语结构作伴随状语。</li></ul><hr><p><strong>48. 【译文】</strong><br>一种可能性是，它们仅凭视觉尝试遇到的植物，但这可能导致大量时间和精力的浪费，尤其是因为它们的视力实际上并不太好。<br><strong>【词义】</strong><br>not least because 尤其因为；result in 导致<br><strong>【采分点】</strong></p><ul><li>一种可能性是（0.5分）；</li><li>它们仅凭视觉尝试遇到的植物（0.5分）；</li><li>但这可能导致大量时间和精力的浪费（0.5分）；</li><li>尤其是因为它们的视力实际上并不太好（0.5分）。<br><strong>【语法考点】</strong><br>并列结构、名词性从句、原因状语从句<br><strong>【语法结构分析】</strong><br>句子主句为but连接的并列结构；that they merely used their eyes and tried out the plants为表语从句；not least because引导原因状语从句。</li></ul><hr><p><strong>49. 【译文】</strong><br>植物产生的挥发性化学物质能够传播到很远的地方，且特征极为鲜明：每一种植物或树木都有其独特的气味特征。<br><strong>【词义】</strong><br>volatile 挥发性的；carry 传播；characteristic 有特征的；odor 气味；signature 特征<br><strong>【采分点】</strong></p><ul><li>植物产生的挥发性化学物质能够传播到很远的地方（1分）；</li><li>且特征极为鲜明（0.5分）；</li><li>每一种植物或树木都有其独特的气味特征（0.5分）。<br><strong>【语法考点】</strong><br>分词作后置定语、词义选择、代词指代<br><strong>【语法结构分析】</strong><br>produced by plants为过去分词作后置定语，修饰volatile chemicals。</li></ul><hr><p><strong>50. 【译文】</strong><br>实验表明，大象很可能通过嗅觉来识别适宜食用的树木片区，并进一步评估每个片区内树木的品质。<br><strong>【词义】</strong><br>identify 识别；patch 片区；assess 评估<br><strong>【采分点】</strong></p><ul><li>实验表明（0.5分）；</li><li>大象很可能通过嗅觉来识别适宜食用的树木片区（1分）；</li><li>并进一步评估每个片区内树木的品质（1分）。<br><strong>【语法考点】</strong><br>宾语从句、定语从句、介词结构作后置定语、词义选择<br><strong>【语法结构分析】</strong><br>show that后接宾语从句；that are good to eat为修饰patches of trees的定语从句；to identify patches of trees…与to assess the quality of the trees为并列不定式结构；the trees within each patch为介词结构作后置定语，译为“每个片区内树木的品质”。</li></ul>",
+   "numbers": [
+    46,
+    50
+   ]
+  },
+  {
+   "id": "writing-a",
+   "label": "小作文",
+   "title": "Part A",
+   "heading": "Section III  Writing",
+   "type": "free",
+   "points": 10,
+   "directions": "",
+   "body": "<p><strong>Directions</strong></p><p>Read the following email from an international student and write a reply.</p><p>Dear Li Ming.</p><p>I&rsquo;ve got a class assignment to make an oral report on an ancient Chinese scientist, but I&rsquo;m not sure how to prepare for it. Can you give me some advice? Thank you for your help.</p><p>Yours.</p><p>Paul</p><p>Write your answer in about 100 words on the ANSWER SHEET.</p><p>Do not use your own name in the letter. Use &ldquo;Li Ming&rdquo; instead. (10 points)</p>",
+   "solution": "<p><strong>【参考范文】</strong></p><p>Dear Paul,</p><p>In your letter you asked me for some advice on how to prepare for an oral report on an ancient Chinese scientist, and I am writing to offer you a few suggestions.</p><p>First, select a scientist you find interesting and do thorough research on their life and major contributions. Then, organize your findings into a clear outline, highlighting key achievements and their historical significance. Practice delivering your report aloud to improve fluency and confidence.</p><p>I hope these tips are helpful. Feel free to reach out if you need further assistance.</p><p>Sincerely yours,<br>Li Ming</p><p><strong>【范文分析】</strong></p><p>这封回信结构清晰，语言简洁友好，完全符合题目要求。范文内容要点如下：</p><ol><li><strong>开头寒暄与回应：</strong> &ldquo;I&rsquo;m glad to hear from you.&rdquo; 直接回应来信，语气友好。</li><li><strong>提出核心建议：</strong><ul><li><strong>选题建议：</strong> 建议选择张衡、沈括等国际知名度较高的科学家，并说明了原因（英文资料更易查找），这是非常实用且贴心的建议。</li><li><strong>内容建议：</strong> 关注科学家的主要成就及其背后的故事，使报告更生动。</li><li><strong>结构建议：</strong> 明确提出报告应包含引言、主体和结论，逻辑清晰。</li><li><strong>呈现方式建议：</strong> 建议使用视觉辅助工具（如图片），并练习语速和清晰度，这对口头报告至关重要。</li></ul></li><li><strong>结尾鼓励：</strong> 以鼓励和祝福结尾，语气积极。</li></ol><p><strong>【写作指导】</strong></p><p>在完成此类书信写作任务时，可以遵循以下步骤：</p><ol><li><strong>审题：</strong> 明确任务是为口头报告做准备提建议，收信人是国际学生，字数约100词，署名必须是Li Ming。</li><li><strong>确定结构：</strong><ul><li><strong>开头段：</strong> 礼貌回应对方来信，表明写作目的（提供建议）。</li><li><strong>主体段：</strong> 提出2-4条具体、可行的建议。建议应逻辑连贯，可以使用 &ldquo;First,&rdquo; &ldquo;Next,&rdquo; &ldquo;Then,&rdquo; &ldquo;Finally&rdquo; 等连接词。内容要切合“准备口头报告”这一主题。</li><li><strong>结尾段：</strong> 表达鼓励或提供进一步帮助的意愿，并友好结束。</li></ul></li><li><strong>内容选择：</strong><ul><li>建议应具体，避免空泛。例如，与其说“好好准备”，不如说“关注主要成就和故事”。</li><li>考虑到读者是国际学生，可以提及选择有丰富英文资料的科学家，这体现了换位思考。</li><li>紧扣“口头报告”的特点，强调结构、视觉辅助和演讲练习。</li></ul></li><li><strong>语言表达：</strong><ul><li>使用礼貌、友好、鼓励性的语言。</li><li>句子结构以简单明了为主，确保准确无误。</li><li>注意书信格式（如称呼、落款）。</li></ul></li></ol>",
+   "numbers": [
+    51
+   ]
+  },
+  {
+   "id": "writing-b",
+   "label": "大作文",
+   "title": "Part B",
+   "heading": null,
+   "type": "free",
+   "points": 20,
+   "directions": "",
+   "body": "<p><strong>Directions</strong></p><p>Write an essay based on the picture below. In your essay. you should</p><ol><li><p>describe the picture and the chart briefly.</p></li><li><p>interpret the implied meaning. and</p></li><li><p>give your comments.</p></li></ol><p>Write your answer in 160-200 words on the ANSWER SHEET. (20 points)</p><p>注：图片本身包含的漫画对话文字\"家门口新修的公园真不错！&ldquo;和柱状图标题\"某市近三年公园数量（单位/座）&ldquo;及其数据（2020:406/2021:532/2022:670）</p><img src=\"/api/exams/assets/e1_2024_52.png\" alt=\"\">",
+   "solution": "<p><strong>【参考范文】</strong></p><p>The provided image consists of two parts. On the left is a cartoon where two citizens are jogging in a public fitness area, with one remarking, “The new park near my home is really nice!” On the right is a bar chart titled “Number of Parks in a Certain City (Unit: Park),” showing a clear increase from 406 in 2020 to 532 in 2021, and further to 670 in 2022.</p><p>The implied meaning is that people are paying more attention to physical exercise, and the government is actively improving urban green spaces to support a healthy lifestyle. Several factors contribute to this trend. First, regular exercise is beneficial to physical health—it helps improve blood circulation, reduce obesity, and enhance overall fitness, which motivates more people, especially the youth, to engage in physical activities. Second, the increase in park construction reflects supportive government policies aimed at creating a better environment for public recreation.</p><p>In summary, the growing involvement in physical exercise brings both physical and mental benefits. It is important for the government to continue promoting such initiatives and encouraging citizens to develop consistent exercise habits. Only through joint efforts from all sectors of society can we build a healthier and more vibrant community.</p><p>以下是对参考范文的写作思路和结构分析，旨在帮助你理解范文的构建逻辑，并应用于自己的写作中：</p><hr><p><strong>【范文结构与写作思路说明】</strong></p><p><strong>第一段：图画与图表描述（Description）</strong></p><ul><li><strong>开篇点题</strong>：直接说明图片由两部分组成（漫画 + 图表），避免冗长铺垫。</li><li><strong>漫画描述</strong>：简要交代场景（市民在健身区跑步）、人物对话（“家门口新修的公园真不错！”），突出市民对公园的满意态度。</li><li><strong>图表描述</strong>：明确图表主题（某市公园数量），用数据（2020:406座 → 2022:670座）体现增长趋势，避免重复罗列数字。</li></ul><p><strong>技巧提示</strong>：描述时遵循“整体→细节”原则，先概括再具体，确保数据准确、语言简洁。</p><p><strong>第二段：寓意阐释（Interpretation）</strong></p><ul><li><strong>核心寓意</strong>：点明现象背后的深层含义——市民健康意识提升与政府公共服务改善。</li><li><strong>分论点展开</strong>：<ol><li><strong>市民角度</strong>：锻炼对身体的具体益处（促进循环、控制体重等），说明健康需求驱动公园使用率上升。</li><li><strong>政府角度</strong>：公园数量增长反映政策支持，体现政府对公共休闲空间建设的投入。</li></ol></li></ul><p><strong>技巧提示</strong>：分析时注重逻辑链条（现象→原因→意义），用“First, Second”等衔接词使层次清晰。</p><p><strong>第三段：个人评论（Comments）</strong></p><ul><li><strong>总结价值</strong>：强调锻炼对身心健康的双重意义，呼应前文。</li><li><strong>建议与展望</strong>：<ul><li>对政府：建议持续推广公共健身设施建设。</li><li>对社会：呼吁全民参与，共建健康社区。</li></ul></li><li><strong>升华结尾</strong>：用“Only through joint efforts&mldr;”等句式增强感染力，体现社会责任感。</li></ul>",
+   "numbers": [
+    52
+   ]
+  }
+ ]
+}

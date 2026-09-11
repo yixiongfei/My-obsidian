@@ -1,0 +1,1424 @@
+{
+ "id": "english1-2017",
+ "kind": "english1",
+ "kindLabel": "英语一",
+ "group": "english",
+ "year": 2017,
+ "title": "2017 年真题",
+ "source": "https://www.csgraduates.com/study_methods/english/english1/2017/",
+ "fetchedAt": "2026-09-11T17:46:08.086Z",
+ "sections": [
+  {
+   "id": "cloze",
+   "label": "完形填空",
+   "title": "完形填空",
+   "heading": "Section I  Use of English",
+   "type": "choice",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>Read the following text. Choose the best word(s) for each numbered blank and mark A, B, C or D on the ANSWER SHEET. (10 points)</p>",
+   "passage": [
+    {
+     "segs": [
+      "Could a hug a day keep the doctor away? The answer may be a resounding “yes!”\n",
+      {
+       "n": 1
+      },
+      "\nhelping you feel close and\n",
+      {
+       "n": 2
+      },
+      "\nto people you care about, it turns out that hugs can bring a\n",
+      {
+       "n": 3
+      },
+      "\nof health benefits to your body and mind. Believe it or not, a warm embrace might even help you\n",
+      {
+       "n": 4
+      },
+      "\ngetting sick this winter."
+     ]
+    },
+    {
+     "segs": [
+      "In a recent study\n",
+      {
+       "n": 5
+      },
+      "\nover 400 healthy adults, researchers from Carnegie Mellon University in Pennsylvania examined the effects of perceived social support and the receipt of hugs\n",
+      {
+       "n": 6
+      },
+      "\nthe participants’ susceptibility to developing the common cold after being\n",
+      {
+       "n": 7
+      },
+      "\nto the virus. People who perceived greater social support were less likely to come\n",
+      {
+       "n": 8
+      },
+      "\nwith a cold, and the researchers\n",
+      {
+       "n": 9
+      },
+      "\nthat the stress - reducing effects of hugging\n",
+      {
+       "n": 10
+      },
+      "\nabout 32 percent of that beneficial effect.\n",
+      {
+       "n": 11
+      },
+      "\namong those who got a cold, the ones who felt greater social support and received more frequent hugs had less severe\n",
+      {
+       "n": 12
+      },
+      "\n."
+     ]
+    },
+    {
+     "segs": [
+      "“Hugging protects people who are under stress from the\n",
+      {
+       "n": 13
+      },
+      "\nrisk for colds that’s usually\n",
+      {
+       "n": 14
+      },
+      "\nwith stress,” notes Sheldon Cohen, a professor of psychology at Carnegie. Hugging “is a marker of intimacy and helps\n",
+      {
+       "n": 15
+      },
+      "\nthe feeling that others are there to help\n",
+      {
+       "n": 16
+      },
+      "\ndifficulty.”"
+     ]
+    },
+    {
+     "segs": [
+      "Some experts\n",
+      {
+       "n": 17
+      },
+      "\nthe stress - reducing, health - related benefits of hugging to the release of oxytocin, often called “the bonding hormone”\n",
+      {
+       "n": 18
+      },
+      "\nit promotes attachment in relationships, including that between mothers and their newborn babies. Oxytocin is made primarily in the central lower part of the brain, and some of it is released into the bloodstream. But some of it\n",
+      {
+       "n": 19
+      },
+      "\nin the brain, where it\n",
+      {
+       "n": 20
+      },
+      "\nmood, behavior and physiology."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 1,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Unlike"
+      },
+      {
+       "k": "B",
+       "text": "Besides"
+      },
+      {
+       "k": "C",
+       "text": "Throughout"
+      },
+      {
+       "k": "D",
+       "text": "Despite"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 1 题题干为：</p><blockquote><p><span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>1</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nhelping you feel close and\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>2</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nto people you care about, it turns out that hugs can bring a\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>3</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nof health benefits to your body and mind.</p></blockquote><p>四个选项：<br>A. Unlike<br>B. Besides<br>C. Throughout<br>D. Despite</p><p><strong>逻辑分析：</strong></p><ul><li>空格后面是 “helping you feel close and &mldr; to people you care about”，这是拥抱的一个好处。</li><li>主句说 “hugs can bring a &mldr; of health benefits to your body and mind”，即拥抱还能带来其他健康益处。</li><li>因此，空格处应表示“除了……之外（还有……）”的递进关系。</li></ul><p><strong>选项分析：</strong></p><ul><li><strong>A. Unlike</strong>（与……不同）—— 表示对比，不符合语义。</li><li><strong>B. Besides</strong>（除了……之外还）—— 表示递进，符合“除了让人感到亲密外，还有健康益处”的逻辑。</li><li><strong>C. Throughout</strong>（贯穿）—— 语义不通。</li><li><strong>D. Despite</strong>（尽管）—— 表示让步，但这里没有转折含义。</li></ul><p>因此，正确答案是 <strong>B. Besides</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 2,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "equal"
+      },
+      {
+       "k": "B",
+       "text": "restricted"
+      },
+      {
+       "k": "C",
+       "text": "connected"
+      },
+      {
+       "k": "D",
+       "text": "inferior"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>本句结构为 “helping you feel close and ___ to people you care about”，其中 “and” 连接两个并列的形容词短语，描述拥抱带来的感受。</p><ul><li><strong>close</strong>（亲近的）与空格处应为语义相近或相关的词，共同表达“与关心的人关系亲密、有联系”。</li><li><strong>A. equal</strong>（平等的）—— 与“亲近”没有直接关联，不符合语境。</li><li><strong>B. restricted</strong>（受限制的）—— 与“亲近”在情感上矛盾，不符合文意。</li><li><strong>C. connected</strong>（有联系的）—— 与“亲近”在情感上一致，且常与 “feel close and connected” 搭配使用，表示情感上的紧密连接。</li><li><strong>D. inferior</strong>（低人一等的）—— 与“亲近”语义不符，且情感色彩错误。</li></ul><p>因此，正确答案是 <strong>C. connected</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 3,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "host"
+      },
+      {
+       "k": "B",
+       "text": "view"
+      },
+      {
+       "k": "C",
+       "text": "lesson"
+      },
+      {
+       "k": "D",
+       "text": "choice"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>空格处需要填入一个名词，与 “a ___ of health benefits” 搭配，表示“许多健康益处”。</p><ul><li><strong>A. host</strong>：a host of 是固定搭配，意为“许多，大量”，符合句意。</li><li><strong>B. view</strong>：a view of 意为“对…的看法”，与“健康益处”搭配不当。</li><li><strong>C. lesson</strong>：a lesson of 意为“…的教训”，语义不符。</li><li><strong>D. choice</strong>：a choice of 意为“选择”，不能与“健康益处”形成合理搭配。</li></ul><p>因此，正确答案是 <strong>A. host</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 4,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "recall"
+      },
+      {
+       "k": "B",
+       "text": "forget"
+      },
+      {
+       "k": "C",
+       "text": "avoid"
+      },
+      {
+       "k": "D",
+       "text": "keep"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 4 题所在句子是：</p><blockquote><p>Believe it or not, a warm embrace might even help you\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>4</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\ngetting sick this winter.</p></blockquote><ul><li><strong>A. recall</strong>（回忆起）—— 与“生病”搭配不合理，语义不通。</li><li><strong>B. forget</strong>（忘记）—— “forget getting sick” 不符合逻辑，拥抱不能让人忘记生病这件事。</li><li><strong>C. avoid</strong>（避免）—— “avoid getting sick” 是常见搭配，意为“避免生病”，符合上下文“拥抱有益健康”的意思。</li><li><strong>D. keep</strong>（保持）—— “keep getting sick” 意为“持续生病”，与文章想表达的预防疾病相反。</li></ul><p>根据上下文，拥抱能带来健康益处，甚至可能帮助人们<strong>避免</strong>在冬天生病，因此正确答案是 <strong>C. avoid</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 5,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "collecting"
+      },
+      {
+       "k": "B",
+       "text": "affecting"
+      },
+      {
+       "k": "C",
+       "text": "guiding"
+      },
+      {
+       "k": "D",
+       "text": "involving"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 5 题题干为：</p><blockquote><p>In a recent study ______ over 400 healthy adults, researchers from Carnegie Mellon University examined the effects&mldr;</p></blockquote><p>四个选项为：<br>A. collecting（收集）<br>B. affecting（影响）<br>C. guiding（指导）<br>D. involving（涉及，包括）</p><p><strong>解题思路：</strong></p><ol><li>这里描述的是“一项研究 ______ 超过 400 名健康成年人”，空格处需要表示“研究对象包括这些人”的意思。</li><li>“involve” 在学术或实验语境中常表示“涉及/包括某些参与者”，例如 “a study involving 100 patients” 意为“一项涉及 100 名患者的研究”。</li><li>其他选项：<ul><li>A. collecting：一般用于收集数据或样本，不直接用于“收集人”作研究参与者。</li><li>B. affecting：逻辑不通，研究不是“影响”这些人，而是以他们为对象。</li><li>C. guiding：不符合语境，研究不是“指导”参与者。</li></ul></li></ol><p>因此，正确答案是 <strong>D. involving</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 6,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "on"
+      },
+      {
+       "k": "B",
+       "text": "in"
+      },
+      {
+       "k": "C",
+       "text": "at"
+      },
+      {
+       "k": "D",
+       "text": "of"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>本题考察介词搭配。句子结构为：</p><blockquote><p>&mldr; examined the effects of perceived social support and the receipt of hugs ______ the participants’ susceptibility to developing the common cold&mldr;</p></blockquote><p>这里的关键是 <strong>effect &mldr; on &mldr;</strong> 的固定搭配，意为“对……的影响”。</p><ul><li><strong>effect(s) on sth</strong> 是标准用法，例如：<br>The medicine has a good effect on patients.<br>这种药对病人有良好效果。</li></ul><p>因此，这里说的是“社会支持和拥抱 <strong>对</strong> 参与者患感冒的易感性的影响”，应选 <strong>A. on</strong>。</p><p>其他选项：</p><ul><li><strong>B. in</strong> 不用于 effect 的常见搭配（除非是 in effect “生效”）</li><li><strong>C. at</strong> 不用于 effect 的此种意义</li><li><strong>D. of</strong> 表示所属关系，但此处是“对……产生影响”，不是“易感性的效果”</li></ul><p><strong>答案：A</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 7,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "devoted"
+      },
+      {
+       "k": "B",
+       "text": "exposed"
+      },
+      {
+       "k": "C",
+       "text": "lost"
+      },
+      {
+       "k": "D",
+       "text": "attracted"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 7 题所在句子为：</p><blockquote><p>&mldr; the participants’ susceptibility to developing the common cold after being ______ to the virus.</p></blockquote><p>这里的意思是：参与者<strong>接触病毒后</strong>患上普通感冒的易感性。<br>在医学或流行病学语境中，“接触病毒”的固定表达是 <strong>be exposed to the virus</strong>。</p><ul><li><strong>A. devoted</strong>（致力于）不符合语境，不能说“被奉献给病毒”。</li><li><strong>B. exposed</strong>（暴露于）符合“接触病毒”的常用表达。</li><li><strong>C. lost</strong>（迷失）语义不通。</li><li><strong>D. attracted</strong>（被吸引）不用于疾病接触的语境。</li></ul><p>因此正确答案是 <strong>B. exposed</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 8,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "along"
+      },
+      {
+       "k": "B",
+       "text": "across"
+      },
+      {
+       "k": "C",
+       "text": "down"
+      },
+      {
+       "k": "D",
+       "text": "out"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 8 题考查动词短语 <strong>come down with</strong> 的固定搭配。</p><ul><li><strong>come down with</strong> 意为“患上（疾病）”，尤其指感冒、发烧等常见病症。</li><li>原文语境是：感知到更多社会支持的人 <strong>less likely to come ___ with a cold</strong>（更不容易患上感冒），因此应填入 <strong>down</strong>。</li></ul><p>其他选项：</p><ul><li><strong>come along</strong>（进展；一起来）</li><li><strong>come across</strong>（偶然遇到）</li><li><strong>come out</strong>（出来；出版；结果是）<br>均不符合“生病”的语义。</li></ul><p>因此正确答案是 <strong>C. down</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 9,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "imagined"
+      },
+      {
+       "k": "B",
+       "text": "denied"
+      },
+      {
+       "k": "C",
+       "text": "doubted"
+      },
+      {
+       "k": "D",
+       "text": "calculated"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 9 题所在句子为：</p><blockquote><p>&mldr; the researchers ______ that the stress-reducing effects of hugging ______ about 32 percent of that beneficial effect.</p></blockquote><p>这里描述的是研究人员的<strong>研究结果</strong>，特别是关于拥抱的减压效果在整体有益效果中所占的比例（约 32%）。<br>这种比例数据通常是经过<strong>测量、计算或统计分析</strong>得出的，而不是凭空想象、否认或怀疑。</p><ul><li><strong>A. imagined</strong>（想象） → 不符合科学研究客观数据的语境。</li><li><strong>B. denied</strong>（否认） → 与上下文意思相反，研究人员是在证实拥抱的作用。</li><li><strong>C. doubted</strong>（怀疑） → 与数据支持的结论不符。</li><li><strong>D. calculated</strong>（计算） → 符合“通过数据得出比例”的科学语境。</li></ul><p>因此，正确答案是 <strong>D. calculated</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 10,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "served"
+      },
+      {
+       "k": "B",
+       "text": "explained"
+      },
+      {
+       "k": "C",
+       "text": "restored"
+      },
+      {
+       "k": "D",
+       "text": "required"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第10题所在句为：<br>“…the researchers ___ that the stress-reducing effects of hugging ___ about 32 percent of that beneficial effect.”</p><ul><li>前半句是 “researchers ___ that …”，这里需要一个表示“推断、认为、说明”的动词，但第9题已经填了“estimated”（估计），所以第10题是跟在“effects of hugging”后面，说明这种效果“解释”了约32%的有益作用。</li><li>从逻辑上看，拥抱的减压作用**解释（explained）**了大约32%的保护效果，即这种益处中有32%是由拥抱带来的减压效果所说明的。</li><li><strong>served</strong>（服务）、<strong>restored</strong>（恢复）、<strong>required</strong>（要求）均不符合“解释某一比例的原因”这一语义。</li></ul><p>因此正确答案是 <strong>B. explained</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 11,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Thus"
+      },
+      {
+       "k": "B",
+       "text": "Still"
+      },
+      {
+       "k": "C",
+       "text": "Rather"
+      },
+      {
+       "k": "D",
+       "text": "Even"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 11 题空格所在的句子是：</p><blockquote><p>“______ among those who got a cold, the ones who felt greater social support and received more frequent hugs had less severe ______.”</p></blockquote><ul><li>前文提到，感知到更多社会支持的人 <strong>更不容易感冒</strong>。</li><li>本句说 <strong>即使是在那些感冒的人中</strong>，社会支持更多、拥抱更多的人 <strong>症状更轻</strong>。</li><li>这里存在一种递进或让步的逻辑：不只是降低患病概率，<strong>即使患病</strong>，严重程度也会减轻。</li></ul><p>选项分析：</p><ul><li><strong>A. Thus</strong>（因此）表示因果关系，不符合逻辑。</li><li><strong>B. Still</strong>（仍然）可以表示转折或持续，但语气不如“even”贴合“即使……也”的递进让步。</li><li><strong>C. Rather</strong>（相反）表示对比或修正前文，不符合。</li><li><strong>D. Even</strong>（甚至，即使）用于强调在更极端情况下（这里指“已经感冒的人中”）结论依然成立，符合语境。</li></ul><p>因此正确答案是 <strong>D. Even</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 12,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "defeats"
+      },
+      {
+       "k": "B",
+       "text": "symptoms"
+      },
+      {
+       "k": "C",
+       "text": "errors"
+      },
+      {
+       "k": "D",
+       "text": "tests"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>第 12 题所在句子为：</p><blockquote><p>“&mldr; among those who got a cold, the ones who felt greater social support and received more frequent hugs had less severe ______.”</p></blockquote><ul><li><strong>A. defeats</strong>（失败）—— 与感冒症状严重程度无关，不符合语境。</li><li><strong>B. symptoms</strong>（症状）—— 感冒严重程度通常是指症状（如鼻塞、咳嗽等）的轻重，符合上下文逻辑。</li><li><strong>C. errors</strong>（错误）—— 与健康研究无关，明显不符。</li><li><strong>D. tests</strong>（测试）—— 虽然研究中可能有“tests”，但这里是指患病后的表现，不是测试的严重程度。</li></ul><p>因此，<strong>B. symptoms</strong> 是正确答案，意为“感冒症状较轻”。</p>",
+     "tags": []
+    },
+    {
+     "n": 13,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "highlighted"
+      },
+      {
+       "k": "B",
+       "text": "minimized"
+      },
+      {
+       "k": "C",
+       "text": "controlled"
+      },
+      {
+       "k": "D",
+       "text": "increased"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 13 题所在的句子是：</p><blockquote><p>Hugging protects people who are under stress from the ______ risk for colds that’s usually ______ with stress.</p></blockquote><p>意思是：拥抱可以保护处于压力下的人，使他们免受通常与压力 <strong>______</strong> 的感冒风险。</p><p>从逻辑上看，压力通常会 <strong>增加</strong> 感冒的风险，而拥抱可以保护人们免受这种 <strong>增加</strong> 的风险。</p><ul><li>A. highlighted（突出）</li><li>B. minimized（最小化）</li><li>C. controlled（控制）</li><li>D. increased（增加）</li></ul><p>只有 <strong>increased</strong> 符合“压力导致感冒风险增加”的常识和上下文语义。</p><p>因此正确答案是 <strong>D. increased</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 14,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "associated"
+      },
+      {
+       "k": "B",
+       "text": "equipped"
+      },
+      {
+       "k": "C",
+       "text": "presented"
+      },
+      {
+       "k": "D",
+       "text": "compared"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第14题所在句子为：</p><blockquote><p>“Hugging protects people who are under stress from the increased risk for colds that’s usually ______ with stress.”</p></blockquote><p>句意是：拥抱可以保护处于压力下的人，使他们免受“通常与压力______的感冒风险增加”的影响。</p><p><strong>选项分析：</strong></p><ul><li><strong>A. associated</strong>（与……相关）<br>常用搭配为“be associated with”，意为“与……有关联”，符合语境，表示感冒风险的增加通常与压力有关。</li><li><strong>B. equipped</strong>（装备）<br>“be equipped with”意为“装备有……”，不符合句意。</li><li><strong>C. presented</strong>（呈现）<br>“be presented with”意为“被呈现……”，不符合搭配和语义。</li><li><strong>D. compared</strong>（比较）<br>“be compared with”意为“与……相比”，不符合句意。</li></ul><p><strong>因此正确答案是 A. associated</strong>，构成“associated with stress”，表示“与压力相关的”。</p>",
+     "tags": []
+    },
+    {
+     "n": 15,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "assess"
+      },
+      {
+       "k": "B",
+       "text": "moderate"
+      },
+      {
+       "k": "C",
+       "text": "generate"
+      },
+      {
+       "k": "D",
+       "text": "record"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 15 题所在句子为：<br>Hugging “is a marker of intimacy and helps ___ the feeling that others are there to help ___ difficulty.”<br>（拥抱“是亲密关系的标志，有助于 ___ 一种感觉，即在困难时有人会提供帮助。”）</p><p>四个选项：<br>A. assess（评估）<br>B. moderate（缓和；调节）<br>C. generate（产生；引起）<br>D. record（记录）</p><p>从上下文逻辑来看，拥抱作为一种亲密行为，会让人产生“别人会在困难时帮助自己”的感觉，这是一种<strong>心理感受的产生</strong>，而不是评估、调节或记录这种感觉。<br>因此，<strong>C. generate</strong> 最符合语境，意为“帮助产生这种感觉”。</p><p><strong>答案：C</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 16,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "in the face of"
+      },
+      {
+       "k": "B",
+       "text": "in the form of"
+      },
+      {
+       "k": "C",
+       "text": "in the way of"
+      },
+      {
+       "k": "D",
+       "text": "in the name of"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 16 题所在句子为：<br>Hugging “is a marker of intimacy and helps <strong>15</strong> the feeling that others are there to help <strong>16</strong> difficulty.”<br>（拥抱是“亲密关系的标志，有助于 <strong>15</strong> 一种感觉，即在困难时有人会提供帮助 <strong>16</strong> 困难。”）</p><p>这里要表达的意思是：在面临困难时，别人会来帮忙。<br>四个选项的意思分别是：</p><ul><li><strong>A. in the face of</strong>（面对……时）</li><li><strong>B. in the form of</strong>（以……的形式）</li><li><strong>C. in the way of</strong>（妨碍；关于……方面）</li><li><strong>D. in the name of</strong>（以……的名义）</li></ul><p>从语义上看，“help &mldr; in the face of difficulty” 表示“在面临困难时提供帮助”，符合上下文逻辑。<br>而其他选项放入后语义不通，因此正确答案是 <strong>A</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 17,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "attribute"
+      },
+      {
+       "k": "B",
+       "text": "commit"
+      },
+      {
+       "k": "C",
+       "text": "transfer"
+      },
+      {
+       "k": "D",
+       "text": "return"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 17 题题干为：<br>Some experts ______ the stress-reducing, health-related benefits of hugging to the release of oxytocin&mldr;</p><p>四个选项：<br>A. attribute<br>B. commit<br>C. transfer<br>D. return</p><hr><p><strong>1. 句意理解</strong><br>这句话的意思是：一些专家将拥抱带来的减压和健康益处<strong>归因于</strong>催产素的释放。<br>英语中表示“把……归因于”的常用短语是 <strong>attribute&mldr;to&mldr;</strong>。</p><hr><p><strong>2. 选项分析</strong></p><ul><li><strong>A. attribute</strong>：attribute A to B 意为“把 A 归因于 B”，符合句意。</li><li><strong>B. commit</strong>：commit&mldr;to&mldr; 意为“致力于；承诺”，语义不符。</li><li><strong>C. transfer</strong>：transfer&mldr;to&mldr; 意为“转移；传递”，不表示归因关系。</li><li><strong>D. return</strong>：return&mldr;to&mldr; 意为“归还；返回”，与句意无关。</li></ul><hr><p><strong>3. 固定搭配与上下文</strong><br>后文提到 oxytocin 被称为“the bonding hormone”，并解释它如何促进人际关系，这都是在说明拥抱的好处与催产素之间的因果关系，因此用 <strong>attribute&mldr;to&mldr;</strong> 最合适。</p><hr><p><strong>答案：A</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 18,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "unless"
+      },
+      {
+       "k": "B",
+       "text": "because"
+      },
+      {
+       "k": "C",
+       "text": "though"
+      },
+      {
+       "k": "D",
+       "text": "until"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第18题所在句子为：</p><blockquote><p>Some experts ___ the stress-reducing, health-related benefits of hugging to the release of oxytocin, often called “the bonding hormone” ___ it promotes attachment in relationships&mldr;</p></blockquote><p>这里的意思是：<br>“一些专家将拥抱减压及健康相关的益处归因于催产素的释放，催产素常被称为‘亲密激素’______它能促进人际关系中的依恋。”</p><p>从逻辑上看，后面“it promotes attachment in relationships”是解释为什么催产素被称为“the bonding hormone”的原因，因此这里需要一个表示原因的连接词。</p><ul><li><strong>A. unless</strong>（除非）表示条件，不符合因果关系。</li><li><strong>B. because</strong>（因为）表示原因，符合语境。</li><li><strong>C. though</strong>（虽然）表示让步，不符合。</li><li><strong>D. until</strong>（直到）表示时间，不符合。</li></ul><p>因此正确答案是 <strong>B. because</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 19,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "emerges"
+      },
+      {
+       "k": "B",
+       "text": "vanishes"
+      },
+      {
+       "k": "C",
+       "text": "remains"
+      },
+      {
+       "k": "D",
+       "text": "decreases"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第19题所在句为：<br>“But some of it\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>19</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nin the brain, where it\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>20</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nmood, behavior and physiology.”<br>（但其中一部分\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>19</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\n在大脑中，在那里它\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>20</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\n情绪、行为和生理机能。）</p><p>前一句说“一部分催产素被释放到血液中”，然后用“But”转折，说明另一部分并没有进入血液，而是留在大脑里。<br>选项分析：</p><ul><li>A. emerges 出现 → 不符合语境，因为催产素本来就在大脑中产生，不是在大脑中“出现”。</li><li>B. vanishes 消失 → 与文意相反，这里强调它留在大脑发挥作用。</li><li>C. remains 停留、留下 → 符合逻辑，即“一部分仍留在大脑”。</li><li>D. decreases 减少 → 不符合，这里不是讨论数量减少，而是位置存留。</li></ul><p>因此正确答案是 <strong>C. remains</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 20,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "experiences"
+      },
+      {
+       "k": "B",
+       "text": "combines"
+      },
+      {
+       "k": "C",
+       "text": "justifies"
+      },
+      {
+       "k": "D",
+       "text": "influences"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>第20题所在句子为：</p><blockquote><p>But some of it\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=\"mord text\"><span class=mord>19</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nin the brain, where it\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=\"mord text\"><span class=mord>20</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nmood, behavior and physiology.</p></blockquote><p>这里描述的是<strong>催产素（oxytocin）在大脑中的作用</strong>。从上下文可知，催产素会影响人的情绪、行为和生理机能。</p><ul><li><strong>A. experiences</strong>（经历）—— 主语是“it”（催产素），催产素不能“经历”情绪、行为等，逻辑不通。</li><li><strong>B. combines</strong>（结合）—— 催产素与情绪等“结合”不符合生理机制和上下文意思。</li><li><strong>C. justifies</strong>（证明…合理）—— 催产素并不能“证明”情绪或行为合理，语义不符。</li><li><strong>D. influences</strong>（影响）—— 符合科学常识和上下文：催产素在大脑中会影响人的情绪、行为和生理状态。</li></ul><p>因此，正确答案是 <strong>D. influences</strong>。</p>",
+     "tags": []
+    }
+   ],
+   "extras": [
+    {
+     "title": "参考译文与解析",
+     "html": "<p>每天一个拥抱真的能让人不生病吗？答案或许是响亮的“是的！”除了能让你感觉与关心的人更亲密、联系更紧密之外，事实证明拥抱还能为你的身心带来诸多健康益处。信不信由你，一个温暖的拥抱甚至可能帮助你这个冬天不生病。</p><p>在最近一项针对400多名健康成年人的研究中，宾夕法尼亚州卡内基梅隆大学的研究人员考察了感知到的社会支持以及接受拥抱对参与者暴露于病毒后患普通感冒的易感性的影响。那些感知到更多社会支持的人患感冒的几率较低，研究人员认为拥抱的减压效果带来了约32%的这种益处。即使那些感冒的人中，感受到更多社会支持且接受拥抱更频繁的人症状也较轻。</p><p>卡内基梅隆大学心理学教授谢尔登·科恩指出：“拥抱能保护处于压力下的人免受通常与压力相关的感冒风险增加的影响。”拥抱是“亲密关系的标志，有助于强化一种感觉，即在困难时有人会提供帮助。”</p><p>一些专家将拥抱减压及与健康相关的益处归因于催产素的释放。催产素常被称为“亲密激素”，因为它能促进人际关系中的依恋，包括母亲与新生儿之间的情感。催产素主要在大脑中枢下部产生，一部分会释放到血液中，但还有一部分会留在大脑中，影响情绪、行为和生理机能。</p>"
+    }
+   ]
+  },
+  {
+   "id": "reading-1",
+   "label": "阅读 Text 1",
+   "title": "Part A · Text 1",
+   "heading": "Section II  Reading Comprehension",
+   "type": "choice",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>Read the following four texts. Answer the questions below each text by choosing A, B, C or\nMark your answers on the ANSWER SHEET. (40 points)</p>",
+   "passage": [
+    {
+     "segs": [
+      "First two hours, now three hours - this is how far in advance authorities are recommending people show up to catch a domestic flight, at least at some major U.S. airports with increasingly massive security lines."
+     ]
+    },
+    {
+     "segs": [
+      "Americans are willing to tolerate time-consuming security protocols in return for increased safety. The crash of Egypt Air Flight 804, which terrorists may have downed over the Mediterranean Sea, provides another tragic reminder of why. But demanding too much of air travelers or providing too little security in return undermines public support for the process. And it should: Wasted time is a drag on Americans&rsquo; economic and private lives, not to mention infuriating."
+     ]
+    },
+    {
+     "segs": [
+      "Last year, the Transportation Security Administration(TSA) found in a secret check that undercover investigators were able to sneak weapons - both fake and real- past airport security nearly every time they tried.Enhanced security measures since then, combined with a rise in airline travel due to the improving economy and low oil prices, have resulted in long waits at major airports such as Chicago&rsquo;s O&rsquo;Hare International. It is not yet clear how much more effective airline security has become - but the lines are obvious."
+     ]
+    },
+    {
+     "segs": [
+      "Part of the issue is that the government did not anticipate the steep increase in airline travel,so the TSA is now rushing to get new screeners on the line. Part of the issue is that airports have only so much room for screening lanes. Another factor may be that more people are trying to overpack their carry-on bags to avoid checked-baggage fees, though the airlines strongly dispute this."
+     ]
+    },
+    {
+     "segs": [
+      "There is one step the TSA could take that would not require remodeling airports or rushing to hire: Enroll more people in the PreCheck program. PreCheck is supposed to be a win-win for travelers and the TSA. Passengers who pass a background check are eligible to use expedited screening lanes. This allows the TSA to focus on travelers who are higher risk, saving time for everyone involved.TSA wants to enroll 25 million people in PreCheck."
+     ]
+    },
+    {
+     "segs": [
+      "It has not gotten anywhere close to that, and one big reason is sticker shock: Passengers must pay $85 every five years to process their background checks. Since the beginning, this price tag has been PreCheck&rsquo;s fatal flaw. Upcoming reforms might bring the price to a more reasonable level. But Congress should look into doing so directly,by helping to finance PreCheck enrollment or to cut costs in other ways."
+     ]
+    },
+    {
+     "segs": [
+      "The TSA cannot continue diverting resources into underused PreCheck lanes while most of the traveling public suffers in unnecessary lines. t is long past time to make the program work."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 21,
+     "stem": "<p>The crash of Egypt Air Flight 804 is mentioned to</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "stress the urgency to strengthen security worldwide."
+      },
+      {
+       "k": "B",
+       "text": "explain American&rsquo; s tolerance of current security checks."
+      },
+      {
+       "k": "C",
+       "text": "highlight the necessity of upgrading major U.S. airports."
+      },
+      {
+       "k": "D",
+       "text": "emphasize the importance of privacy protection"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>文章第二段提到埃及航空804航班坠毁事件，其前一句是：“Americans are willing to tolerate time-consuming security protocols in return for increased safety.” 这句话说明美国人愿意忍受耗时的安检是为了安全。紧接着提到埃及航空空难，是用一个具体事例<strong>解释为什么美国人愿意忍受安检</strong>——因为空难提醒人们安全的重要性。</p><p>选项分析：</p><ul><li><strong>A</strong> 强调全球加强安全的紧迫性——文中未涉及“全球”范围，也未重点呼吁加强安全，而是解释美国人为何接受现状。</li><li><strong>B</strong> 解释美国人对当前安检的容忍——与原文逻辑一致，空难作为例子说明他们愿意忍受耗时安检以换取安全。</li><li><strong>C</strong> 突出美国主要机场升级的必要性——文中未直接讨论机场升级，而是讨论安检效率和 PreCheck 计划。</li><li><strong>D</strong> 强调隐私保护的重要性——文中未涉及隐私问题。</li></ul><p>因此，正确选项是 <strong>B</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 22,
+     "stem": "<p>Which of the following contributes to long waits at major airports?</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "New restrictions on carry-on bags."
+      },
+      {
+       "k": "B",
+       "text": "The declining efficiency of the TSA."
+      },
+      {
+       "k": "C",
+       "text": "An increase in the number of travellers."
+      },
+      {
+       "k": "D",
+       "text": "Frequent unexpected secret checks."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>题目问“以下哪一项是导致主要机场长时间等待的原因”。</p><ul><li><strong>A 项</strong>（对随身行李的新限制）：文中提到“更多人试图在随身行李中塞更多东西以避开托运行李费”，但并未提到有新的限制出台，因此 A 错误。</li><li><strong>B 项</strong>（TSA 效率下降）：文中并未直接说明 TSA 效率下降，而是指出安检措施加强和旅客人数增加导致排队，因此 B 错误。</li><li><strong>C 项</strong>（旅客数量增加）：文中第三段提到“a rise in airline travel due to the improving economy and low oil prices, have resulted in long waits”，第四段也提到“government did not anticipate the steep increase in airline travel”，因此 C 正确。</li><li><strong>D 项</strong>（频繁的意外秘密检查）：文中只提到 TSA 做过秘密检查，但并未说这是导致长时间排队的原因，因此 D 错误。</li></ul><p><strong>正确答案：C</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 23,
+     "stem": "<p>The word\"expedited\"(Liner 4, Para.5) is closet in meaning to</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "quieter."
+      },
+      {
+       "k": "B",
+       "text": "faster."
+      },
+      {
+       "k": "C",
+       "text": "cheaper."
+      },
+      {
+       "k": "D",
+       "text": "wider."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>题目问的是第5段第4行中“expedited”一词的含义。</p><ul><li>原文提到 PreCheck 计划时说明，通过背景调查的乘客可以使用 <strong>expedited screening lanes</strong>，其效果是“saving time for everyone involved”（为所有相关方节省时间）。</li><li>从上下文逻辑来看，PreCheck 是为了减少排队时间，让安检过程更快，因此 expedited 应理解为“加快的、更迅速的”。</li><li>选项分析：<ul><li>A. quieter（更安静的）—— 文中未提及噪音或安静程度。</li><li><strong>B. faster（更快的）</strong> —— 与节省时间、快速安检相符。</li><li>C. cheaper（更便宜的）—— 虽然 PreCheck 涉及费用，但 expedited 本身不直接表示便宜。</li><li>D. wider（更宽的）—— 未提及通道宽度。</li></ul></li></ul><p>因此正确答案是 <strong>B</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 24,
+     "stem": "<p>One problem with the PreCheck program is</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "a dramatic reduction of its scale."
+      },
+      {
+       "k": "B",
+       "text": "its wrongly-directed implementation."
+      },
+      {
+       "k": "C",
+       "text": "the government&rsquo; s reluctance to back it."
+      },
+      {
+       "k": "D",
+       "text": "an unreasonable price for enrollment."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>文章在最后两段明确指出了 PreCheck 计划存在的问题。</p><ul><li>第 6 段提到 “one big reason is sticker shock: Passengers must pay $85 every five years&mldr; this price tag has been PreCheck&rsquo;s fatal flaw.”</li><li>第 7 段也提到 “Upcoming reforms might bring the price to a more reasonable level.”</li></ul><p>这些内容直接说明 <strong>PreCheck 计划的一个主要问题是 enrollment（注册）费用过高</strong>，对应选项 <strong>D. an unreasonable price for enrollment</strong>。</p><p>其他选项：</p><ul><li>A 项（规模大幅缩减）未提及；</li><li>B 项（错误方向的实施）未提及；</li><li>C 项（政府不愿支持）与原文最后一段提到的国会应介入帮助降低成本的说法不完全一致，而且不是直接指出的问题。</li></ul><p><strong>正确答案：D</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 25,
+     "stem": "<p>Which of the following would be the best for the text?</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Getting Stuck in Security Lines"
+      },
+      {
+       "k": "B",
+       "text": "Less Screening for More Safety"
+      },
+      {
+       "k": "C",
+       "text": "PreCheck - a Belated Solution"
+      },
+      {
+       "k": "D",
+       "text": "Underused PreCheck Lanes"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目要求选择最适合文章的标题，即最能概括全文主旨的选项。</p><ul><li><p><strong>A. Getting Stuck in Security Lines（困在安检队伍中）</strong><br>全文围绕美国机场安检排队时间过长的问题展开，分析了原因（如旅客增加、安检资源不足、PreCheck 使用率低等），并探讨了解决方案。该选项直接点明了核心问题，概括性强。</p></li><li><p><strong>B. Less Screening for More Safety（更少的安检，更多的安全）</strong><br>文章并未主张减少安检，而是强调如何在保障安全的前提下提高效率。PreCheck 是优化安检流程，而非减少安检。</p></li><li><p><strong>C. PreCheck - a Belated Solution（PreCheck——一个迟来的解决方案）</strong><br>PreCheck 是文中提出的解决方案之一，但文章重点在于揭示排队问题及其成因，而非单纯介绍 PreCheck。且“迟来的”这一评价并非全文核心。</p></li><li><p><strong>D. Underused PreCheck Lanes（未被充分利用的 PreCheck 通道）</strong><br>这只是文章的一个具体问题，不能全面概括全文内容。文章还涉及排队现象、成因分析及其他改进建议。</p></li></ul><p><strong>结论：</strong><br>文章主旨是<strong>机场安检排队时间过长的问题及其改进方向</strong>，选项 <strong>A</strong> 准确抓住了这一核心，因此是最佳标题。</p><p><strong>正确答案：A</strong></p>",
+     "tags": []
+    }
+   ],
+   "extras": [
+    {
+     "title": "参考译文与解析",
+     "html": "<p>最初是两小时，现在是三小时——这是美国当局建议乘客搭乘国内航班应提前抵达机场的时间，至少在一些安检队伍日益冗长的主要美国机场是如此。</p><p>美国人愿意为了更高的安全性而忍受耗时的安检程序。埃及航空804航班的坠毁（恐怖分子可能在地中海上空击落了该航班）再次悲剧性地提醒了人们原因所在。但对航空旅客要求过多，或提供的安全保障过少，会削弱公众对这一过程的支持。确实如此：浪费时间不仅令人愤怒，更拖累了美国人的经济和私人生活。</p><p>去年，美国运输安全管理局（TSA）在一次秘密检查中发现，卧底调查人员几乎每次尝试都能将武器（包括仿真的和真实的）偷偷带过机场安检。自那以后，加强的安保措施，加上经济改善和低油价带来的航空旅行量上升，导致在芝加哥奥黑尔国际机场等主要机场出现长时间等待。目前尚不清楚航空安检效率提高了多少——但排长队的现象却显而易见。</p><p>部分问题在于政府未能预料到航空旅客人数的激增，因此TSA正匆忙招募新的安检人员上岗。部分问题在于机场用于安检通道的空间有限。另一个因素可能是更多人试图在随身行李中过度塞塞物品以避开托运行李费，尽管航空公司对此强烈否认。</p><p>TSA可以采取一项措施，既无需改造机场也无需匆忙招聘：让更多人加入PreCheck计划。PreCheck本应是旅客和TSA的双赢。通过背景调查的乘客有资格使用快速安检通道。这使得TSA能够将精力集中在风险较高的旅客身上，从而为所有相关方节省时间。TSA希望让2500万人加入PreCheck。</p><p>但实际参与人数远未达到目标，一个主要原因是价格令人咋舌：乘客必须每五年支付85美元进行背景审查。从一开始，这个价格标签就是PreCheck的致命缺陷。即将进行的改革可能会将价格调整到更合理的水平。但国会应该考虑直接介入，例如通过资助PreCheck注册或以其他方式降低成本来做到这一点。</p><p>TSA不能继续将资源投入到使用不足的PreCheck通道，而大多数出行公众却在不必要的队伍中受苦。让这个计划真正发挥作用早已刻不容缓。</p>"
+    }
+   ]
+  },
+  {
+   "id": "reading-2",
+   "label": "阅读 Text 2",
+   "title": "Text 2",
+   "heading": null,
+   "type": "choice",
+   "points": 10,
+   "directions": "",
+   "passage": [
+    {
+     "segs": [
+      "&ldquo;The ancient Hawaiians were astronomers,&rdquo; wrote Queen Liliuokalani, Hawaii&rsquo;s lat rigning monarch, in 1897. Star watchers were among the most esteemed members of Hawaiian society. Sadly, allis not well wih atonomy in Hawai today. Protests have erupted over construction of the Thirty Meter Telescope (TMT), a giant observatory that promises to revolutionize humanity&rsquo;s view of the cosmos"
+     ]
+    },
+    {
+     "segs": [
+      "At issue is the TMT&rsquo;s planned location on Mauna Kea, a dormant volcano worshiped by some Hawaiians as the piko,that connects the Hawaian lslands to the heavens. But Mauna Kea is also home to some of the world&rsquo;s most powerful telescopes. Rested in the Pacific Ocean, Mauna Kea&rsquo;s peak rises above the bulk of our planet&rsquo;s dense atmosphere, where conditions allow telescopes to obtain images of unsurpassed clarity."
+     ]
+    },
+    {
+     "segs": [
+      "Opposition to telescopes on Mauna Kea is nothing new.A small but vocal group of Hawaiians and environmentalists have long viewed their presence as disrespect far sacred land and a painful reminder of the occupation of what was once a sovereign nation."
+     ]
+    },
+    {
+     "segs": [
+      "Some blame for the current controversy belongs to astronomers. In their eagerness to build bigger telescopes,they forgot that science is not the only way of understanding the world. They did not always prioritize the protection of Mauna Kea&rsquo;s fragile ecosystems or its holiness to the islands&rsquo; inhabitants. Hawaian culture is not a relic of the past ; it is a ling culture undergoing a renaissance today."
+     ]
+    },
+    {
+     "segs": [
+      "Yet science has a cultural history, too, with roots going back to the dawn of civilization. The same curiosity to find what lies beyond the horizon that first brought early Polynesians to Hawai&rsquo;s shores inspires astronomers today to explore the heavens. Calls to disassemble all telescopes on Mauna Kea or to ban future development there ignore the reality that astronomy and Hawaiian culture both seek to answer big questions about who we are,where we come from and where we are going. Perhaps that is why we explore the starry skies, as if answering a primal calling to know ourselves and our true ancestral homes."
+     ]
+    },
+    {
+     "segs": [
+      "The astronomy community is making compromises to change its use of Mauna Kea.The TMT site was chosen to minimize the telescope&rsquo;s visibility around the island and to avoid archaeological and environmental impact. To limit the number of telescopes on Mauna Kea, old ones will be removed at the end of their lifetimes and their sites returned to a natural state.There is no reason why everyone cannot be welcomed on Mauna Kea to embrace their cultural heritage and to study the stars."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 26,
+     "stem": "<p>Queen Liliuokalani s remark in Paragraph 1 indicates</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "her conservative view on the historical role of astronomy."
+      },
+      {
+       "k": "B",
+       "text": "the importance of astronomy in ancient Hawaiian society."
+      },
+      {
+       "k": "C",
+       "text": "the regrettable decline of astronomy in ancient times."
+      },
+      {
+       "k": "D",
+       "text": "her appreciation of star watchers&rsquo; feats in her time."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目要求根据第一段中Liliuokalani女王的言论，判断其含义。</p><ol><li><p><strong>原文定位</strong>：<br>第一段开头写道：</p><blockquote><p>&ldquo;The ancient Hawaiians were astronomers,&rdquo; wrote Queen Liliuokalani&mldr; Star watchers were among the most esteemed members of Hawaiian society.</p></blockquote></li><li><p><strong>内容理解</strong>：</p><ul><li>女王说“古代夏威夷人是天文学家”，意思是天文学在古代夏威夷社会中非常普遍且重要。</li><li>接着提到“观星者是夏威夷社会中最受尊敬的成员之一”，这进一步强调了天文学在古代夏威夷社会中的地位。</li></ul></li><li><p><strong>选项分析</strong>：</p><ul><li><strong>A. 她对天文学历史作用的保守观点</strong>：原文没有体现“保守”或对历史作用的评价，只是陈述事实。</li><li><strong>B. 天文学在古代夏威夷社会的重要性</strong>：与原文意思一致，女王的话强调了天文学在古代的重要地位。</li><li><strong>C. 古代天文学 regrettable decline</strong>：原文虽然后文提到今天的天文学状况不好，但女王的话本身并没有表达“遗憾的衰落”。</li><li><strong>D. 她对她时代观星者成就的欣赏</strong>：原文是谈论古代（ancient Hawaiians），不是女王自己的时代。</li></ul></li><li><p><strong>结论</strong>：<br>女王的言论是在强调天文学在古代夏威夷社会的重要地位，因此正确答案是 <strong>B</strong>。</p></li></ol><p><strong>答案：B</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 27,
+     "stem": "<p>Mauna Kea is deemed as an ideal astronomical site due to</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "its geographical features."
+      },
+      {
+       "k": "B",
+       "text": "its protective surroundings."
+      },
+      {
+       "k": "C",
+       "text": "its religious implications."
+      },
+      {
+       "k": "D",
+       "text": "its existing infrastructure."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题干问的是“为什么莫纳克亚山被视为理想的天文观测地点”。</p><p>文章第二段提到：</p><blockquote><p>Rested in the Pacific Ocean, Mauna Kea&rsquo;s peak rises above the bulk of our planet&rsquo;s dense atmosphere, where conditions allow telescopes to obtain images of unsurpassed clarity.</p></blockquote><p>这句话说明，莫纳克亚山位于太平洋，其顶峰高度超出了地球大部分稠密大气层，这种地理条件使得望远镜能获得无比清晰的图像。</p><ul><li><strong>A 项“地理特征”</strong> 对应其海拔高、大气干扰少的地理条件，是正确选项。</li><li><strong>B 项“保护性环境”</strong> 未在文中提及。</li><li><strong>C 项“宗教意义”</strong> 是当地部分人反对建望远镜的原因，不是它成为理想天文台址的原因。</li><li><strong>D 项“现有基础设施”</strong> 文中未作为主要原因强调。</li></ul><p>因此，正确答案是 <strong>A</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 28,
+     "stem": "<p>The construction of the TMT is opposed by some locals partly because</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "it may risk ruining their intellectual life."
+      },
+      {
+       "k": "B",
+       "text": "it reminds them of a humiliating history."
+      },
+      {
+       "k": "C",
+       "text": "their culture will lose a chance of revival."
+      },
+      {
+       "k": "D",
+       "text": "they fear losing control of Mauna Kea."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问：一些人反对建造 TMT 的部分原因是？<br>正确答案是 <strong>B. it reminds them of a humiliating history</strong>（它让他们想起一段屈辱的历史）。</p><hr><p><strong>依据原文：</strong></p><ol><li><p>第三段提到：</p><blockquote><p>a painful reminder of the occupation of what was once a sovereign nation.<br>意思是望远镜的存在是对“曾经是一个主权国家被占领的痛苦提醒”。</p></blockquote></li><li><p>结合历史背景，夏威夷曾经是独立王国，后来被美国吞并。对部分当地人来说，在圣山 Mauna Kea 上修建天文台，象征着外来势力对这片土地的控制，唤起了历史上主权丧失的屈辱记忆。</p></li></ol><hr><p><strong>排除其他选项：</strong></p><ul><li><strong>A</strong>：文中没有提到会破坏 intellectual life（精神或知识生活）。</li><li><strong>C</strong>：文中提到夏威夷文化正在复兴，但并未说建 TMT 会导致失去复兴机会。</li><li><strong>D</strong>：文中没有明确说当地人“害怕失去对 Mauna Kea 的控制”，更多是觉得这是对圣山的不敬和对历史的伤痛记忆。</li></ul><p>因此，<strong>B</strong> 项最符合原文表述。</p>",
+     "tags": []
+    },
+    {
+     "n": 29,
+     "stem": "<p>It can be inferred from Paragraph 5 that progress in today&rsquo;s astronomy__</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "may uncover the origin of Hawaiian culture."
+      },
+      {
+       "k": "B",
+       "text": "is fuflling te reams of ancient Hawaiians."
+      },
+      {
+       "k": "C",
+       "text": "helps spread Hawaiian culture across the world."
+      },
+      {
+       "k": "D",
+       "text": "will eventually soften Hawaiians&rsquo; hostility."
+      }
+     ],
+     "explanation": "<p>好的，我们先定位到原文第 5 段，然后逐一分析选项。</p><p><strong>第 5 段原文</strong>（关键句）：</p><blockquote><p>The same curiosity to find what lies beyond the horizon that first brought early Polynesians to Hawaii&rsquo;s shores inspires astronomers today to explore the heavens. &mldr; astronomy and Hawaiian culture both seek to answer big questions about who we are, where we come from and where we are going.</p></blockquote><hr><p><strong>解析</strong>：</p><ol><li><p><strong>A. may uncover the origin of Hawaiian culture.</strong></p><ul><li>段落中提到，天文学和夏威夷文化都在探索“我们是谁、从哪里来、到哪里去”这类大问题。</li><li>天文学研究宇宙、星辰、生命起源，这可能会揭示人类和夏威夷人祖先的来源（包括波利尼西亚人航海的历史背景）。</li><li>因此可以合理推断，今天的天文学进展可能会揭示夏威夷文化的起源。</li><li>✅ 这是合理的推断。</li></ul></li><li><p><strong>B. is fulfilling the dreams of ancient Hawaiians.</strong></p><ul><li>文中说古代夏威夷人是天文学家，今天的天文学也受同样的好奇心驱动，但并没有说今天的进展就是在“实现他们的梦想”，这属于过度推断。</li><li>❌ 排除。</li></ul></li><li><p><strong>C. helps spread Hawaiian culture across the world.</strong></p><ul><li>文中没有提到天文学在世界范围内传播夏威夷文化。</li><li>❌ 排除。</li></ul></li><li><p><strong>D. will eventually soften Hawaiians&rsquo; hostility.</strong></p><ul><li>虽然末段提到天文学界在妥协，但第 5 段并未讨论敌意软化的问题，而且这是一种未来可能的结果，不是第 5 段的主要推断。</li><li>❌ 排除。</li></ul></li></ol><hr><p><strong>结论</strong>：<br>正确答案是 <strong>A</strong>，因为第 5 段暗示天文学和夏威夷文化都追寻人类起源等根本问题，因此今天的天文学进展可能揭示夏威夷文化的起源。</p>",
+     "tags": []
+    },
+    {
+     "n": 30,
+     "stem": "<p>The author&rsquo;s attitude toward choosing Mauna Kea as the TMT site is one of</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "severe criticism"
+      },
+      {
+       "k": "B",
+       "text": "passive acceptance"
+      },
+      {
+       "k": "C",
+       "text": "slight hesitancy"
+      },
+      {
+       "k": "D",
+       "text": "full approval"
+      }
+     ],
+     "explanation": "<p>让我们根据文章内容来分析作者的态度。</p><p><strong>1. 文章结构回顾</strong></p><ul><li>开头介绍夏威夷天文学的悠久历史，以及现在在莫纳克亚山建 TMT 望远镜引发的争议。</li><li>提到反对者的理由：莫纳克亚山是神圣之地，且历史上夏威夷主权被侵占。</li><li>作者也指出天文学家有责任，他们过去忽视了当地文化与生态。</li><li>但作者强调科学也有文化历史，探索未知的精神与早期波利尼西亚人航海是相通的。</li><li>最后一段说天文学界已在做出妥协（最小化视觉影响、移除旧望远镜、恢复自然等），并总结说莫纳克亚山可以同时容纳文化遗产和天文研究。</li></ul><p><strong>2. 关键态度词句</strong></p><ul><li>“Calls to disassemble all telescopes &mldr; ignore the reality that astronomy and Hawaiian culture both seek to answer big questions&mldr;” —— 反对全部拆除望远镜，认为两者目标一致。</li><li>“There is no reason why everyone cannot be welcomed on Mauna Kea to embrace their cultural heritage and to study the stars.” —— 明确支持共享莫纳克亚山，既保护文化遗产，也进行天文研究。</li><li>虽然提到天文学家有错，但重点落在“正在妥协”和“可以共存”上，没有否定选莫纳克亚山作为 TMT 地址的合理性。</li></ul><p><strong>3. 排除选项</strong></p><ul><li>A 严厉批评：作者没有严厉批评选址，而是理解双方并支持共存。</li><li>B 被动接受：作者没有显得无奈或勉强，而是积极论证可行性。</li><li>C 轻微犹豫：作者在最后立场很明确，没有犹豫。</li><li>D 完全赞同：从最后一段看，作者认为经过妥协后，在莫纳克亚山建 TMT 并兼容文化是可行的，态度是支持的。</li></ul><p><strong>4. 结论</strong><br>作者在指出问题后，着重表达科学与夏威夷文化可以共享莫纳克亚山，并认为 TMT 选址经过考虑和妥协后是合理的，因此态度是 <strong>full approval</strong>（完全赞同）。</p><p><strong>答案：D</strong></p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-3",
+   "label": "阅读 Text 3",
+   "title": "Text 3",
+   "heading": null,
+   "type": "choice",
+   "points": 10,
+   "directions": "",
+   "passage": [
+    {
+     "segs": [
+      "Robert F.Kennedy once said that a country&rsquo;s GDP measures &ldquo;everything except that which makes life worthwhile.&rdquo; With Britain voting to leave the European Union,and GDP already predicted to slow as a result, it is now a timely moment to assess what he was referring to."
+     ]
+    },
+    {
+     "segs": [
+      "The question of GDP and its usefulness has annoyed policymakers for over half a century. Many argue that it is a flawed concept. It measures things that do not matter and miss things that do. By most recent measures,the UK&rsquo; s GDP has been the envy of the Western World, with record low unemployment and high growth figures. If everything was going so so well, then why did over 17million people vote for Brexit, despite the warnings about what it could do to their country&rsquo; s economic prospects?"
+     ]
+    },
+    {
+     "segs": [
+      "A recent annual study of countries and their ability to convert growth into well-being sheds some light on that question. Across the 163 countries measured, the UK is one of the poorest performers in ensuring that economic growth is translated into meaningful improvement for its citizens. Rather than just focusing on GDR over 40 different sets of criteria from health, education and civil society engagement have been measured to get a more rounded assessment of how countries are performing."
+     ]
+    },
+    {
+     "segs": [
+      "While all of these countries face their own challenges, there are a number of consistent themes. Yes, there has been a budding economic recovery since the 2008 global crash, but in key indicators in areas such as health and education, major economies have continued to decline.Yet this isn&rsquo;t the case with all countries. Some relatively poor European countries have seen huge improvements across measures including civil society; income equality and the environment."
+     ]
+    },
+    {
+     "segs": [
+      "This is a lesson that rich countries can learn: When GDP is no longer regarded as the sole measure of a country&rsquo; s success, the world looks very different."
+     ]
+    },
+    {
+     "segs": [
+      "So what Kennedy was referring to was that while GDP has been the most common method for measuring the economic activity of nations, as a measure it is no longer enough. t does not include important factors such as environmental equality or education outcomes - all things that contribute to a person&rsquo;s sense of well-being."
+     ]
+    },
+    {
+     "segs": [
+      "The sharp hit to growth predicted around the world and in the UK could lead to a decine in the everyday services we depend on for our well-being and for growth. But policymaker who refocus efforts on improving well-being rather than simply worrying about GDP figures could avoid the forecasted doom and may even see progress."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 31,
+     "stem": "<p>Robert F.Kennedy is cited because he</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "praised the UK for its GDP."
+      },
+      {
+       "k": "B",
+       "text": "identified GDP with happiness."
+      },
+      {
+       "k": "C",
+       "text": "misinterpreted the role of GDP."
+      },
+      {
+       "k": "D",
+       "text": "had a low opinion of GDP."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>定位原文</strong>：<br>文章第一段引用了 Robert F. Kennedy 的话，他说 GDP 衡量了“除了那些使生活有价值之外的一切（everything except that which makes life worthwhile）”。这说明他对 GDP 的评价是负面的，认为它忽略了生活中真正重要的东西。</p></li><li><p><strong>理解选项</strong>：</p><ul><li>A. 赞扬英国的 GDP → 错，他是在批评 GDP 的局限性，不是赞扬。</li><li>B. 将 GDP 等同于幸福 → 错，他恰恰在说 GDP 不衡量幸福。</li><li>C. 误解了 GDP 的作用 → 错，作者引用他是为了支持论点，不是说他误解。</li><li>D. 对 GDP 评价很低 → 对，他认为 GDP 忽略了生活中重要的价值。</li></ul></li><li><p><strong>结合后文</strong>：<br>后文接着讨论 GDP 的缺陷，以及英国虽然 GDP 数字好，但民众并未感到幸福，所以脱欧公投结果出人意料。这进一步印证 Kennedy 的观点：GDP 不足以衡量国家的真正成功和人民福祉。</p></li></ol><p><strong>因此正确答案是 D</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 32,
+     "stem": "<p>It can be inferred from Paragraph 2 that_</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "the UK is reluctant to remold its economic pattern."
+      },
+      {
+       "k": "B",
+       "text": "GDP as the measure of success is widely defied in the UK."
+      },
+      {
+       "k": "C",
+       "text": "the UK will contribute less to the world economy."
+      },
+      {
+       "k": "D",
+       "text": "policymakers in the UK are paying less attention to GDP."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 2 段提到，尽管英国的 GDP 数据表现优异（低失业率、高增长），但仍有超过 1700 万人投票支持脱欧，尽管脱欧可能损害经济前景。这说明很多人并不把 GDP 作为衡量国家成功的唯一标准，甚至愿意为了其他价值（如主权、移民控制等）牺牲 GDP 增长。</p><p>选项分析：</p><ul><li><strong>A. the UK is reluctant to remold its economic pattern.</strong>（英国不愿重塑经济模式）—— 段落未提及经济模式转变的意愿。</li><li><strong>B. GDP as the measure of success is widely defied in the UK.</strong>（在英国，GDP 作为成功衡量标准受到广泛质疑）—— 从“GDP 表现好却仍选择脱欧”可合理推出公众对 GDP 衡量成功的不认同。</li><li><strong>C. the UK will contribute less to the world economy.</strong>（英国对世界经济的贡献将减少）—— 段落未提及对世界经济的贡献。</li><li><strong>D. policymakers in the UK are paying less attention to GDP.</strong>（英国决策者不太关注 GDP）—— 段落未直接说明决策者态度转变。</li></ul><p>因此，<strong>B</strong> 是符合段落逻辑的合理推断。</p>",
+     "tags": []
+    },
+    {
+     "n": 33,
+     "stem": "<p>Which of the following is true about the recent annual study?</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "lt excludes GDP as an indicator."
+      },
+      {
+       "k": "B",
+       "text": "lt is sponsored by 163 countries."
+      },
+      {
+       "k": "C",
+       "text": "Its criteria are questionable."
+      },
+      {
+       "k": "D",
+       "text": "lts results are enlightening."
+      }
+     ],
+     "explanation": "<p>让我们先定位原文中关于 <strong>recent annual study</strong> 的内容。</p><p>原文第三段：</p><blockquote><p>A recent annual study of countries and their ability to convert growth into well-being sheds some light on that question. Across the 163 countries measured, the UK is one of the poorest performers in ensuring that economic growth is translated into meaningful improvement for its citizens.</p></blockquote><p>这里的关键是 <strong>sheds some light on that question</strong>，意思是“对那个问题有所启发”，也就是解释了为什么英国 GDP 数据好但民众却投票脱欧。</p><p>再看选项：</p><ul><li><strong>A</strong> 说“它排除了 GDP 作为指标”——原文没有明确说排除了 GDP，而是说用了 40 多项指标来综合评价，但 GDP 可能仍被考虑，只是不唯一。</li><li><strong>B</strong> 说“它由 163 个国家赞助”——原文只说调查了 163 个国家，没说它们赞助。</li><li><strong>C</strong> 说“它的标准是有问题的”——原文没有批评标准有问题。</li><li><strong>D</strong> 说“它的结果具有启发性”——对应 <strong>sheds some light</strong>，所以正确。</li></ul><p>因此答案是 <strong>D</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 34,
+     "stem": "<p>In the last two paragraphs, the author suggests that</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "the UK is preparing for an economic boom."
+      },
+      {
+       "k": "B",
+       "text": "high GDP foreshadows an economic decline."
+      },
+      {
+       "k": "C",
+       "text": "it is essential to consider factors beyond GDP."
+      },
+      {
+       "k": "D",
+       "text": "it requires caution to handle economic issues."
+      }
+     ],
+     "explanation": "<p>让我们先回顾最后两段的内容：</p><p><strong>倒数第二段</strong></p><blockquote><p>So what Kennedy was referring to was that while GDP has been the most common method for measuring the economic activity of nations, as a measure it is no longer enough. It does not include important factors such as environmental equality or education outcomes — all things that contribute to a person&rsquo;s sense of well-being.</p></blockquote><p><strong>最后一段</strong></p><blockquote><p>The sharp hit to growth predicted around the world and in the UK could lead to a decline in the everyday services we depend on for our well-being and for growth. But policymakers who refocus efforts on improving well-being rather than simply worrying about GDP figures could avoid the forecasted doom and may even see progress.</p></blockquote><hr><p><strong>解析</strong>：</p><ol><li><p><strong>作者在最后两段的核心观点</strong>：</p><ul><li>GDP 作为衡量国家成功的标准已经不够用，因为它忽略了许多影响人民幸福的重要因素（环境、教育等）。</li><li>如果政策制定者把重点从单纯追求 GDP 转向改善福祉（well-being），那么即使 GDP 增长放缓，也可能避免糟糕的结果并取得进步。</li></ul></li><li><p><strong>选项分析</strong>：</p><ul><li><strong>A</strong>：英国正准备迎接经济繁荣 → 文中没有提到“经济繁荣”，反而提到可能面临增长冲击。</li><li><strong>B</strong>：高 GDP 预示着经济衰退 → 文中没有说高 GDP 会导致衰退，而是说只关注 GDP 会忽略福祉。</li><li><strong>C</strong>：必须考虑 GDP 以外的因素 → 这与作者建议“refocus efforts on improving well-being rather than simply worrying about GDP figures”完全一致。</li><li><strong>D</strong>：处理经济问题需要谨慎 → 虽然合理，但不是这两段的直接核心建议，不够具体。</li></ul></li><li><p><strong>结论</strong>：<br>作者在最后两段明确建议不应只关注 GDP，而应重视福祉相关的因素，因此 <strong>C</strong> 是正确答案。</p></li></ol><hr><p><strong>答案</strong>：C</p>",
+     "tags": []
+    },
+    {
+     "n": 35,
+     "stem": "<p>Which of the following is the best??for the text?</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "High GDP But Inadequate Well-being, a UK lesson"
+      },
+      {
+       "k": "B",
+       "text": "GDP figures, a Window on Global Economic Health"
+      },
+      {
+       "k": "C",
+       "text": "Robert F. Kennedy, a Terminator of GDP"
+      },
+      {
+       "k": "D",
+       "text": "Brexit,the UK&rsquo;s Gateway to Well-being"
+      }
+     ],
+     "explanation": "<p>好的，我们来一步步分析这道题。</p><hr><p><strong>1. 文章主旨概括</strong></p><ul><li>开头引用罗伯特·肯尼迪的话：GDP 不能衡量“使生活有价值的东西”。</li><li>英国脱欧公投（Brexit）发生，尽管 GDP 数字不错，但很多人投票脱欧，说明民众的福祉（well-being）感受与 GDP 不一致。</li><li>最近的研究表明，英国在将经济增长转化为民众福祉方面表现很差。</li><li>文章提出要使用健康、教育、公民社会参与等更多指标来评估国家表现。</li><li>结论：GDP 作为衡量国家成功的唯一标准已经不够，政策制定者应更关注福祉。</li></ul><hr><p><strong>2. 选项分析</strong></p><ul><li><p><strong>A. High GDP But Inadequate Well-being, a UK lesson</strong><br>（高 GDP 但福祉不足，英国的教训）<br>这与文章内容高度一致：英国 GDP 数据好，但民众未感到生活改善，导致脱欧投票，这是一个教训。</p></li><li><p><strong>B. GDP figures, a Window on Global Economic Health</strong><br>（GDP 数据，全球经济健康的一扇窗）<br>文章恰恰在批评 GDP 不能全面反映经济健康，更不用说福祉了，所以此选项与主旨相反。</p></li><li><p><strong>C. Robert F. Kennedy, a Terminator of GDP</strong><br>（罗伯特·肯尼迪，GDP 的终结者）<br>他虽批评 GDP，但文章并非主要讲他本人，也不是说他终结了 GDP，只是引用他的话引出讨论。</p></li><li><p><strong>D. Brexit, the UK&rsquo;s Gateway to Well-being</strong><br>（英国脱欧，通往福祉之门）<br>文章没有说脱欧会带来福祉，反而提到脱欧可能损害经济，只是用它来说明 GDP 与福祉的差异。</p></li></ul><hr><p><strong>3. 为什么选 A</strong></p><ul><li>文章核心是：英国的高 GDP 数字并没有带来相应的民众福祉，这是值得吸取的教训。</li><li>关键词：GDP、well-being、UK、lesson 都在 A 中准确体现。</li><li>其他选项要么偏离重点，要么与作者观点相反。</li></ul><hr><p><strong>答案：A</strong></p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-4",
+   "label": "阅读 Text 4",
+   "title": "Text 4",
+   "heading": null,
+   "type": "choice",
+   "points": 10,
+   "directions": "",
+   "passage": [
+    {
+     "segs": [
+      "In a rare unanimous ruling,the US Supreme Court has overturned the corruption conviction of a former Virginia governor, Robert McDonnell.But it did so while holding its nose at the ethics of his conduct, which included accepting gifts such as a Rolex watch and a Ferrari Automobile from a company seeking access to government.\nThe high court&rsquo;s decision said the judge in Mr.McDonnell&rsquo;s railfaied to tell ajury that it must look only at his &ldquo;official acts,&rdquo; or the former governor s decisions on\"specific\" and\"unsettled\" issues related to his duties."
+     ]
+    },
+    {
+     "segs": [
+      "Merely helping a gift-giver gain access to other officials unlss done with clear intent to pressure those officials,isn not corruption, the justices found."
+     ]
+    },
+    {
+     "segs": [
+      "The court did suggest that acepting favors in return for opening doors is &ldquo;distasteful&rdquo; and\"nasty.\" But under anti-bribery laws, proof must be made of concrete benefits, such as approval of a contract or regulation. Simply arranging a meeting, making a phone call,or hosting an event is not an &ldquo;fficial act.&rdquo;"
+     ]
+    },
+    {
+     "segs": [
+      "The court&rsquo;s ruling is legally sound in defining a kind of favoritism that is not criminal. Elected leaders must be alowed to help supporters deal with bureaucratic problems without fear of prosecution of bribery.&ldquo;The basic compact underlying representative government,&rdquo; wrote Chief Justice John Roberts for the court,&ldquo;assumes that public officials will hear from their constituents and act on their concerns."
+     ]
+    },
+    {
+     "segs": [
+      "But the ruling reinforces the need for citizens and their elected representatives, not the courts, to ensure equality of access to government. Officials must not be allowed to play favorites in providing information or in arranging meetings simply because an individual or group provides a campaign donation or a personal gift. This type of integrity requires will-enforced laws in government transparency, such as records of official meetings, rules on lobbying, and information about each elected leader&rsquo;s source of wealth."
+     ]
+    },
+    {
+     "segs": [
+      "Favoritism in official access can fan public perceptions of corruption. But it is not always corruption. Rather officials must avoid double standards, or different types of access for average people and the wealthy. If connections can be bought, a basic premise of democratic society - that all are equal in treatment by government is undermined. Good government rests on an understanding of the inherent worth of each individual."
+     ]
+    },
+    {
+     "segs": [
+      "The court&rsquo; s ruling is a step forward in the struggle against both corruption and official favoritism."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 36,
+     "stem": "<p>The underlined sentence(Para.1) most probably shows that the court</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "avoided defining the extent of McDonnell&rsquo;s duties."
+      },
+      {
+       "k": "B",
+       "text": "made no compromise in convicting McDonnell."
+      },
+      {
+       "k": "C",
+       "text": "was contemptuous of McDonnell&rsquo; s conduct."
+      },
+      {
+       "k": "D",
+       "text": "refused to comment on McDonnell&rsquo;s ethics."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目要求理解第一段划线句的含义：</p><blockquote><p>But it did so while holding its nose at the ethics of his conduct&mldr;</p></blockquote><p><strong>1. 字面理解</strong><br>“hold one’s nose” 是一个英语习语，字面意思是“捏住鼻子”，常用来表示对某事物感到厌恶、不齿，但因为某种原因不得不忍受或接受。<br>在这里，法院虽然推翻了 McDonnell 的有罪判决（基于法律技术原因），但同时对 McDonnell 的行为道德表示鄙视。</p><p><strong>2. 上下文印证</strong></p><ul><li>第一段提到他收受 Rolex 手表和 Ferrari 等贵重礼物，来自一家寻求政府关照的公司。</li><li>第四段提到法院认为这种行为 “distasteful” and “nasty”。</li><li>这些都说明法院在道德上不认同其行为，只是法律上不构成贿赂罪。</li></ul><p><strong>3. 选项分析</strong></p><ul><li><strong>A</strong>：未提及“避免定义职责范围”，这是判决理由的一部分，但不是划线句的意思。</li><li><strong>B</strong>：错在“定罪不妥协”，事实上法院推翻了他的定罪。</li><li><strong>C</strong>：<strong>正确</strong>。“was contemptuous of McDonnell’s conduct” 对应 “holding its nose at the ethics of his conduct”，即鄙视其行为道德。</li><li><strong>D</strong>：错在“拒绝评论道德”，实际上法院明确批评其行为不道德。</li></ul><p><strong>答案：C</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 37,
+     "stem": "<p>According to Paragraph 4, an official at is deemed corruptive only if itt involves</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "sizable gains in the form of gifts."
+      },
+      {
+       "k": "B",
+       "text": "leaking secrets intentionally."
+      },
+      {
+       "k": "C",
+       "text": "concrete returns for gift-givers."
+      },
+      {
+       "k": "D",
+       "text": "breaking contracts officially"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是：根据第4段，官员的哪种行为才会被认定为腐败？</p><p><strong>第4段原文关键句：</strong></p><blockquote><p>&ldquo;But under anti-bribery laws, proof must be made of concrete benefits, such as approval of a contract or regulation.&rdquo;</p></blockquote><p>这句话的意思是：根据反贿赂法律，必须证明存在<strong>具体的利益</strong>（concrete benefits），例如批准合同或法规，才构成贿赂罪。<br>而仅仅是安排会议、打电话或举办活动，不算是“官方行为”，因此不构成腐败。</p><p><strong>选项分析：</strong></p><ul><li><strong>A. sizable gains in the form of gifts</strong>（以礼物形式获得可观收益）—— 文中强调的是“具体利益”，而不是礼物的大小。</li><li><strong>B. leaking secrets intentionally</strong>（故意泄露秘密）—— 文中未提及。</li><li><strong>C. concrete returns for gift-givers</strong>（为送礼者提供具体回报）—— 与原文“concrete benefits”对应，符合文意。</li><li><strong>D. breaking contracts officially</strong>（正式违反合同）—— 文中未提及。</li></ul><p>因此，正确答案是 <strong>C</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 38,
+     "stem": "<p>The court&rsquo;s ruling is d on the assumption that public officials are_</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "justified in adressing the needs of their constiuents."
+      },
+      {
+       "k": "B",
+       "text": "allowed to focus on the concerns of their supporters."
+      },
+      {
+       "k": "C",
+       "text": "qualified to deal independently with bureaucratic issues."
+      },
+      {
+       "k": "D",
+       "text": "exempt from conviction on the charge of favoritism."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是“法院的裁决是基于一个假设，即公职人员是______”。<br>我们需要从文章中找出法院做出这一裁决时所依赖的前提或假设。</p><hr><p><strong>关键段落定位：</strong><br>文章第五段提到：</p><blockquote><p>The court&rsquo;s ruling is legally sound in defining a kind of favoritism that is not criminal. Elected leaders must be allowed to help supporters deal with bureaucratic problems without fear of prosecution of bribery. &ldquo;The basic compact underlying representative government,&rdquo; wrote Chief Justice John Roberts for the court, &ldquo;assumes that public officials will hear from their constituents and act on their concerns.&rdquo;</p></blockquote><p>这段话明确给出了法院的假设：</p><ul><li>代议制政府的基本契约（basic compact）<strong>假设</strong>（assumes）公职人员会听取选民（constituents）的意见并针对他们的关切采取行动。</li></ul><hr><p><strong>选项分析：</strong></p><ul><li><p><strong>A. justified in addressing the needs of their constituents</strong><br>（在满足选民需求方面是正当的）<br>这与原文“hear from their constituents and act on their concerns”对应，并且法院允许他们这样做而不必担心被控受贿，因此这是法院裁决的假设。</p></li><li><p><strong>B. allowed to focus on the concerns of their supporters</strong><br>（被允许关注其支持者所关心的事）<br>虽然看似接近，但原文强调的是“constituents”（选民），而不是“supporters”（支持者）。“supporters”可能带有偏袒特定利益方的意味，而“constituents”更中性，指所有选民，所以 B 不如 A 准确。</p></li><li><p><strong>C. qualified to deal independently with bureaucratic issues</strong><br>（有资格独立处理官僚问题）<br>原文没有强调“独立”或“资格”，而是强调他们可以帮忙解决选民遇到的官僚问题而不算腐败。</p></li><li><p><strong>D. exempt from conviction on the charge of favoritism</strong><br>（在偏袒指控方面免于定罪）<br>这是法院裁决的结果，而不是假设。法院是在假设公职人员会回应选民的基础上，划定某些偏袒不算犯罪。</p></li></ul><hr><p><strong>因此正确答案是 A</strong>，因为法院的假设是：公职人员听取并回应选民的需求是正当的，是代议制政府运作的基础。</p>",
+     "tags": []
+    },
+    {
+     "n": 39,
+     "stem": "<p>Well-enforced laws in government transparency are needed to</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "awaken the conscience of officials."
+      },
+      {
+       "k": "B",
+       "text": "guarantee fair play in official access."
+      },
+      {
+       "k": "C",
+       "text": "allow for certain kinds of lobbying."
+      },
+      {
+       "k": "D",
+       "text": "inspire hopes in average people."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>定位关键信息</strong><br>题目问的是“政府透明度方面严格执行的法律”是为了什么。<br>原文第六段提到：</p><blockquote><p>This type of integrity requires well-enforced laws in government transparency, such as records of official meetings, rules on lobbying, and information about each elected leader&rsquo;s source of wealth.</p></blockquote></li><li><p><strong>理解上下文逻辑</strong><br>这句话的上文说：</p><blockquote><p>Officials must not be allowed to play favorites in providing information or in arranging meetings simply because an individual or group provides a campaign donation or a personal gift.<br>也就是说，要防止官员因为收受好处而在提供信息或安排会面时偏袒某些人。</p></blockquote></li><li><p><strong>对应选项</strong></p><ul><li>A 项“唤醒官员的良知”在文中没有直接对应。</li><li>B 项“保证在接触官员方面的公平”与“防止官员偏袒（play favorites）”直接对应，也就是保证公平机会（fair play in official access）。</li><li>C 项“允许某些类型的游说”与文意不符，文中说的是对游说进行规则限制。</li><li>D 项“给普通人带来希望”属于过度引申，不是直接目的。</li></ul></li><li><p><strong>结论</strong><br>原文强调，为了保证官员不偏袒捐赠者或送礼者，需要透明度法律来确保“平等接触政府”（equality of access to government），这正是 B 项所说的 <strong>guarantee fair play in official access</strong>。</p></li></ol><p><strong>答案：B</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 40,
+     "stem": "<p>The author&rsquo;s attitude toward the court&rsquo; s ruling is_</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "sarcastic."
+      },
+      {
+       "k": "B",
+       "text": "tolerant."
+      },
+      {
+       "k": "C",
+       "text": "skeptical."
+      },
+      {
+       "k": "D",
+       "text": "supportive."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>定位作者态度相关表述</strong><br>文章最后一段明确写道：</p><blockquote><p>The court&rsquo;s ruling is a step forward in the struggle against both corruption and official favoritism.<br>这句话直接表明作者认为最高法院的裁决是“向前迈进了一步”，是<strong>积极评价</strong>。</p></blockquote></li><li><p><strong>结合全文逻辑</strong></p><ul><li>作者在文中承认法院从法律上对“腐败”定义严格是合理的（legally sound），并指出民选官员应当能够帮助支持者处理官僚问题而不必担心被起诉。</li><li>但同时作者也强调，需要加强政府透明度、防止权钱交易带来的不公。</li><li>这种写法不是** sarcastic（讽刺）<strong>，也不是</strong> skeptical（怀疑）<strong>，而是</strong>支持判决的法律合理性**，同时指出还需要其他措施来补充。</li></ul></li><li><p><strong>排除法</strong></p><ul><li>A 讽刺：文中没有使用反语或明显讽刺语气。</li><li>B 容忍：作者不是仅仅“容忍”，而是明确肯定其进步性。</li><li>C 怀疑：作者没有质疑判决的合理性，而是赞同其法律依据并指出其意义。</li><li>D 支持：与最后一段的正面评价一致。</li></ul></li></ol><p><strong>因此正确答案是 D. supportive。</strong></p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-b",
+   "label": "新题型",
+   "title": "Part B",
+   "heading": null,
+   "type": "match",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>The following paragraphs are given in a wrong order. For Questions 41-45. you are required to reorganize these paragraphs into a coherent article by choosing from the list A-G to filling them into the numbered box. Paragraphs B and D have been correctly placed. Mark your answers on ANSWER SHEET. (10 points)</p>",
+   "body": "<p>[A]The first published sketch,\"&lsquo;A Dinner at Poplar Walk&rdquo; brought tears to Dickens&rsquo;s eyes when he discovered it in the pages of The Monthly Magazine. From then on his sketches, which appeared under the pen name &ldquo;Boz&rdquo; in The Evening Chronicle, earned him a modest reputation.</p><p>[B]The runaway success of The Pickwick Papers, as it is generally known today, secured Dickens&rsquo;s fame. There were Pickwick coats and Pickwick cigars, and the plump, spectacled hero, Samuel Pickwick, became a national figure.</p><p>[C]Soon after Sketches by Boz appeared, a publishing firm approached Dickens to write a story in monthly installments, as a backdrop for a series of woodcuts by the ten-famous artist Robert Seymour, who had originated the idea for the story.With characteristic confidence, Dickens successfully insisted that Seymour&rsquo;s pictures illustrate his own story instead. After the first installment, Dickens wrote to the artist and asked him to correct a drawing Dickens felt was not faithful enough to his prose. Seymour made the change, went into his backyard, and expressed his displeasure by committing suicide. Dickens and his publishers simply pressed on with a new artist. The comic novel, The Posthumous Papers of the Pickwick Club, appeared serially in 1836and 1837, and was first published in book form in 1837.</p><p>[D]Charles Dickens is probably the best-known and, to many people,the greatest English novelist of the 19th century. A moralist, satirist,and social reformer. Dickens crafted complex plots and striking characters that capture the panorama of English society.</p><p>[E]Soon after his father&rsquo;s release from prison, Dickens got a better job as errand boy in law offices.He taught himself shorthand to get an even better job later as a court stenographer and as a reporter in Parliament. At the same time, Dickens,who had a reporter&rsquo;s eye for transcribing the life around him especially anything comic or odd, submitted short sketches to obscure magazines.</p><p>[F] Dickens was born in Portsmouth, on England&rsquo;s southern coast. His father was a clerk in the British navy pay office a respectable position,but wish little social status. His paternal grandparents, a steward and a housekeeper possessed even less status, having been servant, and Dickens later concealed their background.Dicken&rsquo;s mother supposedly came from a more respectable family Yet two years before Dicken&rsquo;s birth, his mother&rsquo;s father was caught stealing and fled to Europe, never to return. The family&rsquo;s increasing poverty forced Dickens out of school at age 12 to work in Warren&rsquo;s Blacking Warehouse, a shoe-polish factory,where the other working boys mocked him as &rsquo;the young gentleman.\" His father was then imprisoned for debt. The humiliations of his father&rsquo;s imprisonment and his labor in the blacking factory formed Dicken&rsquo;s greatest wound and became his deepest secret. He could not confide them even to his wife,although they provide the unacknowledged foundation of hi fiction.</p><p>[G] After Pickwick, Dickens plunged into a bleaker world. In Oliver Twist, e traces an orphan&rsquo;s progress from the workhouse to the criminal slums of London. Nicholas Nickleby, his next novel,combines the darkness of Oliver Twist with the sunlight of Pickwick. The popularity of these novels consolidated Dichens&rsquo; as a nationally and internationally celebrated man of letters.</p><p>（D → 41 → 42 → 43 → 44 → B → 45，请将41-45题的答案填入下方的输入框，不区分大小写）</p>",
+   "solution": "<p><strong>41、【答案】[F]</strong></p><p><strong>【解析】</strong><br>文章首段（D段）是对查尔斯·狄更斯的总体介绍。F段介绍其出生背景、家庭状况及童年经历，符合人物传记类文章通常按时间顺序展开的结构特点，应紧接在总起段之后。因此，正确答案为F选项。</p><hr><p><strong>42、【答案】[E]</strong></p><p><strong>【解析】</strong><br>F段末尾提到“His father was then imprisoned for debt&mldr;”，而E段开头“Soon after his father’s release from prison&mldr;”与之形成时间顺序上的自然衔接，且“imprisoned”与“release”构成关键词呼应。因此，正确答案为E选项。</p><hr><p><strong>43、【答案】[A]</strong></p><p><strong>【解析】</strong><br>E段结尾提到狄更斯“submitted short sketches to obscure magazines”，A段开头“The first published sketch&mldr;”承接这一内容，构成从“投稿”到“发表”的逻辑发展，且“sketch”为关键词复现。因此，正确答案为A选项。</p><hr><p><strong>44、【答案】[C]</strong></p><p><strong>【解析】</strong><br>A段结尾提到其作品以笔名“Boz”发表，C段开头“Soon after Sketches by Boz appeared&mldr;”与之紧密衔接，时间副词“soon after”和关键词“Boz”形成明显呼应。因此，正确答案为C选项。</p><hr><p><strong>45、【答案】[G]</strong></p><p><strong>【解析】</strong><br>B段介绍了《匹克威克外传》的成功，G段开头“After Pickwick, Dickens plunged into a bleaker world&mldr;”以“After Pickwick”明确承接B段内容，并引出其后续创作，构成时间与内容上的自然过渡。因此，正确答案为G选项。</p><hr><p><strong>最终段落顺序：</strong><br>D → F → E → A → C → B → G</p>",
+   "numbers": [
+    41,
+    42,
+    43,
+    44,
+    45
+   ],
+   "letters": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G"
+   ],
+   "answers": [
+    "F",
+    "E",
+    "A",
+    "C",
+    "G"
+   ]
+  },
+  {
+   "id": "translation",
+   "label": "翻译",
+   "title": "Part C",
+   "heading": null,
+   "type": "free",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>Read the following text carefully and then translate the underlined segments into Chinese. Your translation should be written neatly on the ANSWER SHEET. (10 points)</p>",
+   "body": "<p>The growth of the use of English as the world&rsquo;s primary language for international communication has obviously been continuing for several decades. (46) <u>But even as the number of English speakers expands further there are signs that the global predominance of the language may fade within the foreseeable future.</u></p><p>Complex international, economic, technological and cultural changes could start to diminish the leading position of English as the language of the world market, and UK interests which enjoy advantage from the breadth of English usage would consequently face new pressures. Those realistic possibilities are highlighted in the study presented by David Graddol. (47) <u>His analysis should therefore end any self-contentedness among those who may believe that the global position of English is so stable that the young generations of the United Kingdom do not need additional language capabilities.</u></p><p>David Graddol concludes that monoglot English graduates face a bleak economic future as qualified multilingual youngsters from other countries are proving to have a competitive advantage over their British counterparts in global companies and organisations. Alongside that, (48) <u>many countries are introducing English into the primary-school curriculum but British schoolchildren and students do not appear to be gaining greater encouragement to achieve fluency in other languages.</u></p><p>If left to themselves, such trends will diminish the relative strength of the English language in international education markets as the demand for educational resources in languages, such as Spanish, Arabic or Mandarin grows and international business process outsourcing in other languages such as Japanese, French and German, spreads.</p><p>(49) <u>The changes identified by David Graddol all present clear and major challenges to the UK&rsquo;s providers of English language teaching to people of other countries and to broader education business sectors.</u> The English language teaching sector directly earns nearly £1.3 billion for the UK in invisible exports and our other education related exports earn up to £10 billion a year more. As the international education market expands, the recent slowdown in the numbers of international students studying in the main English - speaking countries is likely to continue, especially if there are no effective strategic policies to prevent such slippage.</p><p>The anticipation of possible shifts in demand provided by this study is significant: (50) <u>It gives a basis for all organisations which seek to promote the learning and use of English, a basis for planning to meet the possibilities of what could be a very different operating environment. </u>That is a necessary and practical approach. In this as in much else, those who wish to influence the future must prepare for it.</p>",
+   "solution": "<p><strong>(46)</strong></p><p>【题目考点】状语从句、同位语从句<br>【句子结构】</p><ol><li>主句为 there are signs，后接 that 引导的同位语从句，解释 signs 的具体内容。</li><li>even as 引导让步状语从句，表示“即使……”。<br>【重点词汇】</li></ol><ul><li>expand：扩大，增加</li><li>predominance：主导地位</li><li>fade：逐渐减弱</li><li>foreseeable：可预见的<br>【参考译文】但即使当下英语使用者的人数仍在进一步增长，有迹象表明：在可预见的未来，英语可能会逐渐失去其全球主导地位。</li></ul><p><strong>(47)</strong></p><p>【题目考点】定语从句、宾语从句、状语从句<br>【句子结构】</p><ol><li>主句：His analysis should end any self-contentedness among those&mldr;</li><li>those 后接 who 引导的定语从句，其中包含 that 引导的宾语从句（作 believe 的宾语），以及 so&mldr;that&mldr; 引导的结果状语从句。<br>【重点词汇】</li></ol><ul><li>analysis：分析</li><li>end：终结，结束</li><li>self-contentedness：自满</li><li>additional：额外的</li><li>capabilities：能力<br>【参考译文】因此，他的分析可能会终结某些人的自满情绪——这些人认为英语的全球地位如此稳固，以至于英国的年轻一代无需具备其他语言能力。</li></ul><p><strong>(48)</strong></p><p>【题目考点】并列句、目的状语<br>【句子结构】</p><ol><li>but 连接两个并列分句，表示转折关系。</li><li>后一分句中，不定式 to achieve fluency in other languages 作目的状语。<br>【重点词汇】</li></ol><ul><li>introduce&mldr;into：引入</li><li>curriculum：课程</li><li>schoolchildren：学童</li><li>fluency：流利程度<br>【参考译文】许多国家正在将英语纳入小学课程，但英国学生似乎并未受到更多鼓励去流利掌握其他语言。</li></ul><p><strong>(49)</strong></p><p>【题目考点】过去分词作定语、并列宾语<br>【句子结构】</p><ol><li>主句：The changes&mldr;present challenges to A and B。</li><li>identified by David Graddol 为过去分词短语作后置定语，修饰 changes。<br>【重点词汇】</li></ol><ul><li>identified：被确认的，被发现的</li><li>present&mldr;to&mldr;：给……带来……</li><li>sectors：领域，行业<br>【参考译文】大卫·葛拉尔多所指出的这些变化，给面向外国人的英国英语教学机构以及更广泛的教育产业领域带来了明显而重大的挑战。</li></ul><p><strong>(50)</strong><br>【题目考点】定语从句、同位语、宾语从句<br>【句子结构】</p><ol><li>主句：It gives a basis for all organisations&mldr;</li><li>which 引导定语从句修饰 organisations。</li><li>a basis 为同位语，重复强调前文内容。</li><li>what 引导宾语从句，作 of 的宾语。<br>【重点词汇】</li></ol><ul><li>seek to：力图，致力于</li><li>operating environment：运营环境<br>【参考译文】这为所有致力于推广英语学习和使用的机构提供了一个依据，一个规划的基础，以应对可能出现的、截然不同的运营环境中的各种可能性。</li></ul>",
+   "numbers": [
+    46,
+    50
+   ]
+  },
+  {
+   "id": "writing-a",
+   "label": "小作文",
+   "title": "Part A",
+   "heading": "Section III  Writing",
+   "type": "free",
+   "points": 10,
+   "directions": "",
+   "body": "<p><strong>Directions</strong></p><p>You are to write an email to James Cook, a newly - arrived Australian professor, recommending some tourist attractions in your city. Please give reasons for your recommendation.</p><p>You should write neatly on the ANSWER SHEET.</p><p>Do not sign your own name at the end of the email. Use “Li Ming” instead.</p><p>Do not write the address. (10 points)</p>",
+   "solution": "<p><strong>一、审题谋篇</strong></p><ul><li><strong>写作类型</strong>：电子邮件</li><li><strong>写作对象</strong>：新来的澳大利亚教授 James Cook</li><li><strong>写作要点</strong>：<ol><li>推荐所在城市的旅游景点</li><li>给出推荐理由</li><li>语气礼貌、表达自然</li><li>注意格式规范，落款为“Li Ming”</li></ol></li></ul><hr><p><strong>二、范文参考</strong></p><p>Dear James Cook,</p><p>Welcome to China! I’m writing to recommend some scenic spots in Beijing so that you can have a wonderful time here.</p><p>First of all, you could visit the Summer Palace and the Forbidden City, which are renowned for their historic architecture and rich cultural heritage. After that, it is advisable to go to Wangfujing Street, where you can taste delicious local snacks while experiencing traditional culture. Finally, you may enjoy the National Museum, where a variety of traditional art exhibitions are being held.</p><p>What do you think of my suggestions?</p><p>I sincerely hope that you will enjoy your stay in Beijing, and it would be my pleasure to be your guide.</p><p>Yours sincerely,<br>Li Ming</p><hr><p><strong>三、写作框架参考</strong></p><p>Dear [Name],</p><p>I hear that you are planning a sightseeing trip to [City/Region]. I’d like to recommend [Place Name], one of the most wonderful tourist destinations in the area.</p><p>[Place Name] is known for its [features, e.g., ancient relics, natural scenery, modern facilities]. During my visit, I was deeply impressed by [specific attractions]. You can also enjoy [local food/cultural activities] there.</p><p>[Optional: Give practical tips, such as accommodation or budget considerations.]</p><p>I hope you will have a wonderful and memorable trip.</p><p>Yours,<br>Li Ming</p>",
+   "numbers": [
+    51
+   ]
+  },
+  {
+   "id": "writing-b",
+   "label": "大作文",
+   "title": "Part B",
+   "heading": null,
+   "type": "free",
+   "points": 20,
+   "directions": "",
+   "body": "<p><strong>Directions</strong></p><p>Write an essay of 160 - 200 words based on the following pictures. In your essay, you should</p><ol><li><p>describe the pictures briefly,</p></li><li><p>interpret the meaning, and</p></li><li><p>give your comments.</p></li></ol><p>You should write neatly on the ANSWER SHEET. (20 points) </p><p>（左侧图：一个人坐在书架前，说“我有这么多书”  ；右侧图：一个人坐在书桌前，说“我争取今年读完20本书”  ；下方文字：“有书”与“读书”  ）</p><img src=\"/api/exams/assets/e1_2017_52.png\" alt=\"\">",
+   "solution": "<p><strong>一、审题谋篇</strong></p><ul><li><strong>写作类型：</strong> 议论文</li><li><strong>话题类型：</strong> 人生哲理类</li><li><strong>图画说明：</strong><ul><li>图一：一个人拥有很多书却不去读。</li><li>图二：一个人设定目标，争取今年读完20本书。</li></ul></li><li><strong>核心要点：</strong><ol><li>简要描述图画内容。</li><li>阐释图画的深层寓意。</li><li>发表个人评论。</li></ol></li></ul><p><strong>二、范文参考</strong></p><p>Portrayed in the two cartoons is a thought-provoking scenario. In the left one, a young man, comfortably lounging on a chair, looks contentedly at his huge bookshelf filled with books, seemingly satisfied with mere ownership. Conversely, the individual in the right drawing sits at a desk, determined to achieve a specific goal: finishing 20 books within the year.</p><p>Through this contrast, the cartoonist highlights the disparity between possessing resources (&ldquo;having books&rdquo;) and taking concrete action (&ldquo;reading books&rdquo;). It reminds us that in our fast-paced society, continuous learning and knowledge updating are crucial for success, which can only be attained through dedicated reading. However, objectives remain mere fantasies without determined action. Often, people fail not because challenges are insurmountable, but because they cease to persevere.</p><p>In conclusion, meaningful achievement stems from consistent effort and a persistent spirit, not just from potential or possessions. Action invariably speaks louder than words. Understanding and applying this principle in one&rsquo;s studies and work will undoubtedly yield significant benefits.</p><p><strong>三、写作框架</strong></p><p>As we can see from the picture, [简要描述图画内容]. It is obvious that [点明图画的核心对比或现象].</p><p>The picture reflects a thought-provoking social phenomenon prevalent today. Superficially, [对现象的表面解释或常见借口] might seem reasonable. Upon deeper reflection, however, we uncover a fundamental issue: a lack of determination and persistence. Firstly, we inhabit a dynamic world filled with challenges; confronting them is inevitable. Secondly, attitude is paramount for taking the initial step. Once you [采取行动/改变心态], you will realize the problem is not as &ldquo;huge&rdquo; as imagined. Consider the National Entrance Test for M.A./M.S. Candidates: it appears daunting, leading some to relinquish their efforts, while others, through perseverance, succeed. Therefore, with [坚定的决心/正确的态度] and a realistic assessment of difficulties, we can overcome obstacles through diligent effort.</p><p>On the whole, I believe we young people should confront challenges appropriately and recognize that nothing is impossible with resolute action.</p>",
+   "numbers": [
+    52
+   ]
+  }
+ ]
+}

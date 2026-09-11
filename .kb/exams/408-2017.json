@@ -1,0 +1,1326 @@
+{
+ "id": "408-2017",
+ "kind": "408",
+ "kindLabel": "408",
+ "group": "408",
+ "year": 2017,
+ "title": "2017 年 408 真题",
+ "source": "https://www.csgraduates.com/study_methods/408quiz/2017/",
+ "fetchedAt": "2026-09-11T17:49:00.362Z",
+ "sections": [
+  {
+   "id": "mc-ds",
+   "label": "选择题 · 数据结构",
+   "title": "数据结构",
+   "subject": "数据结构",
+   "heading": "一、单项选择题（每小题 2 分，共 80 分）",
+   "type": "choice",
+   "points": 22,
+   "directions": "",
+   "passage": [],
+   "questions": [
+    {
+     "n": 1,
+     "stem": "<p>下列函数的时间复杂度是（ ）。</p><pre><code data-lang=\"c\">int func(int n) {\n    int i = 0, sum = 0;\n    while(sum &lt; n)\n        sum += ++i;\n    return i;\n}\n</code></pre>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:1em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.02778em>O</span><span class=mopen>(</span><span class=\"mord mathnormal\" style=margin-right:.01968em>l</span><span class=\"mord mathnormal\">o</span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.03588em>g</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0359em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span><span class=mord><span class=\"mord mathnormal\">n</span></span><span class=mclose>)</span></span></span></span>"
+      },
+      {
+       "k": "B",
+       "text": "<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:1.138em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.02778em>O</span><span class=mopen>(</span><span class=mord><span class=\"mord mathnormal\">n</span><span class=msupsub><span class=vlist-t><span class=vlist-r><span class=vlist style=height:.888em><span style=top:-3.063em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">1/2</span></span></span></span></span></span></span></span></span><span class=mclose>)</span></span></span></span>"
+      },
+      {
+       "k": "C",
+       "text": "<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:1em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.02778em>O</span><span class=mopen>(</span><span class=\"mord mathnormal\">n</span><span class=mclose>)</span></span></span></span>"
+      },
+      {
+       "k": "D",
+       "text": "<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:1em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.02778em>O</span><span class=mopen>(</span><span class=\"mord mathnormal\">n</span><span class=\"mord mathnormal\" style=margin-right:.01968em>l</span><span class=\"mord mathnormal\">o</span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.03588em>g</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0359em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span><span class=mord><span class=\"mord mathnormal\">n</span></span><span class=mclose>)</span></span></span></span>"
+      }
+     ],
+     "explanation": "<code>sum += ++i;</code> 相当于 <code>++i; sum = sum + i;</code> 进行到第 k 趟循环，<code>sum = (1+k)*k/2</code> 。显然需要进行\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:1.138em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.02778em>O</span><span class=mopen>(</span><span class=mord><span class=\"mord mathnormal\">n</span><span class=msupsub><span class=vlist-t><span class=vlist-r><span class=vlist style=height:.888em><span style=top:-3.063em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">1/2</span></span></span></span></span></span></span></span></span><span class=mclose>)</span></span></span></span>\n趟循环，因此这也是该函数的时间复杂度。",
+     "tags": [
+      "复杂度分析"
+     ]
+    },
+    {
+     "n": 2,
+     "stem": "<p>下列关于栈的叙述中，错误的是（ ）。</p><p>I. 采用非递归方式重写递归程序时必须使用栈</p><p>II. 函数调用时，系统要用栈保存必要信息</p><p>III. 只要确定了入栈次序，即可确定出栈次序</p><p>IV. 栈是一种受限的线性表，允许在其两端进行操作</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "仅 I"
+      },
+      {
+       "k": "B",
+       "text": "仅 I、II、III"
+      },
+      {
+       "k": "C",
+       "text": "仅 I、III、IV"
+      },
+      {
+       "k": "D",
+       "text": "仅 II、III、IV"
+      }
+     ],
+     "explanation": "I 的反例：计算斐波拉契数列迭代实现只需要一个循环即可实现。\nIII 的反例：入栈序列为 1、2, 进行如下操作 PUSH、PUSH、POP、POP，出栈次序为 2、1；进行如下操作 PUSH、POP、PUSH、POP，出栈次序为 1、2。\nIV，栈是一种受限的线性表，只允许在一端进行操作。\n因此 II 正确。",
+     "tags": [
+      "栈",
+      "入栈出栈序列"
+     ]
+    },
+    {
+     "n": 3,
+     "stem": "<p>适用于压缩存储稀疏矩阵的两种存储结构是（）</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "三元组表和十字链表"
+      },
+      {
+       "k": "B",
+       "text": "三元组表和邻接矩阵"
+      },
+      {
+       "k": "C",
+       "text": "十字链表和二叉链表"
+      },
+      {
+       "k": "D",
+       "text": "邻接矩阵和十字链表"
+      }
+     ],
+     "explanation": "三元组表 的结点存储了行 row、列 col、值 value 三种信息，是主要用来存储稀疏矩阵的一种\n数据结构。十字链表将行单链表和列单链表结合起来存储稀疏矩阵。邻接矩阵空间复杂度达\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:1.0641em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.02778em>O</span><span class=mopen>(</span><span class=mord><span class=\"mord mathnormal\">n</span><span class=msupsub><span class=vlist-t><span class=vlist-r><span class=vlist style=height:.8141em><span style=top:-3.063em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span><span class=mclose>)</span></span></span></span>\n,\n不适用于存储稀疏矩阵。二叉链表又名左孩子右兄弟表示法，可用于表示树或森林。因此 A 正确。",
+     "tags": [
+      "特殊矩阵"
+     ]
+    },
+    {
+     "n": 4,
+     "stem": "<p>要使一颗非空二叉树的先序序列与中序序列相同，其所有非叶节点须满足的条件是（）</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "只有左子树"
+      },
+      {
+       "k": "B",
+       "text": "只有右子树"
+      },
+      {
+       "k": "C",
+       "text": "结点的度均为 1"
+      },
+      {
+       "k": "D",
+       "text": "结点的度均为 2"
+      }
+     ],
+     "explanation": "先序序列是根左右，中序序列是左根右，递归进行。如果所有非叶结点只有右子树，先序序列和中序序列都是先父结点，然后右子树，递归进行，因此 B 正确。",
+     "tags": [
+      "二叉树遍历"
+     ]
+    },
+    {
+     "n": 5,
+     "stem": "<p>已知一颗二叉树的树形如下图所示，其后序序列为 e，a，c，b，d，g，f，树中与结点 a 同层的结点是（）</p><!doctype html>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "c"
+      },
+      {
+       "k": "B",
+       "text": "d"
+      },
+      {
+       "k": "C",
+       "text": "f"
+      },
+      {
+       "k": "D",
+       "text": "g"
+      }
+     ],
+     "explanation": "后序序列是先左子树，接着右子树，最后父结点，递归进行。根结点左子树的叶结点首先被访问，它是 e。接下来是它的父结点 a, 然后是 a 的父结点 c。接着访问根结点的右子树。它的叶结点 b 首先被访问，然后是 b 的父结点 d, 再者是 d 的父结点 g。最后是根结点 f。因此 d 与 a 同层，B 正确。",
+     "tags": [
+      "二叉树遍历"
+     ]
+    },
+    {
+     "n": 6,
+     "stem": "<p>已知字符集 {a, b, c, d, e, f, g, h}，若各字符的哈夫曼编码依次是 0100, 10, 0000, 0101, 001, 011, 11, 0001，则编码序列 0100011001001011110101 的译码结果是（ ）。</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "a c g a b f h"
+      },
+      {
+       "k": "B",
+       "text": "a d b a g b b"
+      },
+      {
+       "k": "C",
+       "text": "a f b e a g d"
+      },
+      {
+       "k": "D",
+       "text": "a f e e f g d"
+      }
+     ],
+     "explanation": "哈夫曼编码 是前缀编码，各个编码的前缀各不相同，因此直接拿编码序列与哈夫曼编码一一比对即可。序列可分割为 0100 011 001 001 011 11 0101，译码结果是 a f e e f g d，选项 D 正确。",
+     "tags": [
+      "哈夫曼编码"
+     ]
+    },
+    {
+     "n": 7,
+     "stem": "<p>已知无向图 G 含有 16 条边，其中度为 4 的顶点个数为 3，度为 3 的顶点个数为 4，其他顶点的度均小于 3。图 G 所含的顶点个数至少是（）</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "10"
+      },
+      {
+       "k": "B",
+       "text": "11"
+      },
+      {
+       "k": "C",
+       "text": "13"
+      },
+      {
+       "k": "D",
+       "text": "15"
+      }
+     ],
+     "explanation": "无向图边数的两倍等于各顶点度数的总和。由于其他顶点的度均小于 3，可以设它们的度都为 2，设它们的数量是 X，可列出方程 4x3 + 3x4 + 2x = 16x2，解得 x = 3。4 + 3 + 3 = 11，B 正确。",
+     "tags": [
+      "图的概念"
+     ]
+    },
+    {
+     "n": 8,
+     "stem": "<p>下列二叉树中，可能成为折半查找判定树（不含外部结点）的是（）</p><!doctype html>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": ""
+      },
+      {
+       "k": "B",
+       "text": ""
+      },
+      {
+       "k": "C",
+       "text": ""
+      },
+      {
+       "k": "D",
+       "text": ""
+      }
+     ],
+     "explanation": "<p>折半查找判定树 实际上是一棵 二叉排序树，它的中序序列是一个有序序列。可以在树结点上依次填上相应的元素，判断哪颗树符合折半查找的规则。</p><!doctype html><p>折半查找树由于其中序遍历是一个升序序列，因此相比于在以往的序列中进行二分查找，折半查找二叉树的优点在于不用自己去找中点，而是直接将要查找的关键字与根节点相比，小的话再和根节点的左子节点（又是相应的左子树中点，更加方便）比较，大的话则是和根节点的右子节点比较。</p><p>而对于这道题的解题思路就在于向上或向下取整的问题，也就是说如果升序序列是偶数个，那么中点应该偏左多右少还是左少右多。但是很显然应该进行一个统一，像 B 和 C 选项中间的对称部分明显就是选择了不同的策略。D 则由根节点左子树 4 个节点而点右子树 5 个节点可以确定用的是向下取整策略，但是我们再看它的左子节点在左子树中对应的中点左边 2 个数，右边一个数，明显是向上取整策略，策略没有统一，所以是错的。</p>",
+     "tags": [
+      "二叉排序树"
+     ]
+    },
+    {
+     "n": 9,
+     "stem": "<p>下列应用中，适合使用 B+ 树的是（）</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "编译器中的词法分析"
+      },
+      {
+       "k": "B",
+       "text": "关系数据库系统中的索引"
+      },
+      {
+       "k": "C",
+       "text": "网络中的路由表快速查找"
+      },
+      {
+       "k": "D",
+       "text": "操作系统的磁盘空闲块管理"
+      }
+     ],
+     "explanation": "B+ 树 是应文件系统所需而产生的 B 树 的变形，前者比后者更加适用于实际应用中的操作系统的文件索引和数据库索引，因为前者磁盘读写代价更低，查询效率更加稳定。编译器中的词法分析使用有穷自动机和语法树。网络中的路由表快速查找主要靠高速缓存、路由表压缩技术和快速查找算法。系统一 般使用空闲空间链表管理磁盘空闲块。所以 B 正确。",
+     "tags": [
+      "B+树"
+     ]
+    },
+    {
+     "n": 10,
+     "stem": "<p>在内部排序时，若选择了归并排序而没有选择插入排序，则可能的理由是（）</p><ol><li><p>归并排序的程序代码更短</p></li><li><p>归并排序的占用空间更少</p></li><li><p>归并排序的运行效率更高</p></li></ol>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "仅 2"
+      },
+      {
+       "k": "B",
+       "text": "仅 3"
+      },
+      {
+       "k": "C",
+       "text": "仅 1、2"
+      },
+      {
+       "k": "D",
+       "text": "仅 1、3"
+      }
+     ],
+     "explanation": "参考 排序算法复杂度，归并排序代码比选择插入排序更复杂，前者空间复杂度是\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:1em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.02778em>O</span><span class=mopen>(</span><span class=\"mord mathnormal\">n</span><span class=mclose>)</span></span></span></span>\n, 后者是\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:1em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.02778em>O</span><span class=mopen>(</span><span class=mord>1</span><span class=mclose>)</span></span></span></span>\n。但是前者时间复杂度是\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:1em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.02778em>O</span><span class=mopen>(</span><span class=\"mord mathnormal\">n</span><span class=\"mord mathnormal\" style=margin-right:.01968em>l</span><span class=\"mord mathnormal\">o</span><span class=\"mord mathnormal\" style=margin-right:.03588em>g</span><span class=\"mord mathnormal\">n</span><span class=mclose>)</span></span></span></span>\n, 后者是\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:1.0641em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.02778em>O</span><span class=mopen>(</span><span class=mord><span class=\"mord mathnormal\">n</span><span class=msupsub><span class=vlist-t><span class=vlist-r><span class=vlist style=height:.8141em><span style=top:-3.063em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span></span><span class=mclose>)</span></span></span></span>\n。所以 B 正确。",
+     "tags": [
+      "排序算法",
+      "归并排序",
+      "插入排序"
+     ]
+    },
+    {
+     "n": 11,
+     "stem": "<p>下列排序方法中，若将顺序存储更换为链式存储，则算法的时间效率会降低的是（）</p><ol><li>插入排序  2.选择排序  3.起泡排序  4.希尔排序  5.堆排序</li></ol>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "仅 1、2"
+      },
+      {
+       "k": "B",
+       "text": "仅 2、3"
+      },
+      {
+       "k": "C",
+       "text": "仅 3、4"
+      },
+      {
+       "k": "D",
+       "text": "仅 4、5"
+      }
+     ],
+     "explanation": "插入排序、选择排序、冒泡原本时间复杂度是\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:1.0641em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.02778em>O</span><span class=mopen>(</span><span class=mord><span class=\"mord mathnormal\">n</span><span class=msupsub><span class=vlist-t><span class=vlist-r><span class=vlist style=height:.8141em><span style=top:-3.063em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=mclose>)</span></span></span></span>\n，更换为链式存储后的时间复杂度还是\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:1.0641em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.02778em>O</span><span class=mopen>(</span><span class=mord><span class=\"mord mathnormal\">n</span><span class=msupsub><span class=vlist-t><span class=vlist-r><span class=vlist style=height:.8141em><span style=top:-3.063em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span></span></span></span></span><span class=mclose>)</span></span></span></span>\n。希尔排序和堆排序都利用了顺序存储的随机访问特性，而链式存储不支持这种性质，所以时间复杂度会增加，因此选 D。",
+     "tags": [
+      "排序算法"
+     ]
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "mc-co",
+   "label": "选择题 · 计算机组成原理",
+   "title": "计算机组成原理",
+   "subject": "计算机组成原理",
+   "heading": null,
+   "type": "choice",
+   "points": 22,
+   "directions": "",
+   "passage": [],
+   "questions": [
+    {
+     "n": 12,
+     "stem": "<p>假定计算机 M1 和 M2 具有相同的指令集体系结构（ISA），主频分别为 1.5GHz 和 1.2GHz。在 M1 和 M2 上运行某基准程序 P，平均 CPI 分别为 2 和 1，则程序 P 在 M1 和 M2 上运行时间的比值是（ ）。</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "0.4"
+      },
+      {
+       "k": "B",
+       "text": "0.625"
+      },
+      {
+       "k": "C",
+       "text": "1.6"
+      },
+      {
+       "k": "D",
+       "text": "2.5"
+      }
+     ],
+     "explanation": "运行时间 = 指令数 x CPI / 主频。M1 的时间 = 指令数 x 2 / 1.5，M2 的时间 = 指令数 x 1 / 1.2，两者之比为 (2/1.5):(1/1.2) = 1.6。故选 C。",
+     "tags": [
+      "指令体系结构"
+     ]
+    },
+    {
+     "n": 13,
+     "stem": "<p>某计算机主存按字节编址，由 4 个 64M×8 位的 DRAM 芯片采用交叉编址方式构成，并与宽度为 32 位的存储器总线相连，主存每次最多读写 32 位数据。若 double 型变量 x 的主存地址为 804001AH，则读取 x 需要的存储周期数是（ ）。</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "1"
+      },
+      {
+       "k": "B",
+       "text": "2"
+      },
+      {
+       "k": "C",
+       "text": "3"
+      },
+      {
+       "k": "D",
+       "text": "4"
+      }
+     ],
+     "explanation": "由 4 个 DRAM 芯片采用 交叉编址方式 构成主存可知主存地址最低二位表示该字节存储的芯片编号。double 型变量占 64 位，8 个字节。它的主存地址 804001AH 最低二位是 10，说明它从编号为 2 的 芯片开始存储（编号从 0 开始）。一个存储周期可以对所有芯片各读取一个字节，因此需要 3 轮，故选 C。",
+     "tags": [
+      "主存容量的扩展"
+     ]
+    },
+    {
+     "n": 14,
+     "stem": "<p>某 C 语言程序段如下：</p><pre><code data-lang=\"c\">for (i = 0; i &lt;= 9; i++) {\n    temp = 1;\n    for (j = 0; j &lt;= i; j++) {\n        temp *= a[j];\n    }\n    sum += temp;\n}\n</code></pre><p>下列关于数组 a 的访问局部性的描述中，正确的是（ ）。</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "时间局部性和空间局部性皆有"
+      },
+      {
+       "k": "B",
+       "text": "无时间局部性，有空间局部性"
+      },
+      {
+       "k": "C",
+       "text": "有时间局部性，无空间局部性"
+      },
+      {
+       "k": "D",
+       "text": "时间局部性和空间局部性皆无"
+      }
+     ],
+     "explanation": "时间局部性 是一旦一条指令被执行，则在不久的将来它可能再次被执行。空间局部性 是一旦一个存储单元被访问，那么它附近的存储单元也很快被访问。显然，这里的循环指令本身具有时间局部性，它对数组 a 的访问具有空间局部性，故选 A。",
+     "tags": [
+      "cache概念"
+     ]
+    },
+    {
+     "n": 15,
+     "stem": "<p>下列寻址方式中，最适合按下标顺序访问一维数组元素的是（ ）。</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "相对寻址"
+      },
+      {
+       "k": "B",
+       "text": "寄存器寻址"
+      },
+      {
+       "k": "C",
+       "text": "直接寻址"
+      },
+      {
+       "k": "D",
+       "text": "变址寻址"
+      }
+     ],
+     "explanation": "<p>在 变址寻址 时，将计算机指令中的地址与变址寄存器中的地址相加，得到有效地址，指令提供数组首地址，由变址寄存器来定位数据中的各元素。所以它最适合按下标顺序访问一维数组元素，故选 D。</p><p>相对寻址以 PC 为基地址，以指令中的地址为偏移量确定有效地址。寄存器寻址则是在指令中指出需要使用的寄存器。直接寻址是在指令的地址字段直接指出操作数的有效地址。</p>",
+     "tags": [
+      "指令寻址方式"
+     ]
+    },
+    {
+     "n": 16,
+     "stem": "<p>某计算机按字节编址，指令字长固定且只有两种指令格式，其中三地址指令 29 条，二地址指令 107 条，每个地址字段为 6 位，则指令字长至少应该是（ ）。</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "24 位"
+      },
+      {
+       "k": "B",
+       "text": "26 位"
+      },
+      {
+       "k": "C",
+       "text": "28 位"
+      },
+      {
+       "k": "D",
+       "text": "32 位"
+      }
+     ],
+     "explanation": "三地址指令有 29 条，所以它的操作码至少为 5 位。以 5 位进行计算，它剩余 32-29=3 种操作码给二地址。而二地址另外多了 6 位给操作码，因此它的数量最大达 3x64=192。所以指令字长最少为 23 位，因为计算机按字节编址，需要是 8 的倍数，所以指令字长至少应该是 24 位，故选 A。",
+     "tags": [
+      "操作码扩展编码"
+     ]
+    },
+    {
+     "n": 17,
+     "stem": "<p>下列关于超标量流水线特性的叙述中，正确的是（ ）。</p><p>Ⅰ. 能缩短流水线功能段的处理时间</p><p>Ⅱ. 能在一个时钟周期内同时发射多条指令</p><p>Ⅲ. 能结合动态调度技术提高指令执行并行性</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "仅Ⅱ"
+      },
+      {
+       "k": "B",
+       "text": "仅Ⅰ、Ⅲ"
+      },
+      {
+       "k": "C",
+       "text": "仅Ⅱ、Ⅲ"
+      },
+      {
+       "k": "D",
+       "text": "Ⅰ、Ⅱ和Ⅲ"
+      }
+     ],
+     "explanation": "超标量流水线 是指在 CPU 中有一条以上的流水线，并且每个时钟周期内可以完成一条以上的指令，其实质是以空间换时间。I 错误，它不影响流水线功能段的处理时间；II、III 正确。故选 C。",
+     "tags": [
+      "超流水线"
+     ]
+    },
+    {
+     "n": 18,
+     "stem": "<p>下列关于主存储器（MM）和控制存储器（CS）的叙述中，错误的是（ ）。</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "MM 在 CPU 外，CS 在 CPU 内"
+      },
+      {
+       "k": "B",
+       "text": "MM 按地址访问，CS 按内容访问"
+      },
+      {
+       "k": "C",
+       "text": "MM 存储指令和数据，CS 存储微指令"
+      },
+      {
+       "k": "D",
+       "text": "MM 用 RAM 和 ROM 实现，CS 用 ROM 实现"
+      }
+     ],
+     "explanation": "主存储器就是我们通常说的主存，在 CPU 外，存储指令和数据，由 RAM 和 ROM 实现。控制存储器用来存放实现指令系统的所有微指令，是一种只读型存储器，机器运行时只读不写，在 CPU 的控制器内。CS 按照微指令的地址访问，所以 B 错误。",
+     "tags": [
+      "寄存器类型"
+     ]
+    },
+    {
+     "n": 19,
+     "stem": "<p>下列关于指令流水线数据通路的叙述中，错误的是（ ）。</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "包含生成控制信号的控制部件"
+      },
+      {
+       "k": "B",
+       "text": "包含算术逻辑运算部件（ALU）"
+      },
+      {
+       "k": "C",
+       "text": "包含通用寄存器组和取指部件"
+      },
+      {
+       "k": "D",
+       "text": "由组合逻辑电路和时序逻辑电路组合而成"
+      }
+     ],
+     "explanation": "五阶段流水线 可分为取指（IF）、译码／取数（ID）、执行（EXC）、存储器读（MEM）、写回（Write Back）。数字系统中，各个子系统通过数据总线连接形成的数据传送路径称为 数据通路，包括程序计数器、算术逻辑运算部件、通用寄存器组、取指部件等，不包括控制部件，故选 A。",
+     "tags": [
+      "流水线概念",
+      "数据通路"
+     ]
+    },
+    {
+     "n": 20,
+     "stem": "<p>下列关于多总线结构的叙述中，错误的是（ ）。</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "靠近 CPU 的总线速度较快"
+      },
+      {
+       "k": "B",
+       "text": "存储器总线可支持突发传送方式"
+      },
+      {
+       "k": "C",
+       "text": "总线之间须通过桥接器相连"
+      },
+      {
+       "k": "D",
+       "text": "PCI-Express×16 采用并行传输方式"
+      }
+     ],
+     "explanation": "多总线结构 用速率高的总线连接高速设备用速率低的总线连接低速设备。一般来说，CPU 是计算机的核心，是计算机中速度最快的设备之一，所以 A 正确。突发传送方式把多个数据单元作为一个独立传输处理，从而最大化设备的吞吐量。现实中一般用支待突发传送方式的总线提高存储器的读写效率，B 正确。各总线通过桥接器相连，后者起流量交换作用。PCI-Express 总线都采用 串行 数据包传输数据，所以选 D。",
+     "tags": [
+      "总线类型"
+     ]
+    },
+    {
+     "n": 21,
+     "stem": "<p>I/O 指令实现的数据传送通常发生在（ ）。</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "I/O 设备和 I/O 端口之间"
+      },
+      {
+       "k": "B",
+       "text": "通用寄存器和 I/O 设备之间"
+      },
+      {
+       "k": "C",
+       "text": "I/O 端口和 I/O 端口之间"
+      },
+      {
+       "k": "D",
+       "text": "通用寄存器和 I/O 端口之间"
+      }
+     ],
+     "explanation": "I/O 端口 是 CPU 与设备之间的交接面。由于主机和 I/0 设备的工作方式和工作速度有很大差异，I/O 端口就应运而生。在执行一条指令时，CPU 使用地址总线选择所请求的 I/O 端口，使用数据总线在 CPU 寄存器和端口之间传输数据。所以选 D。",
+     "tags": [
+      "IO接口"
+     ]
+    },
+    {
+     "n": 22,
+     "stem": "<p>下列关于多重中断系统的叙述中，错误的是（ ）。</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "在一条指令执行结束时响应中断"
+      },
+      {
+       "k": "B",
+       "text": "中断处理期间 CPU 处于关中断状态"
+      },
+      {
+       "k": "C",
+       "text": "中断请求的产生与当前指令的执行无关"
+      },
+      {
+       "k": "D",
+       "text": "CPU 通过采样中断请求信号检测中断请求"
+      }
+     ],
+     "explanation": "多重中断 系统在保护被中断进程现场时关中断，执行中断处理程序时开中断，B 错误。CPU 一般在一条指令执行结束的阶段采样中断请求信号，查看是否存在中断请求，然后决定是否响应中断，A、D 正确。中断请求一般来自 CPU 以外的事件，异常一般发生在 CPU 内部，C 正确。",
+     "tags": [
+      "多级中断"
+     ]
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "mc-os",
+   "label": "选择题 · 操作系统",
+   "title": "操作系统",
+   "subject": "操作系统",
+   "heading": null,
+   "type": "choice",
+   "points": 20,
+   "directions": "",
+   "passage": [],
+   "questions": [
+    {
+     "n": 23,
+     "stem": "<p>假设 4 个作业到达系统的时刻和运行时间如下表所示。</p><table><thead><tr><th align=\"center\">作业</th><th align=\"center\">达到时刻 t</th><th align=\"center\">运行时间</th></tr></thead><tbody><tr><td align=\"center\"><span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8333em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.09618em>J</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0962em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span></td><td align=\"center\">0</td><td align=\"center\">3</td></tr><tr><td align=\"center\"><span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8333em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.09618em>J</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0962em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span></td><td align=\"center\">1</td><td align=\"center\">3</td></tr><tr><td align=\"center\"><span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8333em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.09618em>J</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0962em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span></td><td align=\"center\">1</td><td align=\"center\">2</td></tr><tr><td align=\"center\"><span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8333em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.09618em>J</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0962em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">4</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span></td><td align=\"center\">3</td><td align=\"center\">1</td></tr></tbody></table><p>系统在 t=2 时开始作业调度。若分别采用先来先服务和短作业优先调度算法，则选中的作业分别是（ ）。</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8333em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.09618em>J</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0962em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>\n、\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8333em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.09618em>J</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0962em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>"
+      },
+      {
+       "k": "B",
+       "text": "<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8333em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.09618em>J</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0962em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>\n、\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8333em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.09618em>J</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0962em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">4</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>"
+      },
+      {
+       "k": "C",
+       "text": "<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8333em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.09618em>J</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0962em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>\n、\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8333em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.09618em>J</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0962em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">4</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>"
+      },
+      {
+       "k": "D",
+       "text": "<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8333em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.09618em>J</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0962em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>\n、\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8333em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.09618em>J</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0962em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>"
+      }
+     ],
+     "explanation": "先来先服务 是作业来得越早，优先级越高，因此会选择\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8333em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.09618em>J</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0962em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>\n。最短作业优先是作业运行时间越短，优先级越高，因此会选择\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8333em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.09618em>J</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0962em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">3</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>\n。所以 D 正确。",
+     "tags": [
+      "处理机调度算法"
+     ]
+    },
+    {
+     "n": 24,
+     "stem": "<p>执行系统调用的过程包括如下主要操作：</p><p>①返回用户态         ②执行陷入（trap）指令</p><p>③传递系统调用参数   ④执行相应的服务程序</p><p>正确的执行顺序是（ ）。</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "②→③→①→④"
+      },
+      {
+       "k": "B",
+       "text": "②→④→③→①"
+      },
+      {
+       "k": "C",
+       "text": "③→②→④→①"
+      },
+      {
+       "k": "D",
+       "text": "③→④→②→①"
+      }
+     ],
+     "explanation": "执行 系统调用 的过程是这样的：正在运行的进程先传递系统调用参数，然后由 陷入指令 负责将用户态转化为内核态，并将返回地址压入堆栈以备后用，接下来 CPU 执行相应的内核态服务程序，最后返回用户态。所以 C 正确。",
+     "tags": [
+      "系统调用"
+     ]
+    },
+    {
+     "n": 25,
+     "stem": "<p>某计算机按字节编址，其动态分区内存管理采用最佳适应算法，每次分配和回收内存后都对空闲分区链重新排序。当前空闲分区信息如下表所示。</p><table><thead><tr><th align=\"center\"></th><th align=\"center\"></th><th align=\"center\"></th><th align=\"center\"></th><th align=\"center\"></th></tr></thead><tbody><tr><td align=\"center\">分区起始地址</td><td align=\"center\">20K</td><td align=\"center\">500K</td><td align=\"center\">1000K</td><td align=\"center\">200K</td></tr><tr><td align=\"center\">分区大小</td><td align=\"center\">40KB</td><td align=\"center\">80KB</td><td align=\"center\">100KB</td><td align=\"center\">200KB</td></tr></tbody></table><p>回收起始地址为 60K、大小为 140KB 的分区后，系统中空闲分区的数量、空闲分区链第一个分区的起始地址和大小分别是（ ）。</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "3、20K、380KB"
+      },
+      {
+       "k": "B",
+       "text": "3、500K、80KB"
+      },
+      {
+       "k": "C",
+       "text": "4、20K、180KB"
+      },
+      {
+       "k": "D",
+       "text": "4、500K、80KB"
+      }
+     ],
+     "explanation": "参考 动态内存内存回收过程，回收起始地址为 60K、大小为 140KB 的分区时，它与表中第一个分区和第四个分区合并，成为起始地址为 20K、大小为 380KB 的分区，剩余 3 个空闲分区。在回收内存后，算法会对空闲分区链按分区大小由小到大进行排序，表中的第二个分区排第一。所以选择 B。",
+     "tags": [
+      "动态分区分配"
+     ]
+    },
+    {
+     "n": 26,
+     "stem": "<p>某文件系统的簇和磁盘扇区大小分别为 1KB 和 512B。若一个文件的大小为 1026B，则系统分配给该文件的磁盘空间大小是（ ）。</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "1026B"
+      },
+      {
+       "k": "B",
+       "text": "1536B"
+      },
+      {
+       "k": "C",
+       "text": "1538B"
+      },
+      {
+       "k": "D",
+       "text": "2048B"
+      }
+     ],
+     "explanation": "在文件系统中，磁盘空间 <strong>以簇为单位</strong> 分配，每个簇的大小为 1KB（1024B）。而磁盘扇区大小为 512B，但分配时只考虑簇的整数倍。",
+     "tags": [
+      "外存空间管理"
+     ]
+    },
+    {
+     "n": 27,
+     "stem": "<p>下列有关基于时间片的进程调度的叙述中，错误的是（ ）。</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "时间片越短，进程切换的次数越多，系统开销也越大"
+      },
+      {
+       "k": "B",
+       "text": "当前进程的时间片用完后，该进程状态由执行态变为阻塞态"
+      },
+      {
+       "k": "C",
+       "text": "时钟中断发生后，系统会修改当前进程在时间片内的剩余时间"
+      },
+      {
+       "k": "D",
+       "text": "影响时间片大小的主要因素包括响应时间、系统开销和进程数量等"
+      }
+     ],
+     "explanation": "进程切换带来系统开销，切换次数越多，开销越大，A 正确。当前进程的时间片用完后，它的状态由执行态变为就绪态，B 错误。时钟中断是系统中特定的周期性时钟节拍。操作系统通过它来确定时间间隔，实现时间的延时和任务的超时，C 正确。现代操作系统为了保证性能最优，通常根据响应时间、系统开销、进程数量、进程运行时间、进程切换开销等因素确定 时间片大小，D 正确。",
+     "tags": [
+      "处理机调度算法",
+      "时间片轮转"
+     ]
+    },
+    {
+     "n": 28,
+     "stem": "<p>与单道程序系统相比，多道程序系统的优点是（  ）</p><p>Ⅰ.CPU 利用率高</p><p>Ⅱ.系统开销小</p><p>Ⅲ.系统吞吐量大</p><p>Ⅳ.I/O 设备利用率高</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "仅Ⅰ、Ⅲ"
+      },
+      {
+       "k": "B",
+       "text": "仅Ⅰ、Ⅳ"
+      },
+      {
+       "k": "C",
+       "text": "仅Ⅱ 、Ⅲ"
+      },
+      {
+       "k": "D",
+       "text": "仅Ⅰ、Ⅲ、Ⅳ"
+      }
+     ],
+     "explanation": "多道程序系统通过组织作业（编码或数据）使 CPU 总有一个作业可执行，从而提高了 CPU 的利用率、系统吞吐量和 I/O 设备利用率，I、III、IV 是优点。但系统要付出额外的开销来组织作业和切换作业，II 错误。所以选 D。",
+     "tags": [
+      "操作系统概念"
+     ]
+    },
+    {
+     "n": 29,
+     "stem": "<p>下列选项中，磁盘逻辑格式化程序所做的工作是（ ）。</p><p>Ⅰ. 对磁盘进行分区</p><p>Ⅱ. 建立文件系统的根目录</p><p>Ⅲ. 确定磁盘扇区校验码所占位数</p><p>Ⅳ. 对保存空闲磁盘块信息的数据结构进行初始化</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "仅Ⅱ"
+      },
+      {
+       "k": "B",
+       "text": "仅Ⅱ、Ⅳ"
+      },
+      {
+       "k": "C",
+       "text": "仅Ⅲ、Ⅳ"
+      },
+      {
+       "k": "D",
+       "text": "仅Ⅰ、Ⅱ、Ⅳ"
+      }
+     ],
+     "explanation": "一个新的磁盘是一个空白盘，必须分成扇区以便磁盘控制器能读和写，这个过程称为 物理格式化。低级格式化为磁盘的每个扇区采用特别的数据结构，包括校验码，III 错误。为了使用磁盘存储文件，操作系统还需要将其数据结构记录在磁盘上。这分为两步。第一步是将磁盘分为由一个或多个柱面组成的分区，每个分区可以作为一个独立的磁盘，I 错误。在分区之后，第二步是 逻辑格式化（创建文件系统）。在这一步，操作系统将初始的文件系统数据结构存储到磁盘上。这些数据结构包括空闲和已分配的空间和一个初始 为空的目录，II、IV 正确。所以选 B。",
+     "tags": [
+      "磁盘格式化"
+     ]
+    },
+    {
+     "n": 30,
+     "stem": "<p>某文件系统中，针对每个文件，用户类别分为 4 类：安全管理员、文件主、文件主的伙伴、其他用户；访问权限分为 5 种：完全控制、执行、修改、读取、写入。若文件控制块中用二进制位串表示文件权限，为表示不同类别用户对一个文件的访问权限，则描述文件权限的位数至少应为（ ）。</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "5"
+      },
+      {
+       "k": "B",
+       "text": "9"
+      },
+      {
+       "k": "C",
+       "text": "12"
+      },
+      {
+       "k": "D",
+       "text": "20"
+      }
+     ],
+     "explanation": "可以把用户访问权限抽象为一个矩阵，行代表用户，列代表访问权限。这个矩阵有 4 行 5 列，1 代表 true，0 代表 false，所以需要 20 位，选 D。",
+     "tags": [
+      "inode"
+     ]
+    },
+    {
+     "n": 31,
+     "stem": "<p>若文件 f1 的硬链接为 f2，两个进程分别打开 f1 和 f2，获得对应的文件描述符为 fd1 和 fd2，则下列叙述中，正确的是（ ）。</p><p>Ⅰ. f1 和 f2 的读写指针位置保持相同</p><p>Ⅱ. f1 和 f2 共享同一个内存索引结点</p><p>Ⅲ. fd1 和 fd2 分别指向各自的用户打开文件表中的一项</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "仅Ⅲ"
+      },
+      {
+       "k": "B",
+       "text": "仅Ⅱ、Ⅲ"
+      },
+      {
+       "k": "C",
+       "text": "仅Ⅰ、Ⅱ"
+      },
+      {
+       "k": "D",
+       "text": "Ⅰ、Ⅱ和Ⅲ"
+      }
+     ],
+     "explanation": "<p><strong>背景知识：</strong></p><ul><li><p><strong>硬链接</strong>：f1 和 f2 是同一个 inode 的两个目录项（即它们指向同一个文件的 inode），共享 <strong>相同的索引节点（inode）</strong> 和数据块。</p></li><li><p><strong>打开文件的过程</strong>：\n每个进程在打开文件时会创建：</p><ul><li>一个对应的 <strong>用户级打开文件表项</strong>（即 <code>fd</code> 指向它）</li><li>用户打开文件表项再指向 <strong>系统级打开文件表项</strong>（Open File Table）</li><li>系统级表项包含文件的读写偏移量（读写指针）和对 inode 的引用</li></ul></li></ul><hr><p><strong>分析选项：</strong></p><p>Ⅰ. f1 和 f2 的读写指针位置保持相同</p><p>❌ <strong>错误</strong>。\n虽然 f1 和 f2 是同一个文件（硬链接），但两个进程分别打开它们时，会在系统级打开文件表中<strong>生成两个不同的表项</strong>，每个表项维护<strong>独立的文件偏移量</strong>（读写指针），所以<strong>互不影响</strong>。</p><p>Ⅱ. f1 和 f2 共享同一个内存索引结点</p><p>✅ <strong>正确</strong>。\n硬链接的本质就是多个目录项共享同一个 inode。即使路径不同（f1 和 f2），它们最终指向的是同一个 inode。</p><p>Ⅲ. fd1 和 fd2 分别指向各自的用户打开文件表中的一项</p><p>✅ <strong>正确</strong>。\n每个进程维护自己的文件描述符表（用户级文件表），<code>fd1</code> 和 <code>fd2</code> 分别是两个不同进程打开文件得到的描述符，它们自然是指向各自进程的用户打开文件表项。</p><p><strong>Ⅱ 和 Ⅲ 正确</strong>，因此，正确答案为 B。</p>",
+     "tags": [
+      "inode",
+      "文件链接"
+     ]
+    },
+    {
+     "n": 32,
+     "stem": "<p>系统将数据从磁盘读到内存的过程包括以下操作：</p><p>① DMA 控制器发出中断请求</p><p>② 初始化 DMA 控制器并启动磁盘</p><p>③ 从磁盘传输一块数据到内存缓冲区</p><p>④ 执行“DMA 结束”中断服务程序</p><p>正确的执行顺序是（ ）。</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "③→①→②→④"
+      },
+      {
+       "k": "B",
+       "text": "②→③→①→④"
+      },
+      {
+       "k": "C",
+       "text": "②→①→③→④"
+      },
+      {
+       "k": "D",
+       "text": "①→②→④→③"
+      }
+     ],
+     "explanation": "在开始 DMA 传输时，主机向内存写入 DMA 命令块，向 DMA 控制器写入该命令块的地址，启动 I/O 设备。然后，CPU 继续其他工作，DMA 控制器则继续下去直接操作内存总线，将地址放到总线上开始传输。当整个传输完成后，DMA 控制器中断 CPU。因此执行顺序是 ②→③→①→④ 选 B。",
+     "tags": [
+      "DMA"
+     ]
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "mc-cn",
+   "label": "选择题 · 计算机网络",
+   "title": "计算机网络",
+   "subject": "计算机网络",
+   "heading": null,
+   "type": "choice",
+   "points": 16,
+   "directions": "",
+   "passage": [],
+   "questions": [
+    {
+     "n": 33,
+     "stem": "<p>假设 OSI 参考模型的应用层欲发送 400B 的数据（无拆分），除物理层和应用层之外，其他各层在封装 PDU 时均引入 20B 的额外开销，则应用层数据传输效率约为（ ）。</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "80%"
+      },
+      {
+       "k": "B",
+       "text": "83%"
+      },
+      {
+       "k": "C",
+       "text": "87%"
+      },
+      {
+       "k": "D",
+       "text": "91%"
+      }
+     ],
+     "explanation": "OSI 参考模型共 7 层，除去物理层和应用层，剩五层。它们会向 PDU 引入 20Bx5 = 100B 的额外开销。应用层是最顶层，所以它的数据传输效率为 400B/500B=80%，选 A。",
+     "tags": [
+      "OSI模型"
+     ]
+    },
+    {
+     "n": 34,
+     "stem": "<p>若信道在无噪声情况下的极限数据传输速率不小于信噪比为 30dB 条件下的极限数据传输速率，则信号状态数至少是（ ）。</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "4"
+      },
+      {
+       "k": "B",
+       "text": "8"
+      },
+      {
+       "k": "C",
+       "text": "16"
+      },
+      {
+       "k": "D",
+       "text": "32"
+      }
+     ],
+     "explanation": "可用 奈奎斯特定理 计算无噪声情况下的极限数据传输速率，用 香农定理 计算有噪信道极限数据传输速率。\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8889em;vertical-align:-.1944em></span><span class=mord>2</span><span class=\"mord mathnormal\" style=margin-right:.13889em>W</span><span class=\"mord mathnormal\" style=margin-right:.01968em>l</span><span class=\"mord mathnormal\">o</span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.03588em>g</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0359em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">2</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span><span class=\"mord mathnormal\" style=margin-right:.10903em>N</span><span class=mspace style=margin-right:.2778em></span><span class=mrel>≥</span><span class=mspace style=margin-right:.2778em></span></span><span class=base><span class=strut style=height:1em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.13889em>W</span><span class=\"mord mathnormal\" style=margin-right:.01968em>l</span><span class=\"mord mathnormal\">o</span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.03588em>g</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0359em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">2</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span><span class=mopen>(</span><span class=mord>1</span><span class=mspace style=margin-right:.2222em></span><span class=mbin>+</span><span class=mspace style=margin-right:.2222em></span></span><span class=base><span class=strut style=height:1em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.05764em>S</span><span class=mord>/</span><span class=\"mord mathnormal\" style=margin-right:.10903em>N</span><span class=mclose>)</span></span></span></span>\n，\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6833em></span><span class=\"mord mathnormal\" style=margin-right:.13889em>W</span></span></span></span>\n是信道带宽，\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6833em></span><span class=\"mord mathnormal\" style=margin-right:.10903em>N</span></span></span></span>\n是信号状态数，\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:1em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.05764em>S</span><span class=mord>/</span><span class=\"mord mathnormal\" style=margin-right:.10903em>N</span></span></span></span>\n是信噪比，将数据代入计算可得\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8193em;vertical-align:-.136em></span><span class=\"mord mathnormal\" style=margin-right:.10903em>N</span><span class=mspace style=margin-right:.2778em></span><span class=mrel>≥</span><span class=mspace style=margin-right:.2778em></span></span><span class=base><span class=strut style=height:.6444em></span><span class=mord>32</span></span></span></span>\n，选 D。（注意 分贝数=\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:1em;vertical-align:-.25em></span><span class=mord>10</span><span class=\"mord mathnormal\" style=margin-right:.01968em>l</span><span class=\"mord mathnormal\">o</span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.03588em>g</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0359em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">10</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span><span class=mopen>(</span><span class=\"mord mathnormal\" style=margin-right:.05764em>S</span><span class=mord>/</span><span class=\"mord mathnormal\" style=margin-right:.10903em>N</span><span class=mclose>)</span></span></span></span>\n。）",
+     "tags": [
+      "奈奎斯特定理"
+     ]
+    },
+    {
+     "n": 35,
+     "stem": "<p>在下图所示的网络中，若主机 H 发送一个封装访问 Internet 的 IP 分组的 IEEE 802.11 数据帧 F，则帧 F 的地址 1、地址 2 和地址 3 分别是（ ）。</p><!doctype html>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "00-12-34-56-78-9a, 00-12-34-56-78-9b, 00-12-34-56-78-9c"
+      },
+      {
+       "k": "B",
+       "text": "00-12-34-56-78-9b, 00-12-34-56-78-9a, 00-12-34-56-78-9c"
+      },
+      {
+       "k": "C",
+       "text": "00-12-34-56-78-9b, 00-12-34-56-78-9c, 00-12-34-56-78-9a"
+      },
+      {
+       "k": "D",
+       "text": "00-12-34-56-78-9a, 00-12-34-56-78-9c, 00-12-34-56-78-9b"
+      }
+     ],
+     "explanation": "IEEE 802.11 数据帧有四种子类型，分别是 IBSS、From AP、ToAP、WDS。这里的数据帧 F 是从笔记本电脑发送往访问接入点（AP），所以属于 To AP 子类型。这种帧地址 l 是 RA (BSSID)，地址 2 是 SA，地址 3 是 DA。RA 是 Receiver Address 的缩写，BSSID 是 basic service set identifier 的缩写，SA 是 source address 的缩写，DA 是 destination address 的缩写。因此地址 1 是 AP 的 MAC，地址 2 是 H 的 MAC，地址 3 是 R 的 MAC，选 B。",
+     "tags": [
+      "CSMA/CA"
+     ]
+    },
+    {
+     "n": 36,
+     "stem": "<p>下列 IP 地址中，只能作为 IP 分组的源 IP 地址但不能作为目的 IP 地址的是（ ）。</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "0.0.0.0"
+      },
+      {
+       "k": "B",
+       "text": "127.0.0.1"
+      },
+      {
+       "k": "C",
+       "text": "200.10.10.3"
+      },
+      {
+       "k": "D",
+       "text": "255.255.255.255"
+      }
+     ],
+     "explanation": "0.0.0.0/32 可以作为本主机在本网络上的源地址。127.0.0.1 是 loopback 地址，以它为目的 IP 地址的数据将被立即返回到本机。200.10.10.3 是 C 类 IP 地址。255.255.255.255 是广播地址。",
+     "tags": [
+      "网络号和主机号"
+     ]
+    },
+    {
+     "n": 37,
+     "stem": "<p>直接封装 RIP、OSPF、BGP 报文的协议分别是（ ）。</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "TCP、UDP、IP"
+      },
+      {
+       "k": "B",
+       "text": "TCP、IP、UDP"
+      },
+      {
+       "k": "C",
+       "text": "UDP、TCP、IP"
+      },
+      {
+       "k": "D",
+       "text": "UDP、IP、TCP"
+      }
+     ],
+     "explanation": "参考 路由协议对比，RIP 是一种分布式的基于距离向量的路由选择协议，通过广播 UDP 报文来交换路由信息。OSPF 是一个内部网关协议，不使用传输协议，如 UDP 或 TCP，而是直接用 IP 包封装它的数据。BGP 是一个外部网关协议，用 TCP 封装它的数据。因此选 D。",
+     "tags": [
+      "路由协议"
+     ]
+    },
+    {
+     "n": 38,
+     "stem": "<p>若将网络 21.3.0.0/16 划分为 128 个规模相同的子网，则每个子网可分配的最大 IP 地址个数是（ ）。</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "254"
+      },
+      {
+       "k": "B",
+       "text": "256"
+      },
+      {
+       "k": "C",
+       "text": "510"
+      },
+      {
+       "k": "D",
+       "text": "512"
+      }
+     ],
+     "explanation": "这个网络有 16 位的主机号，平均分成 128 个规模相同的子网，每个子网有 7 位的子网号，9 位的主机号。除去一个网络地址和广播地址，可分配的最大 IP 地址个数是 29-2=512-2=510，故选 C。",
+     "tags": [
+      "网络号和主机号"
+     ]
+    },
+    {
+     "n": 39,
+     "stem": "<p>若甲向乙发起一个 TCP 连接，最大段长 MSS=1KB，RTT=5ms，乙开辟的接收缓存为 64KB，则甲从连接建立成功至发送窗口达到 32KB，需经过的时间至少是（ ）。</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "25 ms"
+      },
+      {
+       "k": "B",
+       "text": "30 ms"
+      },
+      {
+       "k": "C",
+       "text": "160 ms"
+      },
+      {
+       "k": "D",
+       "text": "165 ms"
+      }
+     ],
+     "explanation": "按照 慢开始算法，发送窗口 = min{ 拥塞窗口，接收窗口｝，初始的拥塞窗口为最大报文段长度 1KB 海经过一个 RTT，拥塞窗口翻倍，因此需至少经过 5 个 RTT，发送窗口才能达到 32KB，所以选 A。这里假定乙能及时处理接收到的数据，空闲的接收缓存 ≥ 32KB。",
+     "tags": [
+      "TCP拥塞控制"
+     ]
+    },
+    {
+     "n": 40,
+     "stem": "<p>下列关于 FTP 协议的叙述中，错误的是（ ）。</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "数据连接在每次数据传输完毕后就关闭"
+      },
+      {
+       "k": "B",
+       "text": "控制连接在整个会话期间保持打开状态"
+      },
+      {
+       "k": "C",
+       "text": "服务器与客户端的 TCP 20 端口建立数据连接"
+      },
+      {
+       "k": "D",
+       "text": "客户端与服务器的 TCP 21 端口建立控制连接"
+      }
+     ],
+     "explanation": "FTP 协议使用控制连接和数据连接，控制连接存在于整个 FTP 会话过程中，数据连接在每次文件传输时才建立，传输结束就关闭，A 和 B 是正确的。默认情况下 FTP 协议使用 TCP 20 端口进行数据连接，TCP 21 端口进行控制连接。但是是否使用 TCP 20 端口建立数据连接与传输模式有关，主动方式使用 TCP20 端口，被动方式由服务器和客户端自行协商决定，C 错，D 对。所以选 C。",
+     "tags": [
+      "FTP"
+     ]
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "q41",
+   "label": "第 41 题 · 数据结构",
+   "title": "41．数据结构",
+   "subject": "数据结构",
+   "heading": "二、综合应用题（共 70 分）",
+   "type": "free",
+   "points": null,
+   "directions": "",
+   "body": "<p>请设计一个算法，将给定的表达式树（二叉树）转换为等价的中缀表达式（通过括号反映操作符的计算次序）并输出。例如，当下列两棵表达式树作为算法输入时：</p><!doctype html><p>输出的中缀表达式分别为 <code>(a+b)*(c*(</code>−<code>d))</code> 和 <code>(a*b)+(</code>−<code>(c</code>−<code>d))</code> 。</p><p>二叉树结点的定义如下：</p><pre><code data-lang=\"c\">typedef struct node{\n    char data[10];   // 存储操作数或操作符\n    struct node *left, *right;\n} BTree;\n</code></pre><p>要求：</p><p>(1) 给出算法的基本设计思想。</p><p>(2) 根据设计思想，采用 C 或 C++ 语言描述算法，关键之处给出注释。</p>",
+   "solution": "<p>1）算法的基本设计思想</p><p>表达式树的中序序列加上必要的括号即为等价的中缀表达式。可以基于二叉树的中序遍历策略得到所需的表达式。（3 分）</p><p>表达式树中分支结点所对应的子表达式的计算次序，由该分支结点所处的位置决定。为得到正确的中缀表达式，需要在生成遍历序列的同时，在适当位置增加必要的括号。显然，表达式的最外层（对应根结点）及操作数（对应叶结点）不需要添加括号。（2 分）</p><p>2）算法实现（10 分）</p><pre><code data-lang=\"c\">void preorder(node *root, int depth) {\n  if (!root) {\n    return;\n  }\n  bool isRoot = (depth == 1);\n  bool isLeaf = (!root-&gt;left &amp;&amp; !root-&gt;right);\n  if (!isRoot &amp;&amp; !isLeaf) {\n    printf(&#34;(&#34;);\n  }\n  preorder(root-&gt;left, depth+1);\n  printf(&#34;%s&#34;, root-&gt;data);\n  preorder(root-&gt;right, depth+1);\n  if (!isRoot &amp;&amp; !isLeaf) {\n    printf(&#34;)&#34;);\n  }\n}\n\nvoid solve(node *root) {\n  preorder(root, 1);\n}\n</code></pre><p>将二叉树的中序遍历递归算法稍加改造即可得本题答案。除根结点和叶结点外，遍历到其他结点时在遍历其左子树之前加上左括号，在遍历完右子树后加上右括号。</p><p>【评分说明】①若考生设计的算法满足题目的功能要求，则（1)、(2) 根据所实现算法的策略及输出结果给分，评分标准见下表。</p><table><thead><tr><th align=\"center\">分数</th><th align=\"center\">备注</th></tr></thead><tbody><tr><td align=\"center\">15</td><td align=\"center\">采用中序遍历算法且正确，括号嵌套正确，层数适当</td></tr><tr><td align=\"center\">14</td><td align=\"center\">采用中序遍历算法且正确，括号嵌套正确，但括号嵌套层数过多。例如，表达式最外层加上括号，或操作数加括号，如 (a)</td></tr><tr><td align=\"center\">11</td><td align=\"center\">采用中序遍历算法，但括号嵌套层数不完全正确。例如，左右括号数量不匹配</td></tr><tr><td align=\"center\">9</td><td align=\"center\">采用中序遍历算法，但没有考虑括号</td></tr><tr><td align=\"center\">≤7</td><td align=\"center\">其他</td></tr></tbody></table><p>②若考生采用其他方法得到正确结果，可参照①的评分标准给分。</p><p>③如果程序中使用了求结点深度等辅助函数，但没有给出相应的实现过程，只要考生进\n行了必要的说明，可不扣分。</p><p>④若在算法的基本设计思想描述中因文字表达没有清晰反映出算法思路，但在算法实现\n中能够表达出算法思想且正确的，则可参照①的标准给分。</p><p>⑤若算法的基本设计思想描述或算法实现中部分正确，可参照①中各种情况的相应给分标准酌情给分。</p>",
+   "tags": [
+    "二叉树遍历"
+   ],
+   "numbers": [
+    41
+   ]
+  },
+  {
+   "id": "q42",
+   "label": "第 42 题 · 数据结构",
+   "title": "42．数据结构",
+   "subject": "数据结构",
+   "heading": null,
+   "type": "free",
+   "points": null,
+   "directions": "",
+   "body": "<p>使用 Prim（普里姆）算法求带权连通图的最小（代价）生成树（MST）。请回答下列问题。</p><p>(1) 对下列图 G，从顶点 A 开始求 G 的 MST，依次给出按算法选出的边。</p><!doctype html><p>(2) 图 G 的 MST 是唯一的吗？</p><p>(3) 对任意的带权连通图，满足什么条件时，其 MST 是唯一的？</p>",
+   "solution": "<p>1）Prim 算法 属于贪心策略。算法从一个任意的顶点开始，一直长大到覆盖图中所有顶点为止。算法每一步在连接树集合 S 中顶点和其他顶点的边中，选择一条使得树的总权重增加最小的边加入集合 S。当算法终止时，S 就是最小生成树。</p><ol><li>S 中顶点为 A，候选边为 (A,D),(A,B),(A,E)，选择 (A,D) 加入 S。</li><li>S 中顶点为 A,D，候选边为 (A,B),(A,E),(D,E),(C,D)，选择 (D,E) 加入 S。</li><li>S 中顶点为 A,D,E，候选边为 (A,B),(C,D),(C,E)，选择 (C,E) 加入 S。</li><li>S 中顶点为 A,D,E,C，候选边为 (A,B),(B,C)，选择 (B,C) 加入 S。</li><li>S 就是最小生成树。</li></ol><p>依次选出的边为 (A,D),(D,E),(C,E),(B,C)（4 分）</p><p>【评分说明】每正确选对一条边且次序正确，给 1 分。若考生选择的边正确，但次序不完\n全正确，酌情给分。</p><p>2）图 G 的 MST 是唯一的。（2 分）第一小题的最小生成树包括了图中权值最小的四条边，其他边都比这四条边大，所以此图的 MST 唯一。</p><p>3）当带权连通图的任意一个环中所包含的边的权值均不相同时，其 MST 是唯一的。（2 分）此题不要求回答充分必要条件，所以回答一个限制边权值的充分条件即可。</p><p>【评分说明】①若考生答案中给出的是其他充分条件，例如“带权连通图的所有边的权值均不相同”，同样给分。</p><p>②若考生给出的充分条件对图的顶点数和边数做了某些限制，例如，限制了图中顶点的个数（顶点个数少于 3 个）、限制了图的形状（图中没有环）等，则最高给 1 分。</p><p>③答案部分正确，酌情给分。</p>",
+   "tags": [
+    "最小生成树"
+   ],
+   "numbers": [
+    42
+   ]
+  },
+  {
+   "id": "q43",
+   "label": "第 43 题 · 计算机组成原理",
+   "title": "43．计算机组成原理",
+   "subject": "计算机组成原理",
+   "heading": null,
+   "type": "free",
+   "points": null,
+   "directions": "",
+   "body": "<p>已知\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:1em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.10764em>f</span><span class=mopen>(</span><span class=\"mord mathnormal\">n</span><span class=mclose>)</span><span class=mspace style=margin-right:.2778em></span><span class=mrel>=</span><span class=mspace style=margin-right:.2778em></span></span><span class=base><span class=strut style=height:1.1244em;vertical-align:-.2997em></span><span class=mop><span class=\"mop op-symbol small-op\" style=position:relative;top:0>∑</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.8043em><span style=top:-2.4003em;margin-left:0;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">i</span><span class=\"mrel mtight\">=</span><span class=\"mord mtight\">0</span></span></span></span><span style=top:-3.2029em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">n</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2997em><span></span></span></span></span></span></span><span class=mspace style=margin-right:.1667em></span><span class=mord><span class=mord>2</span><span class=msupsub><span class=vlist-t><span class=vlist-r><span class=vlist style=height:.8247em><span style=top:-3.063em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mathnormal mtight\">i</span></span></span></span></span></span></span></span><span class=mspace style=margin-right:.2778em></span><span class=mrel>=</span><span class=mspace style=margin-right:.2778em></span></span><span class=base><span class=strut style=height:.8974em;vertical-align:-.0833em></span><span class=mord><span class=mord>2</span><span class=msupsub><span class=vlist-t><span class=vlist-r><span class=vlist style=height:.8141em><span style=top:-3.063em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">n</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">1</span></span></span></span></span></span></span></span></span><span class=mspace style=margin-right:.2222em></span><span class=mbin>−</span><span class=mspace style=margin-right:.2222em></span></span><span class=base><span class=strut style=height:.6444em></span><span class=mord>1</span><span class=mspace style=margin-right:.2778em></span><span class=mrel>=</span><span class=mspace style=margin-right:.2778em></span></span><span class=base><span class=strut style=height:.6444em></span><span class=mord>11</span><span class=mspace style=margin-right:.1667em></span><span class=minner>⋯</span><span class=mspace style=margin-right:.1667em></span><span class=mord>1</span></span></span></span>\nB，计算\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:1em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.10764em>f</span><span class=mopen>(</span><span class=\"mord mathnormal\">n</span><span class=mclose>)</span></span></span></span>\n的 C 语言函数 f1 如下：</p><pre><code data-lang=\"c\">int f1(unsigned n) {\n    int sum=1, power=1;\n    for(unsigned i=0; i&lt;= n -1; i ++) {\n        power * = 2;\n        sum += power;\n    }\n    return sum ;\n}\n</code></pre><p>将 f1 中的 int 都改为 float，可得到计算 f(n) 的另一个函数 f2。假设 unsigned 和 int 型数据都占 32 位，float 采用 IEEE754 单精度标准。请回答下列问题。</p><p>(1) 当 n=0 时，f1 会出现死循环，为什么？若将 f1 中的变量 i 和 n 都定义为 int 型，则 f1 是否还会出现死循环？为什么？</p><p>(2) f1(23) 和 f2(23) 的返回值是否相等？机器数各是什么（用十六进制表示）？</p><p>(3) f1(24) 和 f2(24) 的返回值分别为 33554431 和 33554432.0，为什么不相等？</p><p>(4) f(31)= \n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8974em;vertical-align:-.0833em></span><span class=mord><span class=mord>2</span><span class=msupsub><span class=vlist-t><span class=vlist-r><span class=vlist style=height:.8141em><span style=top:-3.063em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">32</span></span></span></span></span></span></span></span></span><span class=mspace style=margin-right:.2222em></span><span class=mbin>−</span><span class=mspace style=margin-right:.2222em></span></span><span class=base><span class=strut style=height:.6444em></span><span class=mord>1</span></span></span></span>\n ，而 f1(31) 的返回值却为 -1，为什么？若使 f1(n) 的返回值与 f(n) 相等，则最大的 n 是多少？</p><p>(5) f2(127) 的机器数为 7F80 0000H，对应的值是什么？若使 f2(n) 的结果不溢出，则最大的 n 是多少？若使 f2(n) 的结果精确（无舍入），则最大的 n 是多少？</p>",
+   "solution": "<p>1）由于\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6595em></span><span class=\"mord mathnormal\">i</span></span></span></span>\n和\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.4306em></span><span class=\"mord mathnormal\">n</span></span></span></span>\n是 unsigned 型，故\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.7955em;vertical-align:-.136em></span><span class=\"mord mathnormal\">i</span><span class=mspace style=margin-right:.2778em></span><span class=mrel>≤</span><span class=mspace style=margin-right:.2778em></span></span><span class=base><span class=strut style=height:.6667em;vertical-align:-.0833em></span><span class=\"mord mathnormal\">n</span><span class=mspace style=margin-right:.2222em></span><span class=mbin>−</span><span class=mspace style=margin-right:.2222em></span></span><span class=base><span class=strut style=height:.6944em></span><span class=\"mord mathnormal\" style=margin-right:.01968em>l</span></span></span></span>\n是无符号数比较，\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.4306em></span><span class=\"mord mathnormal\">n</span><span class=mspace style=margin-right:.2778em></span><span class=mrel>=</span><span class=mspace style=margin-right:.2778em></span></span><span class=base><span class=strut style=height:.6444em></span><span class=mord>0</span></span></span></span>\n时，\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6667em;vertical-align:-.0833em></span><span class=\"mord mathnormal\">n</span><span class=mspace style=margin-right:.2222em></span><span class=mbin>−</span><span class=mspace style=margin-right:.2222em></span></span><span class=base><span class=strut style=height:.6444em></span><span class=mord>1</span></span></span></span>\n的机器数为全\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6444em></span><span class=mord>1</span></span></span></span>\n，值是\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8974em;vertical-align:-.0833em></span><span class=mord><span class=mord>2</span><span class=msupsub><span class=vlist-t><span class=vlist-r><span class=vlist style=height:.8141em><span style=top:-3.063em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">32</span></span></span></span></span></span></span></span></span><span class=mspace style=margin-right:.2222em></span><span class=mbin>−</span><span class=mspace style=margin-right:.2222em></span></span><span class=base><span class=strut style=height:.6444em></span><span class=mord>1</span></span></span></span>\n，为 unsigned 型可表示的最大数，条件\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.7955em;vertical-align:-.136em></span><span class=\"mord mathnormal\">i</span><span class=mspace style=margin-right:.2778em></span><span class=mrel>≤</span><span class=mspace style=margin-right:.2778em></span></span><span class=base><span class=strut style=height:.6667em;vertical-align:-.0833em></span><span class=\"mord mathnormal\">n</span><span class=mspace style=margin-right:.2222em></span><span class=mbin>−</span><span class=mspace style=margin-right:.2222em></span></span><span class=base><span class=strut style=height:.6444em></span><span class=mord>1</span></span></span></span>\n永真，因此出现死循环。（2 分）</p><p>若\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6595em></span><span class=\"mord mathnormal\">i</span></span></span></span>\n和\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.4306em></span><span class=\"mord mathnormal\">n</span></span></span></span>\n改为 int 类型则不会出现死循环。（1 分）</p><p>因为\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.7955em;vertical-align:-.136em></span><span class=\"mord mathnormal\">i</span><span class=mspace style=margin-right:.2778em></span><span class=mrel>≤</span><span class=mspace style=margin-right:.2778em></span></span><span class=base><span class=strut style=height:.6667em;vertical-align:-.0833em></span><span class=\"mord mathnormal\">n</span><span class=mspace style=margin-right:.2222em></span><span class=mbin>−</span><span class=mspace style=margin-right:.2222em></span></span><span class=base><span class=strut style=height:.6444em></span><span class=mord>1</span></span></span></span>\n是带符号整数比较，\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.4306em></span><span class=\"mord mathnormal\">n</span><span class=mspace style=margin-right:.2778em></span><span class=mrel>=</span><span class=mspace style=margin-right:.2778em></span></span><span class=base><span class=strut style=height:.6444em></span><span class=mord>0</span></span></span></span>\n时，\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6667em;vertical-align:-.0833em></span><span class=\"mord mathnormal\">n</span><span class=mspace style=margin-right:.2222em></span><span class=mbin>−</span><span class=mspace style=margin-right:.2222em></span></span><span class=base><span class=strut style=height:.6444em></span><span class=mord>1</span></span></span></span>\n的值是\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.7278em;vertical-align:-.0833em></span><span class=mord>−</span><span class=mord>1</span></span></span></span>\n，当\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6595em></span><span class=\"mord mathnormal\">i</span><span class=mspace style=margin-right:.2778em></span><span class=mrel>=</span><span class=mspace style=margin-right:.2778em></span></span><span class=base><span class=strut style=height:.6444em></span><span class=mord>0</span></span></span></span>\n时条件\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.7955em;vertical-align:-.136em></span><span class=\"mord mathnormal\">i</span><span class=mspace style=margin-right:.2778em></span><span class=mrel>≤</span><span class=mspace style=margin-right:.2778em></span></span><span class=base><span class=strut style=height:.6667em;vertical-align:-.0833em></span><span class=\"mord mathnormal\">n</span><span class=mspace style=margin-right:.2222em></span><span class=mbin>−</span><span class=mspace style=margin-right:.2222em></span></span><span class=base><span class=strut style=height:.6444em></span><span class=mord>1</span></span></span></span>\n不成立，此时退出 for 循环。（1 分）</p><p>2）f1(23) 与 f2(23) 的返回值相等。（1 分）f(23) =\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8974em;vertical-align:-.0833em></span><span class=mord><span class=mord>2</span><span class=msupsub><span class=vlist-t><span class=vlist-r><span class=vlist style=height:.8141em><span style=top:-3.063em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">23</span><span class=\"mbin mtight\">+</span><span class=\"mord mtight\">1</span></span></span></span></span></span></span></span></span><span class=mspace style=margin-right:.2222em></span><span class=mbin>−</span><span class=mspace style=margin-right:.2222em></span></span><span class=base><span class=strut style=height:.6444em></span><span class=mord>1</span><span class=mspace style=margin-right:.2778em></span><span class=mrel>=</span><span class=mspace style=margin-right:.2778em></span></span><span class=base><span class=strut style=height:.8974em;vertical-align:-.0833em></span><span class=mord><span class=mord>2</span><span class=msupsub><span class=vlist-t><span class=vlist-r><span class=vlist style=height:.8141em><span style=top:-3.063em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">24</span></span></span></span></span></span></span></span></span><span class=mspace style=margin-right:.2222em></span><span class=mbin>−</span><span class=mspace style=margin-right:.2222em></span></span><span class=base><span class=strut style=height:.6444em></span><span class=mord>1</span></span></span></span>\n，它的二进制形式是\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6444em></span><span class=mord>24</span></span></span></span>\n个\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6444em></span><span class=mord>1</span></span></span></span>\n。int 占\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6444em></span><span class=mord>32</span></span></span></span>\n位，没有溢出。float 有\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6444em></span><span class=mord>1</span></span></span></span>\n个符号位，\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6444em></span><span class=mord>8</span></span></span></span>\n个指数位，\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6444em></span><span class=mord>23</span></span></span></span>\n个底数位，\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6444em></span><span class=mord>23</span></span></span></span>\n个底数位可以表示\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6444em></span><span class=mord>24</span></span></span></span>\n位的底数。所以两者返回值相等。</p><p>f1(23) 的机器数是 00FF FFFFH。（1 分）</p><p>f2(23) 的机器数是 4B7F FFFFH。（1 分）</p><p>显而易见前者是\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6444em></span><span class=mord>24</span></span></span></span>\n个\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6444em></span><span class=mord>1</span></span></span></span>\n，即\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.9996em;vertical-align:-.3552em></span><span class=mord>0000</span><span class=mspace> </span><span class=mord>0000</span><span class=mspace> </span><span class=mord>1111</span><span class=mspace> </span><span class=mord>1111</span><span class=mspace> </span><span class=mord>1111</span><span class=mspace> </span><span class=mord>1111</span><span class=mspace> </span><span class=mord>1111</span><span class=mspace> </span><span class=mord>111</span><span class=mord><span class=mord>1</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3448em><span style=top:-2.5198em;margin-left:0;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mopen mtight\">(</span><span class=\"mord mtight\">2</span><span class=\"mclose mtight\">)</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.3552em><span></span></span></span></span></span></span></span></span></span>\n，后者符号位是\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6444em></span><span class=mord>0</span></span></span></span>\n，\n指数位为\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.7278em;vertical-align:-.0833em></span><span class=mord>23</span><span class=mspace style=margin-right:.2222em></span><span class=mbin>+</span><span class=mspace style=margin-right:.2222em></span></span><span class=base><span class=strut style=height:.7944em;vertical-align:-.15em></span><span class=mord>12</span><span class=mord><span class=mord>7</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:0;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">10</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span><span class=mspace style=margin-right:.2778em></span><span class=mrel>=</span><span class=mspace style=margin-right:.2778em></span></span><span class=base><span class=strut style=height:.7944em;vertical-align:-.15em></span><span class=mord>1001011</span><span class=mord><span class=mord>0</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:0;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">2</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>\n，底数位是\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.7944em;vertical-align:-.15em></span><span class=mord>111</span><span class=mspace> </span><span class=mord>1111</span><span class=mspace> </span><span class=mord>1111</span><span class=mspace> </span><span class=mord>1111</span><span class=mspace> </span><span class=mord>1111</span><span class=mspace> </span><span class=mord>111</span><span class=mord><span class=mord>1</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:0;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">2</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>\n。</p><p>3）当 n=24 时，f(24) = 1 1111 1111 1111 1111 1111 1111 B，而 float 型数只有 24 位有效位，舍入后数值增大，所以 f2(24) 比 f1(24) 大 1。（1 分）</p><p>【评分说明】只要说明 f2(24) 需舍入处理即可给分。</p><p>4）显然 f(31) 已超出了 int 型数据的表示范围，用 f1(31) 实现时得到的机器数为 32 个 1，作为 int 型数解释时其值为 -1，即 f1(31) 的返回值为 -1。（1 分）</p><p>因为 int 型最大可表示数是 0 后面加 31 个 1，故使 f1(n) 的返回值与 f(n) 相等的最大 n 值是 30。（1 分）</p><p>【评分说明】对于第二问，只要给出 n=30 即可给分。</p><p>5）IEEE754 标准用“阶码全 1、尾数全 0”表示 无穷大。2 返回值为 f1oat 型，机器数 7F800000H 对应的值是+∞。（1 分）</p><p>当 n=126 时，f(126) =\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8974em;vertical-align:-.0833em></span><span class=mord><span class=mord>2</span><span class=msupsub><span class=vlist-t><span class=vlist-r><span class=vlist style=height:.8141em><span style=top:-3.063em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">127</span></span></span></span></span></span></span></span></span><span class=mspace style=margin-right:.2222em></span><span class=mbin>−</span><span class=mspace style=margin-right:.2222em></span></span><span class=base><span class=strut style=height:.6444em></span><span class=mord>1</span><span class=mspace style=margin-right:.2778em></span><span class=mrel>=</span><span class=mspace style=margin-right:.2778em></span></span><span class=base><span class=strut style=height:.7278em;vertical-align:-.0833em></span><span class=mord>1.1</span><span class=mspace style=margin-right:.1667em></span><span class=minner>…</span><span class=mspace style=margin-right:.1667em></span><span class=mord>1</span><span class=mspace style=margin-right:.2222em></span><span class=mbin>×</span><span class=mspace style=margin-right:.2222em></span></span><span class=base><span class=strut style=height:.8141em></span><span class=mord><span class=mord>2</span><span class=msupsub><span class=vlist-t><span class=vlist-r><span class=vlist style=height:.8141em><span style=top:-3.063em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">126</span></span></span></span></span></span></span></span></span></span></span></span>\n，对应阶码为 127+126=253，尾数部分舍入后阶码加 1，最终阶码为 254，是 IEEE754 单精度格式表示的最大阶码。故使 2 结果不溢出的最大 n 值为 126。（1 分）</p><p>当 n=23 时，f(23) 为 24 位 1，f1oat 型数有 24 位有效位，所以不需舍入，结果精确。故使 f2 获得精确结果的最大 n 值为 23。（1 分）</p><p>【评分说明】对于第二问，只要给出 n=23，即可给分。对于第三问，只要给出 n=126，即可给分。</p>",
+   "tags": [
+    "补码",
+    "IEEE浮点数表示"
+   ],
+   "numbers": [
+    43
+   ]
+  },
+  {
+   "id": "q44",
+   "label": "第 44 题 · 计算机组成原理",
+   "title": "44．计算机组成原理",
+   "subject": "计算机组成原理",
+   "heading": null,
+   "type": "free",
+   "points": null,
+   "directions": "",
+   "body": "<p>在按字节编址的计算机 M 上，题 43 中 f1 的部分源程序（阴影部分）与对应的机器级代码（包括指令的虚拟地址）如下图所示。</p><pre><code>int f1(unsigned n)\n1   00401020 55         push ebp\n...      ...        ...\n    for (unsigned i = 0; i &lt;= n-1; i++) {\n...      ...        ...\n20  0040105E 39 4D F4   cmp dword ptr [ebp-0Ch],ecx\n...      ...        ...\n        power *= 2;\n...      ...        ...\n23  00401066 D1 E2      shl edx,1\n...      ...        ...\n    return sum;\n...      ...        ...\n35  0040107F C3         ret\n</code></pre><p>其中，机器级代码行包括行号、虚拟地址、机器指令和汇编指令。</p><p>请回答下列问题。</p><p>(1) 计算机 M 是 RISC 还是 CISC？为什么？</p><p>(2) f1 的机器指令代码共占多少字节？要求给出计算过程。</p><p>(3) 第 20 条指令 cmp 通过 i 减 n-1 实现对 i 和 n-1 的比较。执行 f1(0) 过程中，当 i=0 时，cmp 指令执行后，进/借位标志 CF 的内容是什么？要求给出计算过程。</p><p>(4) 第 23 条指令 shl 通过左移操作实现了 power*2 运算，在 f2 中能否也用 shl 指令实现 power*2？为什么？</p>",
+   "solution": "<p>（1）M 为 CISC。（1 分）<br>M 的指令长短不一，不符合 RISC 指令系统特点。（1 分）</p><p>（2）f1 的机器代码为 96B。（1 分）<br>因为 f1 的第一条指令 “<code>push ebp</code>” 所在的虚拟地址为 <code>0040 1020H</code>，最后一条指令 “<code>ret</code>” 所在的虚拟地址为 <code>0040 107FH</code>，所以，f1 的机器指令代码长度为：<code>0040 107FH - 0040 1020H + 1 = 60H = 96B</code>（<code>1</code> 分）</p><p>（3）CF = 1。（1 分）<br><code>cmp</code> 指令实现 <code>i</code> 与 <code>n-1</code> 的比较功能，进行的是减法运算。在执行 f1(0) 过程中，<code>n=0</code>，当 <code>i=0</code> 时，<code>i=0000 0000H</code>，并且 <code>n-1=FFFF FFFFH</code>。因此，当执行第 20 条指令时，在补码加/减运算器中执行的是 “<code>0 - FFFF FFFFH</code>” 的操作，即：<code>0000 0000H + 0000 0000H + 1 = 0000 0001H</code>。此时，进位输出 <code>C=0</code>，减法运算时的借位标志 <code>CF = C ⊕ 1 = 1</code>。（2 分）</p><p>（4）f2 中不能用 <code>shl</code> 指令实现 <code>power * 2</code>。（1 分）<br>因为 <code>shl</code> 指令用来将一个整数的所有有效位作为一个整体左移；而 f2 中的变量 <code>power</code> 是 float 型，其机器数中不包含最高有效位，但包含了阶码部分，将其作为一个整体左移时并不能实现 “乘 2” 的功能。因此在 f2 中不能用 <code>shl</code> 指令实现 <code>power * 2</code>。（2 分）浮点数运算比整型运算要复杂，耗时也较长。</p>",
+   "tags": [
+    "复杂和精简指令集",
+    "标志寄存器",
+    "指令操作码"
+   ],
+   "numbers": [
+    44
+   ]
+  },
+  {
+   "id": "q45",
+   "label": "第 45 题 · 操作系统",
+   "title": "45．操作系统",
+   "subject": "操作系统",
+   "heading": null,
+   "type": "free",
+   "points": null,
+   "directions": "",
+   "body": "<p>假定题 44 给出的计算机 M 采用二级分页虚拟存储管理方式，虚拟地址格式如下：</p><table><thead><tr><th></th><th></th><th></th></tr></thead><tbody><tr><td>页目录号（10 位）</td><td>页表索引（10 位）</td><td>页内偏移量（12 位）</td></tr></tbody></table><p>请针对题 43 的函数 f1 和题 44 中的机器指令代码，回答下列问题。</p><p>(1) 函数 f1 的机器指令代码占多少页？</p><p>(2) 取第 1 条指令（push ebp）时，若在进行地址变换的过程中需要访问内存中的页目录和页表，则会分别访问它们各自的第几个表项（编号从 0 开始）？</p><p>(3) M 的 I/O 采用中断控制方式。若进程 P 在调用 f1 之前通过 scanf() 获取 n 的值，则在执行 scanf() 的过程中，进程 P 的状态会如何变化？CPU 是否会进入内核态？</p>",
+   "solution": "<p>1）函数 1 的代码段中所有指令的虚拟地址的高 20 位相同，因此 1 的机器指令代码在同\n一页中，仅占用 1 页。（1 分）页目录号用于寻找页目录的表项，该表项包含页表的位置。页表\n索引用于寻找页表的表项，该表项包含页的位置。</p><p>2）push ebp 指令的虚拟地址的最高 10 位（页目录号）为 0000000001，中间 10 位（页\n表索引）为 0000000001，所以，取该指令时访问了页目录的第 1 个表项，（1 分）在对应的页\n表中访问了第 1 个表项。（1 分）</p><p>3）在执行 scanf0 的过程中，进程 P 因等待输入而从执行态变为阻塞态。（1 分）输入结束\n时，P 被中断处理程序唤醒，变为就绪态。（1 分）P 被调度程序调度，变为运行态。（1 分）CPU\n状态会从用户态变为内核态。（1 分）</p>",
+   "tags": [
+    "页表",
+    "地址翻译",
+    "中断IO"
+   ],
+   "numbers": [
+    45
+   ]
+  },
+  {
+   "id": "q46",
+   "label": "第 46 题 · 操作系统",
+   "title": "46．操作系统",
+   "subject": "操作系统",
+   "heading": null,
+   "type": "free",
+   "points": null,
+   "directions": "",
+   "body": "<p>某进程中有 3 个并发执行的线程 thread1、thread2、thread3，其伪代码如下所示。</p><pre><code>\n//复数的结构类型定义\ntypedef struct\n{\n    float a;\n    float b;\n} cnum;\n\n//全局变量\ncnum x,y,z;\n\n//计算两个复数之和\ncnum add(cnum p,cnum q)\n{\n    cnum s;\n    s.a=p.a+q.a;\n    s.b=p.b+q.b;\n    return s;\n}\n</code></pre><pre><code>\nthread1\n{\n    cnum w;\n    w=add(x,y);\n    ...\n}\n\nthread2\n{\n    cnum w;\n    w=add(y,z);\n    ...\n}\n\n\n\n\n\n</code></pre><pre><code>\nthread3\n{\n    cnum w;\n    w.a=1;\n    w.b=2;\n    z=add(z,w);\n    y=add(y,w);\n    ...\n}\n\n\n\n\n\n\n\n\n\n</code></pre><p>请添加必要的信号量和 P、V（或 wait()、signal()）操作，要求确保线程互斥访问临界资源，并且最大程度地并发执行。</p>",
+   "solution": "<p>先找出线程对在各个变量上的互斥、并发关系。如果是一读一写或两个都是写，那么这就是互斥关系。每一个互斥关系都需要一个信号量进行调节。</p><pre><code data-lang=\"c\">// 冲突：\n// t1 和 t3 关于 y 有读写冲突\n// t2 和 t3 关于 y, z 都有读写冲突\n\n// 解决 t1 和 t3 关于 y 读写冲突\nsemaphore y_mutex1 = 1;\n\nsemaphore y_mutex2 = 1;\nsemaphore z_mutex = 1;\n\n\n// 全局变量 x y z\ncnum x, y, z;\n\nthread1()\n{\n  cnum w;\n  // 读 x, y\n  P(y_mutex1);\n  w = add(x, y);\n  V(y_mutex1);\n  // ...\n}\n\nthread2()\n{\n  cnum w;\n  // 读 y, z\n  P(z_mutex);\n  P(y_mutex2);\n  w = add(y, z);\n  V(y_mutex2);\n  V(z_mutex);\n  // ...\n}\n\nthread3()\n{\n  cnum w;\n  w.a = 1;\n  w.b = 1;\n  // 写 z\n  P(z_mutex);\n  z = add(z, w);\n  V(z_mutex);\n  // 写 y\n  P(y_mutex1);\n  P(y_mutex2);\n  y = add(y, w);\n  V(y_mutex2);\n  V(y_mutex1);\n  // ...\n}\n</code></pre><p>【评分标准】</p><p>① 各线程与变量之间的互斥、并发情况及相应评分见下表。</p><table><thead><tr><th align=\"center\">变量/线程对</th><th align=\"center\">thread1 和 thread2</th><th align=\"center\">thread2 和 thread3</th><th align=\"center\">thread3 和 thread4</th><th align=\"center\">给分</th></tr></thead><tbody><tr><td align=\"center\">x</td><td align=\"center\">不共享</td><td align=\"center\">不共享</td><td align=\"center\">不共享</td><td align=\"center\">1 分</td></tr><tr><td align=\"center\">y</td><td align=\"center\">同时读</td><td align=\"center\">读写互斥</td><td align=\"center\">读写互斥</td><td align=\"center\">3 分</td></tr><tr><td align=\"center\">z</td><td align=\"center\">不共享</td><td align=\"center\">读写互斥</td><td align=\"center\">不共享</td><td align=\"center\">1 分</td></tr></tbody></table><p>② 考生仅使用一个互斥信号量，互斥代码部分的得分最多给 2 分。</p><p>③ 答案部分正确，酌情给分。</p>",
+   "tags": [
+    "信号量"
+   ],
+   "numbers": [
+    46
+   ]
+  },
+  {
+   "id": "q47",
+   "label": "第 47 题 · 计算机网络",
+   "title": "47．计算机网络",
+   "subject": "计算机网络",
+   "heading": null,
+   "type": "free",
+   "points": null,
+   "directions": "",
+   "body": "<p>甲乙双方均采用后退 N 帧协议 (GBN) 进行持续的双向数据传输，且双方始终采用捎带确认，帧长均为 1000 B。 \n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.9694em;vertical-align:-.2861em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.05764em>S</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.1514em><span style=top:-2.55em;margin-left:-.0576em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">x</span><span class=\"mpunct mtight\">,</span><span class=\"mord mathnormal mtight\" style=margin-right:.03588em>y</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2861em><span></span></span></span></span></span></span></span></span></span>\n 和 \n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.9694em;vertical-align:-.2861em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.00773em>R</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.1514em><span style=top:-2.55em;margin-left:-.0077em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">x</span><span class=\"mpunct mtight\">,</span><span class=\"mord mathnormal mtight\" style=margin-right:.03588em>y</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2861em><span></span></span></span></span></span></span></span></span></span>\n 分别表示甲方和乙方发送的数据帧，其中：\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.4306em></span><span class=\"mord mathnormal\">x</span></span></span></span>\n是发送序号；\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.625em;vertical-align:-.1944em></span><span class=\"mord mathnormal\" style=margin-right:.03588em>y</span></span></span></span>\n是确认序号（表示希望接收对方的下一帧序号）；数据帧的发送序号和确认序号字段均为 3 比特。信道传输速率为 100 Mbps，RTT = 0.96 ms。下图给出了甲方发送数据帧和接收数据帧的两种场景，其中 \n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.7651em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\">t</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:0;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">0</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>\n 为初始时刻，此时甲方的发送和确认序号均为 0， \n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.7651em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\">t</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:0;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>\n 时刻甲方有足够多的数据待发送。</p><!doctype html><p>请回答下列问题。</p><p>(1) 对于图 (a)， \n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.7651em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\">t</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:0;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">0</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>\n 时刻到 \n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.7651em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\">t</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:0;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>\n 时刻期间，甲方可以断定乙方已正确接收的数据帧数是多少？正确接收的是哪几个帧（请用 \n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.9694em;vertical-align:-.2861em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.05764em>S</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.1514em><span style=top:-2.55em;margin-left:-.0576em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">x</span><span class=\"mpunct mtight\">,</span><span class=\"mord mathnormal mtight\" style=margin-right:.03588em>y</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2861em><span></span></span></span></span></span></span></span></span></span>\n 形式给出）？</p><p>(2) 对于图 (a)，从 \n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.7651em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\">t</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:0;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>\n 时刻起，甲方在不出现超时且未收到乙方新的数据帧之前，最多还可以发送多少个数据帧？其中第一个帧和最后一个帧分别是哪个（请用 \n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.9694em;vertical-align:-.2861em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.05764em>S</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.1514em><span style=top:-2.55em;margin-left:-.0576em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">x</span><span class=\"mpunct mtight\">,</span><span class=\"mord mathnormal mtight\" style=margin-right:.03588em>y</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2861em><span></span></span></span></span></span></span></span></span></span>\n 形式给出）？</p><p>(3) 对于图 (b)，从 \n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.7651em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\">t</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:0;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>\n 时刻起，甲方在不出现新的超时且未收到乙方新的数据帧之前，需要重发多少个数据帧？重发的第一个帧是哪个（请用 \n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.9694em;vertical-align:-.2861em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.05764em>S</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.1514em><span style=top:-2.55em;margin-left:-.0576em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mathnormal mtight\">x</span><span class=\"mpunct mtight\">,</span><span class=\"mord mathnormal mtight\" style=margin-right:.03588em>y</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2861em><span></span></span></span></span></span></span></span></span></span>\n 形式给出）？</p><p>(4) 甲方可以达到的最大信道利用率是多少？</p>",
+   "solution": "<p>1）6 时刻到 t 时刻期间，甲方可以断定乙方已正确接收了 3 个数据帧，（1 分）分别是\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.9694em;vertical-align:-.2861em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.05764em>S</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0576em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">0</span><span class=\"mpunct mtight\">,</span><span class=\"mord mtight\">0</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2861em><span></span></span></span></span></span></span></span></span></span>\n,\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.9694em;vertical-align:-.2861em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.05764em>S</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0576em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">1</span><span class=\"mpunct mtight\">,</span><span class=\"mord mtight\">0</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2861em><span></span></span></span></span></span></span></span></span></span>\n,\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.9694em;vertical-align:-.2861em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.05764em>S</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0576em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">2</span><span class=\"mpunct mtight\">,</span><span class=\"mord mtight\">0</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2861em><span></span></span></span></span></span></span></span></span></span>\n（1 分）。\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.9694em;vertical-align:-.2861em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.00773em>R</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0077em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">3</span><span class=\"mpunct mtight\">,</span><span class=\"mord mtight\">3</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2861em><span></span></span></span></span></span></span></span></span></span>\n说明乙发送的数据帧确认号是 3，即希望甲发送序号 3 的数据帧，说明乙已经接收了序号为 0~2 的数据帧。</p><p>2）从\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.7651em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\">t</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:0;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">1</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>\n时刻起，甲方最多还可以发送 5 个数据帧（1 分），其中第一个帧是\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.9694em;vertical-align:-.2861em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.05764em>S</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0576em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">5</span><span class=\"mpunct mtight\">,</span><span class=\"mord mtight\">2</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2861em><span></span></span></span></span></span></span></span></span></span>\n（1 分），最后一个数据帧是\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.9694em;vertical-align:-.2861em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.05764em>S</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0576em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">1</span><span class=\"mpunct mtight\">,</span><span class=\"mord mtight\">2</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2861em><span></span></span></span></span></span></span></span></span></span>\n（1 分）。发送序号 3 位，有 8 个序号。在 GBN 协议中，序号个数 ≥ 发送窗口 + 1，所以这里发送窗口最大为 7。此时已发送了\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.9694em;vertical-align:-.2861em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.05764em>S</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0576em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">3</span><span class=\"mpunct mtight\">,</span><span class=\"mord mtight\">0</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2861em><span></span></span></span></span></span></span></span></span></span>\n和\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.9694em;vertical-align:-.2861em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.05764em>S</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0576em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">4</span><span class=\"mpunct mtight\">,</span><span class=\"mord mtight\">1</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2861em><span></span></span></span></span></span></span></span></span></span>\n，所以最多还可以发送 5 个帧。</p><p>3）甲方需要重发 3 个数据帧（1 分），重发的第一个帧是\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.9694em;vertical-align:-.2861em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.05764em>S</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0576em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">2</span><span class=\"mpunct mtight\">,</span><span class=\"mord mtight\">3</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2861em><span></span></span></span></span></span></span></span></span></span>\n（1 分）。在 GBN 协议中，接收方发送了 N 帧后，检测出错，则需要发送出错帧及其之后的帧。\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.9694em;vertical-align:-.2861em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.05764em>S</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0576em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\"><span class=\"mord mtight\">2</span><span class=\"mpunct mtight\">,</span><span class=\"mord mtight\">0</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2861em><span></span></span></span></span></span></span></span></span></span>\n超时，所以重发的第一帧是\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8333em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.05764em>S</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0576em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>\n。已收到乙的\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8333em;vertical-align:-.15em></span><span class=mord><span class=\"mord mathnormal\" style=margin-right:.00773em>R</span><span class=msupsub><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.3011em><span style=top:-2.55em;margin-left:-.0077em;margin-right:.05em><span class=pstrut style=height:2.7em></span><span class=\"sizing reset-size6 size3 mtight\"><span class=\"mord mtight\">2</span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.15em><span></span></span></span></span></span></span></span></span></span>\n帧，所以确认号应为 3。</p><p>\\[\n\\frac{7 \\times \\frac{8 \\times 1000}{100 \\times 10^6}}{0.96 \\times 10^{-3} + 2 \\times \\frac{8 \\times 1000}{100 \\times 10^6}} \\times 100\\% = 50%\n\\]</p><p>4）甲方可以达到的最大信道利用率是</p><p><span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6833em></span><span class=\"mord mathnormal\" style=margin-right:.10903em>U</span></span></span></span>\n= 发送数据的时间/从开始发送第一帧到收到第一个确认帧的时间 =\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6833em></span><span class=\"mord mathnormal\" style=margin-right:.10903em>N</span><span class=mspace style=margin-right:.2222em></span><span class=mbin>⋅</span><span class=mspace style=margin-right:.2222em></span></span><span class=base><span class=strut style=height:1em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.13889em>T</span><span class=\"mord mathnormal\">d</span><span class=mord>/</span><span class=mopen>(</span><span class=\"mord mathnormal\" style=margin-right:.13889em>T</span><span class=\"mord mathnormal\">d</span><span class=mspace style=margin-right:.2222em></span><span class=mbin>+</span><span class=mspace style=margin-right:.2222em></span></span><span class=base><span class=strut style=height:.7667em;vertical-align:-.0833em></span><span class=\"mord mathnormal\" style=margin-right:.13889em>RTT</span><span class=mspace style=margin-right:.2222em></span><span class=mbin>+</span><span class=mspace style=margin-right:.2222em></span></span><span class=base><span class=strut style=height:1em;vertical-align:-.25em></span><span class=\"mord mathnormal\" style=margin-right:.13889em>T</span><span class=\"mord mathnormal\">a</span><span class=mclose>)</span></span></span></span></p><p><span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6833em></span><span class=\"mord mathnormal\" style=margin-right:.10903em>U</span></span></span></span>\n是信道利用率，\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6833em></span><span class=\"mord mathnormal\" style=margin-right:.10903em>N</span></span></span></span>\n是发送窗口的最大值，\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6944em></span><span class=\"mord mathnormal\" style=margin-right:.13889em>T</span><span class=\"mord mathnormal\">d</span></span></span></span>\n是发送一数据帧的时间，\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6833em></span><span class=\"mord mathnormal\" style=margin-right:.13889em>RTT</span></span></span></span>\n是往返时间，\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6833em></span><span class=\"mord mathnormal\" style=margin-right:.13889em>T</span><span class=\"mord mathnormal\">a</span></span></span></span>\n是发送一确认帧的时间。这里采用捎带确认，\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.6944em></span><span class=\"mord mathnormal\" style=margin-right:.13889em>T</span><span class=\"mord mathnormal\">d</span><span class=mspace style=margin-right:.2778em></span><span class=mrel>=</span><span class=mspace style=margin-right:.2778em></span></span><span class=base><span class=strut style=height:.6833em></span><span class=\"mord mathnormal\" style=margin-right:.13889em>T</span><span class=\"mord mathnormal\">a</span></span></span></span>\n。</p><p>【评分说明】答案部分正确，酌情给分。</p>",
+   "tags": [
+    "ARQ协议",
+    "信道利用率"
+   ],
+   "numbers": [
+    47
+   ]
+  }
+ ]
+}

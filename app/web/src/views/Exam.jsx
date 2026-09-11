@@ -3,7 +3,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import { Loading, ErrorBox } from '../components/bits.jsx';
-import { useWordMarks } from '../wordmarks.js';
+import { useWordMarks, useHighlights } from '../wordmarks.js';
 
 /**
  * 一张真卷。按真题的版式铺：
@@ -41,7 +41,22 @@ export default function Exam() {
   const articleRef = useRef(null);
   const jumpedTo = useRef('');
   const isEnglish = data?.group === 'english' && data.id === id;
-  const { toast: markToast, onDoubleClick: onMarkWord } = useWordMarks(articleRef, isEnglish, id);
+  const [toast, setToast] = useState(null);
+  const notify = useCallback((text, kind = '') => {
+    const at = Date.now();
+    setToast({ text, kind, at });
+    setTimeout(() => setToast((t) => (t && t.at === at ? null : t)), 1800);
+  }, []);
+  const { onDoubleClick: onMarkWord } = useWordMarks(articleRef, isEnglish, id, notify);
+  const hl = useHighlights(articleRef, id, isEnglish, notify);
+
+  // 「加入 md」：把一道题追加到 <学科>/错题本/<年份 科目>.md
+  const exportQ = useCallback(async (sid, n) => {
+    try {
+      const out = await api.exportQuestion(id, sid, n);
+      notify(out.added ? `已加入 ${out.file}${out.submitted ? '' : '（未交卷，未附答案）'}` : `已经在 ${out.file} 里了`, 'md');
+    } catch (err) { notify(err.message, 'err'); }
+  }, [id, notify]);
 
   // 换卷子时 useApi 会先保留上一份数据再去取新的，别把旧卷子当新卷子渲染（?q= 跳转也会跳错）
   useEffect(() => { setSections(data && data.id === id ? data.sections : null); }, [data, id]);
@@ -94,13 +109,14 @@ export default function Exam() {
   const groupLabel = data.group === 'english' ? '英语历年真题' : data.group === 'math' ? '数学历年真题' : '408 历年真题';
   const tagGroup = data.group === 'math' ? 'math' : data.group === '408' ? '408' : null;
 
-  const props = { examId: id, onSubmit, onReset };
+  const props = { examId: id, onSubmit, onReset, onExport: exportQ };
   const Unit = { choice: ChoiceUnit, match: MatchUnit, free: FreeUnit, fill: FillUnit };
 
   return (
     <div className="scroll paper-scroll" ref={scrollRef}>
       <div className="paper-layout">
-        <article className={`paper paper-${data.group}`} ref={articleRef} onDoubleClick={isEnglish ? onMarkWord : undefined}>
+        <article className={`paper paper-${data.group}`} ref={articleRef}
+                 onDoubleClick={isEnglish ? onMarkWord : undefined} onContextMenu={isEnglish ? hl.onContextMenu : undefined}>
           <header className="paper-head">
             <div className="rh-crumb">
               <button onClick={() => navigate('/resources')} style={{ color: 'var(--dim)', letterSpacing: 'inherit' }}>学习资源</button>
@@ -114,7 +130,7 @@ export default function Exam() {
               <span>{sections.length} 个单元 · 已交 {submitted}</span>
               <span>客观题 <b className="fig" style={{ color: 'var(--text)' }}>{fmt(objScore)}</b> / {objTotal}</span>
               {tagGroup && <button className="paper-link" onClick={() => navigate(`/resources/tags/${tagGroup}`)}>知识点标签</button>}
-              {isEnglish && <span className="dim" style={{ fontSize: 11 }}>双击单词加入生词本 · <i className="vmark-demo ky">红线</i> 考研词表 · <i className="vmark-demo own">蓝线</i> 词表外</span>}
+              {isEnglish && <span className="dim" style={{ fontSize: 11 }}>双击单词加入生词本（<i className="vmark-demo ky">红</i> 词表内 · <i className="vmark-demo own">蓝</i> 词表外）· 选中句子右键可划荧光笔</span>}
               <a href={data.source} target="_blank" rel="noreferrer" style={{ marginLeft: 'auto' }}>题源 ↗</a>
             </div>
           </header>
@@ -130,7 +146,10 @@ export default function Exam() {
           })}
         </article>
 
-        {markToast && <div className={`mark-toast ${markToast.kind}`}>{markToast.text}</div>}
+        {toast && <div className={`mark-toast ${toast.kind}`}>{toast.text}</div>}
+        {hl.menu && (
+          <CtxMenu menu={hl.menu} onClose={hl.closeMenu} onHighlight={hl.highlight} onUnhighlight={hl.unhighlight} onCopy={hl.copySelection} />
+        )}
 
         <nav className="toc paper-rail">
           <div className="toc-label">答题卡</div>
@@ -206,11 +225,36 @@ function useSubmit(section, answers, flush, onSubmit) {
  * 单元外壳：标题行 + 交卷 / 成绩 / 重做
  * ------------------------------------------------------------------ */
 
-function UnitHead({ section }) {
+function UnitHead({ section, right }) {
   return (
     <div className="unit-head">
       <span className="unit-title">{section.title || section.label}</span>
       {section.points != null && <span className="unit-pts">{section.points} 分</span>}
+      {right && <><span className="spacer" />{right}</>}
+    </div>
+  );
+}
+
+/** 选中文字后的右键菜单：划荧光笔 / 复制；点在已有荧光笔上则是取消 */
+function CtxMenu({ menu, onClose, onHighlight, onUnhighlight, onCopy }) {
+  useEffect(() => {
+    const off = (e) => { if (!e.target.closest?.('.ctx-menu')) onClose(); };
+    const key = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('mousedown', off, true);
+    window.addEventListener('keydown', key);
+    window.addEventListener('scroll', onClose, true);
+    return () => { window.removeEventListener('mousedown', off, true); window.removeEventListener('keydown', key); window.removeEventListener('scroll', onClose, true); };
+  }, [onClose]);
+  const x = Math.min(menu.x, window.innerWidth - 180);
+  const y = Math.min(menu.y, window.innerHeight - 100);
+  return (
+    <div className="ctx-menu" style={{ left: x, top: y }}>
+      {menu.existing
+        ? <button onClick={onUnhighlight}><i className="hl-swatch" />取消标记</button>
+        : <>
+            <button onClick={onHighlight}><i className="hl-swatch" />标记句子</button>
+            <button onClick={onCopy}>复制</button>
+          </>}
     </div>
   );
 }
@@ -262,7 +306,7 @@ function Tags({ tags }) {
  * 选择题单元：完形（正文带空）、阅读（正文 + 题干）、408 / 数学（题干可能带代码和公式）
  * ------------------------------------------------------------------ */
 
-function ChoiceUnit({ section, examId, onSubmit, onReset }) {
+function ChoiceUnit({ section, examId, onSubmit, onReset, onExport }) {
   const [answers, update, flush, locked] = useDraft(examId, section);
   const [submit, busy] = useSubmit(section, answers, flush, onSubmit);
   const [open, setOpen] = useState(() => new Set());
@@ -315,11 +359,14 @@ function ChoiceUnit({ section, examId, onSubmit, onReset }) {
                     );
                   })}
                 </div>
-                {key && (
-                  <button className={`q-exp-btn${open.has(q.n) ? ' on' : ''}`} onClick={() => toggle(q.n)}>
-                    {mine === right ? '✓' : mine ? '✗' : '—'}　解析
-                  </button>
-                )}
+                <div className="q-side">
+                  {key && (
+                    <button className={`q-exp-btn${open.has(q.n) ? ' on' : ''}`} onClick={() => toggle(q.n)}>
+                      {mine === right ? '✓' : mine ? '✗' : '—'}　解析
+                    </button>
+                  )}
+                  <button className="q-md-btn" title="加入错题本（Markdown）" onClick={() => onExport(section.id, q.n)}>+md</button>
+                </div>
               </div>
               {key && open.has(q.n) && (
                 <div className="q-exp">
@@ -459,7 +506,7 @@ function MatchUnit({ section, examId, onSubmit, onReset }) {
  * 填空题（数学）：六个短答一起交，交了才看六个答案
  * ------------------------------------------------------------------ */
 
-function FillUnit({ section, examId, onSubmit, onReset }) {
+function FillUnit({ section, examId, onSubmit, onReset, onExport }) {
   const [answers, update, flush, locked] = useDraft(examId, section);
   const [submit, busy] = useSubmit(section, answers, flush, onSubmit);
   const key = section.key;
@@ -478,6 +525,7 @@ function FillUnit({ section, examId, onSubmit, onReset }) {
             <div className="fill-row">
               <input className="fill-input" value={answers[q.n] || ''} readOnly={locked} placeholder="答案"
                      onChange={(e) => update((prev) => ({ ...prev, [q.n]: e.target.value }))} />
+              <button className="q-md-btn" title="加入错题本（Markdown）" onClick={() => onExport(section.id, q.n)}>+md</button>
             </div>
             {key && (
               <div className="q-exp">
@@ -505,7 +553,7 @@ const countWords = (t) => {
   return { cjk, latin };
 };
 
-function FreeUnit({ section, examId, onSubmit, onReset }) {
+function FreeUnit({ section, examId, onSubmit, onReset, onExport }) {
   const [answers, update, flush, locked] = useDraft(examId, section);
   const [submit, busy] = useSubmit(section, answers, flush, onSubmit);
   const key = section.key;
@@ -517,7 +565,7 @@ function FreeUnit({ section, examId, onSubmit, onReset }) {
 
   return (
     <section className={`unit${locked ? ' locked' : ''}`} id={n ? `q-${section.id}-${n}` : undefined}>
-      <UnitHead section={section} />
+      <UnitHead section={section} right={<button className="q-md-btn" title="加入错题本（Markdown）" onClick={() => onExport(section.id, n ?? null)}>+md</button>} />
       {section.directions && <div className="paper-directions" dangerouslySetInnerHTML={html(section.directions)} />}
       <div className="paper-body" dangerouslySetInnerHTML={html(section.body)} />
 

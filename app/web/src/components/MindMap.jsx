@@ -92,8 +92,16 @@ function Marker({ x, y, status }) {
 export default function MindMap({ data, currentId }) {
   const navigate = useNavigate();
   const wrapRef = useRef(null);
-  const [t, setT] = useState({ k: 1, x: 0, y: 0 });
+  /* 视图（缩放 / 平移）记在本机：每次进这一页都缩到最小很烦。
+     没有记录、或双击画布时才重新适配窗口 */
+  const [t, setT] = useState(() => {
+    try { const v = JSON.parse(localStorage.getItem('kb-mind-view') || 'null'); if (v && v.k > 0) return v; } catch { /* 无 */ }
+    return null;
+  });
+  const touched = useRef(t !== null);
   const drag = useRef(null);
+
+  useEffect(() => { if (t && touched.current) localStorage.setItem('kb-mind-view', JSON.stringify(t)); }, [t]);
 
   const tree = useMemo(() => layout(data, currentId), [data, currentId]);
 
@@ -106,14 +114,17 @@ export default function MindMap({ data, currentId }) {
   }, [tree]);
 
   useEffect(() => {
-    fit();
-    const ro = new ResizeObserver(fit);
+    if (!touched.current) fit();
+    const ro = new ResizeObserver(() => { if (!touched.current) fit(); });
     if (wrapRef.current) ro.observe(wrapRef.current);
     return () => ro.disconnect();
   }, [fit]);
 
+  const refit = () => { touched.current = false; localStorage.removeItem('kb-mind-view'); fit(); };
+
   const onWheel = (e) => {
     e.preventDefault();
+    touched.current = true;
     const rect = wrapRef.current.getBoundingClientRect();
     const mx = e.clientX - rect.left, my = e.clientY - rect.top;
     setT((p) => {
@@ -127,6 +138,7 @@ export default function MindMap({ data, currentId }) {
     if (!drag.current) return;
     const dx = e.clientX - drag.current.x, dy = e.clientY - drag.current.y;
     drag.current = { x: e.clientX, y: e.clientY, moved: drag.current.moved + Math.abs(dx) + Math.abs(dy) };
+    if (dx || dy) touched.current = true;
     setT((p) => ({ ...p, x: p.x + dx, y: p.y + dy }));
   };
   const onUp = () => { drag.current = null; };
@@ -134,9 +146,9 @@ export default function MindMap({ data, currentId }) {
   return (
     <div className="mind-canvas" ref={wrapRef}
          onWheel={onWheel} onMouseDown={onDown} onMouseMove={onMove}
-         onMouseUp={onUp} onMouseLeave={onUp}>
+         onMouseUp={onUp} onMouseLeave={onUp} onDoubleClick={refit}>
       <svg width="100%" height="100%" style={{ fontFamily: 'var(--font)' }}>
-        <g transform={`translate(${t.x} ${t.y}) scale(${t.k})`}>
+        <g transform={t ? `translate(${t.x} ${t.y}) scale(${t.k})` : undefined} style={{ opacity: t ? 1 : 0 }}>
           {tree.paths.map((p, i) => (
             <path key={i} d={p.d} fill="none" strokeWidth="1"
                   stroke={p.hot ? 'var(--accent)' : 'var(--line-2)'}

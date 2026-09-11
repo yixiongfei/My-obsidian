@@ -1,0 +1,1403 @@
+{
+ "id": "english1-2021",
+ "kind": "english1",
+ "kindLabel": "英语一",
+ "group": "english",
+ "year": 2021,
+ "title": "2021 年真题",
+ "source": "https://www.csgraduates.com/study_methods/english/english1/2021/",
+ "fetchedAt": "2026-09-11T17:46:08.154Z",
+ "sections": [
+  {
+   "id": "cloze",
+   "label": "完形填空",
+   "title": "完形填空",
+   "heading": "Section I  Use of English",
+   "type": "choice",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>Read the following text. Choose the best word(s) for each numbered blank and mark A, B, C or D on the ANSWER SHEET. (10 points)</p>",
+   "passage": [
+    {
+     "segs": [
+      "Fluid intelligence is the type of intelligence that has to do with short - term memory and the ability to think quickly, logically, and abstractly in order to solve new problems. It\n",
+      {
+       "n": 1
+      },
+      "\nin young adulthood, levels out for a period of time, and then\n",
+      {
+       "n": 2
+      },
+      "\nstarts to slowly decline as we age. But\n",
+      {
+       "n": 3
+      },
+      "\naging is inevitable, scientists are finding that certain changes in brain function may not be."
+     ]
+    },
+    {
+     "segs": [
+      "One study found that muscle loss and the\n",
+      {
+       "n": 4
+      },
+      "\nof body fat around the abdomen are associated with a decline in fluid intelligence. This suggests the\n",
+      {
+       "n": 5
+      },
+      "\nthat lifestyle factors might help prevent or\n",
+      {
+       "n": 6
+      },
+      "\nthis type of decline."
+     ]
+    },
+    {
+     "segs": [
+      "The researchers looked at data that\n",
+      {
+       "n": 7
+      },
+      "\nmeasurements of lean muscle and abdominal fat from more than 4,000 middle - to - older - aged men and women and\n",
+      {
+       "n": 8
+      },
+      "\nthat data to reported changes in fluid intelligence over a six - year period. They found that middle - aged people\n",
+      {
+       "n": 9
+      },
+      "\nhigher measures of abdominal fat\n",
+      {
+       "n": 10
+      },
+      "\nworse on measures of fluid intelligence as the years\n",
+      {
+       "n": 11
+      },
+      "\n."
+     ]
+    },
+    {
+     "segs": [
+      "For women, the association may be\n",
+      {
+       "n": 12
+      },
+      "\nto changes in immunity that resulted from excess abdominal fat; in men, the immune system did not appear to be\n",
+      {
+       "n": 13
+      },
+      "\n. It is hoped that future studies could\n",
+      {
+       "n": 14
+      },
+      "\nthese differences and perhaps lead to different\n",
+      {
+       "n": 15
+      },
+      "\nfor men and women."
+     ]
+    },
+    {
+     "segs": [
+      {
+       "n": 16
+      },
+      "\n, there are steps you can\n",
+      {
+       "n": 17
+      },
+      "\nto help reduce abdominal fat and maintain lean muscle mass as you age in order to protect both your physical and mental\n",
+      {
+       "n": 18
+      },
+      "\n. The two highly recommended lifestyle approaches are maintaining or increasing your\n",
+      {
+       "n": 19
+      },
+      "\nof aerobic exercise and following a Mediterranean - style\n",
+      {
+       "n": 20
+      },
+      "\nthat is high in fiber and eliminates highly processed foods."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 1,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "pauses"
+      },
+      {
+       "k": "B",
+       "text": "returns"
+      },
+      {
+       "k": "C",
+       "text": "peaks"
+      },
+      {
+       "k": "D",
+       "text": "fades"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>语境分析</strong><br>句子描述流体智力（fluid intelligence）在成年早期的发展趋势：“在成年早期______，平稳一段时间，然后随着年龄增长开始缓慢下降。”<br>这里需要一个表示“达到顶峰”的词，因为智力在成年早期发展到最高水平，之后才会平稳并下降。</p></li><li><p><strong>选项分析</strong></p><ul><li><strong>A. pauses</strong>（暂停）—— 智力在成年早期不是“暂停”，而是发展到最高点。</li><li><strong>B. returns</strong>（返回）—— 与语境不符，这里不是“返回”到某个状态。</li><li><strong>C. peaks</strong>（达到高峰）—— 符合科学常识和上下文逻辑，即流体智力在成年早期达到高峰。</li><li><strong>D. fades</strong>（衰退）—— 如果选这个，就与后面“然后开始缓慢下降”矛盾，因为“fades”已经表示下降，逻辑重复。</li></ul></li><li><p><strong>逻辑与搭配</strong><br>“peaks in young adulthood”是常见表达，表示在年轻时达到顶峰，与后文“levels out”（趋于平稳）和“starts to slowly decline”（开始缓慢下降）形成自然的阶段顺序。</p></li></ol><p><strong>答案：C. peaks</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 2,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "alternatively"
+      },
+      {
+       "k": "B",
+       "text": "formally"
+      },
+      {
+       "k": "C",
+       "text": "accidentally"
+      },
+      {
+       "k": "D",
+       "text": "generally"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 2 题所在句子为：</p><blockquote><p>It (Fluid intelligence) &mldr; in young adulthood, levels out for a period of time, and then <strong>2</strong> starts to slowly decline as we age.</p></blockquote><p>意思是：流体智力在青年时期达到高峰，平稳一段时间，然后 <strong>2</strong> 开始随着年龄增长缓慢下降。</p><p>选项分析：</p><ul><li><strong>A. alternatively</strong>（或者，交替地）→ 不符合逻辑，这里不是提供另一种情况。</li><li><strong>B. formally</strong>（正式地）→ 智力下降不是“正式”开始的，语义不当。</li><li><strong>C. accidentally</strong>（偶然地）→ 智力随年龄下降是普遍现象，不是偶然的。</li><li><strong>D. generally</strong>（通常，一般）→ 符合科学常识，表示“一般会开始缓慢下降”，语气客观且常用在这种描述普遍规律的语境中。</li></ul><p>因此，<strong>D. generally</strong> 是正确答案。</p>",
+     "tags": []
+    },
+    {
+     "n": 3,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "while"
+      },
+      {
+       "k": "B",
+       "text": "since"
+      },
+      {
+       "k": "C",
+       "text": "once"
+      },
+      {
+       "k": "D",
+       "text": "until"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 3 题空格所在的句子是：</p><blockquote><p>But ___ aging is inevitable, scientists are finding that certain changes in brain function may not be.</p></blockquote><ul><li>这里前后两个分句之间是<strong>对比/让步</strong>关系。</li><li>前半句说“衰老是不可避免的”，后半句说“科学家发现大脑功能的某些变化可能并非不可避免”。</li><li>逻辑上，这里需要一个词表示“虽然”或“尽管”，即 “<strong>虽然衰老不可避免，但大脑功能的某些变化可能不是必然的</strong>”。</li><li>在选项中，<strong>A. while</strong> 可以表示“虽然”，引导让步状语从句，符合句意。</li><li>B. since（因为/既然）表示原因，不符合对比关系。</li><li>C. once（一旦）表示条件，不符合。</li><li>D. until（直到）表示时间，也不符合。</li></ul><p>因此正确答案是 <strong>A. while</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 4,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "detection"
+      },
+      {
+       "k": "B",
+       "text": "accumulation"
+      },
+      {
+       "k": "C",
+       "text": "consumption"
+      },
+      {
+       "k": "D",
+       "text": "separation"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 4 题所在句子为：</p><blockquote><p>One study found that muscle loss and the <strong>4</strong> of body fat around the abdomen are associated with a decline in fluid intelligence.</p></blockquote><ul><li><strong>A. detection</strong>（检测）—— 不符合句意，这里不是指“检测脂肪”，而是脂肪的“增多”与肌肉流失有关。</li><li><strong>B. accumulation</strong>（积累、堆积）—— 符合语境，指腹部脂肪的堆积与流体智力下降有关。</li><li><strong>C. consumption</strong>（消耗）—— 与句意相反，如果是脂肪消耗，则不会与智力下降相关。</li><li><strong>D. separation</strong>（分离）—— 语义不符，脂肪分离与这里讨论的生理变化无关。</li></ul><p>因此，<strong>B. accumulation</strong> 是正确答案，表示腹部脂肪的堆积与流体智力下降有关。</p>",
+     "tags": []
+    },
+    {
+     "n": 5,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "possibility"
+      },
+      {
+       "k": "B",
+       "text": "decision"
+      },
+      {
+       "k": "C",
+       "text": "goal"
+      },
+      {
+       "k": "D",
+       "text": "requirement"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 5 题所在句子为：</p><blockquote><p>This suggests the <strong>5</strong> that lifestyle factors might help prevent or <strong>6</strong> this type of decline.</p></blockquote><p>空格前的 “suggests” 意为“表明、暗示”，后面常接一个表示“可能性”或“推测”的内容。<br>空格后的 “that lifestyle factors might help&mldr;” 是一个同位语从句，解释这个名词的内容。</p><ul><li><strong>A. possibility</strong>（可能性）——符合语境，因为研究结果暗示了“生活方式因素可能有助于防止或减缓这种衰退”这一可能性。</li><li><strong>B. decision</strong>（决定）——研究结果不能直接是一个“决定”，逻辑不符。</li><li><strong>C. goal</strong>（目标）——上下文并未提到这是一个目标，而是研究发现的一种可能性。</li><li><strong>D. requirement</strong>（要求）——研究结果并不是一个“要求”，语气不对。</li></ul><p>因此，<strong>A. possibility</strong> 最符合上下文逻辑。</p><p><strong>答案：A</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 6,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "delay"
+      },
+      {
+       "k": "B",
+       "text": "ensure"
+      },
+      {
+       "k": "C",
+       "text": "seek"
+      },
+      {
+       "k": "D",
+       "text": "utilize"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>上下文逻辑</strong><br>该句提到“生活方式因素可能有助于预防或 ______ 这种类型的衰退”。<br>“预防或 ______” 是并列结构，通常两个动词意思相近或相关，且与“衰退”搭配。<br>“预防”已经表示阻止发生，后面应填入一个表示“推迟、延缓”的词，因为衰退如果无法完全避免，至少可以延缓它的发生。</p></li><li><p><strong>选项分析</strong></p><ul><li><strong>A. delay</strong>（延迟）—— 符合“预防或延缓衰退”的语义逻辑。</li><li><strong>B. ensure</strong>（确保）—— 与“衰退”搭配语义矛盾。</li><li><strong>C. seek</strong>（寻求）—— 与“衰退”搭配不合理。</li><li><strong>D. utilize</strong>（利用）—— 与“衰退”搭配语义不通。</li></ul></li><li><p><strong>句意验证</strong><br>“生活方式因素可能有助于预防或延缓这类衰退”在逻辑和医学常识上都成立，因此选 <strong>A</strong>。</p></li></ol><p><strong>答案：A</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 7,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "modified"
+      },
+      {
+       "k": "B",
+       "text": "supported"
+      },
+      {
+       "k": "C",
+       "text": "included"
+      },
+      {
+       "k": "D",
+       "text": "predicted"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>第 7 题所在句子为：</p><blockquote><p>The researchers looked at data that ___ measurements of lean muscle and abdominal fat from more than 4,000 middle - to - older - aged men and women and ___ that data to reported changes in fluid intelligence over a six - year period.</p></blockquote><p>前半句意思是“研究人员查看了 <strong>包含</strong> 肌肉量和腹部脂肪测量值的数据”，这里“data that ___ measurements” 显然是说“数据中包含了这些测量值”。</p><p>选项分析：</p><ul><li><strong>A. modified</strong>（修改） → 数据不是被修改，而是本身就包含这些测量值，不符合。</li><li><strong>B. supported</strong>（支持） → 数据不能“支持”测量值，逻辑不通。</li><li><strong>C. included</strong>（包含） → 符合语境，数据包含这些测量值。</li><li><strong>D. predicted</strong>（预测） → 数据是已经收集的测量值，不是预测，不符合。</li></ul><p>因此正确答案是 <strong>C. included</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 8,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "devoted"
+      },
+      {
+       "k": "B",
+       "text": "compared"
+      },
+      {
+       "k": "C",
+       "text": "converted"
+      },
+      {
+       "k": "D",
+       "text": "applied"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 8 题所在句为：</p><blockquote><p>The researchers looked at data that ___ measurements of lean muscle and abdominal fat &mldr; and ___ that data to reported changes in fluid intelligence over a six-year period.</p></blockquote><p>句意是：研究人员查看了包含肌肉量和腹部脂肪测量的数据，并将这些数据与六年期间流体智力的变化数据进行了 <strong>比较</strong>。</p><ul><li><strong>A. devoted</strong> 意为“奉献”，不符合“数据比较”的语境。</li><li><strong>B. compared</strong> 意为“比较”，符合研究方法的逻辑：将身体指标数据与智力变化数据进行比较。</li><li><strong>C. converted</strong> 意为“转换”，这里并没有数据格式转换的意思。</li><li><strong>D. applied</strong> 意为“应用”，虽然可以说“apply data to a problem”，但这里强调的是对比分析关系，而不是应用数据去做某事。</li></ul><p>因此，<strong>B. compared</strong> 是正确答案。</p>",
+     "tags": []
+    },
+    {
+     "n": 9,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "with"
+      },
+      {
+       "k": "B",
+       "text": "above"
+      },
+      {
+       "k": "C",
+       "text": "by"
+      },
+      {
+       "k": "D",
+       "text": "against"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 9 题所在句子是：</p><blockquote><p>They found that middle-aged people\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=\"mord text\"><span class=mord>9</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nhigher measures of abdominal fat\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=\"mord text\"><span class=mord>10</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nworse on measures of fluid intelligence as the years\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=\"mord text\"><span class=mord>11</span></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\n.</p></blockquote><p>这里要表达的意思是：<strong>拥有更多腹部脂肪的中年人</strong>在流体智力测试中表现更差。</p><p>在英语中，表示“具有某种特征的人”常用 <strong>with</strong> 引出该特征，结构是：</p><ul><li>people with + 名词短语（如：higher measures of abdominal fat）</li></ul><p>选项分析：</p><ul><li><strong>A. with</strong> → 表示“具有”，符合句意。</li><li><strong>B. above</strong> → “above” 一般用于比较或位置，不用于引出人的特征。</li><li><strong>C. by</strong> → 表示方式或被动语态中的施动者，不符合此处。</li><li><strong>D. against</strong> → “反对”或“对照”，不符合句意。</li></ul><p>因此正确答案是 <strong>A. with</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 10,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "lived (on)"
+      },
+      {
+       "k": "B",
+       "text": "managed (on)"
+      },
+      {
+       "k": "C",
+       "text": "scored (on)"
+      },
+      {
+       "k": "D",
+       "text": "played (on)"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>上下文逻辑</strong><br>原文说的是“腹部脂肪含量较高的中年人，在流体智力测试中表现更差”。<br>空格前的部分是 “middle-aged people &mldr; higher measures of abdominal fat”，空格后是 “worse on measures of fluid intelligence”，显然这里需要一个动词，表示“在……测试中得分”。</p></li><li><p><strong>动词搭配与语义</strong></p><ul><li><strong>lived on</strong>：靠……生活，不符合语境。</li><li><strong>managed on</strong>：靠……维持（生活），不用于测试得分。</li><li><strong>scored on</strong>：在……上得分，是常用搭配（如 score on a test）。</li><li><strong>played on</strong>：在……上演奏/利用（情绪等），不适用。</li></ul></li><li><p><strong>固定用法</strong><br>“score worse on measures of fluid intelligence” 意思是“在流体智力的测量指标上得分更差”，完全符合研究数据的表达习惯。</p></li></ol><p><strong>因此正确答案是 C. scored (on)。</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 11,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "ran out"
+      },
+      {
+       "k": "B",
+       "text": "set off"
+      },
+      {
+       "k": "C",
+       "text": "drew in"
+      },
+      {
+       "k": "D",
+       "text": "went by"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 11 题空格所在的句子是：</p><blockquote><p>They found that middle-aged people with higher measures of abdominal fat performed worse on measures of fluid intelligence as the years ______.</p></blockquote><p><strong>句意分析</strong>：<br>这里说的是，随着时间推移（“随着岁月……”），腹部脂肪多的人在流体智力测试中表现更差。<br>空格处需要填入一个表示“时间流逝”的短语。</p><p><strong>选项分析</strong>：</p><ul><li><strong>A. ran out</strong>：用完、耗尽（时间、物品等），主语常是时间或物品，但这里主语是“the years”，如果填 ran out，意思是“年岁耗尽”，不符合“随着时间推移”的常见表达。</li><li><strong>B. set off</strong>：出发、引起，主语可以是人或事件，不用于时间流逝。</li><li><strong>C. drew in</strong>：吸入、吸引、（白天）变短，不用于“年岁”流逝。</li><li><strong>D. went by</strong>：（时间）流逝、过去，固定搭配，符合语境。</li></ul><p><strong>因此正确答案是 D. went by</strong>。<br>“as the years went by” 是英语中表示“随着岁月流逝”的常见表达。</p>",
+     "tags": []
+    },
+    {
+     "n": 12,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "superior"
+      },
+      {
+       "k": "B",
+       "text": "attributable"
+      },
+      {
+       "k": "C",
+       "text": "parallel"
+      },
+      {
+       "k": "D",
+       "text": "resistant"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 12 题题干：</p><blockquote><p>For women, the association may be\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>12</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nto changes in immunity that resulted from excess abdominal fat.</p></blockquote><p><strong>选项含义</strong>：</p><ul><li>A. superior 优越的</li><li>B. attributable 可归因于</li><li>C. parallel 平行的，类似的</li><li>D. resistant 抵抗的</li></ul><p><strong>逻辑分析</strong>：<br>这句话的意思是“对于女性来说，这种关联可能 <strong>归因于</strong> 由腹部脂肪过多引起的免疫力变化”。</p><ul><li>“be attributable to” 是固定搭配，意为“可归因于”，符合上下文因果关系。</li><li>其他选项：<ul><li>superior to “优于”，不符合句意。</li><li>parallel to “与…平行/类似”，这里不是比较相似性，而是说明原因。</li><li>resistant to “抵抗”，不符合语义。</li></ul></li></ul><p>因此正确答案是 <strong>B. attributable</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 13,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "restored"
+      },
+      {
+       "k": "B",
+       "text": "isolated"
+      },
+      {
+       "k": "C",
+       "text": "involved"
+      },
+      {
+       "k": "D",
+       "text": "controlled"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 13 题所在句子为：</p><blockquote><p>For women, the association may be linked to changes in immunity that resulted from excess abdominal fat; in men, the immune system did not appear to be <strong>involved</strong>.</p></blockquote><p><strong>逻辑分析</strong>：</p><ul><li>前文提到，腹部脂肪与流体智力下降的关联在女性中可能与免疫系统变化有关。</li><li>分号后面是并列对比，说明在男性中，免疫系统似乎 <strong>没有参与</strong> 这种关联。</li><li>因此，这里要表达的意思是“免疫系统似乎没有牵涉其中”。</li></ul><p><strong>选项分析</strong>：</p><ul><li>A. restored（恢复）—— 上下文未提到免疫系统被破坏或需要恢复。</li><li>B. isolated（隔离）—— 不符合语境，免疫系统不可能被“隔离”。</li><li>C. involved（涉及）—— 符合句意，即免疫系统没有牵涉进这种关联。</li><li>D. controlled（控制）—— 与文意不符，这里不是说免疫系统被控制。</li></ul><p>因此正确答案是 <strong>C. involved</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 14,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "alter"
+      },
+      {
+       "k": "B",
+       "text": "spread"
+      },
+      {
+       "k": "C",
+       "text": "remove"
+      },
+      {
+       "k": "D",
+       "text": "explain"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 14 题所在句子是：</p><blockquote><p>It is hoped that future studies could <strong>14</strong> these differences and perhaps lead to different <strong>15</strong> for men and women.</p></blockquote><p><strong>上下文分析：</strong></p><ul><li>前文提到，在女性中腹部脂肪与流体智力下降的关联可能与免疫系统的变化有关，而在男性中免疫系统似乎没有参与。</li><li>这里说“未来的研究可能 <strong>______</strong> 这些差异”，意思是未来的研究要<strong>弄清楚</strong>为什么男性和女性机制不同。</li><li>四个选项：<ul><li><strong>A. alter</strong>（改变）—— 差异是客观存在的，研究不能“改变”差异，只能解释它。</li><li><strong>B. spread</strong>（传播）—— 不符合语境。</li><li><strong>C. remove</strong>（消除）—— 研究不能“消除”差异本身，只能解释原因。</li><li><strong>D. explain</strong>（解释）—— 符合逻辑，即未来的研究可以解释这些差异的原因。</li></ul></li></ul><p>因此正确答案是 <strong>D. explain</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 15,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "compensations"
+      },
+      {
+       "k": "B",
+       "text": "symptoms"
+      },
+      {
+       "k": "C",
+       "text": "demands"
+      },
+      {
+       "k": "D",
+       "text": "treatments"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第15题所在句为：<br>“It is hoped that future studies could ___ these differences and perhaps lead to different ___ for men and women.”<br>（希望未来的研究能够阐明这些差异，并可能为男性和女性带来不同的 ___。）</p><ol><li><p><strong>上下文逻辑</strong>：<br>前文提到，腹部脂肪与流体智力下降有关，但在男性和女性中机制不同（女性可能与免疫变化有关，男性则不明显）。因此，未来的研究可能会针对这些差异，为男性和女性提供不同的 <strong>干预方法</strong>。</p></li><li><p><strong>选项分析</strong>：</p><ul><li><strong>A. compensations</strong>（补偿）—— 不符合医学或健康干预的语境。</li><li><strong>B. symptoms</strong>（症状）—— 研究目的不是产生不同的症状，而是应对方法。</li><li><strong>C. demands</strong>（要求）—— 不合逻辑，研究不会导致不同的“要求”。</li><li><strong>D. treatments</strong>（治疗方法/对策）—— 最符合语境，指针对男女差异的个性化健康干预或治疗方案。</li></ul></li><li><p><strong>搭配与语义</strong>：<br>“different treatments for men and women” 意为“针对男性和女性的不同治疗方法/对策”，与上文的“机制差异”呼应，且与“prevent or slow this type of decline”的目标一致。</p></li></ol><p><strong>答案：D</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 16,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Likewise"
+      },
+      {
+       "k": "B",
+       "text": "Meanwhile"
+      },
+      {
+       "k": "C",
+       "text": "Therefore"
+      },
+      {
+       "k": "D",
+       "text": "Instead"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第16题位于最后一段的开头，用来承接上一段的研究发现和本段的建议。<br>上一段主要讲研究发现腹部脂肪与流体智力下降的关联，并指出未来研究可能探索性别差异。<br>本段则转向给出实际可行的建议（减少腹部脂肪、保持肌肉等）。</p><ul><li><strong>A. Likewise</strong> 表示“同样地”，一般用于并列相似的情况，但这里不是并列，而是从研究发现转向建议。</li><li><strong>B. Meanwhile</strong> 表示“与此同时”或“另一方面”，用于引出另一个相关但不同角度的话题，这里从研究结论转到生活建议，符合语境。</li><li><strong>C. Therefore</strong> 表示“因此”，强调严格的因果关系，但上一段并未完全确定因果关系，且这里更像是补充建议，不是直接推论。</li><li><strong>D. Instead</strong> 表示“相反”，用于转折替代，但上下文并非否定前文，而是补充建议，所以不合适。</li></ul><p>因此，<strong>B. Meanwhile</strong> 最合适，起到承上启下、引出建议的作用。</p><p><strong>答案：B</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 17,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "change"
+      },
+      {
+       "k": "B",
+       "text": "watch"
+      },
+      {
+       "k": "C",
+       "text": "count"
+      },
+      {
+       "k": "D",
+       "text": "take"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 17 题题干为：</p><blockquote><p>there are steps you can\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>17</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nto help reduce abdominal fat and maintain lean muscle mass&mldr;</p></blockquote><p><strong>选项分析：</strong></p><ul><li><strong>A. change</strong>：搭配 &ldquo;steps you can change&rdquo; 不符合常见表达，因为 &ldquo;steps&rdquo; 在这里是“措施、步骤”，一般说“采取步骤”而不是“改变步骤”。</li><li><strong>B. watch</strong>：&ldquo;watch steps&rdquo; 意为“注意脚步”，与上下文“帮助减少腹部脂肪”不符。</li><li><strong>C. count</strong>：&ldquo;count steps&rdquo; 指“数步数”，虽然与计步器有关，但这里上下文是泛指“可以采取的措施”，不是特指数步数。</li><li><strong>D. take</strong>：&ldquo;take steps&rdquo; 是固定搭配，意思是“采取措施”，完全符合语境：你可以采取一些措施来减少腹部脂肪并保持肌肉量。</li></ul><p>因此正确答案是 <strong>D. take</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 18,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "well-being"
+      },
+      {
+       "k": "B",
+       "text": "process"
+      },
+      {
+       "k": "C",
+       "text": "formation"
+      },
+      {
+       "k": "D",
+       "text": "coordination"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 18 题空格所在的句子是：</p><blockquote><p>&mldr; to help reduce abdominal fat and maintain lean muscle mass as you age in order to protect both your physical and mental ______.</p></blockquote><ul><li><strong>A. well-being</strong>（健康/幸福感）<br>与前面的“physical and mental”搭配，表示“身体和心理健康/福祉”，是常见且自然的表达。</li><li><strong>B. process</strong>（过程）<br>“mental process”可指思维过程，但“physical process”与“mental process”并列时，与“保护”搭配不自然，且不符合上下文强调的整体健康目标。</li><li><strong>C. formation</strong>（形成）<br>“mental formation”不常见，且“physical formation”也不符合语境。</li><li><strong>D. coordination</strong>（协调）<br>“physical coordination”可指身体协调性，但“mental coordination”不常用，且与全文讨论的“健康维护”主题不符。</li></ul><p>文章强调通过减少腹部脂肪和保持肌肉来保护身体和心理健康，<strong>well-being</strong> 涵盖身心两方面的健康状态，因此 A 是最佳答案。</p><p><strong>正确答案：A</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 19,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "level"
+      },
+      {
+       "k": "B",
+       "text": "love"
+      },
+      {
+       "k": "C",
+       "text": "knowledge"
+      },
+      {
+       "k": "D",
+       "text": "space"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 19 题所在句子为：</p><blockquote><p>The two highly recommended lifestyle approaches are maintaining or increasing your ______ of aerobic exercise and following a Mediterranean - style diet&mldr;</p></blockquote><p><strong>选项分析：</strong></p><ul><li><strong>A. level</strong>（水平）—— “maintaining or increasing your level of aerobic exercise” 意为“保持或提高你有氧运动的水平”，搭配自然合理，符合语境。</li><li><strong>B. love</strong>（热爱）—— “maintaining or increasing your love of aerobic exercise” 虽然语法上可行，但逻辑上“热爱程度”不是这里强调的重点，而是实际运动水平或强度。</li><li><strong>C. knowledge</strong>（知识）—— “knowledge of aerobic exercise” 指对运动的知识，但这里说的是实际锻炼行为，不是知识。</li><li><strong>D. space</strong>（空间）—— “space of aerobic exercise” 搭配不当，语义不通。</li></ul><p>结合上下文，作者推荐的生活方式是<strong>保持或增加有氧运动的量/强度</strong>，因此 <strong>level</strong> 是最合适的选项。</p><p><strong>答案：A</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 20,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "design"
+      },
+      {
+       "k": "B",
+       "text": "routine"
+      },
+      {
+       "k": "C",
+       "text": "diet"
+      },
+      {
+       "k": "D",
+       "text": "prescription"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>上下文线索</strong><br>空格前的短语是 “following a Mediterranean - style ______”，其中 “Mediterranean-style” 是“地中海式的”，通常用来修饰“饮食”（Mediterranean diet），这是一个常见的固定搭配，指地中海地区的饮食习惯（富含橄榄油、水果、蔬菜、全谷物等）。</p></li><li><p><strong>语义搭配</strong></p><ul><li>A. design（设计）—— 与饮食无关，不符合语境。</li><li>B. routine（日常安排、惯例）—— 虽然可以搭配生活方式，但这里更具体地指“饮食模式”，routine 不如 diet 贴切。</li><li>C. diet（饮食）—— 与“高纤维、避免深加工食品”直接对应，且 “Mediterranean diet” 是固定术语。</li><li>D. prescription（处方）—— 一般指医生开的药方，与生活方式建议不符。</li></ul></li><li><p><strong>段落主旨</strong><br>本段在讲通过<strong>有氧运动</strong>和<strong>饮食</strong>来减少腹部脂肪、保持肌肉，从而保护身心健康，所以此处应选与“饮食”相关的词。</p></li></ol><p><strong>因此正确答案是 C. diet。</strong></p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-1",
+   "label": "阅读 Text 1",
+   "title": "Part A · Text 1",
+   "heading": "Section II  Reading Comprehension",
+   "type": "choice",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>Read the following four texts. Answer the questions after each text by choosing A, B, C or D. Mark your answers on the ANSWER SHEET. (40 points)</p>",
+   "passage": [
+    {
+     "segs": [
+      "How can the train operators possibly justify yet another increase to rail passenger fares? It has become a grimly reliable annual ritual: every January the cost of traveling by train rises, imposing a significant extra burden on those who have no option but to use the rail network to get to work or otherwise. This year&rsquo;s rise, an average of 2.7 percent, may be a fraction lower than last year&rsquo;s, but it is still well above the official Consumer Price Index (CPI) measure of inflation."
+     ]
+    },
+    {
+     "segs": [
+      "Successive governments have permitted such increases on the grounds that the cost of investing in and running the rail network should be borne by those who use it, rather than the general taxpayer. Why, the argument goes, should a car-driving pensioner from Lincolnshire have to subsidise the daily commute of a stockbroker from Surrey? Equally, there is a sense that the travails of commuters in the South East, many of whom will face among the biggest rises, have received too much attention compared to those who must endure the relatively poor infrastructure of the Midlands and the North."
+     ]
+    },
+    {
+     "segs": [
+      "H worst rail strikes in years. It is all very well train operators trumpeting the improvements they are making to the network, but passengers should be able to expect a basic level of service for the substantial sums they are now paying to travel. The responsibility for the latest wave of strikes rests on the unions. However, there&rsquo;s a strong case that those who have been worst affected by industrial action should receive compensation for the disruption they have suffered."
+     ]
+    },
+    {
+     "segs": [
+      "The Government has pledged to change the law to introduce a minimum service requirement so that, even when strikes occur, services can continue to operate. This should form part of a wider package of measures to address the long-running problems on Britain&rsquo;s railways. Yes, more investment is needed, but passengers will not be willing to pay more indefinitely if they must also endure cramped, unreliable services, punctuated by regular chaos when timetables are changed, or planned maintenance is managed incompetently. The threat of nationalisation may have been seen off for now, but it will return with a vengeance if the justified anger of passengers is not addressed in short order."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 21,
+     "stem": "<p>The author holds that this year&rsquo;s increase in rail passengers fares</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "has kept pace with inflation"
+      },
+      {
+       "k": "B",
+       "text": "is a big surprise to commuters"
+      },
+      {
+       "k": "C",
+       "text": "remains an unreasonable measure"
+      },
+      {
+       "k": "D",
+       "text": "will ease train operation&rsquo;s burden"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>原文定位</strong><br>第一段提到：</p><blockquote><p>This year&rsquo;s rise, an average of 2.7 percent, may be a fraction lower than last year&rsquo;s, but it is still well above the official Consumer Price Index (CPI) measure of inflation.<br>说明票价涨幅高于通胀，因此 <strong>A 项“与通胀同步”错误</strong>。</p></blockquote></li><li><p><strong>作者态度</strong><br>开头作者就用反问句表达不满：</p><blockquote><p>How can the train operators possibly justify yet another increase to rail passenger fares?<br>并且指出这是每年一月的“grimly reliable annual ritual”（令人不快的固定惯例），暗示这种涨价不合理。</p></blockquote></li><li><p><strong>排除其他选项</strong></p><ul><li><strong>B 项“对通勤者是大惊喜”</strong>：文中没有体现“惊讶”，而是说这是每年都发生的惯例，所以不对。</li><li><strong>D 项“会缓解铁路运营负担”</strong>：文中没有直接支持这一说法，且作者的重点是批评涨价不合理，而不是肯定其作用。</li></ul></li><li><p><strong>确定答案</strong><br>作者认为涨价不合理，因为涨幅高于通胀，且服务质量差、罢工频发，乘客没有得到相应回报，因此 <strong>C 项“仍然是不合理的措施”</strong> 正确。</p></li></ol><p><strong>答案：C</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 22,
+     "stem": "<p>The stockbroker in Para.2 is used to stand for</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "car drivers"
+      },
+      {
+       "k": "B",
+       "text": "rail traverllers"
+      },
+      {
+       "k": "C",
+       "text": "local investors"
+      },
+      {
+       "k": "D",
+       "text": "ordinary tax payers"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>定位原文</strong><br>第二段提到：</p><blockquote><p>Why, the argument goes, should a car-driving pensioner from Lincolnshire have to subsidise the daily commute of a stockbroker from Surrey?</p></blockquote><p>这句话的意思是：“为什么林肯郡开车的退休老人要补贴萨里郡股票经纪人的日常通勤？”</p></li><li><p><strong>逻辑分析</strong></p><ul><li>这里的“股票经纪人”是乘坐火车通勤的人，因为他的“daily commute”需要 rail network。</li><li>政府允许车票涨价的一个理由是：铁路投资和运营成本应由<strong>使用者</strong>承担，而不是由全体纳税人（包括不开火车的人）承担。</li><li>所以“股票经纪人”代表的是<strong>铁路乘客</strong>，而不是开车的人、投资者或普通纳税人。</li></ul></li><li><p><strong>选项对应</strong></p><ul><li>A. car drivers → 原文中开车的人是 pensioner，不是 stockbroker。</li><li>B. rail travellers → 股票经纪人通勤坐火车，代表铁路乘客。</li><li>C. local investors → 无关。</li><li>D. ordinary tax payers → 原文中纳税人是要避免补贴铁路乘客的人，不是股票经纪人代表的群体。</li></ul></li></ol><p><strong>答案：B</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 23,
+     "stem": "<p>It is indicated in Para. 3 that train operators</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "are offering compensations to commuters"
+      },
+      {
+       "k": "B",
+       "text": "are trying to repair relations with the unions"
+      },
+      {
+       "k": "C",
+       "text": "have failed to provide an adequate source"
+      },
+      {
+       "k": "D",
+       "text": "have suffered huge losses owing to the strike"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第3段的主要内容是：</p><ul><li>火车运营商在宣传他们对铁路网络的改进，但乘客支付了高昂票价，理应得到基本的服务水平。</li><li>最近的罢工责任在工会，但受罢工影响严重的乘客应获得补偿。</li><li>暗示火车运营商在服务方面未能满足乘客的合理期望。</li></ul><p><strong>选项分析：</strong><br>A. <strong>向通勤者提供赔偿</strong> —— 文中只说“应该得到补偿”，但没说运营商已经提供，所以错误。<br>B. <strong>试图修复与工会的关系</strong> —— 未提及。<br>C. <strong>未能提供足够的服务</strong> —— 对应原文“passengers should be able to expect a basic level of service for the substantial sums they are now paying to travel”，暗示目前服务不够好，因此正确。<br>D. <strong>因罢工遭受巨大损失</strong> —— 未提及运营商自身损失。</p><p>因此答案是 <strong>C</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 24,
+     "stem": "<p>If unable to calm down passengers, the railways may have to face</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "the loss of investment"
+      },
+      {
+       "k": "B",
+       "text": "the colaps f pration"
+      },
+      {
+       "k": "C",
+       "text": "a reduction of revenue"
+      },
+      {
+       "k": "D",
+       "text": "a change of ownership"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>定位关键信息</strong><br>文章最后一段提到：</p><blockquote><p>The threat of nationalisation may have been seen off for now, but it will return with a vengeance if the justified anger of passengers is not addressed in short order.<br>这句话的意思是：铁路国有化的威胁目前可能暂时被避免了，但如果不尽快解决乘客的合理愤怒，国有化将会更猛烈地卷土重来。</p></blockquote></li><li><p><strong>理解题干</strong><br>题干问的是：如果无法安抚乘客，铁路可能会面临什么？<br>根据最后一句的逻辑，无法安抚乘客 → 乘客愤怒未解决 → 国有化（nationalisation）会重新成为现实。</p></li><li><p><strong>匹配选项</strong></p><ul><li>A. 投资损失 → 未直接提及</li><li>B. 运营崩溃 → 文章提到服务差，但未说会崩溃</li><li>C. 收入减少 → 未直接对应</li><li>D. 所有权变更 → 与“国有化”对应，即 ownership 从私营变为国有</li></ul></li></ol><p>因此，正确选项是 <strong>D</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 25,
+     "stem": "<p>Which of the following would be the best tile for the text?</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Who Are to Blame for the Strikes?"
+      },
+      {
+       "k": "B",
+       "text": "Constant Complaining Doesn&rsquo;t Worlk"
+      },
+      {
+       "k": "C",
+       "text": "Can Nationalization Bring Hope?"
+      },
+      {
+       "k": "D",
+       "text": "Ever-rising Fares Aren&rsquo;t Sustainable"
+      }
+     ],
+     "explanation": "<p>好的，我们来分析一下这道题。</p><p><strong>文章主旨分析：</strong></p><ol><li>开头提出火车票连年涨价，涨幅高于通胀，给通勤者带来沉重负担。</li><li>接着提到政府允许涨价的理由是“铁路成本应由乘客而非全体纳税人承担”，但也指出不同地区乘客受到的影响不同。</li><li>然后批评铁路服务不佳，罢工频发，乘客花了高价却得不到应有的基本服务。</li><li>最后提到政府承诺改革，但警告说如果乘客花更多钱却还得忍受糟糕服务，问题会恶化，国有化的呼声会再起。</li></ol><p><strong>核心线索：</strong></p><ul><li>贯穿全文的主线是 <strong>票价持续上涨</strong>（ever-rising fares）与 <strong>服务质量不匹配</strong>，并且指出这种模式不可持续（乘客不会无限接受）。</li><li>文章结尾明确说：乘客不会愿意一直多付钱（passengers will not be willing to pay more indefinitely&mldr;）。</li></ul><p><strong>选项分析：</strong></p><ul><li><strong>A. Who Are to Blame for the Strikes?</strong><br>罢工责任只是文中一个局部细节，不是全文核心。</li><li><strong>B. Constant Complaining Doesn&rsquo;t Work</strong><br>文中没有强调“抱怨没有用”，而是支持乘客的不满有理。</li><li><strong>C. Can Nationalization Bring Hope?</strong><br>国有化只在结尾提了一句，是作为警告出现的，并非全文讨论焦点。</li><li><strong>D. Ever-rising Fares Aren&rsquo;t Sustainable</strong><br>准确概括了票价持续上涨 + 乘客不愿一直忍受 + 这种模式难以为继的核心论点。</li></ul><p><strong>因此，最佳标题是 D。</strong></p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-2",
+   "label": "阅读 Text 2",
+   "title": "Text 2",
+   "heading": null,
+   "type": "choice",
+   "points": 10,
+   "directions": "",
+   "passage": [
+    {
+     "segs": [
+      "Last year marked the third year in a row of when Indonesia&rsquo;s bleak rate of deforestation has slowed in pace. One reason for the turnaround may be the country&rsquo;s antipoverty program."
+     ]
+    },
+    {
+     "segs": [
+      "In 2007, Indonesia started phasing in a program that gives money to its poorest residents under certain conditions, such as requiring people to keep kids in school or get regular medical care. Called conditional cash transfers or CCTs, these social assistance programs are designed to reduce inequality and break the cycle of poverty. They&rsquo;re already used in dozens of countries worldwide. In Indonesia, the program has provided enough food and medicine to substantially reduce severe growth problems among children."
+     ]
+    },
+    {
+     "segs": [
+      "But CCT programs don&rsquo;t generally consider effects on the environment. In fact, poverty alleviation and environmental protection are often viewed as conflicting goals, says Paul Ferraro, an economist at Johns Hopkins University."
+     ]
+    },
+    {
+     "segs": [
+      "That&rsquo;s because economic growth can be correlated with environmental degradation, while protecting the environment is sometimes correlated with greater poverty. However, those correlations don&rsquo;t prove cause and effect. The only previous study analyzing causality, based on an area in Mexico that had instiuted CTs, supported the traditional view. There, as people got more money, some of them may have more cleared land for cattle to rais for meat, Ferraro says."
+     ]
+    },
+    {
+     "segs": [
+      "Such programs do not have to negatively affect the environment, though.Ferraro wanted to see if Indonesia&rsquo;s poverty-alleviation program was affecting deforestation. Indonesia has the third-largest area of ropical foras in the word and on of the highest deforestation rates."
+     ]
+    },
+    {
+     "segs": [
+      "Ferraro analyzed sutelie data showing annual forest loss from 2008 to 2012-including during Indonesia&rsquo;s phase-in of the antipoverty program-in 7,468 forested villages across 15 provinces and multiple islands. The duo separated the effects of the CT program on forest loss from other factors, like weather and macroeconomic changes, which were also affecting forest loss, With that,&ldquo;we see that the program is associated with a 30 percent reduction in deforestation,&rdquo; Ferraro says."
+     ]
+    },
+    {
+     "segs": [
+      "That&rsquo;s likely because the rural poor are using the money as makeshift insurance policies against inclement weather, Ferraro says. Typically, if rains are delayed, people may clear land to plant more rice to supplement their harvests. With the CCTs, individuals instead can use the money to supplement their harvests."
+     ]
+    },
+    {
+     "segs": [
+      "Whether this research translates elsewhere is anybody&rsquo;s guess.Ferraro suggests the importance of growing rice and marke accss,And regardless of transferabiliy, the study shows that what&rsquo;s good for people may also be good for the value of the avoided deforestation just for carbon dioxide emissions alone is more than the program costs.\""
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 26,
+     "stem": "<p>According to the first two paragraphs, CCT programs aim to</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "facilitate health care reform"
+      },
+      {
+       "k": "B",
+       "text": "help poor families get better off"
+      },
+      {
+       "k": "C",
+       "text": "improve local education systems"
+      },
+      {
+       "k": "D",
+       "text": "lower deforestation rates"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是“根据前两段，CCT 项目的目的是什么”。<br>我们来看前两段中关于 CCT 目的的描述：</p><ul><li><p>第二段第二句说：</p><blockquote><p>these social assistance programs are designed to reduce inequality and break the cycle of poverty.<br>（这些社会援助项目旨在减少不平等并打破贫困循环。）</p></blockquote></li><li><p>第二段最后一句说：</p><blockquote><p>the program has provided enough food and medicine to substantially reduce severe growth problems among children.<br>（该项目提供了足够的食品和药物，大幅减少了儿童的严重生长问题。）</p></blockquote></li></ul><p>这些都是在说明 CCT 是为了帮助贫困家庭改善生活、摆脱贫困。</p><p>选项分析：</p><ul><li><strong>A. facilitate health care reform</strong>（促进医疗改革）—— 文中提到医疗是条件之一，但不是主要目的。</li><li><strong>B. help poor families get better off</strong>（帮助贫困家庭改善生活）—— 与“减少贫困、打破贫困循环”一致。</li><li><strong>C. improve local education systems</strong>（改善当地教育系统）—— 教育是条件之一，但不是主要目的。</li><li><strong>D. lower deforestation rates</strong>（降低森林砍伐率）—— 这是后来研究发现的间接影响，不是 CCT 的设计目的。</li></ul><p>因此，正确答案是 <strong>B</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 27,
+     "stem": "<p>The study based on an area in Mexico is cited o show that</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "cattle rearing has been a major means of livelihood for the poor"
+      },
+      {
+       "k": "B",
+       "text": "CCT programs have helped preserve traditional ifetyle"
+      },
+      {
+       "k": "C",
+       "text": "antipoverty efforts qure te prcipation of fca famers"
+      },
+      {
+       "k": "D",
+       "text": "economic growth tends to cause environmental degradation"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问：引用墨西哥地区的研究是为了说明什么？</p><ol><li><p><strong>定位原文</strong>：<br>文章第四段提到：</p><blockquote><p>The only previous study analyzing causality, based on an area in Mexico that had instituted CCTs, supported the traditional view. There, as people got more money, some of them may have more cleared land for cattle to raise for meat, Ferraro says.</p></blockquote></li><li><p><strong>理解“传统观点”</strong>：<br>第三段提到：</p><blockquote><p>poverty alleviation and environmental protection are often viewed as conflicting goals&mldr;<br>That&rsquo;s because economic growth can be correlated with environmental degradation&mldr;</p></blockquote><p>也就是说，“传统观点”认为经济增长会导致环境破坏。</p></li><li><p><strong>墨西哥案例的作用</strong>：<br>墨西哥的研究是之前唯一分析因果关系的，它<strong>支持了传统观点</strong>，即 CCT 项目（给穷人现金）可能促使他们开垦更多土地养牛，从而加剧森林砍伐。<br>因此，引用它是为了说明 <strong>经济增长往往导致环境退化</strong>。</p></li><li><p><strong>选项分析</strong>：</p><ul><li>A：养牛是穷人的主要生计方式——墨西哥案例提到养牛，但这不是引用该研究的目的。</li><li>B：CCT 项目帮助保护传统生活方式——未提及。</li><li>C：扶贫需要当地农民参与——未提及。</li><li>D：经济增长往往导致环境退化——符合“传统观点”和墨西哥案例的结论。</li></ul></li></ol><p><strong>答案：D</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 28,
+     "stem": "<p>In his study about Indonesia.Ferrare intends to find out</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "is accparceve lf Ccor"
+      },
+      {
+       "k": "B",
+       "text": "is anna ate f o r lii"
+      },
+      {
+       "k": "C",
+       "text": "the relation of CCTs to its forest loss"
+      },
+      {
+       "k": "D",
+       "text": "the role of is forests in climate change"
+      }
+     ],
+     "explanation": "<p>我们先分析题目和原文内容。</p><p><strong>题目</strong>：</p><blockquote><p>In his study about Indonesia, Ferraro intends to find out ______.<br>A. its acceptance level of CCTs<br>B. annual rate of poverty alleviation<br>C. the relation of CCTs to its forest loss<br>D. the role of its forests in climate change</p></blockquote><hr><p><strong>原文相关部分</strong>：</p><ol><li>文章开头提到印尼的森林砍伐速度减缓，可能与扶贫计划有关。</li><li>接着介绍 CCTs（有条件现金转移）在印尼的实施情况。</li><li>第五段明确提到：</li></ol><blockquote><p>Ferraro wanted to see if Indonesia&rsquo;s poverty-alleviation program was affecting deforestation.</p></blockquote><p>这里 “poverty-alleviation program” 就是指 CCTs。<br>Ferraro 的研究意图就是 <strong>看 CCTs 是否影响了森林砍伐</strong>，也就是 CCTs 与森林损失之间的关系。</p><hr><p><strong>选项分析</strong>：</p><ul><li><strong>A</strong>：接受程度，文中未研究。</li><li><strong>B</strong>：贫困率年度变化，不是研究的主要目的。</li><li><strong>C</strong>：CCTs 与森林损失的关系，与原文一致。</li><li><strong>D</strong>：森林在气候变化中的作用，不是研究重点。</li></ul><hr><p><strong>答案</strong>：C</p>",
+     "tags": []
+    },
+    {
+     "n": 29,
+     "stem": "<p>According to Ferraro,the CCT program in Indonesia is most valuable in that</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "it will benefit other Asian countries"
+      },
+      {
+       "k": "B",
+       "text": "it will reduce regional inequality"
+      },
+      {
+       "k": "C",
+       "text": "it can protect the environment"
+      },
+      {
+       "k": "D",
+       "text": "it can boost grain production"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是“根据 Ferraro，印度尼西亚的 CCT 项目最有价值的地方在于什么”。</p><p>文章中提到 Ferraro 的研究发现，印度尼西亚的 CCT 项目与森林砍伐减少 30% 有关。<br>关键句在倒数第二段和最后一段：</p><ul><li>“we see that the program is associated with a 30 percent reduction in deforestation”</li><li>最后一段说 “the study shows that what&rsquo;s good for people may also be good for the environment”</li></ul><p>这表明 Ferraro 认为该项目的价值不仅在于扶贫，还在于它意外地带来了环境保护的效益。<br>选项分析：</p><ul><li>A：文章提到是否适用于其他地方还不确定（anybody&rsquo;s guess），所以不选。</li><li>B：虽然 CCT 本身目标是减少不平等，但 Ferraro 强调的价值在于环境效益。</li><li>C：与文章结论一致，是 Ferraro 强调的额外价值。</li><li>D：文中没有说该项目能提高粮食产量，反而提到农民可能不用为了应对天气而开荒种稻。</li></ul><p>因此正确答案是 <strong>C</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 30,
+     "stem": "<p>What is the text centered on?</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "The effects of a program."
+      },
+      {
+       "k": "B",
+       "text": "The debates over a program."
+      },
+      {
+       "k": "C",
+       "text": "The process of a study."
+      },
+      {
+       "k": "D",
+       "text": "The transferability of a study."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>文章的核心内容是围绕 <strong>印尼的“有条件现金转移”（CCT）扶贫计划</strong> 展开的，重点在于探讨该计划<strong>除了扶贫之外，还产生了意想不到的环境影响</strong>，即<strong>减缓了森林砍伐</strong>。</p><ul><li>文章开头提到印尼森林砍伐速度放缓，并引出可能是其扶贫计划所致。</li><li>接着介绍了 CCT 计划的内容和目标。</li><li>然后通过经济学家 Paul Ferraro 的研究，指出通常认为扶贫与环保存在冲突，但印尼的案例可能不同。</li><li>随后详细说明了 Ferraro 的研究方法和发现：<strong>该计划与森林砍伐减少 30% 有关</strong>。</li><li>最后解释了可能的原因，并讨论了该研究结果的潜在意义。</li></ul><p><strong>选项分析：</strong></p><ul><li><p><strong>A. The effects of a program（一个计划的效果）</strong> ✅<br>文章确实主要讨论了 CCT 计划在扶贫之外带来的<strong>环境效益</strong>，即对森林砍伐的影响，因此是围绕“计划的效果”展开的。</p></li><li><p><strong>B. The debates over a program（关于一个计划的辩论）</strong> ❌<br>文章并未围绕“辩论”展开，而是通过研究数据说明了一个事实，没有正反双方的争论。</p></li><li><p><strong>C. The process of a study（一项研究的过程）</strong> ❌<br>虽然文中提到了研究方法和结果，但<strong>研究过程是为说明“计划的效果”服务的</strong>，不是文章的中心。</p></li><li><p><strong>D. The transferability of a study（一项研究的可转移性）</strong> ❌<br>文章末尾提到了“是否适用于其他地方尚不确定”，但这只是附带讨论，并非全文中心。</p></li></ul><p><strong>因此，正确答案是 A。</strong></p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-3",
+   "label": "阅读 Text 3",
+   "title": "Text 3",
+   "heading": null,
+   "type": "choice",
+   "points": 10,
+   "directions": "",
+   "passage": [
+    {
+     "segs": [
+      "As a historian, who&rsquo;s always searching for the text or the image that makes us re-evaluate the past. I&rsquo;ve become preoccupied with looking for photographs that show our Victorian ancestors smiling (what better way to shatter the image of 19th-century prudery?) I&rsquo;ve found quite a few, and-since I started posting them on Twitter- they have been causing quite a stir. People have been surprised to see evidence that Victorians had fun and could, and did, laugh. They are noting that the Victorians suddenly seem to become more human as the hundred-or-so years that separate us fade away through our common experience of laughter."
+     ]
+    },
+    {
+     "segs": [
+      "Of course,I need to concede that my collection of\"smiling Victorians\" makes up only a tiny percentage of the vast catalogue of photographic portraiture created between 1840 and 1900, the majority of which show sitters posing miserably and stifly in front of painted backdrops, or staring absently into the middle distance. How do we explain this trend"
+     ]
+    },
+    {
+     "segs": [
+      "During the 1840s and 1850s, in the early days of photography, exposure times were notoriously long: the daguerreotype photographic method (producing an image on a silvered copper plate) could take several minutes to complete, resulting in blurred images as siters shifted position or adjusted their limbs. The thought of holding a fixed grin as the camera performed its magical duties was too much to contemplate, and so a non-committal blank stare became the norm."
+     ]
+    },
+    {
+     "segs": [
+      "But exposure times were much quicker by the 1880s,and the introduction of the Box Brownie and other portable cameras meant that, though slow by today&rsquo;s digital standards, the exposure was almost instantaneous. Spontaneous smiles were relatively easy to capture by the 1890s,so we must look elsewhere for an explanation of why Victorians still hesitated to smile."
+     ]
+    },
+    {
+     "segs": [
+      "One explanation might be the loss of dignity displayed through a cheesy grin.&ldquo;Nature gave us lips to conceal our teeth,&rdquo; ran one popular Victorian maxim, aluding to the fact that before the birth of proper dentistry, mouths were often in a shocking state of hygiene. A flashing set of hell y enpl lyiss ledse siperih an e"
+     ]
+    },
+    {
+     "segs": [
+      "A toothy grin (especially when there were gaps or blackened gnashers) lacked class; drunks, tramps, prostiutes and buffoonish music hall performers might gurm and grin with a smile as wide as Lewis Carrol&rsquo;s umexposing Cheshire Cat, but it was not a becoming look for properly bred persons. Even Mark Twain,a man who enjoyed a hearty laugh,said that when it came to phadogpiepoais tedy tniaIs forever\","
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 31,
+     "stem": "<p>According to Paragraph 1,the author&rsquo;s posts on Twitter</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "changed people’s impression of the Victorians"
+      },
+      {
+       "k": "B",
+       "text": "highlighted social media’s role in Victorian studies"
+      },
+      {
+       "k": "C",
+       "text": "re-evaluated the Victorians’ notion of public image"
+      },
+      {
+       "k": "D",
+       "text": "illustrated the development of Victorian photography"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是根据第一段，作者在推特上的帖子产生了什么效果。</p><p>第一段的关键信息如下：</p><ul><li>作者一直在寻找能让我们重新评价过去的照片，特别是维多利亚时代人微笑的照片。</li><li>他把这些照片发到推特上后，引起了很大反响（causing quite a stir）。</li><li>人们看到这些照片后很惊讶，因为照片证明维多利亚时代的人也会玩乐和笑。</li><li>最后一句明确说：<strong>他们注意到，由于我们共同的笑声体验，分隔我们的一百多年似乎消失了，维多利亚时代的人突然变得更像人类了</strong>。</li></ul><p>这清楚地表明，作者的推特帖子<strong>改变了人们对维多利亚时代人的印象</strong>，即他们不再是过去人们以为的那样刻板、严肃、不苟言笑。</p><p>选项分析：</p><ul><li><strong>A. changed people’s impression of the Victorians</strong>（改变了人们对维多利亚时代人的印象）——与原文意思一致。</li><li>B. highlighted social media’s role in Victorian studies（突出了社交媒体在维多利亚时代研究中的作用）——原文没有强调社交媒体的作用，只是提到作者在推特上发帖。</li><li>C. re-evaluated the Victorians’ notion of public image（重新评估了维多利亚时代人的公众形象观念）——原文没有讨论维多利亚时代人自己对公众形象的看法。</li><li>D. illustrated the development of Victorian photography（说明了维多利亚时代摄影的发展）——第一段没有涉及摄影技术的发展。</li></ul><p>因此，正确答案是 <strong>A</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 32,
+     "stem": "<p>What does the author say about the Victorian portraits he has collected?</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "They are in popular use among historians."
+      },
+      {
+       "k": "B",
+       "text": "They are rare among photographs of that age."
+      },
+      {
+       "k": "C",
+       "text": "They mirror 19th-century social conventions."
+      },
+      {
+       "k": "D",
+       "text": "They show effects of different exposure times."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是作者对自己收集的维多利亚时代肖像照的描述。</p><ul><li>原文第一段提到作者一直在寻找维多利亚时代人微笑的照片，并在 Twitter 上分享，引起人们惊讶，说明这类照片并不常见。</li><li>第二段开头明确说：</li></ul><blockquote><p>my collection of &ldquo;smiling Victorians&rdquo; makes up only a tiny percentage of the vast catalogue of photographic portraiture created between 1840 and 1900</p></blockquote><p>这说明在那一时期的照片中，微笑的肖像非常稀少。</p><ul><li>选项 <strong>B</strong> “They are rare among photographs of that age”（它们在那个年代的照片中很罕见）与原文意思一致。</li><li>选项 A 说历史学家中很流行使用，原文未提及；</li><li>选项 C 说反映了 19 世纪社会习俗，虽然相关，但不是作者在此处强调的重点；</li><li>选项 D 说显示了不同曝光时间的效果，这是后文解释为何照片中人们不笑的原因之一，不是作者对这些收藏照片的直接描述。</li></ul><p>因此正确答案是 <strong>B</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 33,
+     "stem": "<p>What might have kept the Victorians from smiling for pictures in the 1890s?</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Their inherent social sensitiveness."
+      },
+      {
+       "k": "B",
+       "text": "Their tension before the camera."
+      },
+      {
+       "k": "C",
+       "text": "Their distrust of new inventions."
+      },
+      {
+       "k": "D",
+       "text": "Their unhealthy dental condion."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是：在 19 世纪 90 年代，可能是什么原因让维多利亚时代的人在拍照时仍然不笑？<br>四个选项分别是：<br>A. 他们天生的社会敏感性<br>B. 他们在相机前的紧张感<br>C. 他们对新发明的不信任<br>D. 他们不健康的牙齿状况</p><hr><p><strong>定位原文信息：</strong><br>文章在第四段提到，到 19 世纪 80 年代曝光时间已经缩短，到 90 年代捕捉笑容相对容易，但维多利亚人仍然不愿意笑。<br>第五段给出解释：</p><ul><li>一个原因是“露出牙齿的笑容有失尊严”。</li><li>引用一句当时的流行格言：“自然给我们嘴唇是为了遮住牙齿”，暗示在牙科卫生尚不发达的年代，人们的口腔卫生状况不佳。</li><li>后面还补充说，牙齿不齐、发黑或缺失的露齿笑显得没有档次，只有醉汉、流浪汉、妓女和小丑才会那样笑，体面人不会这样做。</li></ul><hr><p><strong>分析选项：</strong></p><ul><li>A 选项“天生的社会敏感性”虽然与“有失尊严”有关，但原文明确将原因与<strong>牙齿卫生</strong>直接关联，所以 A 太宽泛。</li><li>B 选项“在相机前紧张”在早期曝光时间长时成立，但 1890 年代技术已改进，不再是主要原因。</li><li>C 选项“对新发明的不信任”文中未提及。</li><li>D 选项“不健康的牙齿状况”与原文“proper dentistry 尚未普及，口腔卫生状况差”完全对应。</li></ul><p>因此正确答案是 <strong>D</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 34,
+     "stem": "<p>Mark Twain is quoted to show that the disapproval of smiles in pictures was</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "a deep-root beief"
+      },
+      {
+       "k": "B",
+       "text": "a misguided atitud"
+      },
+      {
+       "k": "C",
+       "text": "a controversial view"
+      },
+      {
+       "k": "D",
+       "text": "a thought-provoking idea"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>题干定位</strong><br>题目问：引用马克·吐温的话是为了说明<strong>照片中不赞成微笑</strong>是……<br>原文最后一段提到，在维多利亚时代，露齿笑被认为不雅、缺乏尊严，尤其是牙齿不好看的情况下，只有社会底层或滑稽演员才会那样笑。然后引用了马克·吐温的话：“当涉及照相时，一个庄重的面部表情才是永恒的姿态”。</p></li><li><p><strong>马克·吐温的身份与观点作用</strong><br>马克·吐温是著名作家，以幽默著称，但连他都认为在照片中应该保持严肃。这说明<strong>即使在爱笑的人心中，照相不笑也是一种根深蒂固的观念</strong>，而不是一时的偏见或错误看法。</p></li><li><p><strong>选项分析</strong></p><ul><li><strong>A. a deep-rooted belief</strong>（根深蒂固的信念）<br>符合文意，因为马克·吐温的例子说明这种观念深入人心，跨越不同性格的人。</li><li><strong>B. a misguided attitude</strong>（被误导的态度）<br>文中没有强调这是“错误”的，只是陈述历史事实与观念。</li><li><strong>C. a controversial view</strong>（有争议的观点）<br>文中未体现当时对此有广泛争议。</li><li><strong>D. a thought-provoking idea</strong>（发人深思的想法）<br>不符合，因为作者引用他是为了说明普遍观念，而不是为了引发读者思考。</li></ul></li><li><p><strong>结论</strong><br>引用马克·吐温的话是为了表明“不在照片中微笑”在维多利亚时代是一种<strong>深入人心的社会规范</strong>，因此选 <strong>A</strong>。</p></li></ol>",
+     "tags": []
+    },
+    {
+     "n": 35,
+     "stem": "<p>Which of the following questions does the text answer?</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Why did most Victorians look stern in photographs?"
+      },
+      {
+       "k": "B",
+       "text": "Why did the Victorians start to view photographs?"
+      },
+      {
+       "k": "C",
+       "text": "What made photography develop slowly in the Victorian period?"
+      },
+      {
+       "k": "D",
+       "text": "How did smiling in photographs beome a post-Victorian norm?"
+      }
+     ],
+     "explanation": "<p>好的，我们来分析一下这道题。</p><p>题干问的是：<strong>文章回答了以下哪个问题？</strong></p><hr><p><strong>选项分析：</strong></p><p><strong>A. Why did most Victorians look stern in photographs?</strong><br>文章确实解释了原因：</p><ol><li>早期摄影曝光时间长，很难保持微笑（1840s–1850s）。</li><li>即使后来曝光时间缩短（1880s 以后），维多利亚时代的人仍因文化观念（牙齿不美观、微笑有失庄重）而不愿在照片中笑。<br>文章明确给出了这两个原因，所以 <strong>A 是文章回答的问题</strong>。</li></ol><p><strong>B. Why did the Victorians start to view photographs?</strong><br>文章没有讨论维多利亚人为何开始<strong>观看</strong>照片，而是讨论他们拍照时为何不笑。</p><p><strong>C. What made photography develop slowly in the Victorian period?</strong><br>文章提到了早期摄影技术限制（曝光时间长），但并未讨论整个摄影技术在这一时期<strong>发展缓慢</strong>的原因，只是作为不笑的一个原因提及。</p><p><strong>D. How did smiling in photographs become a post-Victorian norm?</strong><br>文章解释了维多利亚时代为何不笑，但没有详细说明<strong>维多利亚时代之后</strong>微笑如何成为常态，只是暗示随着技术进步和牙科发展可能改变，但这不是文章主要回答的问题。</p><hr><p><strong>结论：</strong><br>文章的核心内容就是解释<strong>为什么维多利亚时代照片中的人大多表情严肃</strong>，因此正确答案是 <strong>A</strong>。</p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-4",
+   "label": "阅读 Text 4",
+   "title": "Text 4",
+   "heading": null,
+   "type": "choice",
+   "points": 10,
+   "directions": "",
+   "passage": [
+    {
+     "segs": [
+      "From the early days of broadband, advocates for consumers and web-based companies worried that the cable and phone companies selling broadband connections had the power and incentive to favor their own or their partners&rsquo;websites and services over those of their rivals. That&rsquo;s why there has been such a strong demand for rules that would prevent broadband providers from picking winners and losers online, preserving the freedom and innovation that have been the lifeblood of the internet."
+     ]
+    },
+    {
+     "segs": [
+      "Yet that demand has been almost impossible to fil-l in par&rsquo; because of pushback from broadband providers, anti-regulatory conservatives and the courts,A federal appeals court weighed in again Tuesday, but instead of providing a badly needed resolution, it only prolonged the fight. At issue before the U.S. Court of Appeals for the District of Columbia Circuit was the latest take of the Federal Communications Commission on net neutrality, adopted on a party-line vote in 2017.The Republican-penned order not only eliminated the strict net neutrality rules the FCC had adopted when it had a Democratic majority in 2015,but rejected the commission&rsquo;s authority to require broadband providers to do much of anything. The order also declared that state and ocal governments couldn&rsquo;t regulate broadband providers either."
+     ]
+    },
+    {
+     "segs": [
+      "The commission argued that other agencies would protect against anti-competitive behavior, such as a broadband-providing conglomerate like AT&amp;T favoring its own video-streaming service at the expense of Netlix and Apple TV. Yet the FCC also ended the investigations of broadband providers that imposed data caps on their rivals&rsquo; streaming services but not their own."
+     ]
+    },
+    {
+     "segs": [
+      "On Tuesday, the appeals court unanimously upheld the 2017 order deregulating broadband providers, citing a Supreme Court ruling from 2005that upheld a similarly deregulatory move. But Judge Patricia Millet rightly argued in a concurring opinion that &ldquo;the result is unhinged from the realities of modern broadband service, and said Congress or the Supreme Court could intervene to &ldquo;avoid trapping Internet regulation in technological anachronism.&rdquo;"
+     ]
+    },
+    {
+     "segs": [
+      "In the meantime,the court threw out the FCC&rsquo;s attempt to block all state rules on net neutrality,while preserving the commission&rsquo;s power to pre-empt individual state laws that undermine its order.That means more battles like the one now going on between the Justice Department and California, which enacted a tough net neutrality law in the wake of the FCC&rsquo;s abdication."
+     ]
+    },
+    {
+     "segs": [
+      "The endless legal battles and back-and-forth at the FCC cry out for Congress to act. It needs to give the commission explicit authority once and for all to bar broadband providers from meddling in the traffic on their network and to create clear rules protecting openness and innovation online."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 36,
+     "stem": "<p>There has long been concern that broadband provides would</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "bring web-based firms under control"
+      },
+      {
+       "k": "B",
+       "text": "slow down the traffic on their network"
+      },
+      {
+       "k": "C",
+       "text": "show partiality in treating clients"
+      },
+      {
+       "k": "D",
+       "text": "intensify competition with their rivals"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问：“长期以来一直存在担忧，宽带提供商会______。”<br>四个选项分别是：<br>A. 控制网络公司<br>B. 减慢其网络上的流量<br>C. 在对待客户时偏袒<br>D. 加剧与对手的竞争</p><hr><p><strong>定位原文：</strong><br>第一段第一句：</p><blockquote><p>From the early days of broadband, advocates for consumers and web-based companies worried that the cable and phone companies selling broadband connections had the power and incentive to favor their own or their partners&rsquo; websites and services over those of their rivals.</p></blockquote><p>意思是：<br>从宽带早期开始，消费者和网络公司的倡导者就担心，宽带提供商有能力和动机去<strong>偏爱自己或合作伙伴的网站和服务</strong>，而不是竞争对手的。</p><hr><p><strong>分析选项：</strong></p><ul><li>A 项 “bring web-based firms under control” 文中并未说宽带提供商要控制这些公司，而是说在流量或服务上优待自己的业务。</li><li>B 项 “slow down the traffic” 虽然属于网络中立性可能禁止的行为之一，但原文强调的是“偏爱”（favor）某些服务而非普遍降速。</li><li>C 项 “show partiality in treating clients” 正是原文 “favor their own or their partners&rsquo;&mldr; over those of their rivals” 的同义转述，即“偏袒”。</li><li>D 项 “intensify competition with their rivals” 文中并未强调宽带提供商与对手竞争加剧，而是担心它们利用网络控制权扭曲竞争。</li></ul><hr><p><strong>因此正确答案是 C。</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 37,
+     "stem": "<p>Faced with the demand for net neutrality rules, he FCC</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "sticks to an out-of-date order"
+      },
+      {
+       "k": "B",
+       "text": "takes an anti-regulatory.stance"
+      },
+      {
+       "k": "C",
+       "text": "has issued a special resolution"
+      },
+      {
+       "k": "D",
+       "text": "has allowed the states to intervene"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是：面对网络中立性规则的要求，FCC（联邦通信委员会）采取了什么立场？</p><ol><li><p><strong>定位关键信息</strong><br>文章第二段提到，FCC 在 2017 年通过了一项按党派投票的“共和党起草的命令”（Republican-penned order），该命令不仅废除了 2015 年民主党多数时采用的严格网络中立规则，还拒绝了 FCC 要求宽带提供商做任何事情的权力。</p></li><li><p><strong>理解 FCC 的立场</strong><br>从这些描述可以看出，FCC 在 2017 年的决定是<strong>放松管制（deregulate）</strong>，并且拒绝继续对宽带提供商施加网络中立性规则。这明显是一种<strong>反对监管（anti-regulatory）</strong> 的立场。</p></li><li><p><strong>排除其他选项</strong></p><ul><li>A 项（坚持过时的命令）：虽然文中提到法官批评该决定“脱离现代宽带服务的现实”，但 FCC 本身并没有明确“坚持过时命令”，而是主动采取了放松管制的立场。</li><li>C 项（发布了特别决议）：FCC 确实发布了命令，但这不是“特别决议”，而是废除网络中立规则的决定，且与题目强调的“面对要求时的立场”不符。</li><li>D 项（允许各州干预）：FCC 实际上试图阻止各州制定网络中立规则，只是法院部分驳回了这一企图，因此 D 项与事实不符。</li></ul></li><li><p><strong>结论</strong><br>根据文章，FCC 在 2017 年采取了<strong>放松管制、反对网络中立规则</strong>的立场，因此 <strong>B 项（采取反监管立场）</strong> 是正确答案。</p></li></ol>",
+     "tags": []
+    },
+    {
+     "n": 38,
+     "stem": "<p>What can be learned about AT&amp;T from Paragraph 3?</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "It protects against unfair competition"
+      },
+      {
+       "k": "B",
+       "text": "It engages in anti-competitive practices."
+      },
+      {
+       "k": "C",
+       "text": "It is under the FCC&rsquo;S investigation."
+      },
+      {
+       "k": "D",
+       "text": "It is in pursuit of quality service."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目要求从第 3 段中了解关于 AT&amp;T 的信息。第 3 段原文如下：</p><blockquote><p>The commission argued that other agencies would protect against anti-competitive behavior, such as a broadband-providing conglomerate like AT&amp;T favoring its own video-streaming service at the expense of Netflix and Apple TV. Yet the FCC also ended the investigations of broadband providers that imposed data caps on their rivals&rsquo; streaming services but not their own.</p></blockquote><p><strong>关键信息分析：</strong></p><ul><li>文中提到，FCC 声称其他机构会防止“反竞争行为”，并举例说明：像 AT&amp;T 这样的宽带提供商会<strong>偏袒自己的视频流媒体服务</strong>，而损害 Netflix 和 Apple TV 的利益。</li><li>这个例子是作为“反竞争行为”的典型出现的，因此 AT&amp;T 的行为属于 <strong>anti-competitive practices</strong>。</li><li>虽然 FCC 声称其他机构会监管，但紧接着说 FCC 自己却<strong>停止了对这类行为的调查</strong>，说明 AT&amp;T 实际上并未受到制约。</li></ul><p><strong>选项分析：</strong></p><ul><li><strong>A. It protects against unfair competition</strong> ❌（与文中描述相反，AT&amp;T 是实施不公平竞争的一方）</li><li><strong>B. It engages in anti-competitive practices.</strong> ✅（与举例内容完全一致）</li><li><strong>C. It is under the FCC&rsquo;s investigation.</strong> ❌（文中明确说 FCC 已停止调查）</li><li><strong>D. It is in pursuit of quality service.</strong> ❌（文中未提及，且与偏袒自身服务的行为不符）</li></ul><p><strong>因此正确答案是 B。</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 39,
+     "stem": "<p>Judge Patricia Millet argues that the appeals court&rsquo;s decision</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "focuses on trivialities"
+      },
+      {
+       "k": "B",
+       "text": "conveys an ambiguous message"
+      },
+      {
+       "k": "C",
+       "text": "is at odds with its earier rlings"
+      },
+      {
+       "k": "D",
+       "text": "is out of touch with reality"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>根据题干关键词 <strong>Judge Patricia Millet</strong> 定位到文章第四段：</p><blockquote><p>But Judge Patricia Millet rightly argued in a concurring opinion that <strong>&ldquo;the result is unhinged from the realities of modern broadband service&rdquo;</strong> &mldr;</p></blockquote><ul><li><strong>unhinged from the realities</strong> 意思是“与现实脱节”，也就是 <strong>out of touch with reality</strong>。</li><li>选项 <strong>D. is out of touch with reality</strong> 与此完全对应。</li></ul><p>其他选项分析：</p><ul><li><strong>A. focuses on trivialities</strong>（关注琐碎问题）—— 文中未提。</li><li><strong>B. conveys an ambiguous message</strong>（传达了模糊的信息）—— 未提及。</li><li><strong>C. is at odds with its earlier rulings</strong>（与早期裁决不一致）—— 文中提到最高法院 2005 年的裁决支持放松管制，但 Millet 并未说上诉法院的裁决与之前不一致，而是说它与现代宽带服务的现实脱节。</li></ul><p>因此正确答案是 <strong>D</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 40,
+     "stem": "<p>What does the author argue in the last paragraph?</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Congress needs to take action to ensure net neutrality."
+      },
+      {
+       "k": "B",
+       "text": "The FCC should be put under strict supervision."
+      },
+      {
+       "k": "C",
+       "text": "Rules need to be set to diversify online services."
+      },
+      {
+       "k": "D",
+       "text": "Broadband providers&rsquo; rights should be protected."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>题干定位</strong><br>题目问的是作者在最后一段的论点（What does the author argue in the last paragraph?），因此需要重点分析最后一段的内容。</p></li><li><p><strong>最后一段原文</strong></p><blockquote><p>The endless legal battles and back-and-forth at the FCC cry out for Congress to act. It needs to give the commission explicit authority once and for all to bar broadband providers from meddling in the traffic on their network and to create clear rules protecting openness and innovation online.</p></blockquote></li><li><p><strong>关键信息提取</strong></p><ul><li>“cry out for Congress to act” → 呼吁国会采取行动。</li><li>“give the commission explicit authority … to bar broadband providers from meddling in the traffic” → 授予 FCC 明确权力，禁止宽带提供商干涉网络流量。</li><li>“create clear rules protecting openness and innovation online” → 制定清晰规则，保护网络的开放与创新。</li></ul></li><li><p><strong>与选项匹配</strong></p><ul><li><strong>A. Congress needs to take action to ensure net neutrality.</strong><br>与原文“呼吁国会行动”“制定规则保护开放与创新”一致，这里的“开放与创新”就是网络中立性的目标。</li><li>B. FCC 应被严格监督 → 未提及。</li><li>C. 制定规则使在线服务多样化 → 原文强调禁止宽带公司干涉流量，而不是多样化服务。</li><li>D. 宽带提供商权利应受保护 → 与作者立场相反，作者是限制它们的权力。</li></ul></li><li><p><strong>结论</strong><br>最后一段的核心是呼吁国会立法，明确 FCC 的权力，确保网络中立性，因此正确答案是 <strong>A</strong>。</p></li></ol>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-b",
+   "label": "新题型",
+   "title": "Part B",
+   "heading": null,
+   "type": "match",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>In the following text, some sentences have been removed. For questions 41-45, choose the most suitable one from the list A-G to fit into each of numbered blanks. There are two extra choices, which do not fit in any of the blanks. Mark your answers on the ANSWER SHEET. (10 points)</p>",
+   "body": "<p>In the movies and on television, artificial intelligence (AI) is typically depicted as something sinister that will upend our way of life. When it comes to AI in business, we often hear about it in relation to automation and the impending loss of jobs, but in what ways is AI changing companies and the larger economy that don&rsquo;t involve doom-and-gloom mass unemployment predictions?</p><p>A recent survey of manufacturing and service industries from Tata Consultancy Services found that companies currently use AI more often in computer-to-computer activities than in automating human activities. One common application? Preventing electronic security breaches, which, rather than eliminating IT jobs, actually makes those personnel more valuable to employers, because they help firms prevent hacking attempts.</p><p>Here are a few other ways AI is aiding companies without replacing employees:</p><p><strong>Better Hiring Practices</strong></p><p>Companies are using artificial intelligence to remove some of the unconscious bias from hiring decisions. &ldquo;There are experiments that show that, naturally, the results of interviews are much more biased than what AI does,&rdquo; says Domingos. In addition, (41) ___________\nOne company that&rsquo;s doing this is called Blendoor, it uses analytics to help identify where there may be bias in the hiring process.</p><p><strong>More Effective Marketing</strong></p><p>Some AI software can analyze and optimize marketing email subject lines to increase open rates. One company in the UK, Phrasee, claims their software can outperform humans by up to 10 percent when it comes to email open rates. This can mean millions more in revenue. (42) ___________\nThese are &ldquo;tools that help people use data, not a replacement for people,&rdquo; says Patrick H. Winston, a professor of artificial intelligence and computer science at MIT.</p><p><strong>Saving Customers Money</strong></p><p>Energy companies can use AI to help customers reduce their electricity bills, saving them money while helping the environment. Companies can also optimize their own energy use and cut down on the cost of electricity. Insurance companies, meanwhile, can base their premiums on AI models that more accurately access risk. (43) ___________</p><p><strong>Improved Accuracy</strong></p><p>&ldquo;Machine learning often provides a more reliable form of statistics, which makes data more valuable,&rdquo; says Winston. It &ldquo;helps people make smarter decisions.&rdquo; (44) ___________</p><p><strong>Protecting and Maintaining Infrastructure</strong></p><p>A number of companies, particularly in energy and transportation, use AI image processing technology to inspect infrastructure and prevent equipment failure or leaks before they happen. &ldquo;If they fail first and then you fix them, it&rsquo;s very expensive,&rdquo; says Domingos. &ldquo;(45) ___________</p>",
+   "solution": "<p><strong>41. 答案：G</strong><br><strong>考查知识点：</strong> 上下文逻辑衔接 + 内容一致性</p><p><strong>解析：</strong></p><ul><li>本段小标题为“Better Hiring Practices”，核心内容是人工智能在招聘中减少偏见、提升公平性。</li><li>空格前提到“实验表明，面试结果比人工智能更容易产生偏见”，说明人工智能在招聘中更公正。</li><li>选项【G】进一步说明人工智能可以“查看更多简历，筛选出更具潜力的求职者”，即基于能力而非偏见进行筛选，与上文逻辑一致，且与下文的例子“Blendoor公司利用分析技术识别招聘偏见”相呼应。</li><li>因此，【G】项填入此处，语义连贯，内容贴切。</li></ul><hr><p><strong>42. 答案：C</strong><br><strong>考查知识点：</strong> 上下文逻辑衔接 + 代词指代 + 内容一致性</p><p><strong>解析：</strong></p><ul><li>本段小标题为“More Effective Marketing”，核心内容是人工智能在营销中的应用。</li><li>空格前提到一家公司利用人工智能优化邮件主题行，提升打开率，带来收入增长。</li><li>选项【C】以“There are also companies&mldr;”开头，引出另一家公司“Acquisio”分析广告投放效果并优化，与上文形成并列，共同说明人工智能在营销中的多样化应用。</li><li>空格后引用专家观点“这些是帮助人们使用数据的工具”，其中“这些工具”可指代上文提到的AI软件及【C】项中的分析工具，语义衔接自然。</li><li>因此，【C】项填入此处，内容一致，逻辑合理。</li></ul><hr><p><strong>43. 答案：E</strong><br><strong>考查知识点：</strong> 语义一致性 + 代词指代</p><p><strong>解析：</strong></p><ul><li>本段小标题为“Saving Customers Money”，核心内容是人工智能帮助客户节省开支。</li><li>空格前提到保险公司利用人工智能模型更准确地评估风险，从而设定保费。</li><li>选项【E】以“They used to&mldr;”开头，描述过去保险公司设定保费时“要么过高损害客户利益，要么过低损害自身利益”，与上文形成今昔对比，凸显人工智能在精准定价、实现双赢方面的作用。</li><li>代词“They”指代前一句的“Insurance companies”，指代清晰，语义连贯。</li><li>因此，【E】项填入此处，符合段落主旨，衔接自然。</li></ul><hr><p><strong>44. 答案：B</strong><br><strong>考查知识点：</strong> 上下文逻辑衔接 + 词义复现</p><p><strong>解析：</strong></p><ul><li>本段小标题为“Improved Accuracy”，核心内容是人工智能提升数据和决策的准确性。</li><li>空格前提到“机器学习提供更可靠的统计数据，帮助人们做出更明智的决策”。</li><li>选项【B】以安永会计师事务所为例，说明人工智能辅助合同审查，使审计“更快、更准确”，直接呼应小标题“Improved Accuracy”和上文的“more reliable”。</li><li>该项作为具体例证，进一步说明人工智能如何提升准确性和效率，与上下文逻辑一致。</li><li>因此，【B】项填入此处，内容契合，语义连贯。</li></ul><hr><p><strong>45. 答案：D</strong><br><strong>考查知识点：</strong> 语义一致性 + 上下文逻辑衔接</p><p><strong>解析：</strong></p><ul><li>本段小标题为“Protecting and Maintaining Infrastructure”，核心内容是人工智能在基础设施维护中的应用。</li><li>空格前提到“如果设备先出故障再修复，成本会非常高”，强调事后维修的弊端。</li><li>选项【D】描述利用人工智能“预测需要立即关注的问题”，并“指引员工采取有益行动”，与上文形成对比，突出人工智能在预防性维护中的优势。</li><li>该项内容直接呼应小标题，说明人工智能如何提前发现问题、避免损失，逻辑衔接合理。</li><li>因此，【D】项填入此处，语义一致，内容贴切。</li></ul>",
+   "numbers": [
+    41,
+    42,
+    43,
+    44,
+    45
+   ],
+   "letters": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G"
+   ],
+   "answers": [
+    "G",
+    "C",
+    "E",
+    "B",
+    "D"
+   ]
+  },
+  {
+   "id": "translation",
+   "label": "翻译",
+   "title": "Part C",
+   "heading": null,
+   "type": "free",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>Read the following text carefully and then translate the underlined segments into Chinese. Your translation should be written neatly on the ANSWER SHEET. (10 points)</p>",
+   "body": "<p>World War II was the watershed event for higher education in modern western societies. (46)\n<u>Those societies came out of the war with levels of enrollment that had been roughly constant at 3-5% of the relevant age groups during the decades before the war.</u>\nBut after the war, great social and political changes arising out of the successful war against Fascism created a growing demand in European and American economies for increasing numbers of graduates with more than a secondary school education. (47)\n<u>And the demand that rose in those societies for entry to higher education extended to groups and social classes that had not thought of attending to a university before the war.</u>\nThese demands resulted in a very rapid expansion of the systems of higher education, beginning in the 1960s and developing very rapidly though unevenly in the 1970s and 1980s.</p><p>The growth of higher education manifests itself in at least three quite different ways, and these in turn have given rise to different sets of problems. There was first the rate of growth: (48)\n<u>in many countries of Western Europe the numbers of students in higher education doubled within five-year periods during the decade of the 1960s and doubled again in seven, eight, or 10 years by the middle of the 1970s.</u>\nSecond, growth obviously affected the absolute size both of systems and individual institutions. And third, growth was reflected in changes in the proportion of the relevant age group enrolled in institutions of higher education.</p><p>Each of these manifestations of growth carried its own peculiar problems in its wake. For example, a high growth rate placed great strains on the existing structures of governance, of administration, and above all of socialization. When a very large proportion of all the members of an institution are new recruits, they threaten to overwhelm the processes whereby recruits to a more slowly growing system are inducted into its value system and learn its norms and forms. When a faculty or department grows from, say, five to 20 members within three or four years, (49)\n<u>and when the new staff are predominantly young men and women fresh from postgraduate study, they largely define the norms of academic life in that faculty.</u>\nAnd if the postgraduate student population also grows rapidly and there is loss of a close apprenticeship relationship between faculty members and students, the student culture becomes the chief socializing force for new postgraduate students, with consequences for the intellectual and academic life of the institution—this was seen in America as well as in France, Italy, West Germany, and Japan. (50)\n<u>High growth rates increased the chances for academic innovation; they also weakened the forms and processes by which teachers and students are admitted into a community of scholars during periods of stability or slow growth.</u>\nIn the 1960s and 1970s, European universities saw marked changes in their governance arrangements, with the empowerment of junior faculty and to some degree of students as well. They also saw higher levels of student discontent, reflecting the weakening of traditional forms of academic communities.</p>",
+   "solution": "<p><strong>46. 战争刚刚结束时，这些社会的适龄群体入学率为3%-5%，这是战前几十年间基本保持恒定的水平。</strong></p><p><strong>【解析】</strong></p><ul><li><strong>句子结构</strong>：本句主干为“Those societies came out of the war”。“with levels of enrollment&mldr;”作伴随状语，其中包含一个由“that”引导的定语从句，修饰“levels of enrollment”。</li><li><strong>翻译要点</strong>：<ul><li>“come out of the war”译为“战争刚刚结束时”，点明时间背景。</li><li>定语从句“that had been roughly constant&mldr;”信息量较大，采用分译法，单独译为一个小句“这是战前几十年间基本保持恒定的水平”，使句子更流畅。</li><li>“relevant age groups”译为“适龄群体”，符合中文表达习惯。</li><li>“constant”在此语境下强调“稳定不变”，译为“恒定的”能准确传达原文含义。</li></ul></li></ul><hr><p><strong>47. 这些社会中，人们对接受高等教育的需求越来越高，甚至蔓延到了战前从未想过上大学的群体和社会阶层。</strong></p><p><strong>【解析】</strong></p><ul><li><strong>句子结构</strong>：本句主干为“the demand extended to groups and social classes”。主语“demand”后接两个修饰成分：“that rose in those societies”定语从句和“for entry to higher education”介词短语作定语。宾语“groups and social classes”后接“that had not thought of&mldr;”定语从句。</li><li><strong>翻译要点</strong>：<ul><li>将“the demand that rose in those societies for entry to higher education”这一复杂主语拆解，先译出“这些社会中，人们对接受高等教育的需求越来越高”，符合中文先交代背景再说明主体的表达习惯。</li><li>“extended to”本义为“延伸至”，此处引申译为“蔓延至”，生动体现了需求范围的扩大。</li><li>将“that had not thought of&mldr;”定语从句前置，译为“战前从未想过上大学的”，简洁明了。</li></ul></li></ul><hr><p><strong>48. 在许多西欧国家，高校学生人数在20世纪60年代每5年便翻一番，到70年代中期，这一人数在7、8或10年内又翻了一番。</strong></p><p><strong>【解析】</strong></p><ul><li><strong>句子结构</strong>：本句主干为“the numbers of students&mldr;doubled&mldr;and doubled again&mldr;”，包含两个并列的谓语结构。</li><li><strong>翻译要点</strong>：<ul><li>“within five-year periods during the decade of the 1960s”中的“five-year periods”为复数，结合“during the 1960s”，应理解为“在20世纪60年代这段时期内，每5年”作为一个周期，因此译为“每5年”。</li><li>“by the middle of the 1970s”表示到某个时间点为止，译为“到70年代中期”。</li><li>第二个“doubled”的时间状语“in seven, eight, or 10 years”承接前文，译为“在7、8或10年内”。</li></ul></li></ul><hr><p><strong>49. 且当新进教员主要是刚从研究生院毕业的青年男女时，他们会在很大程度上决定该院系的学术生活规范。</strong></p><p><strong>【解析】</strong></p><ul><li><strong>句子结构</strong>：本句是“when&mldr;, they&mldr;”结构的时间状语从句。主句主干为“they define the norms&mldr;”。</li><li><strong>翻译要点</strong>：<ul><li>“new staff”在此上下文中指新入职的教员，译为“新进教员”。</li><li>“fresh from postgraduate study”作后置定语，翻译时前置，译为“刚从研究生院毕业的”。</li><li>“define”本意为“定义”，在此引申为“决定、塑造”更符合语境。</li><li>“faculty”根据上文“a faculty or department”的并列关系，此处译为“院系”。</li></ul></li></ul><hr><p><strong>50. 高增长率增加了学术创新的可能性；同时也弱化了在稳定期或缓慢增长期，教师和学生获准加入某学者团体所需的形式和流程。</strong></p><p><strong>【解析】</strong></p><ul><li><strong>句子结构</strong>：本句由分号连接两个并列分句。第二个分句中，“by which”引导定语从句修饰“the forms and processes”。</li><li><strong>翻译要点</strong>：<ul><li>保留分号结构，第二个分句前增译“同时”以增强连贯性，并省略重复的主语“they”。</li><li>将“by which”引导的定语从句“teachers and students are admitted into a community of scholars during periods of stability or slow growth”提前，译为“在稳定期或缓慢增长期，教师和学生获准加入某学者团体所需的”，作为“形式和流程”的修饰语，使中文表达更通顺。</li><li>“a community of scholars”译为“学者团体”。</li><li>“are admitted into”译为“获准加入”，准确表达了师生需要经过一定程序才能融入学术圈的含义。</li></ul></li></ul>",
+   "numbers": [
+    46,
+    50
+   ]
+  },
+  {
+   "id": "writing-a",
+   "label": "小作文",
+   "title": "Part A",
+   "heading": "Section III  Writing",
+   "type": "free",
+   "points": 10,
+   "directions": "",
+   "body": "<p><strong>Directions</strong></p><p>One foreign friend of yours has recently graduated from college and intends to find a job in China. Please write an email to him/her to make some suggestions.</p><p>You should write about 100 words on the ANSWER SHEET.</p><p>Do not use your own name in the email. Use “Li Ming” instead. (10 points)</p>",
+   "solution": "<p><strong>【写作思路解析】</strong></p><p><strong>一、行文思路</strong></p><ol><li><strong>首段</strong>：表达祝贺，点明写作目的——为对方在华求职提供建议。</li><li><strong>主体段</strong>：分条列举具体可行的求职建议。</li><li><strong>结尾段</strong>：表达祝愿，传递友好期待。</li></ol><p><strong>二、范文</strong></p><p>Dear Friend,</p><p>Congratulations on your graduation! I&rsquo;m delighted to hear you plan to pursue a career in China. Here are some suggestions that might help.</p><p>First, clarify your career direction by considering your education, strengths, and interests. Then, research industries and companies that match your goals. Second, make use of recruitment websites—including those tailored for foreigners in China—to find job openings and submit applications online. Third, remember to apply for a post-study work visa, which is essential for working legally in China.</p><p>I hope these tips are useful. Wishing you every success in your job search!</p><p>Yours sincerely,<br>Li Ming</p><p><strong>三、篇章结构分析</strong></p><ul><li><p><strong>首段（2句）</strong><br>首句表达祝贺，次句表明来信目的，自然引出下文建议。</p></li><li><p><strong>主体段（4句）</strong><br>采用“首先—其次—最后”结构，分别提出三项建议：</p><ol><li>明确职业方向，做好信息搜集；</li><li>利用招聘网站（包括外籍人士专用平台）获取信息并投递简历；</li><li>办理工作签证，强调其必要性。</li></ol></li><li><p><strong>结尾段（1句）</strong><br>以祝愿作结，简洁有力，体现友好关怀。</p></li></ul>",
+   "numbers": [
+    51
+   ]
+  },
+  {
+   "id": "writing-b",
+   "label": "大作文",
+   "title": "Part B",
+   "heading": null,
+   "type": "free",
+   "points": 20,
+   "directions": "",
+   "body": "<p><strong>Directions</strong></p><p>Write an essay of 160 - 200 words based on the pictures below. In your essay, you should</p><ol><li><p>describe the picture briefly,</p></li><li><p>interpret its intended meaning, and</p></li><li><p>give your comments.</p></li></ol><p>You should write neatly on the ANSWER SHEET. (20 points) </p><p>（图中左侧小女孩（穿戏服、拿长杆）说：“爸爸，很多同学觉得学唱戏不好玩。”右侧成年男子（着简约服饰、手抬起）回应：“你自己不是喜欢吗？那就足够了。”）</p><img src=\"/api/exams/assets/e1_2021_52.png\" alt=\"\">",
+   "solution": "<p><strong>【行文思路】</strong></p><ol><li><strong>第一段</strong>：简要描述图片内容。</li><li><strong>第二段</strong>：揭示图片寓意，展开分析论证。</li><li><strong>第三段</strong>：总结观点，发出呼吁。</li></ol><hr><p><strong>【范文】</strong></p><p>① In the picture, a girl dressed in traditional opera costume tells her father that many classmates find learning opera uninteresting. Her father encouragingly replies, “Aren’t you yourself fond of it? That is all that matters.”</p><p>② The illustration conveys a meaningful message: we should pursue our passions regardless of others&rsquo; opinions. ③ The true value of a hobby or dream lies not in pleasing others, but in enriching our own lives. ④ Therefore, there is no need to hesitate in doing what we love simply due to external judgment. ⑤ Admittedly, constructive advice can aid our growth. ⑥ However, if we are easily swayed by biased or casual remarks, we risk losing control of our own path.</p><p>⑦ In summary, having a unique interest is nothing to be ashamed of. ⑧ As the saying goes, “Different strokes for different folks.” ⑨ Rather than blindly following the crowd, we should have the courage to stay true to what we genuinely love.</p><hr><p><strong>【篇章结构解析】</strong></p><ul><li><p><strong>第一段（2句）</strong>：<br>①句间接引述女孩的话，②句直接引用父亲的回应，形成自然对话顺序，生动呈现图片场景。</p></li><li><p><strong>第二段（4句）</strong>：<br>②句点明图片寓意，引出核心观点。③④句通过因果逻辑（“lies not in…but in…”，“Therefore…”）正面阐释观点。⑤⑥句采用让步转折结构（“Admittedly…However…”），并引入条件假设（“if we…”），增强论证深度。</p></li><li><p><strong>第三段（3句）</strong>：<br>⑦句总结观点，⑧句引用俗语补充理由，⑨句通过取舍结构（“Rather than…we should…”）发出积极呼吁，强化主题。</p></li></ul>",
+   "numbers": [
+    52
+   ]
+  }
+ ]
+}

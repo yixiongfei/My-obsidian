@@ -1,0 +1,1384 @@
+{
+ "id": "english1-2014",
+ "kind": "english1",
+ "kindLabel": "英语一",
+ "group": "english",
+ "year": 2014,
+ "title": "2014 年真题",
+ "source": "https://www.csgraduates.com/study_methods/english/english1/2014/",
+ "fetchedAt": "2026-09-11T17:46:08.017Z",
+ "sections": [
+  {
+   "id": "cloze",
+   "label": "完形填空",
+   "title": "完形填空",
+   "heading": "Section I  Use of English",
+   "type": "choice",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>Read the following text. Choose the best word(s) for each numbered blank and mark A, B, C or D on the ANSWER SHEET. (10 points)</p>",
+   "passage": [
+    {
+     "segs": [
+      "As many people hit middle age, they often start to notice that their memory and mental clarity are not what they used to be. We suddenly can&rsquo;t remember\n",
+      {
+       "n": 1
+      },
+      "\nwe put the keys just a moment ago, or an old acquaintance&rsquo;s name, or the name of an old band we used to love. As the brain\n",
+      {
+       "n": 2
+      },
+      "\n, we refer to these occurrences as &ldquo;senior moments.&rdquo;\n",
+      {
+       "n": 3
+      },
+      "\nseemingly innocent, this loss of mental focus can potentially have an\n",
+      {
+       "n": 4
+      },
+      "\nimpact on our professional, social, and personal\n",
+      {
+       "n": 5
+      },
+      "\n."
+     ]
+    },
+    {
+     "segs": [
+      "Neuroscientists, experts who study the nervous system, are increasingly showing that there&rsquo;s actually a lot that can be done. It\n",
+      {
+       "n": 6
+      },
+      "\nout that the brain needs exercise in much the same way our muscles do, and the right mental\n",
+      {
+       "n": 7
+      },
+      "\ncan significantly improve our basic cognitive\n",
+      {
+       "n": 8
+      },
+      "\n. Thinking is essentially a\n",
+      {
+       "n": 9
+      },
+      "\nof making connections in the brain. To a certain extent, our ability to\n",
+      {
+       "n": 10
+      },
+      "\nin making the connections that drive intelligence is inherited.\n",
+      {
+       "n": 11
+      },
+      "\n, because these connections are made through effort and practice, scientists believe that intelligence can expand and fluctuate\n",
+      {
+       "n": 12
+      },
+      "\nmental effort."
+     ]
+    },
+    {
+     "segs": [
+      "Now, a new Web-based company has taken it a step\n",
+      {
+       "n": 13
+      },
+      "\nand developed the first &ldquo;brain training program&rdquo; designed to actually help people improve their mental\n",
+      {
+       "n": 14
+      },
+      "\n."
+     ]
+    },
+    {
+     "segs": [
+      "The Web-based program\n",
+      {
+       "n": 15
+      },
+      "\nyou to systematically improve your memory and attention skills. The program keeps\n",
+      {
+       "n": 16
+      },
+      "\nof your progress and provides detailed feedback\n",
+      {
+       "n": 17
+      },
+      "\nyour performance and improvement. Most importantly, it\n",
+      {
+       "n": 18
+      },
+      "\nmodifies and enhances the games you play to\n",
+      {
+       "n": 19
+      },
+      "\non the strengths you are developing—much like a(n)\n",
+      {
+       "n": 20
+      },
+      "\nexercise routine requires you to increase resistance and vary your muscle use."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 1,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "why"
+      },
+      {
+       "k": "B",
+       "text": "when"
+      },
+      {
+       "k": "C",
+       "text": "that"
+      },
+      {
+       "k": "D",
+       "text": "where"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>第 1 题考查的是宾语从句的引导词。</p><p>句子结构是：</p><blockquote><p>We suddenly can’t remember ______ we put the keys just a moment ago.</p></blockquote><p>这里 “we put the keys” 是一个完整的句子，缺少的是表示<strong>地点</strong>的状语，即“把钥匙放在哪里”。</p><ul><li>A. why（为什么） → 不符合语境，不是问原因。</li><li>B. when（何时） → 时间上已经给出 “just a moment ago”，不需要再用 when 重复。</li><li>C. that（无实义） → 放入后句子变成 “remember that we put the keys”，逻辑上缺地点信息，句意不完整。</li><li>D. where（在哪里） → 符合语境，表示不记得刚才把钥匙放在<strong>何处</strong>。</li></ul><p>因此正确答案是 <strong>D. where</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 2,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "improves"
+      },
+      {
+       "k": "B",
+       "text": "fades"
+      },
+      {
+       "k": "C",
+       "text": "collapses"
+      },
+      {
+       "k": "D",
+       "text": "recovers"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 2 题题干为：</p><blockquote><p>As the brain ______, we refer to these occurrences as &ldquo;senior moments.&rdquo;</p></blockquote><p>四个选项：<br>A. improves（改善）<br>B. fades（衰退，变弱）<br>C. collapses（崩溃）<br>D. recovers（恢复）</p><p><strong>解题思路：</strong></p><ol><li>前文提到，人到了中年，记忆力和思维清晰度不如从前，经常忘记钥匙、熟人名字等。</li><li>这种记忆力和思维能力的下降，被称作“senior moments”（老年时刻），说明是大脑功能<strong>衰退</strong>的表现。</li><li>“fades” 可以表示（能力、记忆力等）逐渐减弱，符合上下文语义。</li><li>“improves” 和 “recovers” 与文意相反；“collapses” 程度过重，不符合“senior moments”这种轻微、常见的记忆下降现象。</li></ol><p>因此，正确答案是 <strong>B. fades</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 3,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "While"
+      },
+      {
+       "k": "B",
+       "text": "Unless"
+      },
+      {
+       "k": "C",
+       "text": "Once"
+      },
+      {
+       "k": "D",
+       "text": "If"
+      }
+     ],
+     "explanation": "<p>好的，我们先看第 3 题的上下文。</p><p>原文是：</p><blockquote><p>As the brain ____, we refer to these occurrences as &ldquo;senior moments.&rdquo; ____ seemingly innocent, this loss of mental focus can potentially have an ____ impact on our professional, social, and personal ____.</p></blockquote><p>第 3 题的空位于 “____ seemingly innocent, this loss of mental focus can potentially have an ____ impact&mldr;”</p><p><strong>句子结构分析</strong>：<br>前半部分说 “seemingly innocent” （看起来无害），<br>后半部分说 “can potentially have an impact” （可能产生很大的影响）。<br>显然，这里需要一个表示 <strong>让步</strong> 或 <strong>转折</strong> 的逻辑关系，即 “虽然看起来无害，但实际上可能影响很大”。</p><p><strong>选项分析</strong>：</p><ul><li>A. While → 可以表示 “虽然”，符合逻辑。</li><li>B. Unless → “除非”，不符合逻辑。</li><li>C. Once → “一旦”，不符合逻辑。</li><li>D. If → “如果”，不符合逻辑，因为这里不是条件关系，而是让步关系。</li></ul><p><strong>但是</strong>，题目说正确答案是 D（If），这看起来很奇怪，因为从语法和逻辑上 A（While）更合理。<br>不过，如果考虑另一种理解：</p><blockquote><p>If seemingly innocent, this loss &mldr; can &mldr;<br>意思是 “如果（这种记忆衰退）看起来无害，它也可能产生很大影响”，逻辑上不通，因为 “看起来无害” 和 “有影响” 之间不是条件关系，而是转折关系。</p></blockquote><p><strong>可能的解释</strong>：<br>如果答案是 D（If），那可能是题目或答案印刷错误，或者是在极特殊的语境里 If = Even if（即使），但 Even if 常用 While/Although 代替。<br>在标准完形填空中，这里选 A（While）才是正确的。</p><hr><p><strong>结论</strong>：<br>根据常规语法和上下文逻辑，第 3 题应选 <strong>A. While</strong>。<br>但既然题目要求解析为什么答案是 D（If），我只能推测出题者可能把 If 理解为 “即使”，但这种用法不常见，且容易引起混淆。</p>",
+     "tags": []
+    },
+    {
+     "n": 4,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "uneven"
+      },
+      {
+       "k": "B",
+       "text": "limited"
+      },
+      {
+       "k": "C",
+       "text": "damaging"
+      },
+      {
+       "k": "D",
+       "text": "obscure"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 4 题空格所在的句子是：</p><blockquote><p>“&mldr; this loss of mental focus can potentially have an ______ impact on our professional, social, and personal ______.”</p></blockquote><ul><li>前文提到“senior moments”看似无害（seemingly innocent），但用 <strong>“but”</strong> 或类似转折含义（这里用 seemingly innocent 暗示实际上可能有害）引出这种注意力、记忆力的下降其实可能带来负面影响。</li><li>从语义上看，这种影响应该是 <strong>负面的</strong>，因为会对职业、社交和个人生活造成问题。</li><li>选项分析：<ul><li><strong>A. uneven</strong>（不均匀的）—— 不贴合“影响”的性质描述。</li><li><strong>B. limited</strong>（有限的）—— 与 potentially（可能）和上下文想表达的严重性不符。</li><li><strong>C. damaging</strong>（有害的，损害的）—— 符合“负面影响”的逻辑，且与 professional, social, personal 搭配合理。</li><li><strong>D. obscure</strong>（模糊的，不清楚的）—— 不适用于“影响”的性质。</li></ul></li></ul><p>因此，<strong>C. damaging</strong> 最符合上下文逻辑，表示“可能产生有害影响”。</p>",
+     "tags": []
+    },
+    {
+     "n": 5,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "relationship"
+      },
+      {
+       "k": "B",
+       "text": "environment"
+      },
+      {
+       "k": "C",
+       "text": "wellbeing"
+      },
+      {
+       "k": "D",
+       "text": "outlook"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 5 题所在句子为：</p><blockquote><p>this loss of mental focus can potentially have an\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>4</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nimpact on our professional, social, and personal\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>5</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\n.</p></blockquote><ul><li><p><strong>A. relationship</strong>（关系）<br>虽然可以说影响人际关系，但前面并列的是 professional（职业的）、social（社交的）、personal（个人的），personal 后面接 relationship 显得重复且范围狭窄，因为 personal 已经包含人际关系，但这里需要一个更上位的、涵盖生活各方面的词。</p></li><li><p><strong>B. environment</strong>（环境）<br>与 professional / social / personal 搭配时，只能说“职业环境、社交环境、个人环境”，但“个人环境”不太自然，且“影响个人环境”意思模糊。</p></li><li><p><strong>C. wellbeing</strong>（福祉、健康状态）<br>professional wellbeing（职业状态）、social wellbeing（社交健康）、personal wellbeing（个人幸福）是常见搭配，涵盖了一个人在这些方面的整体状态，符合语境。</p></li><li><p><strong>D. outlook</strong>（观点、前景）<br>professional outlook（职业前景）、social outlook（社交观念）、personal outlook（人生观）虽然可以搭配，但“影响我们的职业前景、社交观念、人生观”与记忆力和思维清晰度下降的直接后果相比，wellbeing 更贴近生活实际受影响的范围（包括效率、情绪、生活质量等）。</p></li></ul><p><strong>因此，最佳答案是 C. wellbeing</strong>，表示对职业、社交和个人幸福都可能产生负面影响。</p>",
+     "tags": []
+    },
+    {
+     "n": 6,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "turns"
+      },
+      {
+       "k": "B",
+       "text": "finds"
+      },
+      {
+       "k": "C",
+       "text": "points"
+      },
+      {
+       "k": "D",
+       "text": "figures"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 6 题所在句子是：</p><blockquote><p>It\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>6</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nout that the brain needs exercise in much the same way our muscles do&mldr;</p></blockquote><p>四个选项是：<br>A. turns<br>B. finds<br>C. points<br>D. figures</p><hr><p><strong>1. 固定搭配分析</strong></p><ul><li><strong>turn out</strong> 是一个固定短语，意思是“结果是，原来是，证明是”，常用于 It turns out that&mldr; 句型，表示“事实证明……”。</li><li><strong>find out</strong> 意思是“发现，查明”，主语一般是人，不常用 It finds out that&mldr; 这种形式。</li><li><strong>point out</strong> 意思是“指出”，主语一般是人，It points out that&mldr; 虽然语法上可能成立，但不符合这里“揭示一个事实”的常见表达习惯。</li><li><strong>figure out</strong> 意思是“理解，想出”，主语一般是人，不用于 It figures out that&mldr; 表示“事实证明”。</li></ul><hr><p><strong>2. 上下文语义</strong><br>这句话是在说：<strong>事实证明，大脑需要锻炼，就像我们的肌肉一样</strong>。<br>这里强调的是“科学研究揭示了一个事实”，所以 <strong>It turns out that&mldr;</strong> 是最自然、最地道的表达。</p><hr><p><strong>3. 排除其他选项</strong></p><ul><li>B. finds：一般说 Scientists find that&mldr;，不说 It finds that&mldr;（除非是特定文体如新闻标题）。</li><li>C. points：It points out that&mldr; 虽然语法正确，但这里强调的是“结果证明”，不是“指出”。</li><li>D. figures：It figures that&mldr; 在美式口语中可以表示“难怪，可想而知”，但带有主观推测意味，不适合这里客观科学事实的语境。</li></ul><hr><p><strong>因此正确答案是 A. turns。</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 7,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "responses"
+      },
+      {
+       "k": "B",
+       "text": "roundabouts"
+      },
+      {
+       "k": "C",
+       "text": "workouts"
+      },
+      {
+       "k": "D",
+       "text": "associations"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 7 题所在句子为：</p><blockquote><p>It turns out that the brain needs exercise in much the same way our muscles do, and the right mental <strong>workouts</strong> can significantly improve our basic cognitive functions.</p></blockquote><p><strong>解题思路：</strong></p><ol><li>前文提到“大脑需要像肌肉一样锻炼”，因此此处应填入与“锻炼”相关的词。</li><li><strong>workouts</strong> 意为“锻炼、训练”，常用来指身体或脑力的系统训练，与上文的“exercise”形成对应。</li><li>其他选项分析：<ul><li><strong>A. responses</strong>（反应）—— 与“锻炼”语义不符。</li><li><strong>B. roundabouts</strong>（环岛；迂回路线）—— 与上下文无关。</li><li><strong>D. associations</strong>（联想；关联）—— 虽然与思维活动有关，但不符合“脑力锻炼”的语境。</li></ul></li></ol><p>因此，正确答案是 <strong>C. workouts</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 8,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "genre"
+      },
+      {
+       "k": "B",
+       "text": "criterion"
+      },
+      {
+       "k": "C",
+       "text": "circumstances"
+      },
+      {
+       "k": "D",
+       "text": "functions"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 8 题所在句子为：<br>“… the right mental <em><strong>7</strong></em> can significantly improve our basic cognitive <em><strong>8</strong></em>.”</p><ul><li><strong>cognitive functions</strong> 是一个固定搭配，意为“认知功能”，指大脑的记忆、注意、推理等基本能力。</li><li>其他选项：<ul><li><strong>A. genre</strong>（类型、体裁）——与“认知”不搭配。</li><li><strong>B. criterion</strong>（标准）——不符合语境，这里不是谈标准，而是大脑的功能。</li><li><strong>C. circumstances</strong>（环境、情况）——与“认知”搭配不当。</li></ul></li></ul><p>因此，正确答案是 <strong>D. functions</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 9,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "channel"
+      },
+      {
+       "k": "B",
+       "text": "process"
+      },
+      {
+       "k": "C",
+       "text": "sequence"
+      },
+      {
+       "k": "D",
+       "text": "condition"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 9 题所在句子为：</p><blockquote><p>Thinking is essentially a <strong>9</strong> of making connections in the brain.<br>（思考本质上是一个在大脑中建立连接的过程。）</p></blockquote><p><strong>选项分析：</strong></p><ul><li><strong>A. channel</strong>（渠道、通道）—— 思考不是“渠道”，而是活动或过程。</li><li><strong>B. process</strong>（过程）—— 符合句意，强调思考是“建立连接”这一连续的活动过程。</li><li><strong>C. sequence</strong>（顺序、序列）—— 虽然思考可能涉及顺序，但这里强调的是整体动态过程，而不是步骤的顺序。</li><li><strong>D. condition</strong>（条件、状态）—— 思考不是一种“条件”，而是一种活动。</li></ul><p><strong>因此，B. process 最符合语境和逻辑。</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 10,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "excel"
+      },
+      {
+       "k": "B",
+       "text": "feature"
+      },
+      {
+       "k": "C",
+       "text": "persist"
+      },
+      {
+       "k": "D",
+       "text": "believe"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>第 10 题所在的句子是：</p><blockquote><p>To a certain extent, our ability to <strong>10</strong> in making the connections that drive intelligence is inherited.</p></blockquote><p><strong>选项分析：</strong></p><ul><li><strong>A. excel</strong>（擅长，突出）<ul><li>“excel in” 是固定搭配，表示“在……方面擅长/出众”，符合语境“在建立促进智力的连接方面表现出色”。</li></ul></li><li><strong>B. feature</strong>（以……为特色）<ul><li>“feature in” 通常表示“在……中起重要作用/出现”，但主语一般是事物，不用于描述“ability to feature in doing sth.”这种搭配，且语义不如 excel 贴切。</li></ul></li><li><strong>C. persist</strong>（坚持）<ul><li>“persist in” 表示“坚持做某事”，但这里不是强调“坚持建立连接”，而是强调“擅长建立连接”的能力。</li></ul></li><li><strong>D. believe</strong>（相信）<ul><li>“believe in” 表示“信任/信仰”，与“建立神经连接”的能力不搭配。</li></ul></li></ul><p><strong>逻辑与语义：</strong><br>这句话的意思是“我们在建立促进智力的神经连接方面的能力，在一定程度上是遗传的”，这种能力指的是“擅长建立连接”，因此 <strong>excel in</strong> 最符合。</p><p><strong>答案：A</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 11,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "However"
+      },
+      {
+       "k": "B",
+       "text": "Moreover"
+      },
+      {
+       "k": "C",
+       "text": "Otherwise"
+      },
+      {
+       "k": "D",
+       "text": "Therefore"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 11 题位于以下句子中：</p><blockquote><p>To a certain extent, our ability to <strong>10</strong> in making the connections that drive intelligence is inherited. <strong>11</strong> , because these connections are made through effort and practice, scientists believe that intelligence can expand and fluctuate <strong>12</strong> mental effort.</p></blockquote><ul><li>前一句说：在一定程度上，我们建立智力所需的大脑连接的能力是<strong>遗传的</strong>（inherited）。</li><li>后一句说：因为这些连接是通过<strong>努力和练习</strong>形成的，科学家认为智力可以扩展和波动。</li></ul><p>逻辑上，前一句强调先天因素，后一句强调后天努力，两者之间存在<strong>转折关系</strong>。<br>因此，这里需要一个表示转折的逻辑连接词。</p><p><strong>A. However</strong>（然而）表示转折，符合语境。<br>B. Moreover（而且）表示递进，不符合。<br>C. Otherwise（否则）表示假设后果，不符合。<br>D. Therefore（因此）表示因果，不符合。</p><p><strong>答案：A</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 12,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "instead of"
+      },
+      {
+       "k": "B",
+       "text": "regardless of"
+      },
+      {
+       "k": "C",
+       "text": "apart from"
+      },
+      {
+       "k": "D",
+       "text": "according to"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 12 题空格所在的句子是：</p><blockquote><p>scientists believe that intelligence can expand and fluctuate ______ mental effort.</p></blockquote><p>意思是“科学家认为，智力可以扩展和波动 ______ 脑力劳动”。</p><ul><li><strong>A. instead of</strong>（而不是）—— 逻辑不符，这里不是替代关系，而是因果关系或依据关系。</li><li><strong>B. regardless of</strong>（不管，不顾）—— 与文意相反，因为智力变化是依赖于脑力劳动的。</li><li><strong>C. apart from</strong>（除了）—— 不符合语境，这里不是“除了”这种排除关系。</li><li><strong>D. according to</strong>（根据，取决于）—— 符合语境：智力根据脑力劳动的程度而扩展和波动，即“智力随着脑力劳动而变化”。</li></ul><p>因此正确答案是 <strong>D. according to</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 13,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "back"
+      },
+      {
+       "k": "B",
+       "text": "further"
+      },
+      {
+       "k": "C",
+       "text": "aside"
+      },
+      {
+       "k": "D",
+       "text": "around"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 13 题空格所在的句子是：</p><blockquote><p>Now, a new Web-based company has taken it a step ______ and developed the first &ldquo;brain training program&rdquo;&mldr;</p></blockquote><ul><li>短语 <strong>take it a step further</strong> 是固定搭配，意思是“更进一步”，表示在前文提到的做法基础上再推进一层。</li><li>前文提到科学家认为智力可以通过脑力锻炼提升，这家公司在此基础上开发了训练程序，所以是“更进一步”。</li><li>其他选项：<ul><li><strong>take it a step back</strong>（退一步）—— 语义不符。</li><li><strong>take it a step aside</strong>（让到一边）—— 不用于此抽象意义。</li><li><strong>take it a step around</strong>（绕一步）—— 无此固定搭配且语义不通。</li></ul></li></ul><p>因此正确答案是 <strong>B. further</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 14,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "framework"
+      },
+      {
+       "k": "B",
+       "text": "stability"
+      },
+      {
+       "k": "C",
+       "text": "sharpness"
+      },
+      {
+       "k": "D",
+       "text": "flexibility"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>第 14 题位于句子中：</p><blockquote><p>&mldr; developed the first &ldquo;brain training program&rdquo; designed to actually help people improve their mental ______.</p></blockquote><p>四个选项：</p><ul><li><strong>A. framework</strong>（框架）—— 与“大脑训练”的目标不直接匹配，一般不说“提高智力框架”。</li><li><strong>B. stability</strong>（稳定性）—— 虽然大脑功能稳定性重要，但训练目的更侧重“敏锐度”而非稳定。</li><li><strong>C. sharpness</strong>（敏锐度）—— 常与 mental 搭配，表示思维敏捷、头脑敏锐，符合“记忆力、注意力提升”的语境。</li><li><strong>D. flexibility</strong>（灵活性）—— 有一定道理，但不如 sharpness 贴合“记忆力与注意力改善”的直接目标。</li></ul><p>结合上下文，该程序是改善记忆和注意技能，这属于**思维敏锐度（mental sharpness）**的范畴，因此选 <strong>C</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 15,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "hurries"
+      },
+      {
+       "k": "B",
+       "text": "reminds"
+      },
+      {
+       "k": "C",
+       "text": "forces"
+      },
+      {
+       "k": "D",
+       "text": "allows"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第15题所在句子为：<br>“The Web-based program ______ you to systematically improve your memory and attention skills.”<br>（这个基于网络的程序 ______ 你系统地提高记忆力和注意力技能。）</p><p>四个选项：<br>A. hurries（催促）<br>B. reminds（提醒）<br>C. forces（强迫）<br>D. allows（允许，使能够）</p><hr><p><strong>语境分析：</strong></p><ul><li>该程序是一个帮助人们提升认知能力的训练工具，它的作用是<strong>帮助用户</strong>、<strong>让用户能够</strong>系统性地提升技能。</li><li>“hurries”带有催促之意，与“系统性地提高”不搭配，且语气不合适。</li><li>“reminds”是提醒，但这里不是说程序提醒你去提高，而是程序本身<strong>使提高成为可能</strong>。</li><li>“forces”是强迫，语气强硬，不符合这种自主训练产品的特点。</li><li>“allows”在这里意为“使能够，允许”，即“该程序让你能够系统地提高……”，符合程序功能描述。</li></ul><hr><p><strong>因此正确答案是 D. allows。</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 16,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "order"
+      },
+      {
+       "k": "B",
+       "text": "track"
+      },
+      {
+       "k": "C",
+       "text": "hold"
+      },
+      {
+       "k": "D",
+       "text": "pace"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 16 题的句子是：</p><blockquote><p>The program keeps <strong><em><strong>16</strong></em> of your progress</strong> and provides detailed feedback&mldr;</p></blockquote><ul><li><strong>keep track of</strong> 是一个固定搭配，意思是“记录；跟踪；掌握……的进展”。</li><li>这里指程序会<strong>持续追踪你的进步情况</strong>，并据此提供反馈，符合上下文逻辑。</li><li>其他选项：<ul><li><strong>A. order</strong>（keep order of 不常用，且意思不符）</li><li><strong>C. hold</strong>（keep hold of 表示“抓住”，不适用于抽象进度）</li><li><strong>D. pace</strong>（keep pace with 表示“跟上”，但此处不是与 progress 搭配）</li></ul></li></ul><p>因此正确答案是 <strong>B. track</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 17,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "to"
+      },
+      {
+       "k": "B",
+       "text": "on"
+      },
+      {
+       "k": "C",
+       "text": "for"
+      },
+      {
+       "k": "D",
+       "text": "with"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 17 题考查的是介词搭配。<br>句子结构是：</p><blockquote><p>The program keeps track of your progress and provides detailed feedback ______ your performance and improvement.</p></blockquote><p><strong>feedback</strong> 常与 <strong>on</strong> 搭配，表示“关于……的反馈”，即 <strong>feedback on something</strong>。<br>例如：</p><ul><li>give feedback on your work</li><li>feedback on how you did</li></ul><p>因此，此处应选 <strong>B. on</strong>。</p><p>其他选项：</p><ul><li>A. to：feedback to sb. 是“给某人反馈”，但这里后面是“your performance”，不是人，所以不合适。</li><li>C. for：feedback for 虽然有时可用，但不如 on 常用和准确，且多指“给某人的反馈”。</li><li>D. with：feedback with 不符合习惯搭配。</li></ul><p><strong>答案：B</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 18,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "constantly"
+      },
+      {
+       "k": "B",
+       "text": "habitually"
+      },
+      {
+       "k": "C",
+       "text": "irregularly"
+      },
+      {
+       "k": "D",
+       "text": "unusually"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 18 题空格所在句为：</p><blockquote><p>Most importantly, it ___ modifies and enhances the games you play to ___ on the strengths you are developing&mldr;</p></blockquote><p>这里描述的是这个在线大脑训练程序如何运作。<br>从上下文来看，程序会<strong>持续追踪</strong>你的进度，并根据你的表现<strong>不断调整</strong>游戏内容，以强化你正在发展的能力。<br>这种调整应当是<strong>持续不断</strong>的，而不是偶尔、习惯性或异常地发生。</p><ul><li><strong>A. constantly</strong>（不断地）—— 符合程序持续优化、实时调整的逻辑。</li><li><strong>B. habitually</strong>（习惯性地）—— 一般用于人的习惯，不适用于程序的自动调整。</li><li><strong>C. irregularly</strong>（不定期地）—— 与程序应持续适应使用者的需求不符。</li><li><strong>D. unusually</strong>（异常地）—— 与文意不符，这里没有强调“异常”的意思。</li></ul><p>因此，<strong>A. constantly</strong> 最符合上下文语义，表示程序持续不断地调整和优化训练内容。</p>",
+     "tags": []
+    },
+    {
+     "n": 19,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "carry"
+      },
+      {
+       "k": "B",
+       "text": "put"
+      },
+      {
+       "k": "C",
+       "text": "build"
+      },
+      {
+       "k": "D",
+       "text": "take"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 19 题所在的句子是：</p><blockquote><p>it modifies and enhances the games you play to <strong>___ on the strengths</strong> you are developing.</p></blockquote><p>四个选项是：<br>A. carry<br>B. put<br>C. build<br>D. take</p><p><strong>1. 搭配与语义分析</strong></p><ul><li>“<strong>build on</strong>” 是一个固定短语，意思是“在……基础上进一步发展、加强”。</li><li>这里说程序根据你正在发展的优势来调整游戏，也就是“<strong>基于这些优势来加强训练</strong>”，所以 “build on the strengths” 符合语境。</li></ul><p><strong>2. 排除其他选项</strong></p><ul><li><strong>carry on</strong>（继续）后面一般接活动，不接“the strengths”作“在……基础上加强”的意思。</li><li><strong>put on</strong>（穿上；增加）不与“strengths”搭配表示“基于优势加强”。</li><li><strong>take on</strong>（承担；呈现）语义不符。</li></ul><p>因此正确答案是 <strong>C. build</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 20,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "risky"
+      },
+      {
+       "k": "B",
+       "text": "familiar"
+      },
+      {
+       "k": "C",
+       "text": "idle"
+      },
+      {
+       "k": "D",
+       "text": "effective"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 20 题位于文章最后一句，描述的是这个“大脑训练计划”如何通过调整训练内容来强化用户正在发展的能力，并类比于一种“有效的”锻炼计划。</p><p>原句是：</p><blockquote><p>it modifies and enhances the games you play to ___ on the strengths you are developing—much like a(n) <strong>effective</strong> exercise routine requires you to increase resistance and vary your muscle use.</p></blockquote><p>这里的关键是类比关系：</p><ul><li>大脑训练程序会根据你的进步调整难度，就像<strong>有效的健身计划</strong>要求你增加阻力、变换肌肉使用方式一样。</li><li>这种类比强调“有效性”，因为只有有效的锻炼才会科学地增加负荷、适应进步。</li></ul><p>选项分析：</p><ul><li><strong>A. risky</strong>（有风险的）—— 与上下文积极、科学的训练方式不符。</li><li><strong>B. familiar</strong>（熟悉的）—— 不强调效果，只是说熟悉，不符合逻辑重点。</li><li><strong>C. idle</strong>（闲置的，无用的）—— 与文意相反。</li><li><strong>D. effective</strong>（有效的）—— 符合类比逻辑，强调这种训练方式是科学有效的。</li></ul><p>因此正确答案是 <strong>D</strong>。</p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-1",
+   "label": "阅读 Text 1",
+   "title": "Part A · Text 1",
+   "heading": "Section II  Reading Comprehension",
+   "type": "choice",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong> Read the following four texts. Answer the questions after each text by choosing A,B, C or D. Mark your answers on ANSWER SHEET 1.(40 points)</p>",
+   "passage": [
+    {
+     "segs": [
+      "In order to &ldquo;change lives for the bette&rdquo; and reduce &ldquo;dependency,&rdquo; George Osbome,Chancellor of the Excheque, introduced the &ldquo;upfront work search&rsquo; scheme. Only if the jobless arrive at the job centre with a CV register for nin o sarh, an sat toing f or w te h e e n n h h u r weekly rather than fortnightly, What could be more reasonable?"
+     ]
+    },
+    {
+     "segs": [
+      "More apparent reasonableness followed. There will now be a seven-day wait for the jobseeker&rsquo;s allowance &ldquo;Thos first few days should be spent looking for work, not looking to sign on&rdquo; he camed.&ldquo;We&rsquo;re doing these things becarse we know hey help people say off beneris and help those on benefis get ino work faste&rdquo; Help? Really? on first hearing, this was th socaly oncmed chancello rying te change ivse orthe teecoplte with reform\"to an obviously indulgentsystem that demands too fiil fto to th ewy uvemployed o find work, and subsides laziness, What motivated him, we were to understand, was his zeal for &ldquo;findamental faimes\"pccing th tapayer,contoling spending and ensuring that only the most deserving laimants received their benefits."
+     ]
+    },
+    {
+     "segs": [
+      "Losing a job is huring: you don&rsquo;t skip down to the jobcentre with a song in your heart,delighted at the prospect of doubling your income from the generous state. t is isancal/ylttfin y caca/y/bpsgsg and you know that support is minimal and extraordinarily hard to get. You are now not wanted; you support is minimal and extraordinarily hard to get. You are now not wanted; you are now excluded from the work environment that offers purpose and structure in your life. Worse, the crucial income to feed yourself and your family and pay the bills hs disppared. Ask anyone newly unemployed what they want and the answer is always: a job."
+     ]
+    },
+    {
+     "segs": [
+      "But in Osbormcland, your first instinet is to fal intn dependeny- permanent dependeney if you can get i-supported by a state ony to ready to induige your falsehood. t is sthuh 2 yers ofever tugher rfrormsof the job search and benefit administration system never happened. The principle of British welfare is no longer that you can insure yourself against the risk of unemployment and receive unconditional payments if the disaster happens. Even the very phrase jobseeker&rsquo;s allowance -invented in 1996- is about redefining the unemployed as a &ldquo;jobseeker\"who had no mandatory right to a benefit he or she has earmed through making national insurance contrbutions. Instead, the claimant receivs a iome imie&rdquo;&rsquo; alwane&rdquo; ondtioa o ativey seina o, o entitlement and no insurance, at 71.70 a week, one of the least generous in the EU."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 21,
+     "stem": "<p>George Osbome&rsquo;s scheme was intended to</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "motivate the unemployed to report voluntarily."
+      },
+      {
+       "k": "B",
+       "text": "provide the nemployed with easier accesst bnets."
+      },
+      {
+       "k": "C",
+       "text": "encourage jobseekers active engagement in job sking."
+      },
+      {
+       "k": "D",
+       "text": "guarantee jobseekers&rsquo; legitimate right to benefits."
+      }
+     ],
+     "explanation": "<p>让我们先分析原文中关于 George Osborne 计划的关键信息。</p><p><strong>1. 计划内容</strong></p><ul><li>失业者必须带着简历去就业中心，注册网上求职，并开始找工作，然后每周（而不是每两周）汇报一次。</li><li>领取求职者津贴前要等 7 天，理由是前几天应该用来找工作，而不是用来登记领钱。</li><li>官方说这样做是为了帮助人们摆脱福利、更快就业。</li></ul><p><strong>2. 计划目的</strong></p><ul><li>原文提到 Osborne 认为之前的制度“too little effort to find work, and subsidises laziness”，因此改革是为了减少“dependency”，让人们积极求职。</li><li>原文中作者对此表示质疑（“Help? Really?”），但题目问的是 <strong>Osborne 的意图</strong>，不是实际效果。</li></ul><p><strong>3. 选项分析</strong></p><ul><li><strong>A</strong> 报告是强制的，不是“voluntarily”，排除。</li><li><strong>B</strong> 提供更易获得福利？不对，原文是增加限制，更难领钱。</li><li><strong>C</strong> 鼓励求职者积极求职 → 与原文“help those on benefits get into work faster”一致，符合他的宣称目的。</li><li><strong>D</strong> 保障权利？不对，实际上是在削弱福利权利（最后一段提到 no entitlement and no insurance）。</li></ul><p>因此，<strong>C</strong> 是正确答案。</p>",
+     "tags": []
+    },
+    {
+     "n": 22,
+     "stem": "<p>The phrase &ldquo;to sign on&rdquo;(Line 3,Para.2) most probably means</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "to register for an alowane fom the goverment."
+      },
+      {
+       "k": "B",
+       "text": "to accept the government&rsquo;s restrictions on the allowance."
+      },
+      {
+       "k": "C",
+       "text": "to check on the avalabilit of josat the bentre."
+      },
+      {
+       "k": "D",
+       "text": "to attend a governmental job-training program."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>定位原文</strong><br>题目中 “to sign on” 出现在第二段第三行。原文是：</p><blockquote><p>&ldquo;Those first few days should be spent looking for work, not looking to sign on.&rdquo;</p></blockquote></li><li><p><strong>上下文逻辑</strong><br>前文提到失业者领取求职者津贴（jobseeker’s allowance）的等待期从隔周领取变为每周领取，并且现在要等七天才能领到津贴。<br>财政大臣说：“头几天应该用来找工作，而不是用来 ______。”<br>显然，“looking to sign on” 与 “looking for work” 是对比关系，前者是指<strong>办理领取津贴的手续</strong>，后者是<strong>找工作</strong>。</p></li><li><p><strong>短语含义</strong><br>“sign on” 在英国英语中是一个固定短语，特指 <strong>“登记失业以领取政府救济金”</strong>。<br>在本文语境中，就是去政府部门登记申领失业津贴（allowance）。</p></li><li><p><strong>选项分析</strong></p><ul><li><strong>A. to register for an allowance from the government</strong><br>与 “sign on” 的固定含义完全一致，且符合上下文。</li><li>B. to accept the government&rsquo;s restrictions on the allowance<br>文中没有提到 restrictions 的接受动作，不符合。</li><li>C. to check on the availability of jobs at the job centre<br>这是 “looking for work” 的内容，不是 “sign on” 的意思。</li><li>D. to attend a governmental job-training program<br>文中没有提到培训项目，属于无中生有。</li></ul></li></ol><p><strong>因此正确答案是 A。</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 23,
+     "stem": "<p>What promoted the hanelo clrcrp isschce?e?</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "A desire to secure a better life for all."
+      },
+      {
+       "k": "B",
+       "text": "An eagerness to protect the unemployed."
+      },
+      {
+       "k": "C",
+       "text": "An urge to be generous to the claimants."
+      },
+      {
+       "k": "D",
+       "text": "A passion to ensure faimess for tapayers."
+      }
+     ],
+     "explanation": "<p>让我们一步步分析这道题。</p><hr><p><strong>1. 题目问的是什么</strong><br>题目是：</p><blockquote><p>What promoted the chancellor’s scheme?<br>即：什么促使财政大臣（George Osborne）推出这个方案？</p></blockquote><hr><p><strong>2. 原文相关段落</strong><br>文章第二段末尾提到：</p><blockquote><p>What motivated him, we were to understand, was his zeal for &ldquo;fundamental fairness&rdquo; — protecting the taxpayer, controlling spending and ensuring that only the most deserving claimants received their benefits.</p></blockquote><p>这说明他的动机是追求“基本的公平”——保护纳税人、控制开支、确保只有最应得的人才能领到救济金。</p><hr><p><strong>3. 选项分析</strong></p><ul><li><p><strong>A. A desire to secure a better life for all</strong><br>虽然 Osborne 声称改革是为了“change lives for the better”，但这是他的官方说辞，实际动机在下文揭示为“fundamental fairness”，重点是保护纳税人、防止滥用福利，而不是确保所有人的更好生活。</p></li><li><p><strong>B. An eagerness to protect the unemployed</strong><br>文章整体是批判态度，认为他的改革对失业者不利，因此不是保护失业者。</p></li><li><p><strong>C. An urge to be generous to the claimants</strong><br>与改革方向相反，他是在减少“generosity”。</p></li><li><p><strong>D. A passion to ensure fairness for taxpayers</strong><br>这与原文“protecting the taxpayer”和“fundamental fairness”对应，是真正的动机。</p></li></ul><hr><p><strong>4. 为什么答案是 D</strong><br>原文明确指出动机是 zeal for “fundamental fairness” — protecting the taxpayer，即确保对纳税人公平，防止不该领救济的人领取。</p><hr><p><strong>最终答案：D</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 24,
+     "stem": "<p>According to Paragraph 3,being unemployed makes one feel</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "insulted."
+      },
+      {
+       "k": "B",
+       "text": "uneasy."
+      },
+      {
+       "k": "C",
+       "text": "enraged."
+      },
+      {
+       "k": "D",
+       "text": "guilty."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目要求根据第3段内容判断“失业会让人感到什么”。第3段原文描述了失业者的心理状态：</p><blockquote><p>Losing a job is hurting: you don’t skip down to the jobcentre with a song in your heart, delighted at the prospect of doubling your income from the generous state. It is financially terrifying, psychologically embarrassing and you know that support is minimal and extraordinarily hard to get. You are now not wanted; you are now excluded from the work environment that offers purpose and structure in your life. Worse, the crucial income to feed yourself and your family and pay the bills has disappeared.</p></blockquote><p>关键信息提取：</p><ul><li><strong>hurting</strong>（痛苦的）</li><li><strong>financially terrifying</strong>（经济上令人恐惧）</li><li><strong>psychologically embarrassing</strong>（心理上尴尬）</li><li><strong>not wanted</strong>（不被需要）</li><li><strong>excluded</strong>（被排除在外）</li><li><strong>收入消失，生活压力大</strong></li></ul><p>这些描述整体上体现的是一种<strong>焦虑、不安、窘迫</strong>的心理状态，而不是单纯的“受辱”“愤怒”或“内疚”。</p><p>选项分析：</p><ul><li><strong>A. insulted</strong>（受辱的）—— 原文没有强调人格侮辱，更多是心理窘迫和不安。</li><li><strong>B. uneasy</strong>（不安的）—— 与“financially terrifying”“psychologically embarrassing”以及被社会排斥的感觉最贴合。</li><li><strong>C. enraged</strong>（愤怒的）—— 原文没有突出愤怒情绪。</li><li><strong>D. guilty</strong>（内疚的）—— 原文没有提到自责或内疚。</li></ul><p>因此，最准确的是 <strong>B. uneasy</strong>（不安的）。</p>",
+     "tags": []
+    },
+    {
+     "n": 25,
+     "stem": "<p>To which of the following would the author most probably agree?</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "The British welfare system indulges jobseekers&rsquo; laziness."
+      },
+      {
+       "k": "B",
+       "text": "Osbome&rsquo;s reforms will eauce t it f eplyoent.."
+      },
+      {
+       "k": "C",
+       "text": "The jobseckers&rsquo;a llowance has met thei atual edas."
+      },
+      {
+       "k": "D",
+       "text": "Unemployment benefits should not be made conditional."
+      }
+     ],
+     "explanation": "<p>我们先分析一下原文主旨和作者态度，再判断选项。</p><hr><p><strong>1. 原文主旨与作者态度</strong></p><ul><li>文章开头介绍了英国财政大臣 George Osborne 的改革措施：失业者必须带着简历去就业中心、每周（而非每两周）报到、七天等待期才能领取津贴等。</li><li>作者用讽刺语气质疑这些措施的合理性（“What could be more reasonable?”、“Help? Really?”）。</li><li>作者认为失业是痛苦的，失业者最需要的是工作，而不是被暗示他们想依赖福利。</li><li>作者指出，Osborne 的改革把福利制度从“保险型”（失业时无条件领取）变成了“有条件的津贴”，并且金额很低。</li><li>整体上，作者反对 Osborne 的改革，认为它不体恤失业者，且把失业者预设成懒惰的依赖者。</li></ul><hr><p><strong>2. 选项分析</strong></p><p><strong>A. The British welfare system indulges jobseekers&rsquo; laziness.</strong></p><ul><li>这是 Osborne 的观点，不是作者的观点。作者认为 Osborne 把制度描述为“indulgent”，但实际并非如此。</li><li>作者认为失业者真正想要的是工作，不是依赖福利。</li><li>所以 A 错。</li></ul><p><strong>B. Osborne&rsquo;s reforms will reduce the risk of unemployment.</strong></p><ul><li>原文没有说这些改革会减少失业风险。改革只是让领津贴更难、更快地推动人找工作，但失业风险是经济与就业市场决定的，不是这些行政措施能降低的。</li><li>而且作者显然不认为这些改革有效，反而认为它们苛刻。</li><li>但题目问的是“作者最可能同意”，B 明显与作者态度不符，作者认为改革对失业者无帮助，甚至有害。</li><li>等等，这里要注意：题目给的答案是 B，但根据原文逻辑，B 明显不对。可能是题目或答案印刷错误？我们再看一下原文有没有暗示改革会降低失业风险——没有。</li><li>不过，如果 B 是 “Osborne&rsquo;s reforms will <strong>increase</strong> the risk of unemployment” 才可能是作者同意的（因为苛刻条件可能让失业者更困难），但 B 是 reduce，所以不对。</li></ul><p><strong>C. The jobseekers&rsquo; allowance has met their actual needs.</strong></p><ul><li>作者指出津贴很低（£71.70/周，欧盟里最低之一），且领取条件苛刻，显然没有满足实际需要。</li><li>所以 C 错。</li></ul><p><strong>D. Unemployment benefits should not be made conditional.</strong></p><ul><li>作者怀念以前的福利原则：你缴纳保险，失业时无条件领取。现在变成了有条件的“津贴”，作者对此持否定态度。</li><li>因此作者很可能同意“失业救济不应附加条件”。</li><li>这与原文主旨一致。</li></ul><hr><p><strong>3. 结论</strong><br>根据原文，作者最可能同意的是 <strong>D</strong>，但题目说正确答案是 B。<br>这可能是题库错误，或者题目/选项在转录时出现了文字变化。</p><p>如果严格按照原文推理，应选 <strong>D</strong>。</p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-2",
+   "label": "阅读 Text 2",
+   "title": "Text 2",
+   "heading": null,
+   "type": "choice",
+   "points": 10,
+   "directions": "",
+   "passage": [
+    {
+     "segs": [
+      "All around the world, lawyers generate more hostility than the members of any other profession&mdash;wih the possible exception of jourmalism.But there are few places where clients have more grounds for complaint than America."
+     ]
+    },
+    {
+     "segs": [
+      "During the decade before the economic crisis, spending on legal services in America grew twice as fast as inflation. The best lawyers made skyscrapers-fall of money, tempting ever more students to pile int law schools. But most law graduates never get a big-fim job. Many of them instead become the kind of muisance-lawsuit filer that makes the tort system a costly nightmare."
+     ]
+    },
+    {
+     "segs": [
+      "There are many reasons for this. one is the ecsie cots o eal ecation. Threis just oe pp torr lawyer in most American states: a four-year undergraduate degree at one of 200 law schools authorized by the American Bar Association and an expensive preparation for the bar exam. This leaves today&rsquo;s average law-school graduate with S100,000 of debt on top of undergraduate debts. Law-school debt means that they have to work fearsomely hard."
+     ]
+    },
+    {
+     "segs": [
+      "Reforming the system would help both lawyers and their customers. Sensible ideas have been around for a long time,but the state-level bodis that govem the proression have ben to onervative to iplement them.One idea is to allow people to sudy law as an undergraduate degree,Another is to tet tadens tfrte bar atr onlf two years of law school. f the bar exam is truly astm enough test for a would-be lawyer,those who can sit it earlier should be allowed to do so. Students who do not need the extra training could cut their debt mountain by a third."
+     ]
+    },
+    {
+     "segs": [
+      "The other reason why costs are so high is the restrictive guild-like ownership structure of the business, Exccp in the District of Columbia, non-lawyers may not own any share of a law firm. This keeps fees high and inovtion slow.There is pressure for change from within the profession, but opponents of change among the regulators insist that keeping outsiders out of a law firm isolates lawyers from the pressure to make money rather than serve clients ethically."
+     ]
+    },
+    {
+     "segs": [
+      "In fact, allowing non-lawyers to own shares in law firms would reduce costs and improve services t customers,by encouraging law firms to use technology and to employ professional managers to focus on improving fims&rsquo;eficieny. Afer all ther contris, such as Australia and Briain,have started liberalizing their legal professions. America should follow."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 26,
+     "stem": "<p>A lot of students take up law as their profession due to</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "the growing demand fom chients."
+      },
+      {
+       "k": "B",
+       "text": "the increasing pressur of inflation."
+      },
+      {
+       "k": "C",
+       "text": "the prospect of workin in big fims.."
+      },
+      {
+       "k": "D",
+       "text": "the attraction of financial rewards."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>题干定位</strong><br>题目问“很多学生选择法律作为职业的原因”，这对应文章第二段内容。</p></li><li><p><strong>原文依据</strong><br>第二段第二句：</p><blockquote><p>The best lawyers made skyscrapers-full of money, tempting ever more students to pile into law schools.<br>意思是“顶尖律师赚得巨额财富，吸引更多学生涌入法学院”。</p></blockquote></li><li><p><strong>选项分析</strong></p><ul><li><strong>A</strong> 客户需求增长：文中未明确提到客户需求增长是学生学法律的主要原因。</li><li><strong>B</strong> 通货膨胀压力增加：文中提到法律服务支出增长快于通胀，但通胀是背景，不是学生选择法律的主因。</li><li><strong>C</strong> 进入大律所的前景：文中说“大多数法学毕业生从未得到大律所的工作”，所以这不是主要原因。</li><li><strong>D</strong> 经济回报的吸引：与原文“顶尖律师赚大钱，吸引学生涌入法学院”完全对应。</li></ul></li><li><p><strong>结论</strong><br>原文明确用 <strong>tempting</strong>（诱惑）一词，说明是经济收益吸引了学生，因此正确答案是 <strong>D</strong>。</p></li></ol>",
+     "tags": []
+    },
+    {
+     "n": 27,
+     "stem": "<p>Which of the following adds to the costs of legal education in most American states?</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Higher tuition fees for undergraduate studies."
+      },
+      {
+       "k": "B",
+       "text": "Pursuing a bachelor&rsquo;s degree in another major."
+      },
+      {
+       "k": "C",
+       "text": "Admissions approval from the bar association."
+      },
+      {
+       "k": "D",
+       "text": "Receiving training by professional assciations."
+      }
+     ],
+     "explanation": "<p>让我们先梳理文章与题目相关的部分。</p><hr><p><strong>文章相关段落</strong></p><blockquote><p>There are many reasons for this. One is the excessive costs of a legal education. There is just one path for a lawyer in most American states: a four-year undergraduate degree <strong>in some unrelated subject</strong>, then three years at a law school, and an expensive preparation for the bar exam. This leaves today&rsquo;s average law-school graduate with $100,000 of debt on top of undergraduate debts.</p></blockquote><p>题目问：<strong>在大多数美国州，以下哪一项增加了法律教育的成本？</strong></p><hr><p><strong>选项分析</strong></p><ul><li><strong>A. 本科阶段更高的学费</strong><br>文章提到本科债务是额外的，但并未强调“更高学费”是原因，而是强调必须先有一个不相关的本科学位。</li><li><strong>B. 攻读另一个专业的学士学位</strong><br>对应原文“a four-year undergraduate degree in some unrelated subject”，这意味着在进入法学院之前必须花 4 年读一个与法律无关的本科，这增加了总的教育成本和时间成本，因此正确。</li><li><strong>C. 律师协会的录取批准</strong><br>文中没有提到录取需要律协批准增加成本，律协只授权法学院资格。</li><li><strong>D. 接受专业协会的培训</strong><br>文中未提及这种培训增加成本。</li></ul><hr><p><strong>结论</strong><br>文章强调美国法律教育成本高的一个原因是必须先有一个不相关的本科学位，这延长了学习时间并增加了债务。因此正确选项是 <strong>B</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 28,
+     "stem": "<p>Hindrance to the reform of the legal system originates from</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "non-professionals&rsquo; sharp criticism."
+      },
+      {
+       "k": "B",
+       "text": "lawyers&rsquo;and clients&rsquo; strong resistance."
+      },
+      {
+       "k": "C",
+       "text": "the rigid bodies governing the profession."
+      },
+      {
+       "k": "D",
+       "text": "the stem exam for would-be lawyers."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是“阻碍法律体系改革的障碍源于哪里”。文章第四段明确提到了改革的问题：</p><blockquote><p><strong>Reforming the system would help both lawyers and their customers. Sensible ideas have been around for a long time, but the state-level bodies that govern the profession have been too conservative to implement them.</strong></p></blockquote><p>这句话明确指出，虽然有一些合理的改革建议，但<strong>管理该行业的州级机构过于保守，不愿实施这些改革</strong>。</p><p>选项分析：</p><ul><li><strong>A. 非专业人士的尖锐批评</strong> → 文中未提及非专业人士批评阻碍改革。</li><li><strong>B. 律师和客户的强烈抵制</strong> → 文中未强调客户抵制，且律师内部有改革压力（第五段提到）。</li><li><strong>C. 管理该行业的僵化机构</strong> → 与第四段内容一致，是正确答案。</li><li><strong>D. 对预备律师的严格考试</strong> → 文中虽然提到考试，但并未说考试本身是改革障碍，而是说可以提前考试来减轻负担。</li></ul><p>因此，正确答案是 <strong>C</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 29,
+     "stem": "<p>The guild-ik onershi srcre s onsed r rt</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "prevents lawyers from gaining due profits."
+      },
+      {
+       "k": "B",
+       "text": "keeps lawyers from holding law-irm shares."
+      },
+      {
+       "k": "C",
+       "text": "aggravates the ethical situation in the trade."
+      },
+      {
+       "k": "D",
+       "text": "bans outsiders&rsquo; involvement in the profession."
+      }
+     ],
+     "explanation": "<p>让我们先定位题目中的关键词 <strong>&ldquo;guild-like ownership structure&rdquo;</strong>。</p><p>原文对应段落是：</p><blockquote><p>The other reason why costs are so high is the restrictive guild-like ownership structure of the business. Except in the District of Columbia, non-lawyers may not own any share of a law firm. This keeps fees high and innovation slow. There is pressure for change from within the profession, but opponents of change among the regulators insist that keeping outsiders out of a law firm isolates lawyers from the pressure to make money rather than serve clients ethically.</p></blockquote><p><strong>选项分析</strong>：</p><ul><li><p><strong>A. prevents lawyers from gaining due profits</strong><br>文中没有说律师赚不到应得的利润，反而暗示他们收费高，所以 A 错。</p></li><li><p><strong>B. keeps lawyers from holding law-firm shares</strong><br>错，因为律师是可以持股的，被禁止的是 <strong>non-lawyers</strong>。</p></li><li><p><strong>C. aggravates the ethical situation in the trade</strong><br>文中 regulators 认为不让外人进入律所可以 <strong>避免</strong> 律师为了赚钱违背职业道德，所以这种结构是被认为有助于伦理的（虽然作者不认同），所以 C 与原文逻辑不符。</p></li><li><p><strong>D. bans outsiders&rsquo; involvement in the profession</strong><br>正确。原文说 “non-lawyers may not own any share of a law firm”，这就是禁止外人（outsiders）拥有律所股份，即禁止他们参与律所所有权。</p></li></ul><p>因此正确答案是 <strong>D</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 30,
+     "stem": "<p>In ths tex,th tor an siusss</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "flawed ownership of America’s law firms and its causes"
+      },
+      {
+       "k": "B",
+       "text": "the factors that help make a successful lawyer in America"
+      },
+      {
+       "k": "C",
+       "text": "a problem in America’s legal profession and solutions to it"
+      },
+      {
+       "k": "D",
+       "text": "the role of undergraduate studies in America’s legal education"
+      }
+     ],
+     "explanation": "<p>好的，我们先来梳理文章结构，再判断选项。</p><hr><p><strong>文章结构分析：</strong></p><ol><li><strong>第一段</strong>：提出问题 —— 美国律师行业招致更多不满，客户抱怨的理由比其他国家更多。</li><li><strong>第二段</strong>：用数据说明经济危机前十年法律服务支出增长快，很多法学院毕业生找不到好工作，却成为滋扰性诉讼的提起者，导致侵权系统成本高昂。</li><li><strong>第三段</strong>：原因一 —— 法律教育成本过高，并解释了培养流程和债务负担。</li><li><strong>第四段</strong>：改革建议一 —— 允许本科读法律、提前参加律师考试等，以降低学生债务。</li><li><strong>第五段</strong>：原因二 —— 行业的所有权结构封闭（非律师不能拥有律所股份），导致费用高、创新慢。</li><li><strong>第六段</strong>：改革建议二 —— 允许非律师拥有律所股份，可降低成本、改善服务，并举了澳大利亚和英国为例。</li></ol><hr><p><strong>主旨归纳</strong>：<br>文章主要讨论<strong>美国法律行业存在的问题</strong>（费用高、教育成本高、行业封闭）并提出了<strong>相应的解决思路</strong>。</p><hr><p><strong>选项分析</strong>：</p><p>A. <strong>有缺陷的美国律所所有权及其原因</strong></p><ul><li>这只是第五、六段的内容，不能概括全文，太窄。</li></ul><p>B. <strong>在美国成为成功律师的因素</strong></p><ul><li>文章重点不是讲“如何成为成功律师”，而是行业问题和改革。</li></ul><p>C. <strong>美国法律行业的一个问题及其解决方案</strong></p><ul><li>涵盖全文：问题（客户抱怨多、费用高、教育贵、结构封闭） + 解决方案（教育改革、开放所有权）。</li></ul><p>D. <strong>本科教育在美国法律教育中的作用</strong></p><ul><li>仅涉及第四段部分内容，太窄。</li></ul><hr><p><strong>因此正确答案是 C</strong>。</p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-3",
+   "label": "阅读 Text 3",
+   "title": "Text 3",
+   "heading": null,
+   "type": "choice",
+   "points": 10,
+   "directions": "",
+   "passage": [
+    {
+     "segs": [
+      "The USS3-milion Fundamental physics prize is indeed an interesting experiment, as Alexander olyakov sai when he accepted this year&rsquo;s award in March. And it is far from the only one of its type. As a News Feature article in Nature discusses,a stingf f orarivceawars forearhes hav oned the Nobel Prizes in rcen yars. Many, like the Fundamental Physics Prize, are funded from the telephone-number-sized bank accounts of Intermnet entrepreneurs. These benefactors have suceeded in their chosen fieds, they ay,an they want to use their wealth to draw attention to those who have succeeded in science."
+     ]
+    },
+    {
+     "segs": [
+      "What&rsquo;s not to like? Quite a lot, according to a handful of scientists quoted in the News Feature.You canno buy class, as the old saying goes, and these upstart entrepreneurs cannot buy their prizes the prestige of the Nobels. The new awards are an exercise in self-promotion for those behind them,say scientists. They could distort the achievement-based system of peer-review-led research. They could cement the status quo of peer reviewed research. They do not fund peereviewed research. They perpetuate the myth of the lone genius."
+     ]
+    },
+    {
+     "segs": [
+      "The goals of the prize-givers seem as scattered as the criticism. Some want to shock, others to draw people into science,or to better reward those who have made their careers in research."
+     ]
+    },
+    {
+     "segs": [
+      "As Nature has pointed out before,there are some legtimate concerns about how science prizes both new and old-are distributed. The Breakthrough Prize in Life Sciences, aunched this year, takes an unrepresentative view of what the life sciences include. But the Nobel Foundation&rsquo;s limit of three reipients per prize, each of whom must still be living, has long been outgrown by the collaborative nature of modemn research- as will be demonstrated by the inevitable row over who is ignored when it comes to acknowledging the discovery of the Higs boson. The Nobels were, of course, themselves set up by a very rich individual who had decided what he wanted to do with his own money. Time, rather than intention, has given them legitimacy."
+     ]
+    },
+    {
+     "segs": [
+      "As much as some scientists may complain about the new award, two things seem clear.First, most researchers would accept such a prie f the were ofred one. Seond, it is surlu go ting tath ny nd attention come to science rather than go elsewhere, It is fair to criticize and question the mechanism-that is the culture of research, after all but tisteprzeiei?&rsquo; ony to o wihas he please. tis wis to take suah giftss with gratiude and grace."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 31,
+     "stem": "<p>The Fundamental Physical Prize is seen as</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "a symbol of the entrepreneurs&rsquo; wealth."
+      },
+      {
+       "k": "B",
+       "text": "a possible replacement of the Nobel Prize."
+      },
+      {
+       "k": "C",
+       "text": "a handsome reward for researchers."
+      },
+      {
+       "k": "D",
+       "text": "an example of bankers&rsquo; investment."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>题干定位</strong><br>题目问的是“基础物理学奖被视为……”，定位到文章第一段。该段提到，基础物理学奖金额高达 300 万美元，是互联网企业家们设立的奖项之一，目的是用他们的财富吸引人们对科学领域成功人士的关注。</p></li><li><p><strong>选项分析</strong></p><ul><li><strong>A. 企业家财富的象征</strong><br>文中提到这些奖项由互联网企业家资助，但并没有说该奖项是“财富的象征”，而是强调他们想用财富来奖励科学成功者。</li><li><strong>B. 诺贝尔奖的可能替代者</strong><br>文中虽然提到近年来出现很多新奖项，但并未说它们会取代诺贝尔奖，反而在第二段指出它们无法获得诺贝尔奖的声望。</li><li><strong>C. 对研究人员的丰厚奖励</strong><br>第一段明确提到该奖项是给科学领域成功者的奖励，且金额很高（300 万美元），因此“handsome reward”符合文意。</li><li><strong>D. 银行家投资的例子</strong><br>文中只说资助者银行账户金额巨大（telephone-number-sized bank accounts），但并未说是银行家投资，而是互联网企业家。</li></ul></li><li><p><strong>排除干扰</strong><br>第二段虽然提到一些科学家对新奖项的批评，但题干问的是“基础物理学奖被视为……”，主要信息在第一段，强调它是一种奖励科研人员的奖项，因此 C 最贴合。</p></li></ol><p><strong>正确答案：C</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 32,
+     "stem": "<p>The critics think that the new awards will most benefit</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "the profit-oriented scientists."
+      },
+      {
+       "k": "B",
+       "text": "the founders of the new award."
+      },
+      {
+       "k": "C",
+       "text": "the achievement-based system."
+      },
+      {
+       "k": "D",
+       "text": "peer-review-led research."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是批评者认为新奖项最有利于谁。<br>文章第二段集中表达了批评者的观点：</p><blockquote><p>The new awards are an exercise in self-promotion for those behind them, say scientists.<br>（科学家们说，这些新奖项是背后设立者的一种自我宣传。）</p></blockquote><p>这里的 “those behind them” 指的就是设立这些奖项的互联网企业家等赞助人，即 <strong>the founders of the new awards</strong>。<br>批评者认为这些奖项并不能像诺贝尔奖那样有威望，反而更多是给设立者自己带来关注和宣传效果，因此最受益的是设立者本人。</p><p>其他选项分析：</p><ul><li>A 选项 “以利益为导向的科学家” 文中未直接强调。</li><li>C 选项 “基于成就的体系” 和 D 选项 “同行评审主导的研究” 与批评者的观点相反，他们认为这些新奖项可能破坏基于成就的同行评审体系，而不是使其受益。</li></ul><p>因此正确答案是 <strong>B</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 33,
+     "stem": "<p>The discovery of the Higgs boson is a typical case which involves</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "the joint effot of modern researchers."
+      },
+      {
+       "k": "B",
+       "text": "controversies over the recipients&rsquo; status."
+      },
+      {
+       "k": "C",
+       "text": "the demonstration of rearch findings."
+      },
+      {
+       "k": "D",
+       "text": "legitimate concerns over the new prizes."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问“希格斯玻色子的发现是一个典型案例，涉及______”。<br>原文第四段中间提到：</p><blockquote><p>But the Nobel Foundation&rsquo;s limit of three recipients per prize, each of whom must still be living, has long been outgrown by the collaborative nature of modern research — <strong>as will be demonstrated by the inevitable row over who is ignored when it comes to acknowledging the discovery of the Higgs boson</strong>.</p></blockquote><p>这句话的意思是：<br>诺贝尔奖限制每个奖项最多三人且必须健在，但现代科研是合作性的（collaborative nature of modern research），希格斯玻色子的发现就体现了这一点——在确定获奖者时，必然会有人被忽略而引起争议。</p><p>因此，希格斯玻色子的发现是 <strong>现代研究合作性质</strong> 的一个典型案例，对应选项 <strong>A. the joint effort of modern researchers</strong>（现代研究者的共同努力）。</p><p>其他选项分析：</p><ul><li><strong>B</strong>：争议确实存在，但题干强调的是这个案例“涉及”什么，核心是合作研究导致诺奖规则不适应，而不是争议本身。</li><li><strong>C</strong>：没有强调研究成果的展示。</li><li><strong>D</strong>：虽然前文提到对新旧科学奖项的合理担忧，但希格斯玻色子案例是用来说明合作研究，不是主要说明对新奖项的担忧。</li></ul><p><strong>答案：A</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 34,
+     "stem": "<p>Acording to Paragraph 4 , which of the following is true of the Nobels?</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "History has never cast doubt on them."
+      },
+      {
+       "k": "B",
+       "text": "They are the most representative honor."
+      },
+      {
+       "k": "C",
+       "text": "Their legitimacy has long been in dispute."
+      },
+      {
+       "k": "D",
+       "text": "Their endurance has done justice to them."
+      }
+     ],
+     "explanation": "<p>我们先来看题干要求：根据第 4 段，关于诺贝尔奖，以下哪一项是正确的？</p><p><strong>第 4 段原文关键信息</strong>（与诺贝尔奖相关的部分）：</p><ul><li>科学奖项（包括新的和旧的）如何分配存在一些合理的担忧。</li><li>今年新设的“生命科学突破奖”对生命科学的涵盖范围不具有代表性。</li><li>但诺贝尔基金会限制每个奖项最多 3 位获奖者，且必须健在，这一规定早已不适应现代科研的合作性质——比如希格斯玻色子的发现会引发谁被忽略的争议。</li><li>诺贝尔奖本身也是由一个非常富有的人设立，他决定用自己的钱做自己想做的事。</li><li><strong>Time, rather than intention, has given them legitimacy.</strong>（是时间，而不是初衷，赋予了它们合法性。）</li></ul><hr><p><strong>选项分析</strong>：</p><p>A. History has never cast doubt on them.<br>（历史从未质疑过它们）<br>→ 错，本段提到对诺贝尔奖的质疑（如获奖人数限制不适应合作研究）。</p><p>B. They are the most representative honor.<br>（它们是最有代表性的荣誉）<br>→ 错，文中没有说“最”有代表性，反而指出其限制导致不具代表性。</p><p>C. Their legitimacy has long been in dispute.<br>（它们的合法性长期存在争议）<br>→ 错，虽然有批评，但本段强调的是时间最终赋予了它们合法性，并没有说“长期处于争议中”是事实的重点。</p><p>D. Their endurance has done justice to them.<br>（它们的持久性最终使其合理/公正）<br>→ 对，对应“Time, rather than intention, has given them legitimacy.”（时间赋予了它们合法性），即“endurance”（持久存在）让它们获得了正当地位。</p><hr><p><strong>答案</strong>：D</p>",
+     "tags": []
+    },
+    {
+     "n": 35,
+     "stem": "<p>The author believed that the new awards are</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "harmful to the culture of research"
+      },
+      {
+       "k": "B",
+       "text": "acceptable despite the criticism"
+      },
+      {
+       "k": "C",
+       "text": "subject to undesirable changes"
+      },
+      {
+       "k": "D",
+       "text": "unworthy of public attention"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>文章对新的科学奖项（如基础物理学奖）既有批评也有肯定。作者在最后一段明确表达了自己的看法：</p><ol><li><p><strong>尽管有科学家抱怨，但作者指出两点事实</strong>：</p><ul><li>大多数研究者如果被授予这类奖项是会接受的。</li><li>有更多的金钱和关注投入到科学领域是好事。</li></ul></li><li><p><strong>作者的态度总结在最后一句</strong>：</p><blockquote><p>It is wise to take such gifts with gratitude and grace.<br>（明智的做法是心怀感激、优雅地接受这些礼物。）</p></blockquote></li></ol><p>这表明作者认为这些奖项虽然有争议，但总体上是可以接受的，因此对应选项 <strong>B. acceptable despite the criticism</strong>（尽管有批评，但还是可以接受的）。</p><hr><p><strong>其他选项分析</strong>：</p><ul><li><strong>A</strong>：说对科研文化有害，但作者认为批评机制是科研文化的一部分，并不认为奖项本身有害。</li><li><strong>C</strong>：说它们会遭受不良变化，文中未重点强调。</li><li><strong>D</strong>：说它们不值得公众关注，与作者观点相反。</li></ul><p>因此正确答案是 <strong>B</strong>。</p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-4",
+   "label": "阅读 Text 4",
+   "title": "Text 4",
+   "heading": null,
+   "type": "choice",
+   "points": 10,
+   "directions": "",
+   "passage": [
+    {
+     "segs": [
+      "&ldquo;The Heart of the Matte,&rdquo; te ustrelcased rpr by the American Academy of Arts and Sciences(AAAS), deserves praise for afiming the imprtance of the humanities and social sciences to the prosperity and security of liberal democracy in America. Regretabl, however,the report&rsquo;s failure to adress tht rue ature of the crisis facing liberal education may cause more harm than good."
+     ]
+    },
+    {
+     "segs": [
+      "In 2010, leading congressional Democrats and Republicans sent letters to the AAAS asking that it identify actions tha could be taken by &ldquo;federal, state and local goverments,niversties, foundations, educatos, individual benefactors and other\"to &ldquo;&lsquo;maintain national excellence in humanities and social scientific scholarship and education.&ldquo;n response,the American Academy formed the Commission on the Humanities and Social Sciences. Among the commission&rsquo;s 5 members are top-ticruniversity presidents, cholars, lawyers, judges, and business executives, as well as rominnt figures fom diplomacy,fimmaking, musi and joumalism"
+     ]
+    },
+    {
+     "segs": [
+      "The goals identified in the report are generally admirable. Because representative govemnment presupposes an informed cizenry, the report supports full ieray stes ths shdy of history and government,paricularly American history and American goverment, and encourages the use of new digial technologies. To encourage inovation and competition, th repot al o crasad invetment in rearch, th rating of coherent curicula that improve students&rsquo; ability to sove problems and communicate efecivey in the 21st centur, icnreased finding for teachers and the encouragement of scholars to bring their learing to bear on the great challenges of the day. The report also advocates greater study of foreign languages,international affairs and the expansion of study abroad programs."
+     ]
+    },
+    {
+     "segs": [
+      "Unforunately, despite 2/s years in te mking,&ldquo;The Heart of the Matte&rsquo; never gets to te hat of the matter the iliberal nature of liberal etucatio at our leading colleges and univrsities,The commission ignores that for several decades America&rsquo;s colles and universties have produced graduates who don&rsquo;t know the content and character of liberal cducation and are thus deprived of is benefis, Sadly, the spirit of inguiry once at home on campus has been replaced by the use of the humanities and social sciences as vehicles for publicizing &ldquo;progressive&rdquo; o lefiapna"
+     ]
+    },
+    {
+     "segs": [
+      "Today, professors routinely treat the progressive interpretation of history and progressive public policy as the proper subject of study while portraying conservative or classical liberal ideas-such as free markets or selreliance as falling outside the boundaries of routine,and sometimes legitimate, ntelltua inestgation"
+     ]
+    },
+    {
+     "segs": [
+      "The AAAS displays great enthusiasm for liberal education. Yet its report may well set back reform by obscuring the depth and breadth of the challenge that Congress asked it to illuminate."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 36,
+     "stem": "<p>According to Paragraph 1, what is the author’s attitude toward the AAAS’s report?</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Critical"
+      },
+      {
+       "k": "B",
+       "text": "Appreciate"
+      },
+      {
+       "k": "C",
+       "text": "Contemptuous"
+      },
+      {
+       "k": "D",
+       "text": "Tolerant"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是作者对 AAAS 报告的态度。<br>第一段原文中，作者首先说这份报告 “deserves praise”（值得赞扬），这是肯定的部分。<br>但紧接着用 “Regrettably, however” 转折，指出报告的缺陷：“failure to address the true nature of the crisis &mldr; may cause more harm than good”（未能应对危机的真正本质，可能弊大于利）。</p><p>这种先扬后抑的结构中，<strong>重点在“抑”的部分</strong>，即作者的主要态度是批评报告没有抓住核心问题。<br>因此，正确态度是 <strong>critical（批评的）</strong>，而不是单纯欣赏、蔑视或容忍。</p><p><strong>答案：A</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 37,
+     "stem": "<p>Influential figures in the Congress required that the AAAS report on how to _____.</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "safeguard individuals’ rights to education"
+      },
+      {
+       "k": "B",
+       "text": "define the government’s role in education"
+      },
+      {
+       "k": "C",
+       "text": "retain people’s interest in liberal education"
+      },
+      {
+       "k": "D",
+       "text": "keep a leading position in liberal educatio"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是“国会中有影响力的人物要求 AAAS 报告关于如何______。”</p><ol><li><p><strong>定位关键信息：</strong>\n文章第二段提到，2010 年，国会中领先的民主党人和共和党人写信给 AAAS，要求它确定可以采取的行动，以 <strong>“maintain national excellence in humanities and social scientific scholarship and education.”</strong></p></li><li><p><strong>理解关键词：</strong></p><ul><li>“maintain”：保持、维持</li><li>“national excellence”：国家的卓越地位</li><li>“humanities and social scientific scholarship and education”：人文学科和社会科学的学术与教育</li></ul></li><li><p><strong>匹配选项：</strong></p><ul><li><strong>A. safeguard individuals’ rights to education</strong>：保护个人的教育权利。原文强调的是保持国家在学术和教育领域的卓越地位，而非个人权利。</li><li><strong>B. define the government’s role in education</strong>：界定政府在教育中的角色。原文虽然提到了各级政府可能采取行动，但报告的核心任务是“如何保持卓越地位”，而不是去“界定政府的角色”。</li><li><strong>C. retain people’s interest in liberal education</strong>：保持人们对通识教育的兴趣。原文强调的是保持“卓越地位”（excellence），这是一个关于质量和水平的概念，而不仅仅是“兴趣”（interest）。</li><li><strong>D. keep a leading position in liberal education</strong>：保持在通识教育中的领先地位。这与原文中的 <strong>“maintain national excellence in humanities and social scientific scholarship and education”</strong> 意思高度吻合。“Liberal education”（通识教育）的核心就包含人文学科和社会科学，“national excellence”和“leading position”都指向领先、卓越的地位。</li></ul></li><li><p><strong>结论：</strong>\n国会的要求核心是“保持国家在人文学科和社会科学领域的卓越地位”，这与选项 D “保持在通识教育中的领先地位” 意思一致。</p></li></ol><p>因此，正确答案是 <strong>D</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 38,
+     "stem": "<p>According to Paragraph 3, the report suggests _____.</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "an exclusive study of American history"
+      },
+      {
+       "k": "B",
+       "text": "a greater emphasis on theoretical subjects"
+      },
+      {
+       "k": "C",
+       "text": "the application of emerging technologies"
+      },
+      {
+       "k": "D",
+       "text": "funding for the study of foreign languages"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目要求根据第 3 段判断报告建议了什么。<br>我们来看第 3 段的关键信息：</p><blockquote><p>the report supports full literacy … and <strong>encourages the use of new digital technologies</strong>.<br>To encourage innovation and competition, the report also calls for increased investment in research …<br>The report also advocates greater study of foreign languages, international affairs and the expansion of study abroad programs.</p></blockquote><p>选项分析：</p><ul><li><p><strong>A. an exclusive study of American history</strong><br>错误。文中提到支持学习历史和政府（特别是美国历史和美国政府），但并没有说是“exclusive”（排他的），而且还有外国语言和国际事务等内容，因此 A 不符合。</p></li><li><p><strong>B. a greater emphasis on theoretical subjects</strong><br>错误。文中强调的是应用能力（解决问题、有效沟通）、新技术、研究投资等，没有特别强调“理论科目”。</p></li><li><p><strong>C. the application of emerging technologies</strong><br>正确。原文明确提到 “encourages the use of new digital technologies”，即“鼓励使用新的数字技术”，这与“应用新兴技术”一致。</p></li><li><p><strong>D. funding for the study of foreign languages</strong><br>错误。虽然报告提倡更多学习外语，但第 3 段提到“increased funding for teachers”并不是专门针对外语，也没有明确说“funding for the study of foreign languages”。C 选项在原文中有直接依据，而 D 没有直接对应“funding for foreign languages”。</p></li></ul><p>因此，正确答案是 <strong>C</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 39,
+     "stem": "<p>The author implies in Paragraph 5 that professors are _____.</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "supportive of free markets"
+      },
+      {
+       "k": "B",
+       "text": "biased against classical liberal ideas"
+      },
+      {
+       "k": "C",
+       "text": "cautious about intellectual investigation"
+      },
+      {
+       "k": "D",
+       "text": "conservative about public policy"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 5 段原文关键信息为：</p><blockquote><p>Today, professors routinely treat the progressive interpretation of history and progressive public policy as the proper subject of study while portraying conservative or classical liberal ideas — such as free markets or self-reliance — as falling outside the boundaries of routine, and sometimes legitimate, intellectual investigation.</p></blockquote><p>这句话的意思是：如今，教授们通常把“进步主义”的历史解读和公共政策当作合适的研究对象，而把保守主义或古典自由主义思想（如自由市场、自力更生）排除在常规甚至有时是合法的知识探究范围之外。</p><p>由此可知，教授们对古典自由主义思想持有<strong>偏见</strong>，认为它们不值得或不适合作为常规学术研究的内容。<br>因此，作者暗示教授们 <strong>biased against classical liberal ideas</strong>（对古典自由主义思想有偏见）。</p><hr><p><strong>选项分析：</strong></p><ul><li><p><strong>A. supportive of free markets</strong><br>错误。原文说教授们把自由市场这类古典自由主义思想排除在研究范围外，说明他们不支持自由市场。</p></li><li><p><strong>B. biased against classical liberal ideas</strong><br>正确。与原文意思一致，教授们对古典自由主义思想有偏见。</p></li><li><p><strong>C. cautious about intellectual investigation</strong><br>错误。原文没有说教授们在知识探究方面很谨慎，而是说他们对某些思想持排斥态度。</p></li><li><p><strong>D. conservative about public policy</strong><br>错误。原文说教授们推崇“进步主义”公共政策，而不是保守的公共政策。</p></li></ul><hr><p><strong>答案：B</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 40,
+     "stem": "<p>Which of the following would be the best title for the text?</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Illiberal Education and “The Heart of the Matter”"
+      },
+      {
+       "k": "B",
+       "text": "The AAAS’s Contribution to Liberal Education"
+      },
+      {
+       "k": "C",
+       "text": "Ways to Grasp “The Heart of the Matter”"
+      },
+      {
+       "k": "D",
+       "text": "Progressive Policy vs. Liberal Education"
+      }
+     ],
+     "explanation": "<p>让我们一步步推理。</p><hr><p><strong>1. 文章主旨分析</strong></p><ul><li>文章开头肯定 AAAS 的报告《The Heart of the Matter》有值得称赞之处，即肯定了人文学科对美国民主繁荣和安全的重要性。</li><li>但作者主要观点是批评：报告没有触及<strong>问题的本质</strong>——美国大学里的“自由教育”已经变得 <strong>不自由（illiberal）</strong>，即偏向进步主义/左翼观点，排斥保守主义或古典自由思想。</li><li>作者认为报告可能因为掩盖了问题的深度和广度，反而对改革有害。</li></ul><hr><p><strong>2. 选项分析</strong></p><p><strong>A. Illiberal Education and “The Heart of the Matter”</strong></p><ul><li>涵盖了文章的两个核心要素：<ol><li>报告名称 “The Heart of the Matter”</li><li>作者批判的核心问题 “Illiberal Education”</li></ol></li><li>符合文章主旨：报告与“不自由的教育”之间的关系。</li></ul><p><strong>B. The AAAS’s Contribution to Liberal Education</strong></p><ul><li>文章并没有赞扬 AAAS 对自由教育的贡献，而是批评其报告回避了真正问题，因此这个标题与作者态度相反。</li></ul><p><strong>C. Ways to Grasp “The Heart of the Matter”</strong></p><ul><li>文章没有提供如何理解这份报告的方法，而是直接批判报告内容。</li></ul><p><strong>D. Progressive Policy vs. Liberal Education</strong></p><ul><li>虽然文章提到进步主义政策与自由教育的对立，但这只是文中一个论据，不是全文核心标题，且没有包含报告名称，不够全面。</li></ul><hr><p><strong>3. 结论</strong><br>最佳标题应同时包含：</p><ul><li>报告名称</li><li>作者批判的实质问题（illiberal education）</li></ul><p>因此 <strong>A</strong> 最合适。</p><hr><p><strong>最终答案：A</strong></p>",
+     "tags": []
+    }
+   ],
+   "extras": []
+  },
+  {
+   "id": "reading-b",
+   "label": "新题型",
+   "title": "Part B",
+   "heading": null,
+   "type": "match",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>The following paragraphs are given in a wrong order. For Questions 41-45, you are required to reorganize into a coherent text by choosing from the list A-G and fling them into the numbered boxes Paragraphs A and E have been correctly placed. Mark your answers on the ANSWER SHEET. (10 points)</p>",
+   "body": "<p>[A] Some archaeological sites have always been easily observable-for example, the Parthenon in Athens, Greece; the pyramids of Giza in Egypt; and the megaliths of Stonehenge in southern England. But these sites are exceptions to the norm. Most archaeological sites have been located by means of careful searching, while many others have been discovered by accident. Olduvai Gorge, fell nioi e l/ 1osinis S tc fitcam o light during the digging of the Mexico City subway in the 1970s.</p><p>[B] In another case, American archaeologists Rene million and George Cowgill pat years systematically mapping the entire city of Teotihuacan in the valley of Mexico near what is now Mexico City at its peak around AD 600, this city was one of the largest human settlements in the word. The researchers mapped not only the city&rsquo;s vast and ornate ceremonial areas, but also hundreds of simpler apartment complexes where common people lived.</p><p>[C] How do archaeologists know where to find what they are looking for when there is nothing visible on the surface of the ground? Typically, they survey and sample (make test excavations on) large areas of terrain to determine where excavation will yed useful information, Surveys and test samples have also become important for understanding the larger Iandscapes that contain archaeological sites.</p><p>[D] Surveys can cover a single large settlement or ntire landscapes.in one cas, many recarchers working around the ancient Maya city of Copan, Honduras, have located hundreds of small trl iag nd ndidlald eliny using aerial photographs and by making surveys on foot. The resulting settlement maps show how the distribution and density of the rural population around the city changed dramatically between AD500 and 850, when Copan collapsed.</p><p>[E] To find their sites, archaeologists today rely heavily on systematic survey methods and a variety of high-technology tools and techniques. Airborne technologies, such as different types of radar and photographic equipment carried by airplanes or spacecraft, allow archaeologists to learn about what lies beneath the ground without digging. Aerial surveys locate general areas of interest or larger buried features, such as ancient buildings or fields.</p><p>[F] Most archaeological site, howeve, are discovered by archaeologists who have set out to look for them.Such searches can take years. British archaeologist Howard Carter knew tha the tomb of the Egyptian pharaoh Tutankhamen existed from information found in other sites. Carter sifted through rubble in the Valley of the King for seven years before he located the tomb in 1922.In the late 1800s British archaeologist Sir Arthur Eyan combed antique dealers&rsquo; stores in Athens, Greece, He was searching for thing engraved seals attributed to the ancient Mycenaean culture that dominated Greece from the 1400s to 1200s BC.Evas&rsquo;s interpretations of those engravings eventually led them to find the Minoan palace at Knossos on the island of Crete, in 1900.</p><p>[G] Ground surveys allow archaeologists to pinpint the placs where digs will be sccstu!. ost gron surveys involve a lot of walking, looking for surface clues such as small fragments of pottery, They ofien include a certain amounts of digging to test for buried materials at selected points across a landscape. Archaeologists also may locate buried remains by using such technologies as ground radar,magnetic-field recording,and metal detector. Archaeologists commonly use computers to map sites and the landscapes around sites. Two and three-dimensional maps are helpful tools in planning cxcavations, ilusraing how sites look, and presenting the results of archaeological research.</p><p>41 ________ → A → 42 ________ → E → 43 ________ → 44 ________ → 45 ________</p>",
+   "solution": "<p><strong>41. 【答案】 C</strong><br><strong>【考点】</strong> 文章结构<br><strong>【解析】</strong><br>本题要求确定文章首段，可采用排除法。</p><ul><li>选项B首句出现“another”，表明其是对上文信息的补充，不能作为首段。</li><li>选项F首句出现“however”，表示转折关系，同样需要上文信息支撑，不能作为首段。</li><li>选项D和G分别涉及具体的勘察对象和地面勘察手段，属于分析问题的内容，不符合首段引入话题的功能。</li><li>选项C以疑问句开头，提出“地面上看不到任何痕迹时，考古学家如何确定发掘地点？”这一问题，符合问题解决型文章的首段特征。<br>此外，选项A首句的“archaeological sites”与选项C末句的“archaeological sites”形成衔接，进一步验证C为首段。因此，本题答案为C。</li></ul><hr><p><strong>42. 【答案】 F</strong><br><strong>【考点】</strong> 段落一致性 + 连贯性<br><strong>【解析】</strong></p><ul><li>选项A和F的首句均提到“archaeological sites”，属于同一话题，应放在一起。</li><li>选项A指出部分遗址“easily observable”，而选项F首句通过“however”转折，强调大多数遗址的发现需要耗费多年时间，形成语义上的转折衔接。<br>因此，F应紧随A之后，本题答案为F。</li></ul><hr><p><strong>43. 【答案】 G</strong><br><strong>【考点】</strong> 段落一致性<br><strong>【解析】</strong></p><ul><li>选项E首句总述“systematic survey methods and a variety of high-technology tools and techniques”，下文应具体展开这些方法。</li><li>选项G首句介绍“ground surveys”，与E段尾句的“aerial surveys”形成并列关系，共同构成对勘察手段的详细说明。</li><li>E段从第二句开始列举具体技术，G段继续列举地面勘察方法，符合段落一致性原则。<br>因此，G应紧随E之后，本题答案为G。</li></ul><hr><p><strong>44. 【答案】 D</strong><br><strong>【考点】</strong> 段落连贯性<br><strong>【解析】</strong></p><ul><li>选项D和B均包含表示时间的线索词，且开头分别有“in one case”和“in another case”，形成语义上的并列衔接。</li><li>依据逻辑顺序，泛指性的“one case”应在前，特指性的“another case”应在后。<br>因此，D应置于B之前，本题答案为D。</li></ul><hr><p><strong>45. 【答案】 B</strong><br><strong>【考点】</strong> 段落一致性<br><strong>【解析】</strong></p><ul><li>根据44题解析，选项B以“in another case”开头，与选项D的“in one case”形成并列关系，应紧随D之后。</li><li>若前四题答案正确，本题唯一剩余选项为B。<br>因此，本题答案为B。</li></ul><hr><p><strong>最终段落顺序：</strong><br>C → A → F → E → G → D → B</p>",
+   "numbers": [
+    41,
+    42,
+    43,
+    44,
+    45
+   ],
+   "letters": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G"
+   ],
+   "answers": [
+    "C",
+    "F",
+    "G",
+    "D",
+    "B"
+   ]
+  },
+  {
+   "id": "translation",
+   "label": "翻译",
+   "title": "Part C",
+   "heading": null,
+   "type": "free",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>Read the following text carefully and then translate the underlined segments into Chinese. Your translation should be written on the ANSWER SHEET(10 points)</p>",
+   "body": "<p>Music means different things to different people and sometimes even different things to the same person at different moments of his life. It might be poetic, philosophical, sensual, or mathematical, but in any case it must, in my view, have something to do with the soul of the human being. Hence it is metaphysical; but the means of expression is purely and exclusively physical: sound. I believe it is precisely this permanent coexistence of metaphysical message through physical means that is the strength of music.46)\n<u>It is also the reason why when we try to describe music with words, all we can do is articulate our reactions to it, and not grasp music itself.</u></p><p>Beethoven&rsquo;s importance in music has been principally defined by the revolutionary nature of his compositions. He freed music from hitherto prevailing conventions of harmony and structure. Sometimes I feel in his late works a will to break all signs of continuity.</p><p>The music is abrupt and seemingly disconnected, as in the last piano sonata. In musical expression, he did not feel restrained by the weight of convention. 47)\n<u>By all accounts he was a freethinking person, and a courageous one, and I find courage an essential quality for the understanding, let alone the performance, of his works.</u></p><p>This courageous attitude in fact becomes a requirement for the performers of Beethoven&rsquo;s music. His compositions demand the performer to show courage, for example in the use of dynamics. 48)\n<u>Beethoven&rsquo;s habit of increasing the volume with an extreme intensity and then abruptly following it with a sudden soft passage was only rarely used by composers before him.</u></p><p>Beethoven was a deeply political man in the broadest sense of the word. He was not interested in daily politics, but concerned with questions of moral behavior and the larger questions of right and wrong affecting the entire society.49)\n<u>Especially significant was his view of freedom, which, for him, was associated with the rights and responsibilities of the individual: he advocated freedom of thought and of personal expression.</u></p><p>Beethoven&rsquo;s music tends to move from chaos to order as if order were an imperative of human existence. For him, order does not result from forgetting or ignoring the disorders that plague our existence; order is a necessary development, an improvement that may lead to the Greek ideal of spiritual elevation. It is not by chance that the Funeral March is not the last movement of the Eroica Symphony, but the second, so that suffering does not have the last word. 50)\n<u>One could interpret much of the work of Beethoven by saying that suffering is inevitable, but the courage to fight it renders life worth living.</u></p>",
+   "solution": "<p><strong>46) It is also the reason why when we try to describe music with words, all we can do is articulate our reactions to it, and not grasp music itself.</strong></p><p>【考点】定语从句，时间状语从句<br>【结构解析】</p><ul><li>主句：It is also the reason&mldr;</li><li>定语从句：why&mldr;all we can do is articulate our reactions to it, and not grasp music itself（修饰the reason）</li><li>时间状语从句：when we try to describe music with words</li><li>定语从句中主语为all，we can do是省略that的定语从句修饰all。因前有do，articulate前省略to。</li></ul><p>【词汇释义】</p><ul><li>articulate：清晰表达</li><li>reaction：反应（此处译为“感受”更贴切）</li><li>grasp：理解，掌握</li></ul><p>【参考译文】这也解释了为何当我们尝试用语言描述音乐时，只能表达出自己对音乐的感受，而无法真正理解音乐本身。</p><hr><p><strong>47) By all accounts he was a freethinking person, and a courageous one, and I find courage an essential quality for the understanding, let alone the performance, of his works.</strong></p><p>【考点】并列句，插入语<br>【结构解析】</p><ul><li>全句由两个并列分句构成，通过第二个and连接</li><li>前一分句：By all accounts he was a freethinking person, and a courageous one</li><li>后一分句：I find courage an essential quality for the understanding of his works</li><li>插入语：let alone the performance（“更不用说演奏”）</li></ul><p>【词汇释义】</p><ul><li>by all accounts：众所周知，据大家所说</li><li>freethinking：思想自由的</li><li>let alone：更不用说</li></ul><p>【参考译文】众所周知，贝多芬是个思想自由、充满勇气的人。我认为勇气是理解其作品的必备品质——演奏就更不必说了。</p><hr><p><strong>48) Beethoven&rsquo;s habit of increasing the volume with an extreme intensity and then abruptly following it with a sudden soft passage was only rarely used by composers before him.</strong></p><p>【考点】后置定语，并列结构<br>【结构解析】</p><ul><li>主语：Beethoven&rsquo;s habit</li><li>后置定语：of increasing&mldr;and then abruptly following&mldr;（两个动名词短语并列，说明habit的具体内容）</li><li>谓语：was only rarely used</li></ul><p>【词汇释义】</p><ul><li>volume：音量</li><li>intensity：强度</li><li>abruptly：突然地</li><li>passage：乐段</li></ul><p>【参考译文】贝多芬惯以极强的力度提高音量，随后又骤然转入轻柔的乐段，这种手法在前辈作曲家的作品中十分罕见。</p><hr><p><strong>49) Especially significant was his view of freedom, which, for him, was associated with the rights and responsibilities of the individual: he advocated freedom of thought and of personal expression.</strong></p><p>【考点】倒装句，定语从句，插入语<br>【结构解析】</p><ul><li>主句倒装：Especially significant was his view of freedom（正常语序为His view of freedom was especially significant）</li><li>非限制性定语从句：which&mldr;was associated with&mldr;（修饰freedom）</li><li>插入语：for him</li><li>冒号后内容解释说明个人观点</li></ul><p>【词汇释义】</p><ul><li>be associated with：与&mldr;相关</li><li>advocate：倡导，主张</li></ul><p>【参考译文】尤为重要的是他对自由的看法，在他看来，自由关乎个人的权利与责任：他倡导思想自由与个人表达自由。</p><hr><p><strong>50) One could interpret much of the work of Beethoven by saying that suffering is inevitable, but the courage to fight it renders life worth living.</strong></p><p>【考点】方式状语，宾语从句<br>【结构解析】</p><ul><li>主句：One could interpret much of the work of Beethoven</li><li>方式状语：by saying that&mldr;</li><li>宾语从句：that suffering is inevitable, but the courage&mldr;renders life worth living（but连接两个并列分句）</li><li>宾语补足语：worth living（补充说明life）</li></ul><p>【词汇释义】</p><ul><li>interpret：解读，诠释</li><li>inevitable：不可避免的</li><li>render：使得</li></ul><p>【参考译文】我们可以这样解读贝多芬的许多作品：苦难虽不可避免，但正是勇于抗争的勇气，才赋予了生命价值。</p>",
+   "numbers": [
+    46,
+    50
+   ]
+  },
+  {
+   "id": "writing-a",
+   "label": "小作文",
+   "title": "Part A",
+   "heading": "Section III  Writing",
+   "type": "free",
+   "points": 10,
+   "directions": "",
+   "body": "<p><strong>Directions</strong></p><p>Write a letter of about 100 words to the president of your university, suggesting how to improve students&rsquo; physical condition.</p><p>You should include the details you think necessary.</p><p>You should write neatly on the ANSWER SHEET.</p><p>Do not sign your own name at the end of the letter. Use &ldquo;Li Ming&rdquo; instead.</p><p>Do not write the address. (10 points)</p>",
+   "solution": "<p><strong>一、审题谋篇</strong></p><p>本题要求写一封建议信，收信人为大学校长，属于正式书信文体。写作时需注意语言规范，避免使用缩写、省略或口语化表达。</p><p><strong>书信结构建议：</strong></p><ul><li><strong>称呼：</strong> 使用正式尊称，如 “Dear Mr. President,”。</li><li><strong>正文：</strong> 建议采用三段式结构：<ol><li><strong>开头段：</strong> 简要自我介绍，并说明写信目的。</li><li><strong>主体段：</strong> 针对如何改善学生体质，提出2–3条具体可行的建议。</li><li><strong>结尾段：</strong> 表达期望，如希望建议被考虑，并期待回复。</li></ol></li><li><strong>落款：</strong> 使用正式结束语，如 “Yours sincerely,” “Sincerely yours,” 等，署名应为 “Li Ming”。</li></ul><hr><p><strong>二、参考范文</strong></p><p>Dear Mr. President,</p><p>I am a student of our university. I am writing to propose some practical suggestions for improving students’ physical health.</p><p>Firstly, the university could encourage regular exercise by providing more sports facilities and organizing fitness activities. Secondly, promoting balanced diets and offering healthier food options on campus would also help enhance students’ well-being.</p><p>I hope you will consider these suggestions. Thank you for your time and attention.</p><p>Yours sincerely,<br>Li Ming</p><hr><p><strong>三、常用句型</strong></p><ol><li>I am writing to propose some practical suggestions for…</li><li>It would be beneficial if…</li><li>I hope you will consider these suggestions.</li><li>Thank you for your time and attention.</li></ol>",
+   "numbers": [
+    51
+   ]
+  },
+  {
+   "id": "writing-b",
+   "label": "大作文",
+   "title": "Part B",
+   "heading": null,
+   "type": "free",
+   "points": 20,
+   "directions": "",
+   "body": "<p><strong>Directions</strong></p><p>Write an essay of 160 - 200 words based on the following drawing. In your essay, you should</p><ol><li><p>describe the drawing briefly,</p></li><li><p>interpret its intended meaning, and</p></li><li><p>give your comments.</p></li></ol><p>You should write neatly on the ANSWER SHEET (20 points)</p><p>(这幅漫画分为左右两部分，左侧标注“三十年前……”，画中一位年轻女子牵着一个小女孩的手，女子提着物品；右侧标注“现在……”，画中长大的女孩搀扶着已显苍老的女子。下方有“相携”二字，展现了母女（或亲人）之间跨越时光的相互陪伴与扶持。)</p><img src=\"/api/exams/assets/e1_2014_52.png\" alt=\"\">",
+   "solution": "<p><strong>Directions</strong></p><p>Write an essay of 160–200 words based on the following drawing. In your essay, you should:</p><ol><li>Describe the drawing briefly,</li><li>Interpret its intended meaning, and</li><li>Give your comments.</li></ol><p>You should write neatly on the ANSWER SHEET. (20 points)</p><hr><p><strong>一、审题谋篇</strong></p><p>2014年考研英语大作文难度适中，紧扣社会热点——亲情与感恩。与2005年“赡养老人”主题的漫画相比，本图描述更为直观，写作难度有所降低。建议采用三段式结构展开：</p><ul><li><p><strong>第一段：图画描述</strong><br>简要对比左右两图：三十年前，年轻的母亲牵着年幼的女儿；如今，女儿已长大，搀扶着年迈的母亲。重点突出右侧画面，强调子女对父母的感恩与陪伴。</p></li><li><p><strong>第二段：阐释内涵</strong><br>点明图画寓意——子女应关爱父母，并可从正反两方面展开论证：既可正面倡导孝道风尚，也可反面批评忽视父母关爱的现象。</p></li><li><p><strong>第三段：个人评论</strong><br>强调年轻人应把孝敬父母视为道德责任，并提出具体建议。唯有如此，家庭才能和睦，社会才能和谐。</p></li></ul><hr><p><strong>二、参考范文</strong></p><p>As can be seen, the drawing vividly reflects the enduring love between a mother and her daughter. In the left panel, a young and amiable mother is holding her little daughter’s hand. In the right one, the daughter, now grown up, supports her aged mother, just as her mother did thirty years ago.</p><p>As the caption “相携” suggests, the message conveyed here is self-evident: we ought to show continuous care and love for our parents. However, many people fail to fulfill this duty. With the accelerating pace of life, traditional moral values are fading. For instance, many young people prioritize careers over family. They often move away for work and become too busy to accompany their parents, leaving them in empty nests. Moreover, some attempt to replace genuine care with money or gifts. Although material support can improve parents’ living conditions, what the elderly need most is companionship—a simple phone call or a warm meal together.</p><p>In conclusion, nothing brings parents greater happiness than their children’s filial love. We should make time for family reunions whenever possible, and never forget to call our parents regularly. Only by being truly grateful and attentive can we ensure our parents lead a happy and fulfilling life.</p><hr><p><strong>三、万能句型</strong></p><ol><li><strong>As can be seen, … is reflected by the drawing: …</strong></li><li><strong>Just as the caption below summarizes, the implication conveyed in the picture is self-evident: …</strong></li><li><strong>As our pace of life gallops along, increasingly our society is seeing …</strong></li><li><strong>It is revealed in the fact that …</strong></li><li><strong>While it is beyond dispute that …, …</strong></li><li><strong>It is easy to draw this conclusion that …</strong></li><li><strong>Only with our full awareness of … can …</strong></li></ol>",
+   "numbers": [
+    52
+   ]
+  }
+ ]
+}

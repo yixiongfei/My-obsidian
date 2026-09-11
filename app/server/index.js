@@ -19,6 +19,7 @@ import * as vocab from './lib/vocabulary.js';
 import * as vocabDb from './lib/vocabulary-db.js';
 import * as exams from './lib/exams.js';
 import * as marks from './lib/vocab-marks.js';
+import * as examMarks from './lib/exam-marks.js';
 
 const app = express();
 app.use(cors());
@@ -202,6 +203,25 @@ app.get('/api/exams/:id', (req, res) => {
   res.json(exam);
 });
 
+/* 荧光笔：只落库 + 脏标记，Markdown 闲置 30 秒或离开卷面时再合并写 */
+app.get('/api/exams/:id/marks', (req, res) => res.json(examMarks.listMarks(req.params.id)));
+app.post('/api/exams/:id/marks', (req, res) => {
+  const { section, text, q } = req.body || {};
+  res.json(examMarks.addMark(req.params.id, String(section || ''), String(text || ''), Number.isInteger(q) ? q : null));
+});
+app.delete('/api/exams/marks/:mid', (req, res) => res.json(examMarks.removeMark(Number(req.params.mid))));
+app.post('/api/exams/marks/sync', (_req, res) => {
+  examMarks.flush().then((wrote) => { if (wrote) broadcast({ type: 'vault', version: index.version }); }).catch((err) => console.error('[真题例句] 写入失败', err));
+  res.status(202).json({ ok: true });
+});
+
+/* 错题本：显式动作，直接写 Markdown */
+app.post('/api/exams/:id/:section/export', wrap(async (req, res) => {
+  const n = req.body?.n;
+  const out = await examMarks.exportQuestion(req.params.id, req.params.section, Number.isInteger(n) ? n : null);
+  res.json(out);
+}));
+
 app.put('/api/exams/:id/:section/answers', (req, res) => {
   res.json(exams.saveDraft(req.params.id, req.params.section, req.body?.answers));
 });
@@ -322,6 +342,9 @@ export async function start() {
   // 上次进程没来得及写完的日志，开机补上
   const pending = vocab.recoverPendingLogs();
   if (pending.length) console.log(`[词汇] 补写遗留日志：${pending.join(', ')}`);
+  // 早期的按天日志收进按周文件（只收没有手写内容的）
+  vocab.migrateDailyLogs().then((moved) => { if (moved.length) console.log(`[词汇] 日志改为按周：合并了 ${moved.join(', ')}`); }).catch((err) => console.error('[词汇] 日志迁移失败', err));
+  examMarks.recoverPending();
 
   chokidar
     .watch(VAULT_ROOT, {

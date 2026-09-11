@@ -11,7 +11,7 @@ import { api } from './api.js';
  */
 
 const WORD_RE = /[A-Za-z][A-Za-z'’-]*[A-Za-z]|[A-Za-z]/g;
-const SKIP = new Set(['SCRIPT', 'STYLE', 'TEXTAREA', 'INPUT', 'MARK', 'SUP', 'SUB']);
+const SKIP = new Set(['SCRIPT', 'STYLE', 'TEXTAREA', 'INPUT', 'SUP', 'SUB']);
 
 /** 与服务端 lemmaCandidates 同一套规则，前端用来把 criticized 对到 criticize 的标注上 */
 export function lemmaCandidates(raw) {
@@ -97,9 +97,8 @@ export function selectedWord() {
  * @param enabled 只有英语卷开
  * @param source  记到标注来源里（卷子 id）
  */
-export function useWordMarks(rootRef, enabled, source) {
+export function useWordMarks(rootRef, enabled, source, notify) {
   const [marks, setMarks] = useState([]);
-  const [toast, setToast] = useState(null);
   const indexRef = useRef(new Map());
   const observing = useRef(false);
 
@@ -129,10 +128,7 @@ export function useWordMarks(rootRef, enabled, source) {
     return () => obs.disconnect();
   }, [marks, enabled, rootRef]);
 
-  const flash = useCallback((text, kind) => {
-    setToast({ text, kind, at: Date.now() });
-    setTimeout(() => setToast((t) => (t && Date.now() - t.at >= 1400 ? null : t)), 1500);
-  }, []);
+  const flash = useCallback((text, kind) => notify?.(text, kind), [notify]);
 
   const onDoubleClick = useCallback(async (e) => {
     if (!enabled) return;
@@ -156,5 +152,194 @@ export function useWordMarks(rootRef, enabled, source) {
     }
   }, [enabled, source, flash]);
 
-  return { marks, toast, onDoubleClick };
+  return { marks, onDoubleClick };
+}
+
+/* ══════════════════════════════════════════════════════════════
+ * 荧光笔：选中一句 → 右键标记。存的是纯文本，回来时按文本在容器里重新找位置。
+ * ══════════════════════════════════════════════════════════════ */
+
+const squash = (t) => String(t || '').replace(/\s+/g, ' ');
+
+/** 容器内所有文本节点，附带它们在拼接文本里的起点 */
+function textIndex(root) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(n) {
+      const p = n.parentElement;
+      return p && !SKIP.has(p.tagName) && !p.closest('textarea, input, .paper-rail') ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    },
+  });
+  const nodes = [];
+  let text = '';
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) {
+    nodes.push({ node: n, start: text.length });
+    text += n.nodeValue;
+  }
+  return { nodes, text };
+}
+
+/** 在容器里按文本找一段（空白差异容忍），返回 Range；找不到返回 null */
+export function findTextRange(root, wanted) {
+  const target = squash(wanted).trim();
+  if (!target) return null;
+  const { nodes, text } = textIndex(root);
+  // 把多余空白压掉的同时记住每个压缩后字符对应的原始下标
+  const map = [];
+  let compact = '';
+  let prevSpace = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (/\s/.test(ch)) { if (prevSpace) continue; prevSpace = true; compact += ' '; map.push(i); continue; }
+    prevSpace = false; compact += ch; map.push(i);
+  }
+  const at = compact.indexOf(target);
+  if (at < 0) return null;
+  const s = map[at]; const e = map[at + target.length - 1] + 1;
+  const locate = (pos, end) => {
+    for (let i = nodes.length - 1; i >= 0; i--) {
+      const { node, start } = nodes[i];
+      if (pos >= start && (pos < start + node.nodeValue.length || (end && pos === start + node.nodeValue.length))) return [node, pos - start];
+    }
+    return null;
+  };
+  const a = locate(s, false); const b = locate(e, true);
+  if (!a || !b) return null;
+  const range = document.createRange();
+  range.setStart(a[0], a[1]); range.setEnd(b[0], b[1]);
+  return range;
+}
+
+/** 把一个 Range 覆盖到的文本逐节点包进 <mark>，跨标签也没关系 */
+export function wrapRange(range, className, dataset = {}) {
+  const root = range.commonAncestorContainer.nodeType === 1 ? range.commonAncestorContainer : range.commonAncestorContainer.parentElement;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode: (n) => (range.intersectsNode(n) && n.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT),
+  });
+  const nodes = [];
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) nodes.push(n);
+  const marks = [];
+  for (const n of nodes) {
+    let node = n;
+    const from = node === range.startContainer ? range.startOffset : 0;
+    const to = node === range.endContainer ? range.endOffset : node.nodeValue.length;
+    if (to <= from) continue;
+    if (to < node.nodeValue.length) node.splitText(to);
+    if (from > 0) node = node.splitText(from);
+    const mark = document.createElement('mark');
+    mark.className = className;
+    for (const [k, v] of Object.entries(dataset)) mark.dataset[k] = v;
+    node.parentNode.replaceChild(mark, node);
+    mark.appendChild(node);
+    marks.push(mark);
+  }
+  return marks;
+}
+
+/** 拆掉某个 id 的荧光笔标记 */
+export function unwrapHighlight(root, id) {
+  for (const m of root.querySelectorAll(`mark.hl[data-id="${id}"]`)) {
+    const parent = m.parentNode;
+    while (m.firstChild) parent.insertBefore(m.firstChild, m);
+    parent.removeChild(m);
+    parent.normalize();
+  }
+}
+
+/** 当前选区落在哪个单元 / 哪道题里 */
+export function selectionTarget() {
+  const sel = window.getSelection?.();
+  if (!sel || sel.isCollapsed || !sel.rangeCount) return null;
+  const range = sel.getRangeAt(0);
+  const el = range.commonAncestorContainer.nodeType === 1 ? range.commonAncestorContainer : range.commonAncestorContainer.parentElement;
+  const unit = el?.closest('.unit-anchor');
+  if (!unit) return null;
+  const q = el.closest('[id^="q-"]')?.id.match(/-(\d+)$/)?.[1];
+  const text = squash(sel.toString()).trim();
+  if (text.length < 2) return null;
+  return { range: range.cloneRange(), sectionId: unit.id.replace(/^unit-/, ''), q: q ? Number(q) : null, text };
+}
+
+/**
+ * 荧光笔的状态与画线。marks 来自服务端，按 sectionId 找到单元容器再按文本定位。
+ * 单元重挂载（重做）后 DOM 是新的，所以每次 sections 变化都补画一遍；已画过的（有同 id 的 mark）跳过。
+ */
+export function useHighlights(rootRef, examId, enabled, notify) {
+  const [marks, setMarks] = useState([]);
+  const [menu, setMenu] = useState(null); // { x, y, target } | { x, y, existing }
+
+  useEffect(() => {
+    if (!enabled) { setMarks([]); return; }
+    api.examMarks(examId).then(setMarks).catch(() => {});
+  }, [examId, enabled]);
+
+  // 离开卷面时把攒着的句子写进 Markdown（服务端合并写，不等它）
+  useEffect(() => () => { if (enabled) api.syncExamMarks(); }, [examId, enabled]);
+
+  const paintAll = useCallback(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    for (const m of marks) {
+      if (root.querySelector(`mark.hl[data-id="${m.id}"]`)) continue;
+      const unit = root.querySelector(`#unit-${CSS.escape(m.sectionId)}`);
+      if (!unit) continue;
+      const range = findTextRange(unit, m.text);
+      if (range) wrapRange(range, 'hl', { id: String(m.id) });
+    }
+  }, [marks, rootRef]);
+
+  useEffect(() => {
+    if (!enabled) return undefined;
+    const t = setTimeout(paintAll, 60);
+    return () => clearTimeout(t);
+  });
+
+  const onContextMenu = useCallback((e) => {
+    if (!enabled) return;
+    const hit = e.target.closest?.('mark.hl');
+    if (hit) { e.preventDefault(); setMenu({ x: e.clientX, y: e.clientY, existing: Number(hit.dataset.id) }); return; }
+    const target = selectionTarget();
+    if (!target) return;
+    e.preventDefault();
+    setMenu({ x: e.clientX, y: e.clientY, target });
+  }, [enabled]);
+
+  const closeMenu = useCallback(() => setMenu(null), []);
+
+  const highlight = useCallback(async () => {
+    const t = menu?.target;
+    setMenu(null);
+    if (!t) return;
+    try {
+      const saved = await api.addExamMark(examId, { section: t.sectionId, text: t.text, q: t.q });
+      // 先按当时的选区画，不等重新定位；下次进来再按文本找
+      try { wrapRange(t.range, 'hl', { id: String(saved.id) }); } catch { /* 选区已失效，靠 paintAll */ }
+      window.getSelection?.()?.removeAllRanges();
+      setMarks((ms) => (ms.some((m) => m.id === saved.id) ? ms : [...ms, saved]));
+      notify?.('已标记，稍后合并写入 英语/语法/真题例句.md', 'hl');
+    } catch (err) {
+      notify?.(err.message, 'err');
+    }
+  }, [menu, examId, notify]);
+
+  const unhighlight = useCallback(async () => {
+    const id = menu?.existing;
+    setMenu(null);
+    if (!id) return;
+    try {
+      await api.removeExamMark(id);
+      if (rootRef.current) unwrapHighlight(rootRef.current, id);
+      setMarks((ms) => ms.filter((m) => m.id !== id));
+      notify?.('已取消标记', 'off');
+    } catch (err) {
+      notify?.(err.message, 'err');
+    }
+  }, [menu, rootRef, notify]);
+
+  const copySelection = useCallback(() => {
+    const t = menu?.target;
+    setMenu(null);
+    if (t) navigator.clipboard?.writeText(t.text).catch(() => {});
+  }, [menu]);
+
+  return { marks, menu, onContextMenu, closeMenu, highlight, unhighlight, copySelection };
 }

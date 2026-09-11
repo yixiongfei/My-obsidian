@@ -44,6 +44,12 @@ export const api = {
   saveExamDraft: (id, section, answers) => j(`/api/exams/${encodeURIComponent(id)}/${section}/answers`, body('PUT', { answers })),
   submitExam: (id, section, answers) => j(`/api/exams/${encodeURIComponent(id)}/${section}/submit`, body('POST', { answers })),
   resetExam: (id, section) => j(`/api/exams/${encodeURIComponent(id)}/${section}/reset`, body('POST', {})),
+  // 荧光笔与错题本
+  examMarks: (id) => j(`/api/exams/${encodeURIComponent(id)}/marks`),
+  addExamMark: (id, payload) => j(`/api/exams/${encodeURIComponent(id)}/marks`, body('POST', payload)),
+  removeExamMark: (mid) => j(`/api/exams/marks/${mid}`, { method: 'DELETE' }),
+  syncExamMarks: () => fetch('/api/exams/marks/sync', body('POST', {})).catch(() => {}),
+  exportQuestion: (id, section, n) => j(`/api/exams/${encodeURIComponent(id)}/${section}/export`, body('POST', { n })),
   year: (y) => j(`/api/schedule/year/${y}`),
   month: (m) => j(`/api/schedule/month/${m}`),
   day: (d) => j(`/api/schedule/day/${d}`),

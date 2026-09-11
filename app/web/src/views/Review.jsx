@@ -23,6 +23,35 @@ const RATINGS = [
 
 const dot = (d) => (d ? d.replaceAll('-', '.') : '');
 
+/* 发音：用系统自带的语音合成（Web Speech API），离线、不访问网络。
+   选一个英语女声 / 英式音优先，没有就用默认英语声 */
+const canSpeak = typeof window !== 'undefined' && 'speechSynthesis' in window;
+function pickVoice() {
+  const voices = window.speechSynthesis.getVoices();
+  const en = voices.filter((v) => /^en(-|_)?/i.test(v.lang));
+  return en.find((v) => /en-GB/i.test(v.lang) && /female|Hazel|Sonia|Libby/i.test(v.name))
+    || en.find((v) => /en-US/i.test(v.lang) && /Zira|Aria|Jenny|Samantha/i.test(v.name))
+    || en.find((v) => /en-GB/i.test(v.lang)) || en[0] || null;
+}
+function speak(text, { rate = 0.92 } = {}) {
+  if (!canSpeak || !text) return;
+  window.speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  const v = pickVoice();
+  if (v) u.voice = v;
+  u.lang = v?.lang || 'en-US';
+  u.rate = rate;
+  window.speechSynthesis.speak(u);
+}
+
+const SpeakerIcon = ({ on }) => (
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M4 9v6h4l5 4V5L8 9H4z" />
+    {on && <path d="M16 9a4 4 0 0 1 0 6" />}
+    {on && <path d="M18.5 6.5a7.5 7.5 0 0 1 0 11" />}
+  </svg>
+);
+
 export default function Review({ version, onReviewed }) {
   const navigate = useNavigate();
   const { data, loading, error, reload } = useApi(() => api.cards(), [version]);
@@ -33,6 +62,9 @@ export default function Review({ version, onReviewed }) {
   const [flipped, setFlipped] = useState(false);
   const [masteredCount, setMasteredCount] = useState(0);
   const [notice, setNotice] = useState('');
+  // 发音开关记在本机；开着时翻卡就读单词，卡背的例句旁有单独的朗读按钮
+  const [voice, setVoice] = useState(() => canSpeak && localStorage.getItem('kb-voice') === 'on');
+  useEffect(() => { localStorage.setItem('kb-voice', voice ? 'on' : 'off'); }, [voice]);
 
   // 锁住并发：双击、键盘连击、React 还没重绘时的重复提交都会走到这儿
   const inFlight = useRef(false);
@@ -105,7 +137,7 @@ export default function Review({ version, onReviewed }) {
       if (!card) return;
       if (e.key === ' ' || e.key === 'Enter') {
         e.preventDefault();
-        setFlipped((f) => !f);
+        setFlipped((f) => { if (!f && voice) speak(card.term); return !f; });
         return;
       }
       if (!flipped) return;
@@ -114,7 +146,7 @@ export default function Review({ version, onReviewed }) {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [card, flipped, grade]);
+  }, [card, flipped, grade, voice]);
 
   if (loading && !data) return <Loading />;
   if (error) return <ErrorBox error={error} onRetry={reload} />;
@@ -168,16 +200,27 @@ export default function Review({ version, onReviewed }) {
             : card.due ? <span className="dim">下次 {dot(card.due)}</span> : <span className="dim">新词</span>}
           <span className="dim">复习 {card.reviewCount} 次</span>
           <span className="dim">已掌握 {counts.mastered ?? 0}</span>
+          {canSpeak && (
+            <button className={`voice-btn${voice ? ' on' : ''}`} title={voice ? '发音：开（翻卡即读）' : '发音：关'}
+                    onClick={() => setVoice((v) => { if (!v) speak(card.term); return !v; })}>
+              <SpeakerIcon on={voice} />
+            </button>
+          )}
           <button className="vocab-link" onClick={() => navigate('/review/words')}>单词列表 →</button>
         </div>
       </div>
 
       <button className={`vocab-card${flipped ? ' open' : ''}`}
-              onClick={() => setFlipped((f) => !f)}
+              onClick={() => setFlipped((f) => { if (!f && voice) speak(card.term); return !f; })}
               aria-label={flipped ? '收起释义' : '查看释义'}>
         <div className="vocab-face">
           <div className="vocab-term">{card.term}{card.important && <span className="vocab-imp" title="标注词">★</span>}</div>
           {card.phonetic && <div className="vocab-ph">/{card.phonetic}/</div>}
+          {voice && (
+            <button className="voice-btn sm" title="再读一遍" onClick={(e) => { e.stopPropagation(); speak(card.term); }}>
+              <SpeakerIcon on />
+            </button>
+          )}
           {!flipped && <div className="vocab-cue">点击卡片或按 Space 查看释义</div>}
         </div>
 
@@ -195,7 +238,14 @@ export default function Review({ version, onReviewed }) {
 
             {card.example?.text && (
               <div className="vocab-usage">
-                <div className="lbl">USAGE EXAMPLE</div>
+                <div className="row" style={{ gap: 10 }}>
+                  <div className="lbl">USAGE EXAMPLE</div>
+                  {voice && (
+                    <button className="voice-btn sm" title="朗读例句" onClick={(e) => { e.stopPropagation(); speak(card.example.text, { rate: 0.95 }); }}>
+                      <SpeakerIcon on />
+                    </button>
+                  )}
+                </div>
                 <p className="vu-en">{card.example.text}</p>
                 {card.example.translation && <p className="vu-cn">{card.example.translation}</p>}
               </div>

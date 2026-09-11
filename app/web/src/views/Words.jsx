@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import { Loading, ErrorBox } from '../components/bits.jsx';
@@ -19,15 +19,18 @@ const VIEWS = [
   { key: 'new', label: '未学习' },
   { key: 'learning', label: '学习中' },
   { key: 'known', label: '已熟识' },
+  { key: 'all', label: '全部' },
 ];
 const WHY = { reviewed: '今天复习', marked: '今天标注', added: '今天添加' };
 const dot = (d) => (d ? d.replaceAll('-', '.') : '');
 
 export default function Words() {
   const navigate = useNavigate();
-  const [view, setView] = useState(() => localStorage.getItem('kb-words-view') || 'today');
-  const [q, setQ] = useState('');
-  const [debounced, setDebounced] = useState('');
+  const [params] = useSearchParams();
+  const initialQ = params.get('q') || '';
+  const [view, setView] = useState(() => params.get('view') || localStorage.getItem('kb-words-view') || 'today');
+  const [q, setQ] = useState(initialQ);
+  const [debounced, setDebounced] = useState(initialQ);
   const [adding, setAdding] = useState(false);
   const [form, setForm] = useState({ term: '', meaning: '' });
   const [busy, setBusy] = useState(false);
@@ -41,7 +44,7 @@ export default function Words() {
   useEffect(() => { if (data) setItems(data.items); }, [data]);
 
   const counts = data?.counts || {};
-  const stats = useMemo(() => VIEWS.map((v) => ({ ...v, n: counts[v.key] ?? 0 })), [counts]);
+  const stats = useMemo(() => VIEWS.map((v) => ({ ...v, n: v.key === 'all' ? (counts.new || 0) + (counts.learning || 0) + (counts.known || 0) : (counts[v.key] ?? 0) })), [counts]);
 
   const toggleImportant = async (w) => {
     setItems((list) => list.map((x) => (x.id === w.id ? { ...x, important: !w.important, importance: Math.min(4, Math.max(0, x.importance + (w.important ? -2 : 2))) } : x)));
@@ -87,7 +90,6 @@ export default function Words() {
           <input className="input" placeholder="释义（词表内的词可以不填）" value={form.meaning}
                  onChange={(e) => setForm((f) => ({ ...f, meaning: e.target.value }))} />
           <button className="btn primary sm" type="submit" disabled={busy || !form.term.trim()}>加入并标为重要</button>
-          <span className="dim" style={{ fontSize: 11 }}>词表内的词会直接标注在原词条上；词表外的建为自定义词</span>
         </form>
       )}
       {err && <div className="vocab-notice" style={{ marginBottom: 10 }}>{err}</div>}

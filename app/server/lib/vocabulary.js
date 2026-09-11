@@ -407,12 +407,33 @@ const dirtyDates = () => vdb.handle()
   .prepare("SELECT k FROM vocab_meta WHERE k LIKE ?").all(`${DIRTY_PREFIX}%`)
   .map((r) => r.k.slice(DIRTY_PREFIX.length));
 
-const logPath = (date) => path.join(VAULT_ROOT, VOCAB_LOG_DIR, `${date}.md`);
+/* ── 一周一个文件 ────────────────────────────────────────
+   按天建文件一个月就是三十个，翻起来太碎；改成 ISO 周（周一起）一份，
+   周内各天按日期排成小节。文件名 2026-W37.md，方便按名字排序。 */
 
-const FRONTMATTER = (date) => `---
-title: ${date} 英语词汇复习
+const pad2 = (n) => String(n).padStart(2, '0');
+const ymd = (d) => `${d.getUTCFullYear()}-${pad2(d.getUTCMonth() + 1)}-${pad2(d.getUTCDate())}`;
+
+/** 某天所属的 ISO 周：{ key, start, end, year, week } */
+export function weekOf(date) {
+  const d = new Date(`${date}T00:00:00Z`);
+  const dow = d.getUTCDay() || 7;                     // 周一 1 … 周日 7
+  const monday = new Date(d); monday.setUTCDate(d.getUTCDate() - dow + 1);
+  const sunday = new Date(monday); sunday.setUTCDate(monday.getUTCDate() + 6);
+  const thursday = new Date(monday); thursday.setUTCDate(monday.getUTCDate() + 3);
+  const year = thursday.getUTCFullYear();
+  const jan1 = new Date(Date.UTC(year, 0, 1));
+  const week = Math.ceil(((thursday - jan1) / 86400000 + 1) / 7);
+  return { key: `${year}-W${pad2(week)}`, start: ymd(monday), end: ymd(sunday), year, week };
+}
+
+const logPath = (weekKey) => path.join(VAULT_ROOT, VOCAB_LOG_DIR, `${weekKey}.md`);
+
+const FRONTMATTER = (w) => `---
+title: ${w.year} 年第 ${w.week} 周 英语词汇复习
 tags: [英语, 词汇, 复习]
-created: ${date}
+created: ${w.start}
+week: ${w.key}
 kind: vocabulary-review-log
 reviewable: false
 ---
@@ -420,11 +441,13 @@ reviewable: false
 
 const AUTO_START = '<!-- kb:vocab:start -->';
 const AUTO_END = '<!-- kb:vocab:end -->';
+const WEEKDAY = ['日', '一', '二', '三', '四', '五', '六'];
 
-function renderAuto(date) {
+/** 一周的自动区：每天一小节，按日期排；同一个词当天多次评分只算一个、以最后一次为准 */
+function renderAuto(w) {
   const d = vdb.handle();
-  // 同一个词当天多次评分只算一个，并以最后一次评分为准
-  const rows = d.prepare(`
+  const dates = d.prepare('SELECT DISTINCT date FROM vocab_reviews WHERE date BETWEEN ? AND ? ORDER BY date').all(w.start, w.end).map((r) => r.date);
+  const dayRows = d.prepare(`
     SELECT w.term AS term, r.rating AS rating, w.id AS word_id
     FROM (
       SELECT word_id, rating,
@@ -432,49 +455,67 @@ function renderAuto(date) {
       FROM vocab_reviews WHERE date = ?
     ) r JOIN vocab_words w ON w.id = r.word_id
     WHERE r.rn = 1
-    ORDER BY w.term`).all(date);
-
-  const mastered = rows.filter((r) => r.rating === 'easy').length;
+    ORDER BY w.term`);
   const glossOf = d.prepare('SELECT pos, gloss FROM vocab_senses WHERE word_id = ? ORDER BY ord LIMIT 3');
+  const label = { again: '重来', hard: '困难', good: '掌握', easy: '轻松' };
+
+  let total = 0; let mastered = 0;
+  const days = dates.map((date) => {
+    const rows = dayRows.all(date);
+    total += rows.length;
+    mastered += rows.filter((r) => r.rating === 'easy').length;
+    return { date, rows };
+  });
 
   const lines = [
     AUTO_START,
     '',
-    `完成 **${rows.length}** 个词，其中标为「轻松」已掌握 **${mastered}** 个。`,
+    `本周（${w.start.slice(5).replace('-', '.')} – ${w.end.slice(5).replace('-', '.')}）完成 **${total}** 个词，其中标为「轻松」已掌握 **${mastered}** 个。`,
     '',
-    '| 单词 | 释义 | 评分 |',
-    '| --- | --- | --- |',
   ];
-  const label = { again: '重来', hard: '困难', good: '掌握', easy: '轻松' };
-  for (const r of rows) {
-    const gloss = glossOf.all(r.word_id)
-      .map((s) => [s.pos, s.gloss].filter(Boolean).join(' ')).join('；')
-      .replace(/\|/g, '\\|');
-    lines.push(`| ${r.term} | ${gloss} | ${label[r.rating] || r.rating} |`);
+  for (const { date, rows } of days) {
+    const wd = WEEKDAY[new Date(`${date}T00:00:00Z`).getUTCDay()];
+    lines.push(`### ${date.replaceAll('-', '.')} 周${wd} · ${rows.length} 个词`, '', '| 单词 | 释义 | 评分 |', '| --- | --- | --- |');
+    for (const r of rows) {
+      const gloss = glossOf.all(r.word_id)
+        .map((s) => [s.pos, s.gloss].filter(Boolean).join(' ')).join('；')
+        .replace(/\|/g, '\\|');
+      lines.push(`| ${r.term} | ${gloss} | ${label[r.rating] || r.rating} |`);
+    }
+    lines.push('');
   }
-  lines.push('', AUTO_END);
+  lines.push(AUTO_END);
   return lines.join('\n');
 }
 
-/** 同一日期的写入串行化，防止并发覆盖 */
+/** 同一周的写入串行化，防止并发覆盖 */
 const writing = new Map();
 
-async function writeLog(date) {
-  const prev = writing.get(date) || Promise.resolve();
-  const job = prev.then(() => writeLogOnce(date)).catch(() => {});
-  writing.set(date, job);
+async function writeLog(weekKey) {
+  const prev = writing.get(weekKey) || Promise.resolve();
+  const job = prev.then(() => writeLogOnce(weekKey)).catch(() => {});
+  writing.set(weekKey, job);
   await job;
-  if (writing.get(date) === job) writing.delete(date);
+  if (writing.get(weekKey) === job) writing.delete(weekKey);
 }
 
-async function writeLogOnce(date) {
-  const file = logPath(date);
+/** 由 2026-W37 反推这一周：ISO 第 1 周是 1 月 4 日所在的那周，往后数 */
+function weekFromKey(key) {
+  const first = weekOf(`${key.slice(0, 4)}-01-04`);
+  const monday = new Date(`${first.start}T00:00:00Z`);
+  monday.setUTCDate(monday.getUTCDate() + (Number(key.slice(6)) - 1) * 7);
+  return weekOf(ymd(monday));
+}
+
+async function writeLogOnce(weekKey) {
+  const week = weekFromKey(weekKey);
+  const file = logPath(week.key);
   await fsp.mkdir(path.dirname(file), { recursive: true });
 
   let existing = '';
   try { existing = await fsp.readFile(file, 'utf8'); } catch { /* 首次写入 */ }
 
-  const auto = renderAuto(date);
+  const auto = renderAuto(week);
   let body;
   if (existing.includes(AUTO_START) && existing.includes(AUTO_END)) {
     // 只替换自动区，用户在区外写的手记原样保留
@@ -484,7 +525,7 @@ async function writeLogOnce(date) {
   } else if (existing) {
     body = `${existing.trimEnd()}\n\n${auto}\n`;
   } else {
-    body = `${FRONTMATTER(date)}\n## 手写笔记\n\n（这一块不会被自动覆盖，随便写）\n\n${auto}\n`;
+    body = `${FRONTMATTER(week)}\n## 手写笔记\n\n（这一块不会被自动覆盖，随便写）\n\n${auto}\n`;
   }
 
   // 临时文件 + 原子 rename：半截文件会被 Obsidian 和索引器同时读到
@@ -504,7 +545,7 @@ function scheduleIdleFlush() {
 }
 
 /**
- * 把所有脏日期写成 Markdown。返回已排队的日期，不等磁盘。
+ * 把所有脏日期所在的周写成 Markdown。返回已处理的日期，不等磁盘。
  *
  * 脏标记只在这一次任务**自己认领的日期**写完后才清：
  * 如果直接清空全部标记，写盘期间新产生的评分就会被静默丢掉。
@@ -512,11 +553,36 @@ function scheduleIdleFlush() {
 export async function flush() {
   const dates = dirtyDates();
   if (!dates.length) return [];
-  for (const date of dates) {
-    await writeLog(date);
-    vdb.delMeta(DIRTY_PREFIX + date);
-  }
+  const weeks = [...new Set(dates.map((d) => weekOf(d).key))];
+  for (const key of weeks) await writeLog(key);
+  for (const date of dates) vdb.delMeta(DIRTY_PREFIX + date);
   return dates;
+}
+
+/**
+ * 早期是一天一个文件（2026-09-11.md）。启动时把**没有手写内容**的日文件收进周文件：
+ * 正文剥掉自动区后只剩默认脚手架的，删掉并把那天标脏；写过手记的原样留着，不动。
+ */
+export async function migrateDailyLogs() {
+  const dir = path.join(VAULT_ROOT, VOCAB_LOG_DIR);
+  let files = [];
+  try { files = await fsp.readdir(dir); } catch { return []; }
+  const moved = [];
+  for (const f of files) {
+    const m = /^(\d{4}-\d{2}-\d{2})\.md$/.exec(f);
+    if (!m) continue;
+    let text = '';
+    try { text = await fsp.readFile(path.join(dir, f), 'utf8'); } catch { continue; }
+    const a = text.indexOf(AUTO_START); const b = text.indexOf(AUTO_END);
+    const rest = (a >= 0 && b >= 0 ? text.slice(0, a) + text.slice(b + AUTO_END.length) : text)
+      .replace(/^---[\s\S]*?---\s*/, '').replace(/\s+/g, ' ').trim();
+    if (rest !== '## 手写笔记 （这一块不会被自动覆盖，随便写）') continue;
+    await fsp.unlink(path.join(dir, f));
+    vdb.setMeta(DIRTY_PREFIX + m[1], '1');
+    moved.push(m[1]);
+  }
+  if (moved.length) await flush();
+  return moved;
 }
 
 /** 进程意外退出时脏标记会留在库里，下次启动把欠的账补上 */

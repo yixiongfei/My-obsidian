@@ -103,6 +103,19 @@ CREATE TABLE IF NOT EXISTS exam_attempts (
   PRIMARY KEY (exam_id, section_id)
 );
 
+-- 真题里划的句子（荧光笔）。写进 英语/语法/真题例句.md 是投影，本表是真相
+CREATE TABLE IF NOT EXISTS exam_marks (
+  id         INTEGER PRIMARY KEY AUTOINCREMENT,
+  exam_id    TEXT NOT NULL,
+  section_id TEXT NOT NULL,
+  q          INTEGER,                    -- 所在题号，划在正文上时为空
+  text       TEXT NOT NULL,              -- 划中的原句（空白已归一）
+  note       TEXT NOT NULL DEFAULT '',
+  created_at TEXT NOT NULL,
+  UNIQUE (exam_id, section_id, text)
+);
+CREATE INDEX IF NOT EXISTS idx_exam_marks_exam ON exam_marks(exam_id);
+
 CREATE TABLE IF NOT EXISTS meta (k TEXT PRIMARY KEY, v TEXT NOT NULL);
 `;
 

@@ -1,0 +1,1453 @@
+{
+ "id": "english1-2019",
+ "kind": "english1",
+ "kindLabel": "英语一",
+ "group": "english",
+ "year": 2019,
+ "title": "2019 年真题",
+ "source": "https://www.csgraduates.com/study_methods/english/english1/2019/",
+ "fetchedAt": "2026-09-11T17:46:08.123Z",
+ "sections": [
+  {
+   "id": "cloze",
+   "label": "完形填空",
+   "title": "完形填空",
+   "heading": "Section I  Use of English",
+   "type": "choice",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>Read the following text. Choose the best word(s) for each numbered blank and mark A, B, C or D on the ANSWER SHEET. (10 points)</p>",
+   "passage": [
+    {
+     "segs": [
+      "Today we live in a world where GPS systems, digital maps, and other navigation apps are available on our smartphones.\n",
+      {
+       "n": 1
+      },
+      "\nof us just walk straight into the woods without a phone. But phones\n",
+      {
+       "n": 2
+      },
+      "\non batteries, and batteries can die faster than we realize.\n",
+      {
+       "n": 3
+      },
+      "\nyou get lost without a phone or a compass, and you\n",
+      {
+       "n": 4
+      },
+      "\ncan&rsquo;t find north, we have a few tricks to help you navigate\n",
+      {
+       "n": 5
+      },
+      "\nto civilization, one of which is to follow the land."
+     ]
+    },
+    {
+     "segs": [
+      "When you find yourself well\n",
+      {
+       "n": 6
+      },
+      "\na trail, but not in a completely\n",
+      {
+       "n": 7
+      },
+      "\narea, you have to answer two questions: Which\n",
+      {
+       "n": 8
+      },
+      "\nis downhill, in this particular area? And where is the nearest water source? Humans overwhelmingly live in valleys, and on supplies of fresh water.\n",
+      {
+       "n": 9
+      },
+      "\n, if you head downhill, and follow any H20 you find, you should\n",
+      {
+       "n": 10
+      },
+      "\nsee signs of people."
+     ]
+    },
+    {
+     "segs": [
+      "If you&rsquo;ve explored the area before, keep an eye out for familiar sights - you may be\n",
+      {
+       "n": 11
+      },
+      "\nhow quickly identifying a distinctive rock or tree can restore your bearings."
+     ]
+    },
+    {
+     "segs": [
+      "Another\n",
+      {
+       "n": 12
+      },
+      "\n: Climb high and look for signs of human habitation.\n",
+      {
+       "n": 13
+      },
+      "\neven in dense forest, you should be able to\n",
+      {
+       "n": 14
+      },
+      "\ngaps in the tree line due to roads, train tracks, and other paths people carve\n",
+      {
+       "n": 15
+      },
+      "\nthe woods. Head toward these\n",
+      {
+       "n": 16
+      },
+      "\nto find a way out. At night, scan the horizon for\n",
+      {
+       "n": 17
+      },
+      "\nlight sources, such as fires and streetlights, then walk toward the glow of light pollution."
+     ]
+    },
+    {
+     "segs": [
+      {
+       "n": 18
+      },
+      "\n, assuming you&rsquo;re lost in an area humans tend to frequent, look for the\n",
+      {
+       "n": 19
+      },
+      "\nwe leave on the landscape. Trail blazes, tire tracks, and other features can\n",
+      {
+       "n": 20
+      },
+      "\nyou to civilization."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 1,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Some"
+      },
+      {
+       "k": "B",
+       "text": "Most"
+      },
+      {
+       "k": "C",
+       "text": "Few"
+      },
+      {
+       "k": "D",
+       "text": "All"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>第一句提到“如今我们生活在一个GPS、数字地图等导航应用普及的世界”，因此多数人不会不带手机就进入森林。后文又提到手机依赖电池且可能很快没电，暗示这种情况（不带手机进森林）是很少见的。</p><ul><li>A. Some（一些）—— 语气中性，但不符合“很少有人这样做”的语境。</li><li>B. Most（大多数）—— 若选此项，则与后文“手机没电”的警告逻辑不符，因为如果大多数人不带手机进森林，后文的提醒就无必要。</li><li>C. Few（很少）—— “Few of us” 表示“我们中很少有人”，符合上下文逻辑。</li><li>D. All（全部）—— 显然不符合事实，不可能所有人都不带手机进森林。</li></ul><p>因此正确答案是 <strong>C. Few</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 2,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "put"
+      },
+      {
+       "k": "B",
+       "text": "take"
+      },
+      {
+       "k": "C",
+       "text": "run"
+      },
+      {
+       "k": "D",
+       "text": "come"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 2 题空格所在的句子是：</p><blockquote><p>But phones ______ on batteries, and batteries can die faster than we realize.</p></blockquote><p>这里要表达的意思是“手机依靠电池运行”，即“手机依赖电池供电”。</p><ul><li><strong>A. put on</strong> 表示“穿上；假装”，不符合“依赖/运行”的含义。</li><li><strong>B. take on</strong> 表示“承担；呈现”，也不符合语境。</li><li><strong>C. run on</strong> 是一个固定短语，表示“靠……能源运行”，例如：<blockquote><p>Cars run on gasoline.<br>Phones run on batteries.<br>这完全符合句意。</p></blockquote></li><li><strong>D. come on</strong> 表示“开始；快点”，与句意无关。</li></ul><p>因此正确答案是 <strong>C. run</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 3,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Since"
+      },
+      {
+       "k": "B",
+       "text": "If"
+      },
+      {
+       "k": "C",
+       "text": "Though"
+      },
+      {
+       "k": "D",
+       "text": "Until"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 3 题所在的句子是：</p><blockquote><p>______ you get lost without a phone or a compass, and you ______ can&rsquo;t find north, we have a few tricks to help you navigate ______ to civilization&mldr;</p></blockquote><p>这里是一个条件假设的情况，意思是“<strong>如果</strong>你在没有手机或指南针的情况下迷路，并且完全找不到北，我们有一些技巧可以帮助你回到文明世界”。</p><ul><li><strong>A. Since</strong> 表示“因为”，但这里不是因果关系，而是假设情况。</li><li><strong>B. If</strong> 表示“如果”，符合语境。</li><li><strong>C. Though</strong> 表示“尽管”，不符合逻辑。</li><li><strong>D. Until</strong> 表示“直到”，与句子意思不符。</li></ul><p>因此，正确答案是 <strong>B. If</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 4,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "formally"
+      },
+      {
+       "k": "B",
+       "text": "relatively"
+      },
+      {
+       "k": "C",
+       "text": "gradually"
+      },
+      {
+       "k": "D",
+       "text": "literally"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>第 4 题所在的句子是：</p><blockquote><p>If you get lost without a phone or a compass, and you ___ can’t find north, we have a few tricks to help you navigate back to civilization&mldr;</p></blockquote><p>四个选项的含义：</p><ul><li><strong>A. formally</strong>（正式地）</li><li><strong>B. relatively</strong>（相对地）</li><li><strong>C. gradually</strong>（逐渐地）</li><li><strong>D. literally</strong>（简直，完全；字面上）</li></ul><p>从上下文来看，这里强调“完全找不到北”，表示一种强调的语气，<strong>literally</strong> 在口语或非正式文体中常用来加强语气，表示“真的、完全”。<br>因此，<strong>D. literally</strong> 最符合句意。</p><p><strong>答案：D</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 5,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "back"
+      },
+      {
+       "k": "B",
+       "text": "next"
+      },
+      {
+       "k": "C",
+       "text": "around"
+      },
+      {
+       "k": "D",
+       "text": "away"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 5 题空格所在的句子是：</p><blockquote><p>&mldr; we have a few tricks to help you navigate ___ to civilization&mldr;</p></blockquote><ul><li><strong>A. back</strong> 表示“回到”文明世界，符合迷路后返回的逻辑。</li><li><strong>B. next</strong> 表示“下一个”，不符合语境。</li><li><strong>C. around</strong> 表示“在周围”，与“回到”目标不符。</li><li><strong>D. away</strong> 表示“离开”，与“回到文明”意思相反。</li></ul><p>根据上下文，迷路后需要“回到”有人烟的地方，因此 <strong>A. back</strong> 正确。</p>",
+     "tags": []
+    },
+    {
+     "n": 6,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "onto"
+      },
+      {
+       "k": "B",
+       "text": "off"
+      },
+      {
+       "k": "C",
+       "text": "across"
+      },
+      {
+       "k": "D",
+       "text": "along"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 6 题题干为：<br>When you find yourself well ______ a trail, but not in a completely ______ area&mldr;</p><p>四个选项为：<br>A. onto<br>B. off<br>C. across<br>D. along</p><p><strong>解题思路：</strong></p><ol><li>空格前的 “well” 常与 “off” 构成固定搭配 <strong>“well off a trail”</strong>，意思是“偏离了小径/道路”。</li><li>从上下文看，这里描述的是迷路时的一种情况——你已经离开了既定的小径，但又不是完全陌生的地方。</li><li>“off a trail” 是英语中表示“离开小径”的常见表达，而 “well off” 在此加强语气，表示“明显偏离”。</li><li>其他选项：<ul><li>A. onto（到…上） → 语义相反</li><li>C. across（横跨） → 不符合语境</li><li>D. along（沿着） → 与迷路情景不符</li></ul></li></ol><p>因此，正确答案是 <strong>B. off</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 7,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "unattractive"
+      },
+      {
+       "k": "B",
+       "text": "uncrowded"
+      },
+      {
+       "k": "C",
+       "text": "unchanged"
+      },
+      {
+       "k": "D",
+       "text": "unfamiliar"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 7 题空格前的句子是：</p><blockquote><p>When you find yourself well ______ a trail, but not in a completely ______ area&mldr;</p></blockquote><p>前半句说“发现自己偏离了小径”，后半句用 but 表示转折，说明“但不是在完全 ______ 的区域”。</p><ul><li>A. unattractive（不吸引人的）—— 与是否迷路、能否导航无关。</li><li>B. uncrowded（不拥挤的）—— 森林里一般都不拥挤，不构成语义转折。</li><li>C. unchanged（未改变的）—— 与迷路情境无关。</li><li>D. unfamiliar（不熟悉的）—— 偏离小径但不在完全陌生的地方，说明你对这区域还有一定熟悉度，符合逻辑转折。</li></ul><p>因此，<strong>D. unfamiliar</strong> 正确。</p>",
+     "tags": []
+    },
+    {
+     "n": 8,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "site"
+      },
+      {
+       "k": "B",
+       "text": "point"
+      },
+      {
+       "k": "C",
+       "text": "way"
+      },
+      {
+       "k": "D",
+       "text": "place"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>第 8 题所在的句子是：</p><blockquote><p>Which ______ is downhill, in this particular area?</p></blockquote><p>这里需要填入一个表示“方向”或“路径”的词。</p><ul><li><strong>A. site</strong> 指地点、位置，强调具体的地点，不表示方向。</li><li><strong>B. point</strong> 指具体的点或方位点，但通常不单独表示“往哪个方向”。</li><li><strong>C. way</strong> 可以表示“路线、方向”，例如 “Which way is north?”（哪边是北？），符合语境。</li><li><strong>D. place</strong> 指地方、场所，不表示方向。</li></ul><p>根据上下文，这里是在问“哪个方向是下坡”，因此 <strong>C. way</strong> 最合适。</p><p><strong>答案：C</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 9,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "So"
+      },
+      {
+       "k": "B",
+       "text": "Yet"
+      },
+      {
+       "k": "C",
+       "text": "Instead"
+      },
+      {
+       "k": "D",
+       "text": "Besides"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>第 9 题位于第二段末尾的逻辑连接处。前文提到“人类大多生活在山谷，依赖淡水”，接着给出建议：“如果你往山下走并沿着水源前进，你应该会看到人类迹象”。</p><ul><li>前后是因果关系：因为人类聚居在山谷和水源附近，所以往山下和沿水走就能找到人。</li><li><strong>A. So</strong>（因此）表示因果，符合逻辑。</li><li>B. Yet（然而）表示转折，不符合。</li><li>C. Instead（相反）表示替代方案，不符合。</li><li>D. Besides（此外）表示补充信息，也不符合因果逻辑。</li></ul><p>因此正确答案是 <strong>A. So</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 10,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "immediately"
+      },
+      {
+       "k": "B",
+       "text": "intentionally"
+      },
+      {
+       "k": "C",
+       "text": "unexpectedly"
+      },
+      {
+       "k": "D",
+       "text": "eventually"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第10题所在句子为：<br>“Humans overwhelmingly live in valleys, and on supplies of fresh water. ____, if you head downhill, and follow any H₂O you find, you should ____ see signs of people.”</p><p>第一个空（第9题）根据逻辑关系应填入表示“因此”的词（如 Therefore），而第二个空（第10题）则要考虑“沿着水源走”与“看到人类迹象”之间的时间关系。</p><ul><li><strong>A. immediately</strong>（立即）—— 沿着水源走不一定马上就看到人烟，不符合常理。</li><li><strong>B. intentionally</strong>（故意地）—— 语意不通，不是“故意”看到。</li><li><strong>C. unexpectedly</strong>（意外地）—— 逻辑不对，因为这是预期的结果，不是意外。</li><li><strong>D. eventually</strong>（最终）—— 符合逻辑：沿着水源和山谷方向走，最终会看到人类活动的迹象，这需要一个过程。</li></ul><p>因此正确答案是 <strong>D. eventually</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 11,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "surprised"
+      },
+      {
+       "k": "B",
+       "text": "annoyed"
+      },
+      {
+       "k": "C",
+       "text": "frightened"
+      },
+      {
+       "k": "D",
+       "text": "confused"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 11 题原文为：</p><blockquote><p>If you&rsquo;ve explored the area before, keep an eye out for familiar sights — you may be ______ how quickly identifying a distinctive rock or tree can restore your bearings.</p></blockquote><p><strong>句意</strong>：如果你之前探索过这个区域，留意熟悉的景象——你可能会______，辨认出一块独特的岩石或一棵树能多快地恢复你的方向感。</p><p><strong>逻辑分析</strong>：</p><ul><li>这里说的是“之前来过，找熟悉的景物”，而“很快就能通过认出特殊石头或树来恢复方向感”这件事，通常是一种<strong>积极的、令人惊讶</strong>的体验。</li><li><strong>A. surprised</strong>（惊讶的）符合语境，因为人们往往没想到会这么快恢复方向感，所以感到惊讶。</li><li><strong>B. annoyed</strong>（恼怒的）、<strong>C. frightened</strong>（害怕的）、<strong>D. confused</strong>（困惑的）都与这种“快速恢复方向感”的积极情况不符。</li></ul><p>因此正确答案是 <strong>A. surprised</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 12,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "problem"
+      },
+      {
+       "k": "B",
+       "text": "option"
+      },
+      {
+       "k": "C",
+       "text": "view"
+      },
+      {
+       "k": "D",
+       "text": "result"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>第 12 题所在句子为：</p><blockquote><p>Another ______: Climb high and look for signs of human habitation.</p></blockquote><p>这里作者在介绍另一种在迷路时找到方向的方法。前文已经提到“顺着地形走”和“留意熟悉景物”两种方法，这里是第三种方法，因此空格应填入表示“选择、方法、建议”的词。</p><ul><li><strong>A. problem</strong>（问题）——不符合语境，这里不是提出一个问题。</li><li><strong>B. option</strong>（选择，选项）——符合语境，表示“另一种方法/选择”。</li><li><strong>C. view</strong>（观点，视野）——与上下文逻辑不符。</li><li><strong>D. result</strong>（结果）——这里不是描述结果，而是提出建议。</li></ul><p>因此正确答案是 <strong>B. option</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 13,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Above all"
+      },
+      {
+       "k": "B",
+       "text": "In contrast"
+      },
+      {
+       "k": "C",
+       "text": "On average"
+      },
+      {
+       "k": "D",
+       "text": "For example"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>第 13 题所在句子为：</p><blockquote><p><strong>________ even in dense forest, you should be able to ________ gaps in the tree line due to roads, train tracks, and other paths people carve ________ the woods.</strong></p></blockquote><p>四个选项：</p><ul><li><strong>A. Above all</strong>（最重要的是）—— 用于强调重要性，但此处并非强调重要性，而是举例说明。</li><li><strong>B. In contrast</strong>（相比之下）—— 表示对比关系，但上下文没有对比含义。</li><li><strong>C. On average</strong>（平均而言）—— 表示统计平均值，不符合语境。</li><li><strong>D. For example</strong>（例如）—— 用于举例说明前一句的观点。</li></ul><p>前一句说“爬到高处寻找人类居住的痕迹”，后一句进一步说明“即使在茂密的森林里，你也能看到树木线因道路、铁轨等出现的空隙”，这是对前一句的具体举例说明，因此选 <strong>D. For example</strong> 最合适。</p>",
+     "tags": []
+    },
+    {
+     "n": 14,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "bridge"
+      },
+      {
+       "k": "B",
+       "text": "avoid"
+      },
+      {
+       "k": "C",
+       "text": "spot"
+      },
+      {
+       "k": "D",
+       "text": "separate"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>第 14 题所在句子为：</p><blockquote><p>&mldr; you should be able to\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>14</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\ngaps in the tree line due to roads, train tracks, and other paths people carve through the woods.</p></blockquote><p><strong>句意</strong>：即使在茂密的森林中，你也应该能够 ______ 树木线因道路、铁轨和其他人类开辟的小径而出现的空隙。</p><p><strong>选项分析</strong>：</p><ul><li><strong>A. bridge</strong>（连接、弥合）——不符合语境，这里不是要“连接空隙”，而是“发现空隙”。</li><li><strong>B. avoid</strong>（避免）——语义相反，发现空隙是为了走出去，而不是避开。</li><li><strong>C. spot</strong>（发现、认出）——符合语境，指在树林中辨认出这些空隙。</li><li><strong>D. separate</strong>（分开）——与句意不符，主语是人，不是去“分开空隙”，而是看到已有的空隙。</li></ul><p><strong>因此正确答案是 C. spot</strong>，意为“发现、注意到”。</p>",
+     "tags": []
+    },
+    {
+     "n": 15,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "from"
+      },
+      {
+       "k": "B",
+       "text": "through"
+      },
+      {
+       "k": "C",
+       "text": "beyond"
+      },
+      {
+       "k": "D",
+       "text": "under"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 15 题所在句子为：</p><blockquote><p>&mldr; and other paths people carve\n<span class=katex><span class=katex-html aria-hidden=true><span class=base><span class=strut style=height:.8444em;vertical-align:-.2em></span><span class=\"mord underline\"><span class=\"vlist-t vlist-t2\"><span class=vlist-r><span class=vlist style=height:.6444em><span style=top:-2.84em><span class=pstrut style=height:3em></span><span class=underline-line style=border-bottom-width:.04em></span></span><span style=top:-3em><span class=pstrut style=height:3em></span><span class=mord><span class=mspace style=margin-right:1em></span><span class=mord>15</span><span class=mspace style=margin-right:1em></span></span></span></span><span class=vlist-s>​</span></span><span class=vlist-r><span class=vlist style=height:.2em><span></span></span></span></span></span></span></span></span>\nthe woods.</p></blockquote><p><strong>carve</strong> 在这里意为“开辟、开凿”，常与 <strong>through</strong> 搭配，表示“在树林中开辟出一条路”。</p><ul><li><strong>carve through</strong> 是一个固定搭配，表示“穿过…开辟道路”。</li><li>其他选项：<ul><li><strong>A. from</strong>（从…来）不符合“开辟穿过树林”的语境。</li><li><strong>C. beyond</strong>（在…之外）不表示“穿过”的动作。</li><li><strong>D. under</strong>（在…下面）与“开辟道路”不符。</li></ul></li></ul><p>因此正确答案是 <strong>B. through</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 16,
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "posts"
+      },
+      {
+       "k": "B",
+       "text": "links"
+      },
+      {
+       "k": "C",
+       "text": "shades"
+      },
+      {
+       "k": "D",
+       "text": "breaks"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第16题所在的句子为：</p><blockquote><p>Head toward these ______ to find a way out.</p></blockquote><p>前文提到：</p><blockquote><p>you should be able to ______ gaps in the tree line due to roads, train tracks, and other paths people carve ______ the woods.</p></blockquote><p>这里的“gaps in the tree line”指的是树木线中的<strong>空隙、缺口</strong>，这些空隙是因为道路、铁轨等人类活动造成的。</p><p>四个选项的含义：</p><ul><li><strong>A. posts</strong>（柱子、杆子）——与“gaps”不符</li><li><strong>B. links</strong>（链接、连接）——不表示“空隙”</li><li><strong>C. shades</strong>（阴影、遮蔽）——与文意不符</li><li><strong>D. breaks</strong>（断裂处、缺口）——与“gaps”同义，指树林中的间断处</li></ul><p>因此，<strong>D. breaks</strong> 最符合上下文，表示“朝这些缺口走”。</p><p><strong>答案：D</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 17,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "artificial"
+      },
+      {
+       "k": "B",
+       "text": "mysterious"
+      },
+      {
+       "k": "C",
+       "text": "hidden"
+      },
+      {
+       "k": "D",
+       "text": "limited"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>第 17 题所在的句子是：</p><blockquote><p>At night, scan the horizon for ______ light sources, such as fires and streetlights, then walk toward the glow of light pollution.</p></blockquote><p>这里列举的 <strong>fires</strong>（火）和 <strong>streetlights</strong>（路灯）都是<strong>人造光源</strong>，而不是自然的（如星光、月光）。</p><ul><li><strong>A. artificial</strong>（人造的）—— 符合语境，因为火和路灯都是人为制造的。</li><li><strong>B. mysterious</strong>（神秘的）—— 没有依据表明这些光源神秘。</li><li><strong>C. hidden</strong>（隐藏的）—— 文中说的是“扫视地平线寻找”，不是寻找隐藏的光源。</li><li><strong>D. limited</strong>（有限的）—— 与文意无关，且逻辑不通。</li></ul><p>因此正确答案是 <strong>A. artificial</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 18,
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Finally"
+      },
+      {
+       "k": "B",
+       "text": "Consequently"
+      },
+      {
+       "k": "C",
+       "text": "Incidentally"
+      },
+      {
+       "k": "D",
+       "text": "Generally"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>第 18 题位于文章最后一段的开头，而前面已经介绍了“顺着地形走”“寻找熟悉景物”“爬高寻找人类痕迹”等方法，因此这里应是<strong>最后一条建议</strong>。</p><p>选项分析：</p><ul><li><strong>A. Finally</strong>（最后）—— 表示顺序上的最后一点，符合语境。</li><li><strong>B. Consequently</strong>（因此）—— 表示因果关系，但这里不是对上文的总结性结果，而是补充最后一种方法。</li><li><strong>C. Incidentally</strong>（顺便提一句）—— 表示插入的附带信息，不符合逻辑顺序。</li><li><strong>D. Generally</strong>（通常，一般而言）—— 表示一般情况，但这里是在列举具体方法中的最后一条。</li></ul><p>因此，<strong>A. Finally</strong> 最符合上下文逻辑，表示“最后一条建议”。</p><p><strong>答案：A</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 19,
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "memories"
+      },
+      {
+       "k": "B",
+       "text": "marks"
+      },
+      {
+       "k": "C",
+       "text": "notes"
+      },
+      {
+       "k": "D",
+       "text": "belongings"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>本题要求选择填入第 19 题空格的正确选项。句子为：<br>“look for the ______ we leave on the landscape.”<br>（留意我们在景观上留下的______。）</p><ul><li><p><strong>A. memories</strong>（记忆）<br>记忆是抽象的概念，无法直接“留在景观上”，不符合语境。</p></li><li><p><strong>B. marks</strong>（标记、痕迹）<br>与后文 “Trail blazes, tire tracks, and other features” 相呼应，这些都属于人类在自然环境中留下的“痕迹”或“标记”，符合语境。</p></li><li><p><strong>C. notes</strong>（笔记、便条）<br>在野外迷路时寻找“笔记”不符合常理，且与上下文提到的具体痕迹无关。</p></li><li><p><strong>D. belongings</strong>（所有物、随身物品）<br>虽然可能有人类遗留的物品，但文中强调的是“trail blazes, tire tracks”这类标记，而不是个人物品。</p></li></ul><p>因此，<strong>B. marks</strong> 最符合文意，指人类在自然环境中留下的各种痕迹，可以帮助迷路者找到出路。</p><p><strong>答案：B</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 20,
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "restrict"
+      },
+      {
+       "k": "B",
+       "text": "adapt"
+      },
+      {
+       "k": "C",
+       "text": "lead"
+      },
+      {
+       "k": "D",
+       "text": "expose"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>第 20 题所在句子是：</p><blockquote><p>Trail blazes, tire tracks, and other features can ______ you to civilization.</p></blockquote><ul><li><strong>A. restrict</strong>（限制）——不符合语境，因为这些痕迹不会限制你回到文明世界。</li><li><strong>B. adapt</strong>（适应）——搭配不当，不能说“适应你到文明世界”。</li><li><strong>C. lead</strong>（引导）——搭配正确，意为“引导你回到文明世界”，符合上下文逻辑。</li><li><strong>D. expose</strong>（暴露）——语义不通，不能说“暴露你到文明世界”。</li></ul><p>因此正确答案是 <strong>C. lead</strong>。</p>",
+     "tags": []
+    }
+   ],
+   "extras": [
+    {
+     "title": "参考译文与解析",
+     "html": "<p>如今，我们生活在一个GPS系统、数字地图和其他导航应用都能在智能手机上使用的世界。我们中很少有人会不带手机就径直走进森林。但手机依赖电池，而电池的消耗速度可能比我们意识到的更快。如果你在没有手机或指南针的情况下迷路了，而且完全找不到北方，我们有一些技巧可以帮助你导航回到文明世界，其中之一就是顺着地形走。</p><p>当你发现自己偏离了小径，但并非完全在陌生区域时，你必须回答两个问题：在这个特定区域，哪个方向是下坡？最近的水源在哪里？人类绝大多数生活在山谷中，并依赖淡水供应。因此，如果你往山下走，并沿着发现的任何水源前进，你应该能看到人类的踪迹。</p><p>如果你之前探索过这个区域，请留意熟悉的景象——你可能会惊讶地发现，辨认出一块独特的岩石或一棵树能多快地恢复你的方向感。</p><p>另一个建议：爬到高处，寻找人类居住的痕迹。即使在茂密的森林中，你也应该能够察觉到树木线因道路、铁轨和其他人类开辟的小径而出现的空隙。朝这些空隙方向前进，找到出路。夜晚时，扫视地平线寻找人造光源，例如火光和路灯，然后朝着光污染的光亮方向走。</p><p>最后，假设你迷失在人类常活动的区域，留意我们在景观上留下的痕迹。小径标记、轮胎印和其他特征可以引导你回到文明世界。</p>"
+    }
+   ]
+  },
+  {
+   "id": "reading-1",
+   "label": "阅读 Text 1",
+   "title": "Part A · Text 1",
+   "heading": "Section II  Reading Comprehension",
+   "type": "choice",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>Read the following four texts. Answer the questions after each text by choosing A, B, C or\nMark your answers on the ANSWER SHEET. (40 points)</p>",
+   "passage": [
+    {
+     "segs": [
+      "Financial regulators in Britain have imposed a rather unusual rule on the bosses of big banks. Starting next year, any guaranteed bonus of top executives could be delayed 10 years if their banks are under investigation for wrongdoing. The main purpose of this &ldquo;clawback&rdquo; rule is to hold bankers accountable for harmful risk-taking and to restore public trust in financial institutions. Yet officials also hope for a much larger benefit: more long-term decisionmaking, not only by banks but by all corporations, to build a stronger economy for future generations."
+     ]
+    },
+    {
+     "segs": [
+      "&ldquo;Short-termism&rdquo; or the desire for quick profits, has worsened in publicly traded companies, says the Bank of England&rsquo;s top economist, Andrew Haldane. He quotes a giant of classical economics, Alfred Marshall, in describing this financial impatience as acting like &ldquo;children who pick the plums out of their pudding to eat them at once&rdquo; rather than putting them aside to be eaten last."
+     ]
+    },
+    {
+     "segs": [
+      "The average time for holding a stock in both the United States and Britain, he notes, has dropped from seven years to seven months in recent decades. Transient investors, who demand high quarterly profits from companies, can hinder a firm&rsquo;s efforts to invest in long-term research or to build up customer loyalty. This has been dubbed &ldquo;quarterly capitalism.&rdquo;"
+     ]
+    },
+    {
+     "segs": [
+      "In addition, new digital technologies have allowed more rapid trading of equities, quicker use of information, and thus shorter attention spans in financial markets. &ldquo;There seems to be a predominance of short-term thinking at the expense of long­ term investing,&rdquo; said Commissioner Daniel Gallagher of the US Securities and Exchange Commission in a speech this week."
+     ]
+    },
+    {
+     "segs": [
+      "In the US, the Sarbanes-Oxley Act of 2002 has pushed most public companies to defer performance bonuses for senior executives by about a year, slightly helping reduce &ldquo;short-termism.&rdquo; In its latest survey of CEO pay, The Wall Street Journal finds that &ldquo;a substantial part&rdquo; of executive pay is now tied to performance."
+     ]
+    },
+    {
+     "segs": [
+      "Much more could be done to encourage &ldquo;long-termism,&rdquo; such as changes in the tax code and quicker disclosure of stock acquisitions. In France, shareholders who hold onto a company investment for at least two years can sometimes earn more voting rights in a company."
+     ]
+    },
+    {
+     "segs": [
+      "Within companies, the right compensation design can provide incentives for executives to think beyond their own time at the company and on behalf of all stakeholders. Britain&rsquo;s new rule is a reminder to bankers that society has an interest in their performance, not just for the short term but for the long term."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 21,
+     "stem": "<p>According to Paragraph 1, one motive in imposing the new rule is to</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "enhance bankers’ sense of responsibility."
+      },
+      {
+       "k": "B",
+       "text": "help corporations achieve larger profits."
+      },
+      {
+       "k": "C",
+       "text": "build a new system of financial regulation."
+      },
+      {
+       "k": "D",
+       "text": "guarantee the bonuses of top executives."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>题目问的是“根据第一段，实施新规的一个动机是……”，需要定位第一段中直接提到的目的。</p><p>第一段第三句明确说明：</p><blockquote><p>The main purpose of this &ldquo;clawback&rdquo; rule is to hold bankers accountable for harmful risk-taking and to restore public trust in financial institutions.</p></blockquote><p>其中 <strong>hold bankers accountable</strong> 对应 <strong>enhance bankers’ sense of responsibility</strong>（增强银行家的责任感）。</p><p>B 项“帮助企业获得更大利润”未提及；<br>C 项“建立新的金融监管体系”未直接说明；<br>D 项“保障高管的奖金”与原文延迟奖金的目的相反。</p><p>因此正确答案是 <strong>A</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 22,
+     "stem": "<p>Alfred Marshall is quoted to indicate</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "the conditions for generating quick profits."
+      },
+      {
+       "k": "B",
+       "text": "governments&rsquo; impatience in decision-making."
+      },
+      {
+       "k": "C",
+       "text": "the solid structure of publicly traded companies."
+      },
+      {
+       "k": "D",
+       "text": "&ldquo;short-termism&rdquo; in economic activities."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>题干问引用 Alfred Marshall 的目的是为了表明什么。</p><ol><li><p><strong>定位原文</strong>：<br>第二段提到 Andrew Haldane 引用 Alfred Marshall 的话，将金融上的急躁描述为“从布丁中挑出李子立刻吃掉的孩童”，而不是留到最后吃。<br>这显然是在比喻<strong>追求短期满足</strong>，而不是长期利益。</p></li><li><p><strong>上下文逻辑</strong>：<br>第二段开头就指出“短期主义”在上市公司中恶化，引用 Marshall 是为了形象地说明这种<strong>只顾眼前利益、缺乏长期耐心</strong>的经济行为。</p></li><li><p><strong>选项分析</strong>：</p><ul><li>A 项：产生快速利润的条件 → 文中未讨论“条件”，而是描述现象。</li><li>B 项：政府决策的不耐烦 → 主体错误，不是政府，而是企业/投资者。</li><li>C 项：上市公司的稳固结构 → 与比喻含义无关。</li><li>D 项：经济活动中的“短期主义” → 与比喻含义及上下文主旨一致。</li></ul></li></ol><p><strong>答案：D</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 23,
+     "stem": "<p>It is argued that the influence of transient investment on public companies can be</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "indirect."
+      },
+      {
+       "k": "B",
+       "text": "adverse."
+      },
+      {
+       "k": "C",
+       "text": "minimal."
+      },
+      {
+       "k": "D",
+       "text": "temporary."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是“短期投资对上市公司的影响被认为是______”。<br>根据原文第三段：</p><blockquote><p>Transient investors, who demand high quarterly profits from companies, can hinder a firm&rsquo;s efforts to invest in long-term research or to build up customer loyalty.</p></blockquote><p>这里的关键词是 <strong>hinder</strong>（阻碍），说明这种影响是负面的。</p><ul><li>A 项 indirect（间接的）—— 文中没有强调间接性，而是直接指出阻碍长期投资。</li><li>B 项 adverse（不利的）—— 与 hinder 对应，符合文意。</li><li>C 项 minimal（微小的）—— 与原文意思相反。</li><li>D 项 temporary（暂时的）—— 文中未强调影响是短暂的，而是强调它损害长期发展。</li></ul><p>因此正确答案是 <strong>B</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 24,
+     "stem": "<p>The US and France examples are used to illustrate</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "the obstacles to preventing &ldquo;short-termism&rdquo;."
+      },
+      {
+       "k": "B",
+       "text": "the significance of long-term thinking."
+      },
+      {
+       "k": "C",
+       "text": "the approaches to promoting &ldquo;long-termism&rdquo;."
+      },
+      {
+       "k": "D",
+       "text": "the prevalence of short-term thinking."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目要求分析美国和法国的例子在文中的作用。</p><ol><li><p><strong>定位相关段落</strong>：</p><ul><li>美国例子出现在第5段：“In the US, the Sarbanes-Oxley Act of 2002&mldr; slightly helping reduce &lsquo;short-termism&rsquo;.” 这里提到美国通过立法推迟高管奖金发放，以减少短期主义。</li><li>法国例子出现在第6段：“In France, shareholders who hold onto a company investment for at least two years can sometimes earn more voting rights&mldr;” 这是通过股权激励鼓励长期持股。</li></ul></li><li><p><strong>分析上下文逻辑</strong>：</p><ul><li>第6段开头明确说：“Much more could be done to encourage &rsquo;long-termism&rsquo;, such as&mldr;” 紧接着举了法国例子。</li><li>因此，美国和法国的例子都是作为“鼓励长期主义的具体措施”出现的，属于<strong>促进长期主义的方法</strong>。</li></ul></li><li><p><strong>选项分析</strong>：</p><ul><li>A 项：阻碍防止短期主义 → 与例子作用相反。</li><li>B 项：长期思考的重要性 → 例子重点在“方法”，不在强调重要性。</li><li>C 项：促进长期主义的方法 → 与例子作用一致。</li><li>D 项：短期思维的普遍性 → 例子是应对措施，不是说明普遍性。</li></ul></li></ol><p><strong>答案：C</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 25,
+     "stem": "<p>Which of the following would be the best title for the text?</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Failure of Quarterly Capitalism"
+      },
+      {
+       "k": "B",
+       "text": "Patience as a Corporate Virtue"
+      },
+      {
+       "k": "C",
+       "text": "Decisiveness Required of Top Executives"
+      },
+      {
+       "k": "D",
+       "text": "Frustration of Risk-taking Bankers"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>这道题要求选择最适合文章的标题。文章的核心主题是<strong>批判金融领域的“短期主义”，并倡导企业和决策者应具备更长远的眼光和耐心</strong>。</p><p><strong>选项分析：</strong></p><ul><li><p><strong>A. Failure of Quarterly Capitalism（季度资本主义的失败）</strong><br>文章确实批评了“季度资本主义”，但这只是问题的一个方面，并非全文主旨。文章的重点在于提出解决方案和倡导“长期主义”，而非仅仅论述“季度资本主义”的失败。</p></li><li><p><strong>B. Patience as a Corporate Virtue（耐心是一种企业美德）</strong><br>这个标题准确概括了文章的核心思想。文章通过英国的新规、经济学家观点、数据对比等，强调企业和投资者需要<strong>耐心</strong>，避免急功近利，以做出有利于长期发展的决策。这体现了“耐心”作为企业重要品质的主题。</p></li><li><p><strong>C. Decisiveness Required of Top Executives（高管所需的果断力）</strong><br>文章并未强调高管的“果断力”，而是批评他们过于追求短期利润，缺乏长远眼光。主题是“耐心”而非“果断”。</p></li><li><p><strong>D. Frustration of Risk-taking Bankers（冒险银行家的挫败感）</strong><br>文章提到银行家的风险行为，但只是为了引出监管措施，并非讨论他们的“挫败感”。这只是一个细节，不能概括全文。</p></li></ul><p><strong>结论：</strong><br>文章从英国的新规切入，层层递进地论证了“短期主义”的危害，并最终呼吁企业和投资者培养<strong>耐心</strong>，着眼于长期发展。因此，<strong>B. Patience as a Corporate Virtue</strong> 是最贴切、最全面的标题。</p>",
+     "tags": []
+    }
+   ],
+   "extras": [
+    {
+     "title": "参考译文与解析",
+     "html": "<p>英国金融监管机构对各大银行老板施加了一条相当不寻常的规定。从明年开始，如果大银行因行为不当受到调查，其高管的任何有保障的奖金可能会被延迟10年发放。这条\"追回\"规则的主要目的是让银行家为有害的冒险行为负责，并恢复公众对金融机构的信任。但官员们也希望能收到更大的效益：不仅银行，所有公司都能做出更长期的决策，从而为子孙后代建立更强大的经济。</p><p>英国央行首席经济学家安德鲁•哈丹称，在公开上市的公司中，&ldquo;短期主义\"或快速盈利的渴望已经变得更加糟糕。他引用古典经济学巨擘阿尔弗雷德•马歇尔的话，将这种财务上的急躁描述为\"从布丁中挑出李子立刻吃掉的孩童&rdquo;，而不是把李子放到一边最后吃。</p><p>他指出，近几十年来，在美国和英国，股票的平均持有时间已经从7年下降到7个月。要求公司获得高的季度利润的瞬时投资者可以阻碍公司投资长期研究或建立客户忠诚度的努力。这一直被称为\"季度资本主义\"。</p><p>此外，新的数字技术已经允许更快速的股票交易、更快捷的信息使用，从而使得金融市场的注意力持续时间更短。美国证券交易委员会委员丹尼尔•加拉格尔在本周的一次演讲中表示：&ldquo;似乎短期思维占主导地位，其代价是牺牲长期投资。&rdquo;</p><p>在美国，2002年的《萨班斯-奥克斯利法案》已经迫使大多数上市公司将高管的绩效奖金推迟一年发放，对减少\"短期主义\"略有帮助。《华尔街日报》在其最新的一项首席执行官薪酬调查中发现，高管薪酬的\"很大一部分\"目前与业绩挂钩。</p><p>可以做更多的事情来鼓励\"长期主义\"，例如改变税法以及更快地披露股票收购。在法国，持有公司投资至少两年的股东有时可以在公司获得更多投票权。</p><p>在公司内部，正确的薪酬设计可以激励高管超越自己在公司的任期进行思考，并代表所有利益相关者的利益。英国的新规定对银行家是一个提醒，即社会对他们的业绩有兴趣，不仅是为了短期，也是为了长期。</p>"
+    }
+   ]
+  },
+  {
+   "id": "reading-2",
+   "label": "阅读 Text 2",
+   "title": "Text 2",
+   "heading": null,
+   "type": "choice",
+   "points": 10,
+   "directions": "",
+   "passage": [
+    {
+     "segs": [
+      "Grade inflation - the gradual increase in average GPAs (grade-point averages) over the past few decades - is often considered a product of a consumer era in higher education, in which students are treated like customers to be pleased. But another, related force - a policy often buried deep in course catalogs called &ldquo;grade forgiveness&rdquo; - is helping raise GPAs."
+     ]
+    },
+    {
+     "segs": [
+      "Grade forgiveness allows students to retake a course in which they received a low grade, and the most recent grade or the highest grade is the only one that counts in calculating a student&rsquo;s overall GPA."
+     ]
+    },
+    {
+     "segs": [
+      "The use of this little-known practice has accelerated in recent years, as colleges continue to do their utmost to keep students in school (and paying tuition) and improve their graduation rates. When this practice first started decades ago, it was usually limited to freshmen, to give them a second chance to take a class in their first year if they struggled in their transition to college-level courses. But now most colleges, save for many selective campuses, allow all undergraduates, and even graduate students, to get their low grades forgiven."
+     ]
+    },
+    {
+     "segs": [
+      "College officials tend to emphasize that the goal of grade forgiveness is less about the grade itself and more about encouraging students to retake courses critical to their degree program and graduation without incurring a big penalty. &ldquo;Ultimately,&rdquo; said Jack Miner, Ohio State University&rsquo;s registrar, &ldquo;we see students achieve more success because they retake a course and do better in subsequent courses or master the content that allows them to graduate on time.&rdquo;"
+     ]
+    },
+    {
+     "segs": [
+      "That said, there is a way in which grade forgiveness satisfies colleges&rsquo; own needs as well. For public institutions, state funds are sometimes tied partly to their success on metrics such as graduation rates and student retention - so better grades can, by boosting figures like those, mean more money. And anything that raises GPAs will likely make students - who, at the end of the day, are paying the bill - feel they&rsquo;ve gotten a better value for their tuition dollars, which is another big concern for colleges."
+     ]
+    },
+    {
+     "segs": [
+      "Indeed, grade forgiveness is just another way that universities are responding to consumers&rsquo; expectations for higher education. Since students and parents expect a college degree to lead to a job, it is in the best interest of a school to turn out graduates who are as qualified as possible - or at least appear to be. On this, students&rsquo; and colleges&rsquo; incentives seem to be aligned."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 26,
+     "stem": "<p>What is commonly regarded as the cause of grade inflation?</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "The change of course catalogs."
+      },
+      {
+       "k": "B",
+       "text": "Students&rsquo; indifference to GPAs."
+      },
+      {
+       "k": "C",
+       "text": "Colleges&rsquo; neglect of GPAs."
+      },
+      {
+       "k": "D",
+       "text": "The influence of consumer culture."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是“通常认为分数膨胀的原因是什么？”</p><p>文章第一段明确指出：</p><blockquote><p>Grade inflation &mldr; is often considered a product of a consumer era in higher education, in which students are treated like customers to be pleased.</p></blockquote><p>这句话的意思是：分数膨胀通常被认为是高等教育中消费者时代的产物，在这个时代里，学生被视为需要被取悦的顾客。</p><p>因此，原因应归结为<strong>消费者文化的影响</strong>。</p><p>选项分析：</p><ul><li><strong>A. The change of course catalogs</strong>（课程目录的变化）—— 文中提到“grade forgiveness”政策常藏在课程目录中，但这不是分数膨胀的主要原因。</li><li><strong>B. Students&rsquo; indifference to GPAs</strong>（学生对 GPA 漠不关心）—— 文中未提及。</li><li><strong>C. Colleges&rsquo; neglect of GPAs</strong>（大学对 GPA 的忽视）—— 文中未提及。</li><li><strong>D. The influence of consumer culture</strong>（消费者文化的影响）—— 与原文“consumer era”对应。</li></ul><p><strong>正确答案：D</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 27,
+     "stem": "<p>What was the original purpose of grade forgiveness?</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "To help freshmen adapt to college learning."
+      },
+      {
+       "k": "B",
+       "text": "To maintain colleges&rsquo; graduation rates."
+      },
+      {
+       "k": "C",
+       "text": "To prepare graduates for a challenging future."
+      },
+      {
+       "k": "D",
+       "text": "To increase universities&rsquo; income from tuition."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是 <strong>grade forgiveness（分数宽恕）最初的目的</strong>。<br>文章第三段明确提到：</p><blockquote><p>When this practice first started decades ago, it was usually limited to freshmen, to give them a second chance to take a class in their first year if they struggled in their transition to college-level courses.</p></blockquote><p>意思是：几十年前这种做法刚开始时，通常仅限于大一新生，目的是如果他们在适应大学课程的过程中遇到困难，可以在大一期间获得第二次学习课程的机会。</p><p>因此，<strong>最初目的</strong>是帮助大一新生适应大学学习，对应选项 <strong>A</strong>。</p><p>选项 B（维持大学毕业率）和 D（增加大学学费收入）是后来这种做法推广之后带来的效果或动机，但不是最初目的。<br>选项 C（为毕业生应对挑战性未来做准备）文中未直接提及。</p><p><strong>正确答案：A</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 28,
+     "stem": "<p>According to Paragraph 5, grade forgiveness enables colleges to</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "obtain more financial support."
+      },
+      {
+       "k": "B",
+       "text": "boost their student enrollments."
+      },
+      {
+       "k": "C",
+       "text": "improve their teaching quality."
+      },
+      {
+       "k": "D",
+       "text": "meet local governments&rsquo; needs."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong><br>题目要求根据第 5 段内容判断“分数宽恕”政策使大学能够实现什么。</p><p>第 5 段原文关键句：</p><blockquote><p>For public institutions, state funds are sometimes tied partly to their success on metrics such as graduation rates and student retention – so better grades can, by boosting figures like those, mean more money.</p></blockquote><p>这句话明确指出：</p><ul><li>对于公立大学，州政府的资金部分取决于毕业率、学生保留率等指标。</li><li>分数宽恕政策通过提高这些指标（因为重修后成绩提高，学生更可能按时毕业并留在学校），从而可能带来更多资金。</li></ul><p>因此，<strong>分数宽恕政策使大学能够获得更多财政支持</strong>，对应选项 <strong>A. obtain more financial support</strong>。</p><p>其他选项分析：</p><ul><li><strong>B</strong>：提高入学人数（enrollments）—— 文中未直接说明分数宽恕会提高入学人数，而是强调保留学生（retention）和毕业率。</li><li><strong>C</strong>：提高教学质量 —— 文中未提及。</li><li><strong>D</strong>：满足地方政府需求 —— 文中提到的是州政府资金与指标挂钩，但“满足地方政府需求”过于宽泛且不准确，核心是获得资金。</li></ul><p><strong>正确答案：A</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 29,
+     "stem": "<p>What does the phrase &ldquo;to be aligned&rdquo; (Line 5, Para. 6) most probably mean?</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "To counterbalance each other."
+      },
+      {
+       "k": "B",
+       "text": "To complement each other."
+      },
+      {
+       "k": "C",
+       "text": "To be identical with each other."
+      },
+      {
+       "k": "D",
+       "text": "To be contradictory to each other."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问第六段第五行的短语 “to be aligned” 最可能的意思是什么。</p><p>先看上下文：</p><ul><li>第六段提到，学生和家长期望大学文凭能帮助找到工作，因此学校有动力培养出尽可能合格的毕业生（或至少看起来合格）。</li><li>最后一句是：<strong>On this, students&rsquo; and colleges&rsquo; incentives seem to be aligned.</strong><ul><li>“On this” 指的是在“提高成绩以便学生更好就业”这一点上。</li><li>“incentives” 指动机、利益驱动。</li><li>“aligned” 意味着在这件事上，学生和学校的利益或目标是一致的。</li></ul></li></ul><p>选项分析：</p><ul><li><strong>A. To counterbalance each other</strong>（相互平衡/抵消）—— 不符合语境，这里不是相互抵消关系。</li><li><strong>B. To complement each other</strong>（相互补充）—— 虽然合作时可能互补，但这里强调的是目标一致，不是功能互补。</li><li><strong>C. To be identical with each other</strong>（彼此相同）—— 符合“目标一致、利益一致”的含义。</li><li><strong>D. To be contradictory to each other</strong>（彼此矛盾）—— 与原文意思相反。</li></ul><p>因此正确答案是 <strong>C</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 30,
+     "stem": "<p>The author examines the practice of grade forgiveness by</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "assessing its feasibility."
+      },
+      {
+       "k": "B",
+       "text": "analyzing the causes behind it."
+      },
+      {
+       "k": "C",
+       "text": "comparing different views on it."
+      },
+      {
+       "k": "D",
+       "text": "listing its long-run effects."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目要求判断作者是如何分析“分数宽恕”这一做法的。<br>文章结构如下：</p><ol><li><strong>提出现象</strong>：分数宽恕政策的存在及其对 GPA 的影响。</li><li><strong>原因分析</strong>：<ul><li>大学为了留住学生、提高毕业率和保留率（学生支付学费）。</li><li>帮助学生重修重要课程，提高学业成功率。</li><li>公立大学因为州政府资金与毕业率等指标挂钩，所以有动力提高 GPA。</li><li>满足学生和家长对高等教育“物有所值”和就业前景的期望。</li></ul></li></ol><p>全文主要围绕<strong>分数宽恕政策出现和普及的原因</strong>展开，包括学校动机、学生需求、财政因素等，并没有重点讨论其可行性（A）、比较不同观点（C）或列举长期影响（D）。</p><p>因此，正确选项是 <strong>B. analyzing the causes behind it</strong>（分析其背后的原因）。</p><hr><p><strong>答案</strong>：B</p>",
+     "tags": []
+    }
+   ],
+   "extras": [
+    {
+     "title": "参考译文与解析",
+     "html": "<p>分数膨胀——平均学分绩点（GPA）在过去几十年里逐渐上升——通常被认为是高等教育进入消费者时代的产物。在这个时代，学生如同顾客一样需要被取悦。但还有另一个相关因素——课程目录中通常深埋着一条\"分数宽恕\"政策——也在帮助提升平均学分绩点。</p><p>分数宽恕政策允许学生重修成绩不佳的课程，最近一次或最高的分数是计入学生总平均学分绩点的唯一成绩。近年来，随着各大学继续尽其所能让学生留在学校（并支付学费）并提高毕业率，这一鲜为人知的做法的使用率有所上升。</p><p>几十年前这种做法刚开始时，通常仅限于大一新生，如果他们在向大学课程的过渡中遇到困难，可以在大一期间给他们第二次学习课程的机会。但现在，除了许多精挑细选的学校之外，大多数大学允许所有本科生甚至研究生对他们的低分获得宽恕。</p><p>大学官员往往强调，分数宽恕政策的目标较少在于分数本身，更多在于鼓励学生重修对其学位课程和毕业至关重要的课程，而不会受到重大惩罚。俄亥俄州立大学的注册主任杰克·迈纳称：&ldquo;最终我们看到学生取得了更大的成功，因为他们重修了课程，并在后续课程中表现得更好，或者掌握了能让他们按时毕业的内容。&rdquo;</p><p>也就是说，分数宽恕政策在某种程度上也满足了大学自身的需求。对于公共机构来说，国家资金有时部分与其在毕业率和学生保留率等指标上的成功有关——因此，通过提高这些数据，更好的成绩可能意味着更多的资金。任何提高平均学分绩点的做法都可能会让学生（归根结底，是他们支付了账单）觉得他们的学费花得更值，这是大学的另一个大问题。</p><p>事实上，分数宽恕政策只是大学回应消费者对高等教育的期望的另一种方式。由于学生和家长希望大学文凭能帮助他们找到工作，因此培养出尽可能合格的毕业生——或至少看起来合格——符合学校的最佳利益。在这一点上，学生和大学的动机似乎是一致的。</p>"
+    }
+   ]
+  },
+  {
+   "id": "reading-3",
+   "label": "阅读 Text 3",
+   "title": "Text 3",
+   "heading": null,
+   "type": "choice",
+   "points": 10,
+   "directions": "",
+   "passage": [
+    {
+     "segs": [
+      "This year marks exactly two centuries since the publication of &ldquo;Frankenstein; or, The Modern Prometheus,&rdquo; by Mary Shelley. Even before the invention of the electric light bulb, the author produced a remarkable work of speculative fiction that would foreshadow many ethical questions to be raised by technologies yet to come."
+     ]
+    },
+    {
+     "segs": [
+      "Today the rapid growth of artificial intelligence (AI) raises fundamental questions: &ldquo;What is intelligence, identity, or consciousness? What makes humans humans? \""
+     ]
+    },
+    {
+     "segs": [
+      "What is being called artificial general intelligence, machines that would imitate the way humans think, continues to evade scientists. Yet humans remain fascinated by the idea of robots that would look, move, and respond like humans, similar to those recently depicted on popular sci-fi TV series such as &ldquo;Westworld&rdquo; and &ldquo;Humans.&rdquo;"
+     ]
+    },
+    {
+     "segs": [
+      "Just how people think is still far too complex to be understood, let alone reproduced, says David Eagleman, a Stanford University neuroscientist. &ldquo;We are just in a situation where there are no good theories explaining what consciousness actually is and how you could ever build a machine to get there.&rdquo;"
+     ]
+    },
+    {
+     "segs": [
+      "But that doesn&rsquo;t mean crucial ethical issues involving AI aren&rsquo;t at hand. The coming use of autonomous vehicles, for example, poses thorny ethical questions. Human drivers sometimes must make split-second decisions. Their reactions may be a complex combination of instant reflexes, input from past driving experiences, and what their eyes and ears tell them in that moment. AI &ldquo;vision&rdquo; today is not nearly as sophisticated as that of humans. And to anticipate every imaginable driving situation is a difficult programming problem."
+     ]
+    },
+    {
+     "segs": [
+      "Whenever decisions are based on masses of data, &ldquo;you quickly get into a lot of ethical questions,&rdquo; notes Tan Kiat How, chief executive of a Singapore-based agency that is helping the government develop a voluntary code for the ethical use of AI. Along with Singapore, other governments and mega-corporations are beginning to establish their own guidelines. Britain is setting up a data ethics center. India released its AI ethics strategy this spring."
+     ]
+    },
+    {
+     "segs": [
+      "On June 7 Google pledged not to &ldquo;design or deploy AI&rdquo; that would cause &ldquo;overall harm,&rdquo; or to develop AI-directed weapons or use AI for surveillance that would violate international norms. It also pledged not to deploy AI whose use would violate international laws or human rights."
+     ]
+    },
+    {
+     "segs": [
+      "While the statement is vague, it represents one starting point. So does the idea that decisions made by AI systems should be explainable, transparent, and fair."
+     ]
+    },
+    {
+     "segs": [
+      "To put it another way: How can we make sure that the thinking of intelligent machines reflects humanity&rsquo;s highest values? Only then will they be useful servants and not Frankenstein&rsquo;s out-of-control monster."
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 31,
+     "stem": "<p>Mary Shelley&rsquo;s novel Frankenstein is mentioned because it</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "fascinates AI scientists all over the world."
+      },
+      {
+       "k": "B",
+       "text": "has remained popular for as long as 200 years."
+      },
+      {
+       "k": "C",
+       "text": "involves some concerns raised by AI today."
+      },
+      {
+       "k": "D",
+       "text": "has sparked serious ethical controversies."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是文章提到玛丽·雪莱的《弗兰肯斯坦》的原因。</p><ul><li>文章第一段指出，这部小说早在电灯发明之前就预言了未来科技可能引发的伦理问题。</li><li>紧接着第二段就转向人工智能（AI）带来的伦理与本质问题。</li><li>最后一段再次呼应，提醒要让智能机器反映人类的最高价值观，否则可能成为“弗兰肯斯坦式的失控怪物”。</li></ul><p>由此可见，提到《弗兰肯斯坦》是因为它<strong>涉及了当今 AI 所引发的一些担忧</strong>，即科技发展可能带来失控或伦理困境。</p><p>选项分析：</p><ul><li><strong>A</strong>：文中并未说它让全世界的 AI 科学家着迷，而是用它引出伦理讨论。</li><li><strong>B</strong>：虽然它出版 200 年，但文章重点不是它的流行度。</li><li><strong>C</strong>：正确，与文章主旨一致。</li><li><strong>D</strong>：小说本身在文中并未强调“引发了严重的伦理争议”，而是预示了未来科技可能带来的伦理问题。</li></ul><p><strong>正确答案：C</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 32,
+     "stem": "<p>In David Eagleman&rsquo;s opinion, our current knowledge of consciousness</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "helps explain artificial intelligence."
+      },
+      {
+       "k": "B",
+       "text": "can be misleading to robot making."
+      },
+      {
+       "k": "C",
+       "text": "inspires popular sci-fi TV series."
+      },
+      {
+       "k": "D",
+       "text": "is too limited for us to reproduce it."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>定位原文</strong>：<br>文章第四段引用了 David Eagleman 的话：</p><blockquote><p>“We are just in a situation where there are no good theories explaining what consciousness actually is and how you could ever build a machine to get there.”<br>（我们目前的情况是，没有好的理论能解释意识究竟是什么，也不知道如何造出具备意识的机器。）</p></blockquote></li><li><p><strong>理解含义</strong>：</p><ul><li>他明确表示，目前对意识的理解非常有限（no good theories）。</li><li>由于连理解都做不到，更不用说复制（reproduce）人类意识到机器上。</li><li>这与选项 <strong>D</strong> “is too limited for us to reproduce it”（太有限，以至于我们无法复制它）完全对应。</li></ul></li><li><p><strong>排除其他选项</strong>：</p><ul><li><strong>A</strong>：我们的知识有助于解释人工智能 → 与原文相反，原文说没有好的理论。</li><li><strong>B</strong>：可能对机器人制造产生误导 → 原文未提“误导”，只说无法理解与复制。</li><li><strong>C</strong>：启发科幻电视剧 → 虽然前文提到科幻作品，但 David Eagleman 的观点与此无关。</li></ul></li></ol><p><strong>因此正确答案是 D</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 33,
+     "stem": "<p>The solution to the ethical issues brought by autonomous vehicles</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "can hardly ever be found."
+      },
+      {
+       "k": "B",
+       "text": "is still beyond our capacity."
+      },
+      {
+       "k": "C",
+       "text": "causes little public concern."
+      },
+      {
+       "k": "D",
+       "text": "has aroused much curiosity."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是“自动驾驶汽车带来的伦理问题的解决方案______”。</p><ol><li><p><strong>定位原文</strong>：<br>第五段提到自动驾驶汽车会带来棘手的伦理问题（&ldquo;poses thorny ethical questions&rdquo;），并指出人类驾驶员在紧急情况下的反应是复杂的，而AI的“视觉”远不如人类，预判所有驾驶场景也是一个困难的编程问题。<br>这说明目前我们还没有能力完全解决这些问题。</p></li><li><p><strong>选项分析</strong>：</p><ul><li>A. can hardly ever be found（几乎不可能找到）—— 原文并未说“永远找不到”，只是目前还很难。</li><li>B. is still beyond our capacity（仍超出我们的能力范围）—— 与原文“困难的编程问题”“AI视觉不如人类”等描述一致，说明目前还无法解决。</li><li>C. causes little public concern（几乎没有引起公众关注）—— 与事实相反，各国政府和企业已在制定伦理准则。</li><li>D. has aroused much curiosity（引起了很多好奇）—— 原文重点在伦理挑战，而不是好奇心。</li></ul></li><li><p><strong>结论</strong>：<br>原文强调自动驾驶的伦理问题目前难以解决，因此 <strong>B</strong> 正确。</p></li></ol>",
+     "tags": []
+    },
+    {
+     "n": 34,
+     "stem": "<p>The author&rsquo;s attitude toward Google&rsquo;s pledges is one of</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "affirmation."
+      },
+      {
+       "k": "B",
+       "text": "skepticism."
+      },
+      {
+       "k": "C",
+       "text": "contempt."
+      },
+      {
+       "k": "D",
+       "text": "respect."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><ol><li><p><strong>定位原文</strong><br>文章提到 Google 的承诺是在倒数第三段：</p><blockquote><p>On June 7 Google pledged not to &ldquo;design or deploy AI&rdquo; that would cause &ldquo;overall harm,&rdquo; &mldr;<br>接着下一段说：<br>While the statement is vague, it represents one starting point. So does the idea that decisions made by AI systems should be explainable, transparent, and fair.</p></blockquote></li><li><p><strong>态度分析</strong></p><ul><li>作者承认 Google 的声明 “vague”（模糊），但马上用 “represents one starting point” 来肯定其积极意义。</li><li>这种评价是带有认可意味的，虽然指出不足，但更强调这是一个开端，说明作者整体上持<strong>肯定</strong>态度。</li></ul></li><li><p><strong>排除其他选项</strong></p><ul><li><strong>B. skepticism（怀疑）</strong>：虽然有 “vague” 一词，但作者并未否定或质疑其价值，而是肯定其起点作用。</li><li><strong>C. contempt（蔑视）</strong>：语气完全不符。</li><li><strong>D. respect（尊重）</strong>：语气过重，文中只是客观肯定其开端意义，并未表达尊敬。</li></ul></li><li><p><strong>结论</strong><br>作者的态度是 <strong>A. affirmation（肯定）</strong>，即认可 Google 的承诺是推动 AI 伦理发展的一个起点。</p></li></ol><p><strong>答案：A</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 35,
+     "stem": "<p>Which of the following would be the best title for the text?</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "AI&rsquo;s Future: In the Hands of Tech Giants"
+      },
+      {
+       "k": "B",
+       "text": "Frankenstein, the Novel Predicting the Age of AI"
+      },
+      {
+       "k": "C",
+       "text": "The Conscience of AI: Complex But Inevitable"
+      },
+      {
+       "k": "D",
+       "text": "AI Shall Be Killers Once Out of Control"
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>这道题要求选择最适合文章的标题。文章的核心线索是：<strong>从《弗兰肯斯坦》的伦理寓言出发，讨论人工智能发展过程中必须面对的伦理与价值观问题，并指出虽然技术复杂，但伦理规范的建设已经起步且不可避免。</strong></p><hr><p><strong>选项分析：</strong></p><ul><li><p><strong>A. AI&rsquo;s Future: In the Hands of Tech Giants</strong><br>文章虽然提到谷歌等大公司在制定伦理准则，但重点不是“AI的未来由科技巨头掌控”，而是全社会、多国政府与企业共同面对的伦理挑战。该选项过于片面。</p></li><li><p><strong>B. Frankenstein, the Novel Predicting the Age of AI</strong><br>文章确实以《弗兰肯斯坦》开头，但它只是一个引子，用来引出“技术失控”的伦理警示，并不是全文核心内容。文章主体讨论的是现实中的AI伦理问题，而非小说的预言性。</p></li><li><p><strong>C. The Conscience of AI: Complex But Inevitable</strong><br>“AI的良知/伦理：复杂但不可避免”非常贴合文章主旨。</p><ul><li>“复杂”对应文中对人类意识、决策复杂性的描述（Eagleman的观点、自动驾驶的例子）。</li><li>“不可避免”对应各国政府与企业已在制定伦理准则，谷歌等做出承诺，说明伦理规范是必须推进的。</li></ul></li><li><p><strong>D. AI Shall Be Killers Once Out of Control</strong><br>这个说法过于极端和片面。文章虽然以“弗兰肯斯坦的怪物”作比喻，但重点是如何<strong>防止</strong>AI失控，而不是断言AI一定会成为杀手。</p></li></ul><hr><p><strong>结论：</strong><br><strong>C</strong> 选项准确概括了文章的核心——AI伦理问题虽然复杂难解，但已是当下必须面对并规范的课题，因此是最佳标题。</p>",
+     "tags": []
+    }
+   ],
+   "extras": [
+    {
+     "title": "参考译文与解析",
+     "html": "<p>今年是玛丽·雪莱出版《弗兰肯斯坦——现代普罗米修斯的故事》的两百周年。早在电灯泡发明之前，这位作家就创作出了一部杰出的推理小说，预言了未来科技将引发的诸多伦理问题。</p><p>当前人工智能的快速发展正引发一系列本质性追问：&ldquo;何为智能、身份认同乃至意识？人类区别于其他物种的本质是什么？&ldquo;被称作\"人工通用智能\"的、能够模仿人类思维的机器，至今仍是科学家难以企及的目标。但人类始终痴迷于创造外观、行动和反应都酷似人类的机器人，正如《西部世界》《真实的人类》等近期热门科幻剧描绘的那般。</p><p>斯坦福大学神经学家大卫·伊格曼指出，人类的思维方式极其复杂，远非现阶段能够理解，更遑论重现。&ldquo;我们至今未能建立有效理论来解释意识的本质，更不用说构建具备意识的机器。&rdquo;</p><p>但这不意味着人工智能领域的伦理问题可以暂缓考量。以即将普及的自动驾驶汽车为例，其决策系统涉及诸多伦理难题。人类驾驶员在突发状况下需要瞬间决断，这种反应融合了本能反射、过往驾驶经验以及实时感官信息。而当前人工智能的\"视觉\"处理能力远未达到人类水平，且预判所有可能驾驶场景的编程本身就是巨大挑战。</p><p>新加坡资讯通信媒体发展局首席执行官陈杰豪强调，一旦决策基于海量数据，&ldquo;伦理问题便会接踵而至&rdquo;。该机构正协助政府制定人工智能伦理自愿性行为准则。除新加坡外，多国政府与商业巨头也开始构建相关框架：英国正建立数据伦理中心，印度今春发布了国家人工智能伦理战略。</p><p>6月7日，谷歌承诺绝不设计或部署\"可能造成整体伤害\"的人工智能系统，不开发人工智能武器，也不将人工智能用于违反国际规范的监控活动，同时保证其应用将恪守国际法规与人权准则。尽管声明措辞宽泛，但已迈出重要一步。同样具有开创性意义的是\"人工智能决策应具备可解释性、透明度和公平性\"这一理念。</p><p>换言之：如何确保智能机器的思维体现人类最高价值观？唯其如此，人工智能才能成为有益的工具，而非弗兰肯斯坦笔下失控的怪物。</p>"
+    }
+   ]
+  },
+  {
+   "id": "reading-4",
+   "label": "阅读 Text 4",
+   "title": "Text 4",
+   "heading": null,
+   "type": "choice",
+   "points": 10,
+   "directions": "",
+   "passage": [
+    {
+     "segs": [
+      "States will be able to force more people to pay sales tax when they make online purchases under a Supreme Court decision Thursday that will leave shoppers with lighter wallets but is a big financial win for states."
+     ]
+    },
+    {
+     "segs": [
+      "The Supreme Court&rsquo;s opinion Thursday overruled a pair of decades-old decisions that states said cost them billions of dollars in lost revenue annually. The decisions made it more difficult for states to collect sales tax on certain online purchases."
+     ]
+    },
+    {
+     "segs": [
+      "The cases the court overturned said that if a business was shipping a customer&rsquo;s purchase to a state where the business didn&rsquo;t have a physical presence such as a warehouse or office, the business didn&rsquo;t have to collect sales tax for the state. Customers were generally responsible for paying the sales tax to the state themselves if they weren&rsquo;t charged it, but most didn&rsquo;t realize they owed it and few paid."
+     ]
+    },
+    {
+     "segs": [
+      "Justice Anthony Kennedy wrote that the previous decisions were flawed. &ldquo;Each year the physical presence rule becomes further removed from economic reality and results in significant revenue losses to the States,&rdquo; he wrote in an opinion joined by four other justices. Kennedy wrote that the rule &ldquo;limited states&rsquo; ability to seek long-term prosperity and has prevented market participants from competing on an even playing field.&rdquo;"
+     ]
+    },
+    {
+     "segs": [
+      "The ruling is a victory for big chains with a presence in many states, since they usually collect sales tax on online purchases already. Now, rivals will be charging sales tax where they hadn&rsquo;t before. Big chains have been collecting sales tax nationwide because they typically have physical stores in whatever state a purchase is being shipped to. Amazon.com, with its network of warehouses, also collects sales tax in every state that charges it, though third-party sellers who use the site don&rsquo;t have to."
+     ]
+    },
+    {
+     "segs": [
+      "Until now, many sellers that have a physical presence in only a single state or a few states have been able to avoid charging sales taxes when they ship to addresses outside those states. Sellers that use eBay and Etsy, which provide platforms for smaller sellers, also haven&rsquo;t been collecting sales tax nationwide. Under the ruling Thursday, states can pass laws requiring out-of-state sellers to collect the state&rsquo;s sales tax from customers and send it to the state."
+     ]
+    },
+    {
+     "segs": [
+      "Retail trade groups praised the ruling, saying it levels the playing field for local and online businesses. The losers, said retail analyst Neil Saunders, are online-only retailers, especially smaller ones. Those retailers may face headaches complying with various state sales tax laws. The Small Business & Entrepreneurship Council advocacy group said in a statement, &ldquo;Small businesses and internet entrepreneurs are not well served at all by this decision.&rdquo;"
+     ]
+    }
+   ],
+   "questions": [
+    {
+     "n": 36,
+     "stem": "<p>The Supreme Court decision Thursday will</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "better businesses&rsquo; relations with states."
+      },
+      {
+       "k": "B",
+       "text": "put most online businesses in a dilemma."
+      },
+      {
+       "k": "C",
+       "text": "make more online shoppers pay sales tax."
+      },
+      {
+       "k": "D",
+       "text": "force some states to cut sales tax."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问“最高法院周四的裁决将……”，即裁决带来的主要影响。</p><ul><li><p>根据文章第一段：<br>“States will be able to force more people to pay sales tax when they make online purchases under a Supreme Court decision Thursday&mldr;”<br>意思是：根据最高法院周四的裁决，各州将能够强制更多人在网购时支付销售税。</p></li><li><p>再结合第三段内容：<br>此前，如果商家在某个州没有实体存在（如仓库或办公室），就不需要代收该州的销售税，消费者也很少自行缴纳。<br>而新裁决推翻了这一规则，意味着更多网络商家将被要求代收销售税，从而<strong>使更多网购者实际支付销售税</strong>。</p></li><li><p>选项分析：<br>A. 改善企业与州的关系 —— 文中未提及。<br>B. 使大多数在线企业陷入困境 —— 虽然部分小企业会受影响，但并非“大多数”都陷入困境，也不是裁决的主要直接目的。<br>C. 让更多网购者支付销售税 —— 与第一段及全文主旨一致。<br>D. 迫使一些州削减销售税 —— 文中未提及。</p></li></ul><p>因此正确答案是 <strong>C</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 37,
+     "stem": "<p>It can be learned from paragraphs 2 and 3 that the overruled decisions</p>",
+     "answer": "D",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "have led to the dominance of e-commerce."
+      },
+      {
+       "k": "B",
+       "text": "have cost consumers a lot over the years."
+      },
+      {
+       "k": "C",
+       "text": "were widely criticized by online purchasers."
+      },
+      {
+       "k": "D",
+       "text": "were considered unfavorable by states."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目要求从第2段和第3段中推断被推翻的裁决（overruled decisions）的相关信息。</p><ul><li><p><strong>第2段</strong>指出：</p><blockquote><p>The Supreme Court&rsquo;s opinion Thursday overruled a pair of decades-old decisions that states said cost them billions of dollars in lost revenue annually.<br>意思是这些旧裁决让各州每年损失数十亿美元的税收收入，因此各州认为这些裁决对它们不利。</p></blockquote></li><li><p><strong>第3段</strong>进一步说明：<br>根据被推翻的裁决，如果商家在某个州没有实体存在（如仓库或办公室），就不需要代收该州的销售税，导致各州难以征收这部分税款。</p></li></ul><p>由此可知，被推翻的裁决对各州不利（unfavorable by states），对应选项 <strong>D</strong>。</p><p>其他选项分析：</p><ul><li><strong>A</strong>：电子商务的主导地位，文中未提及是因这些裁决直接导致。</li><li><strong>B</strong>：这些裁决实际上让消费者在网购时免于被收税，因此并没有“cost consumers a lot”。</li><li><strong>C</strong>：文中没有提到网购者广泛批评这些裁决，相反他们可能因此受益（少交税）。</li></ul><p><strong>答案：D</strong></p>",
+     "tags": []
+    },
+    {
+     "n": 38,
+     "stem": "<p>According to Justice Anthony Kennedy, the physical presence rule has</p>",
+     "answer": "C",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "hindered economic development."
+      },
+      {
+       "k": "B",
+       "text": "brought prosperity to the country."
+      },
+      {
+       "k": "C",
+       "text": "harmed fair market competition."
+      },
+      {
+       "k": "D",
+       "text": "boosted growth in states&rsquo; revenue."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是根据大法官 Anthony Kennedy 的观点，“实体存在规则”（physical presence rule）带来了什么影响。</p><p>原文第四段中，Kennedy 写道：</p><blockquote><p>&ldquo;limited states&rsquo; ability to seek long-term prosperity and has prevented market participants from competing on an even playing field.&rdquo;</p></blockquote><p>这句话明确指出该规则：</p><ol><li>限制了各州寻求长期繁荣的能力（对应 A 选项 hindered economic development 有一定相关，但不是最直接表述）</li><li>阻止了市场参与者在公平的竞争环境中竞争（对应 C 选项 harmed fair market competition）</li></ol><p>B 选项（给国家带来繁荣）和 D 选项（增加了州财政收入）与原文意思相反，因为 Kennedy 认为该规则导致各州税收损失，不利于公平竞争。</p><p>因此，最直接且准确的答案是 <strong>C</strong>。</p>",
+     "tags": []
+    },
+    {
+     "n": 39,
+     "stem": "<p>Who are most likely to welcome the Supreme Court ruling?</p>",
+     "answer": "B",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "Internet entrepreneurs."
+      },
+      {
+       "k": "B",
+       "text": "Big-chain owners."
+      },
+      {
+       "k": "C",
+       "text": "Third-party sellers."
+      },
+      {
+       "k": "D",
+       "text": "Small retailers."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是“谁最有可能欢迎最高法院的裁决？”</p><p>根据文章内容：</p><ul><li>裁决前，如果企业在某个州没有实体存在（如仓库、办公室），就不必代收该州的销售税。</li><li>裁决后，各州可以要求外州卖家（包括在线商家）代收销售税。</li><li>这对<strong>大型连锁店</strong>有利，因为它们本来就在全国大多数州有实体店，已经代收销售税，而竞争对手（尤其是纯在线小商家）以前不用收税，现在必须收，竞争更公平。</li><li>文章明确提到 <strong>“The ruling is a victory for big chains”</strong>，并且零售业团体认为这“levels the playing field”。</li><li>而 <strong>A（互联网创业者）、C（第三方卖家）、D（小零售商）</strong> 在文中被提到是受负面影响的一方，尤其是小企业和纯在线零售商。</li></ul><p>因此，最欢迎裁决的是 <strong>B. Big-chain owners</strong>（大型连锁店所有者）。</p>",
+     "tags": []
+    },
+    {
+     "n": 40,
+     "stem": "<p>In dealing with the Supreme Court decision Thursday, the author</p>",
+     "answer": "A",
+     "multiple": false,
+     "options": [
+      {
+       "k": "A",
+       "text": "gives a factual account of it and discusses its consequences."
+      },
+      {
+       "k": "B",
+       "text": "describes the long and complicated process of its making."
+      },
+      {
+       "k": "C",
+       "text": "presents its main points with conflicting views on them."
+      },
+      {
+       "k": "D",
+       "text": "cites some cases related to it and analyzes their implications."
+      }
+     ],
+     "explanation": "<p><strong>解析：</strong></p><p>题目问的是作者在讨论最高法院周四的裁决时采用了什么方式。</p><ul><li><p><strong>A 项</strong>：对裁决进行事实性陈述并讨论其后果。<br>文章首先陈述了最高法院裁决的内容（允许各州对更多网络购物征收销售税），接着说明了裁决的背景（推翻旧判例），并分别讨论了它对<strong>各州财政、大型连锁企业、小卖家、电商平台</strong>等不同主体的影响。这属于事实描述 + 后果分析的结构，符合全文内容。</p></li><li><p><strong>B 项</strong>：描述其制定的漫长复杂过程。<br>文章并未详细描述裁决是如何一步步形成的，而是直接给出结果并分析影响，因此不选。</p></li><li><p><strong>C 项</strong>：提出其主要观点并展示相互冲突的看法。<br>虽然有不同群体的反应（如零售业支持、小企业反对），但文章并不是围绕“对主要观点的冲突看法”展开，而是客观陈述不同群体的得失，重点在后果而非观点对立。</p></li><li><p><strong>D 项</strong>：引用相关案例并分析其含义。<br>文章确实提到了之前的判例被推翻，但并没有深入分析这些案例的具体内容和法律含义，而是更侧重于新裁决带来的现实影响。</p></li></ul><p>因此，<strong>A</strong> 最准确地概括了作者的写作方式。</p>",
+     "tags": []
+    }
+   ],
+   "extras": [
+    {
+     "title": "参考译文与解析",
+     "html": "<p>美国最高法院周四作出一项裁决，各州将能够强制更多人在进行网购时支付销售税。这项裁决将使消费者的钱包缩水，但对各州来说则是一个巨大的利好。最高法院周四的意见推翻了几十年前的一项裁决，各州表示，这项裁决每年给它们造成数十亿美元的损失。之前的裁决增加了各州对某些网购行为征收销售税的难度。</p><p>法院推翻的案例裁定，如果一个企业将客户购买的商品运送到该企业没有仓库或办公室等实体存在的州，那么该企业不必为该州代收销售税。如果客户没有被收取销售税，他们通常有责任自己向州政府支付销售税，但大多数人没有意识到这一点，也几乎没有人支付过。</p><p>大法官安东尼·肯尼迪认为，先前的裁决是有缺陷的。他写道：&ldquo;实体存在规则每年都进一步脱离经济现实，并导致各州的大量收入损失。&ldquo;这项意见还有另外四名大法官联署。肯尼迪写道，该规则\"限制了各州寻求长期繁荣的能力，并阻止了市场参与者在公平的竞争环境中竞争&rdquo;。这项裁决对于在很多州都有实体店的大型连锁店来说是一个胜利，因为它们通常已经在网上购物时收取销售税。现在，它们的竞争对手将在此前没有征税的地方收取销售税。</p><p>大型连锁店一直在全国范围内收取销售税，因为无论商品被运送到哪个州，它们通常在该州都有实体店。亚马逊网站拥有仓储网络，也在每个州收取销售税，但使用该网站的第三方卖家不必如此。到目前为止，许多只在某一个州或某几个州有实体店的卖家在将商品运送到这些州以外的地址时，都能够避免收取销售税。使用eBay和Etsy（为小卖家提供平台）的卖家也没有在全国范围内收取销售税。根据周四的裁决，各州可以通过法律，要求外州卖家向顾客收取州的销售税，并将其上缴给州政府。</p><p>零售业贸易团体对这一裁决表示赞赏，称它为本地企业和在线企业创造了公平的竞争环境。零售业分析师尼尔·桑德斯说，失败的是纯在线零售商，尤其是规模较小的零售商。这些零售商在遵守各州的销售税法律方面可能会非常头疼。小型企业及创业委员会倡议组织在一份声明中表示：&ldquo;这项裁决根本没有给小型企业和互联网创业者带来良好的服务。&rdquo;</p>"
+    }
+   ]
+  },
+  {
+   "id": "reading-b",
+   "label": "新题型",
+   "title": "Part B",
+   "heading": null,
+   "type": "match",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>The following paragraphs are given in a wrong order. For Questions 41-45, you are required to reorganize these paragraphs into a coherent text by choosing from the list A-G and filling them into the numbered boxes.\nParagraphs C and F have been correctly placed. Mark your answers on the ANSWER SHEET. (10 points)</p>",
+   "body": "<p>[A] These tools can help you win every argument - not in the unhelpful sense of beating your opponents but in the better sense of learning about the issues that divide people. Learning why they disagree with us and learning to talk and work together with them. If we readjust our view of arguments - from a verbal fight or tennis game to a reasoned exchange through which we all gain mutual respect, and understanding - then we change the very nature of what it means to &ldquo;win&rdquo; an argument.</p><p>[B] Of course, many discussions are not so successful. Still, we need to be careful not to accuse opponents of bad arguments too quickly. We need to learn how to evaluate them properly. A large part of evaluation is calling out bad arguments, but we also need to admit good arguments by opponents and to apply the same critical standards to ourselves. Humility requires you to recognize weakness in your own arguments and sometimes also to accept reasons on the opposite side.</p><p>[C] None of these will be easy but you can start even if others refuse to. Next time you state your position, formulate an argument for what you claim and honestly ask yourself whether your argument is any good. Next time you talk with someone who takes a stand, ask them to give you a reason for their view. Spell out their argument fully and charitably. Assess its strength impartially. Raise objections and listen carefully to their replies.</p><p>[D] Carnegie would be right if arguments were fights, which is how we often think of them. Like physical fights, verbal fights can leave both sides bloodied. Even when you win, you end up no better off. Your prospects would be almost as dismal if arguments were even just competitions - like, say, tennis games. Pairs of opponents hit the ball back and forth until one winner emerges from all who entered. Everybody else loses. This kind of thinking is why so many people try to avoid arguments, especially about politics and religion.</p><p>[E] In his 1936 work How to Win Friends and Influence People, Dale Carnegie wrote: &ldquo;There is only one way&mldr; to get the best of an argument - and that is to avoid it.&rdquo; This aversion to arguments is common, but it depends on a mistaken view of arguments that causes profound problems for our personal and social lives - and in many ways misses the point of arguing in the first place.</p><p>[F] These views of arguments also undermine reason. If you see a conversation as a fight or competition, you can win by cheating as long as you don&rsquo;t get caught. You will be happy to convince people with bad arguments. You can call their views stupid, or joke about how ignorant they are. None of these tricks will help you understand them, their positions or the issues that divide you, but they can help you win - in one way.</p><p>[G] There is a better way to win arguments. Imagine that you favor increasing the minimum wage in our state, and I do not. If you yell, &ldquo;Yes,&rdquo; and I yell, &ldquo;No,&rdquo; neither of us learns anything. We neither understand nor respect each other, and we have no basis for compromise or cooperation. In contrast, suppose you give a reasonable argument: that full-time workers should not have to live in poverty. Then I counter with another reasonable argument: that a higher minimum wage will force businesses to employ fewer people for less time. Now we can understand each other&rsquo;s positions and recognize our shared values, since we both care about needy workers.</p><p>41 ______ → 42 ______ → F → 43 ______ → 44 ______ → C → 45 ______</p>",
+   "solution": "<p><strong>解析：</strong></p><p><strong>41. E</strong></p><ul><li>若首段未给出，应通读各选项首句，通过句间衔接关系判断。</li><li>A 项首句含指代词 “these”，无法作为首段。</li><li>B 项首句含 “Of course”，为承接上文的转折词，不适合作为首段。</li><li>D 项和 E 项均可能作为首段，但 E 项首次提及人物 Dale Carnegie，使用全名，符合首段引入人物的习惯；而 D 项仅用 “Carnegie”，应为后文再次提及时的简称。</li><li>因此，首段应为 E 项。</li></ul><p><strong>42. D</strong></p><ul><li>首段 E 项提出 Carnegie 的观点，D 项首句 “Carnegie would be right if arguments were fights…” 直接承接该观点，进一步展开讨论，形成自然衔接。</li></ul><p><strong>43. G</strong></p><ul><li>F 项尾句指出 “None of these tricks will help you understand them… but they can help you win—in one way”，对上述方法持否定态度。</li><li>G 项首句 “There is a better way to win arguments” 直接提出更好的方法，与 F 项尾句形成转折衔接，逻辑紧密。</li></ul><p><strong>44. B</strong></p><ul><li>G 项尾句描述了一种成功的讨论场景：“Now we can understand each other’s positions and recognize our shared values…”。</li><li>B 项首句 “Of course, many discussions are not so successful” 以 “Of course” 转折，引出不成功的讨论情况，与 G 项形成对比衔接。</li></ul><p><strong>45. A</strong></p><ul><li>C 项尾句提出一系列具体建议：“Spell out their argument fully and charitably. Assess its strength impartially. Raise objections and listen carefully to their replies”。</li><li>A 项首句 “These tools can help you win every argument…” 中的 “These tools” 指代 C 项尾句提出的方法，形成指代衔接。</li></ul><p><strong>最终顺序：</strong> E → D → F → G → B → C → A</p>",
+   "numbers": [
+    41,
+    42,
+    43,
+    44,
+    45
+   ],
+   "letters": [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G"
+   ],
+   "answers": [
+    "E",
+    "D",
+    "G",
+    "B",
+    "A"
+   ]
+  },
+  {
+   "id": "translation",
+   "label": "翻译",
+   "title": "Part C",
+   "heading": null,
+   "type": "free",
+   "points": 10,
+   "directions": "<p><strong>Directions</strong></p><p>Read the following text carefully and then translate the underlined segments into Chinese.</p><p>Your translation should be written neatly on the ANSWER SHEET. (10 points)</p>",
+   "body": "<p>It was only after I started to write a weekly column about the medical journals, and began to read scientific papers from beginning to end, that I realised just how bad much of the medical literature frequently was. I came to recognise various signs of a bad paper: the kind of paper that purports to show that people who eat more than one kilo of broccoli a week were 1.17 times more likely than those who eat less to suffer late in life from pernicious anaemia. (46)\n<u>There is a great deal of this kind of nonsense in the medical journals which, when taken up by broadcasters and the lay press, generates both health scares and short - lived dietary enthusiasm.</u></p><p>Why is so much bad science published? A recent paper, titled “The Natural Selection of Bad Science”, published on the Royal Society’s open science website, attempts to answer this intriguing and important question. It says that the problem is not merely that people do bad science, but that our current system of career advancement positively encourages it. What is important is not truth, but publication, which has become almost an end in itself. There has been a kind of inflationary process at work: (47)\n<u>nowadays anyone applying for a research post has to have published twice the number of papers that would have been required for the same post only 10 years ago.\nNever mind the quality, then, count the number.</u></p><p>(48) <u>Attempts have been made to curb this tendency, for example, by trying to incorporate some measure of quality as well as quantity into the assessment of an applicant’s papers. </u>This is the famed citation index, that is to say the number of times a paper has been quoted elsewhere in the scientific literature, the assumption being that an important paper will be cited more often than one of small account.</p><p>(49) <u>This would be reasonable if it were not for the fact that scientists can easily arrange to cite themselves in their future publications, or get associates to do so for them in return for similar favours.</u></p><p>Boiling down an individual’s output to simple metrics, such as number of publications or journal impacts, entails considerable savings in time, energy and ambiguity. Unfortunately, the long - term costs of using simple quantitative metrics to assess researcher merit are likely to be quite great. (50)\n<u>If we are serious about ensuring that our science is both meaningful and reproducible, we must ensure that our institutions encourage that kind of science.</u></p>",
+   "solution": "<p><strong>（46）</strong>\n<strong>考点：</strong> there be句型、定语从句、状语从句、词义选择</p><p><strong>结构分析：</strong></p><ul><li>本句为含有定语从句和状语从句的复合句。</li><li>句子主干为：There is a great deal of this kind of nonsense.</li><li>in the medical journals 为介词短语作状语。</li><li>which 引导定语从句修饰 nonsense，其中包含 when 引导的状语从句。</li></ul><p><strong>参考译文：</strong><br>医学期刊中有很多这类无稽之谈，这些说法一旦被广播媒体和大众报刊引用，便会引发健康恐慌和短暂的饮食热潮。</p><hr><p><strong>（47）</strong>\n<strong>考点：</strong> 分词短语作定语、被动语态、比较结构</p><p><strong>结构分析：</strong></p><ul><li>本句为含有分词结构和定语从句的复合句。</li><li>主干为：anyone … has to have published twice the number of papers…</li><li>applying for a research post 为现在分词短语作定语修饰 anyone。</li><li>that 引导定语从句修饰 papers。</li><li>twice the number of… 为比较结构。</li></ul><p><strong>参考译文：</strong><br>如今，申请研究职位的人必须发表的论文数量是10年前同一职位所需的两倍。</p><hr><p><strong>（48）</strong>\n<strong>考点：</strong> 被动语态、插入语、介词短语作状语、词义选择、语序调整</p><p><strong>结构分析：</strong></p><ul><li>本句为主谓结构的简单句。</li><li>主干为：Attempts have been made…</li><li>to curb this tendency 为不定式短语作目的状语。</li><li>by trying to… 为介词短语作方式状语。</li></ul><p><strong>参考译文：</strong><br>人们已尝试遏制这一趋势，例如在评估申请者的论文时，不仅考虑数量，也引入某些质量衡量标准。</p><hr><p><strong>（49）</strong>\n<strong>考点：</strong> 状语从句、虚拟语气、同位语从句</p><p><strong>结构分析：</strong></p><ul><li>本句为含有条件状语从句的复合句。</li><li>主句为：This would be reasonable…</li><li>if it were not for the fact that… 为虚拟条件句，其中 that 引导同位语从句说明 fact 的内容。</li><li>同位语从句中，arrange to cite… 与 get associates to do so… 为并列结构。</li></ul><p><strong>参考译文：</strong><br>如果不是因为科学家可以轻易地在今后的论文中自我引用，或让同事为他们这样做以换取类似好处，这种做法本是合理的。</p><hr><p><strong>（50）</strong>\n<strong>考点：</strong> 状语从句、宾语从句</p><p><strong>结构分析：</strong></p><ul><li>本句为主从复合句。</li><li>If we are serious about ensuring that… 为条件状语从句，其中 that 引导宾语从句作 ensuring 的宾语。</li><li>主句为：we must ensure that…，其中 that 引导宾语从句说明 ensure 的内容。</li></ul><p><strong>参考译文：</strong><br>如果我们真的希望科学既有意义又可重现，就必须确保科研机构鼓励这类科学研究。</p>",
+   "numbers": [
+    46,
+    50
+   ]
+  },
+  {
+   "id": "writing-a",
+   "label": "小作文",
+   "title": "Part A",
+   "heading": "Section III  Writing",
+   "type": "free",
+   "points": 10,
+   "directions": "",
+   "body": "<p><strong>Directions</strong></p><p>Suppose you are working for the “Aiding Rural Primary School” project of your university. Write an email to answer the inquiry from an international student volunteer, specifying the details of the project.</p><p>You should write about 100 words on the ANSWER SHEET.</p><p>Do not use your own name in the email. Use “Li Ming” instead. (10 points)</p>",
+   "solution": "<p><strong>【写作说明】</strong></p><ol><li>书信格式规范：范文严格遵循英文电子邮件的标准格式，包含称呼、正文、结尾敬语和签名，结构清晰完整。</li><li>内容完整具体：邮件正文首先礼貌回应来信，随即清晰说明了项目的目标（支持偏远地区乡村小学）、核心活动（捐赠书籍以开阔视野、培养能力）以及对志愿者的期望（勤奋、乐观），信息具体且紧扣题目要求。</li><li>语言正式得体：全文使用正式、礼貌的书信语言（如“I am exceedingly delighted to receive your letter\", &ldquo;please do not hesitate to contact me&rdquo;），符合工作邮件沟通的语境。</li><li>逻辑衔接自然：通过“First and foremost\"和”In addition\"等逻辑连接词，使项目不同方面的介绍过渡自然，条理分明。</li><li>指定信息处理：正确使用\"Li Ming\"作为落款姓名，并提供了具体的项目联系邮箱，完全符合题目指令。</li></ol><p><strong>【参考范文】</strong></p><p>Dear William,</p><p>I am exceedingly delighted to receive your letter in which you inquired about the “Aiding Rural Primary Schools” project. As a member of the project, I am writing to provide you with some essential information.</p><p>First and foremost, the project aims to support rural primary schools in remote areas through various activities. For example, we send books on a wide range of subjects to the students, which not only broadens their horizons and enriches their lives, but also helps them develop the ability to think and learn independently and critically. In addition, we look for volunteers who are diligent and have an optimistic and pleasant personality. Such qualities help ensure that they maintain a positive attitude when facing challenges during the project.</p><p>If you have any further questions, please do not hesitate to contact me at aidingruralprimaryschools@edu.cn.</p><p>Yours sincerely,\nLi Ming</p>",
+   "numbers": [
+    51
+   ]
+  },
+  {
+   "id": "writing-b",
+   "label": "大作文",
+   "title": "Part B",
+   "heading": null,
+   "type": "free",
+   "points": 20,
+   "directions": "",
+   "body": "<p><strong>Directions</strong></p><p>Write an essay of 160 - 200 words based on the picture below. In your essay, you should</p><ol><li>describe the picture briefly,</li><li>interpret the implied meaning, and</li><li>give your comments.</li></ol><p>You should write neatly on the ANSWER SHEET. (20 points) </p><p>（下方是一幅漫画，包含两个人物、对话气泡、山水等元素，下方标注“途 中”  ，人物对话为“别呀，休息一下再接着爬”“累了，我不爬了” ）</p><img src=\"/api/exams/assets/e1_2019_52.png\" alt=\"\">",
+   "solution": "<p><strong>参考范文</strong></p><p>The cartoon presents a thought-provoking scene: two individuals are climbing a mountain. One of them, feeling exhausted, says, “I’m tired, I’m not climbing anymore,” while the other encourages him, “Come on, let’s rest for a while and then continue.”</p><p>Undoubtedly, the illustrator aims to highlight the importance of persistence. First and foremost, perseverance enables us to continually improve ourselves, thereby equipping us for future career advancement and preparing us to face upcoming challenges. Moreover, persistence plays a vital role in personal growth. In today’s ever-changing world, perseverance is as essential to personal development as water is to fish. Conversely, if we neglect the value of persistence, we may suffer unimaginable losses.</p><p>Therefore, it is crucial to draw positive lessons from this cartoon. On one hand, we should use such examples to inspire the younger generation. On the other hand, we must help teenagers cultivate the awareness of persevering toward their goals. Only in this way can we emerge victorious in the face of adversity.</p><hr><p><strong>参考范文译文</strong></p><p>这幅漫画描绘了一个发人深省的场景：两人正在爬山，其中一人因疲惫而说“累了，我不爬了”，另一人则鼓励他：“别呀，休息一下再接着爬。”</p><p>毫无疑问，作者旨在强调坚持的重要性。首先，坚持能帮助我们不断完善自我，从而为未来的职业发展做好准备，迎接即将到来的挑战。此外，坚持在个人成长中也起着关键作用。在这个瞬息万变的时代，坚持之于个人成长，犹如水之于鱼。反之，如果我们忽视坚持的价值，可能会遭受难以想象的损失。</p><p>因此，从这幅漫画中汲取积极的启示至关重要。一方面，我们应当用这样的例子激励年轻一代；另一方面，我们应帮助青少年树立坚持不懈、追求目标的意识。唯有如此，我们才能在面对困难时成为胜利者。</p><hr><p><strong>题目点评</strong></p><ol><li><strong>话题熟悉度</strong>：“坚持”是考研英语写作的经典话题，早在2004年就曾出现过类似主题的漫画“终点又是新起点”。今年的考题再次印证了深入研读历年真题的重要性。</li><li><strong>话题类型</strong>：该主题宏观上属于“个人成功品质”类话题，是考生备考中的常见类别。</li><li><strong>写作难点</strong>：本次作文的难点主要集中在图画描述的准确性以及相关主题词汇的表达上。对于认真备考的考生而言，这仍属于一道难度适中的题目。</li></ol>",
+   "numbers": [
+    52
+   ]
+  }
+ ]
+}
