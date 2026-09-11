@@ -74,9 +74,12 @@
 
   --radius:   8px;
   --radius-s: 5px;
-  /* 纸纹：一层极淡的噪点，只在浅色模式下铺 */
-  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
-  --grain-op: 0.05;
+  /* 纸纹：只调亮度、不带色相。
+     feTurbulence 默认对 R/G/B 各生成一套独立噪声，直接拿来铺会让每个像素的
+     三通道各偏几级，大面积纯色上看着就是「发花」。这里用 feColorMatrix 把
+     RGB 全压成 0、只把噪声喂给 alpha，于是它是一层纯黑的疏密变化，色相零偏移。 */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .55 .55 .55 0 -.42'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-op: 0.045;
   --shadow: 0 1px 2px rgba(30, 42, 36, 0.04);
   --rule-hard: var(--line-2);
 
@@ -117,7 +120,6 @@ body::after {
   pointer-events: none;
   background-image: var(--grain);
   opacity: var(--grain-op);
-  mix-blend-mode: multiply;
 }
 
 ::selection { background: var(--accent); color: var(--on-accent); }

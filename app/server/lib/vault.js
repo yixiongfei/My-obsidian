@@ -149,6 +149,9 @@ class VaultIndex {
         const abs = path.join(dir, e.name);
         if (e.isDirectory()) {
           if (IGNORED_DIRS.has(e.name)) continue;
+          // 自带 .git 的子目录是另一个仓库（比如把本站点克隆进了 vault），
+          // 里面的 .md 不是你的笔记，扫进来会凭空多出重复条目
+          if (fs.existsSync(path.join(abs, '.git'))) continue;
           await walk(abs);
           continue;
         }
