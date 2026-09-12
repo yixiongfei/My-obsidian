@@ -13,20 +13,8 @@ import { Loading, ErrorBox, Empty } from '../components/bits.jsx';
  * 阅读页
  * ------------------------------------------------------------------ */
 
-const KIND_LABEL = { point: '知识点', wrong: '错题本', log: '日志', misc: '随笔' };
+const KIND_LABEL = { point: '知识点', exam: '真题笔记', wrong: '错题本', log: '日志', misc: '随笔' };
 
-/** 知识点笔记的八段模板；标题里含任一关键词就算写了这一段 */
-const TEMPLATE = [
-  { key: '一句话理解', re: /一句话|直觉|大白话/ },
-  { key: '数学定义', re: /定义|定理|概念/ },
-  { key: '为什么这样定义', re: /为什么|动机|由来/ },
-  { key: '几何意义', re: /几何|图像|直观/ },
-  { key: '核心公式', re: /公式|性质|结论/ },
-  { key: '常见题型', re: /题型|例题|真题|怎么考/ },
-  { key: '容易犯的错误', re: /错误|易错|坑|误区/ },
-  { key: '关联知识', re: /关联|相关|联系|延伸/ },
-];
-const coverage = (outline) => TEMPLATE.map((t) => ({ ...t, has: (outline || []).some((h) => t.re.test(h.text)) }));
 
 function Reader({ id, version, onReviewed }) {
   const navigate = useNavigate();
@@ -86,23 +74,20 @@ function Reader({ id, version, onReviewed }) {
               <span>{note.words} 字</span>
               {note.created && <span>{note.created.replaceAll('-', '.')} 创建</span>}
               <span>复习 {note.reviewCount} 次</span>
+              {/* 一轮的最后一步只能人来判断：复习过、把考点总结完了，点一下 */}
+              {note.kind === 'point' && note.words > 0 && (
+                <button className={`sum-btn${note.summarized ? ' on' : ''}`}
+                        title={note.summarized ? '再点一次取消' : '把这个考点的一轮复习标为完成（写进 frontmatter stage: 总结）'}
+                        onClick={async () => { await api.summarize(note.id, !note.summarized); reload(); onReviewed?.(); }}>
+                  {note.summarized ? `✓ 已总结${note.summarized !== 'yes' ? ' ' + note.summarized.slice(5).replace('-', '.') : ''}` : '总结完成'}
+                </button>
+              )}
               {note.nextReview && (
                 <span style={{ marginLeft: 'auto', color: 'var(--accent)' }}>
                   下次 {note.nextReview.replaceAll('-', '.')}
                 </span>
               )}
             </div>
-            {/* 知识点笔记：八段模板写到哪一段了。一轮复习的「理解」就是把这八段填满 */}
-            {note.kind === 'point' && note.words > 0 && (() => {
-              const cov = coverage(note.outline);
-              const n = cov.filter((c) => c.has).length;
-              return (
-                <div className="tpl-row" title="知识点笔记的八段结构：一句话理解 / 数学定义 / 为什么这样定义 / 几何意义 / 核心公式 / 常见题型 / 容易犯的错误 / 关联知识">
-                  <span className="tpl-n fig">{n}/8</span>
-                  {cov.map((c) => <span key={c.key} className={`tpl-chip${c.has ? ' on' : ''}`}>{c.key}</span>)}
-                </div>
-              );
-            })()}
           </header>
 
           {note.words === 0

@@ -25,7 +25,13 @@ export default function Dashboard({ version }) {
   if (error) return <ErrorBox error={error} onRetry={reload} />;
   if (!data) return null;
 
-  const { counts, subjects, heatmap, due, upcoming, unscheduled, streak, daysToExam, examDate, today, recent, points } = data;
+  const { counts, subjects, heatmap, due, upcoming, unscheduled, streak, daysToExam, examDate, today, recent, points, stages } = data;
+  const STAGE_COLORS = ['var(--line-2)', 'var(--hue-2)', 'var(--accent-2)', 'var(--accent)', 'var(--hue-3)'];
+  const StageBar = ({ counts: c, total }) => (
+    <div className="stage-bar" title={c.map((n, k) => `${stages.names[k]} ${n}`).join(' · ')}>
+      {c.map((n, k) => (n > 0 ? <i key={k} style={{ width: `${(n / Math.max(1, total)) * 100}%`, background: STAGE_COLORS[k] }} /> : null))}
+    </div>
+  );
   const list = due.length ? due : upcoming;
   const pt = points?.totals || { total: 0, learned: 0, unlearned: 0, due: 0, today: 0 };
 
@@ -168,31 +174,52 @@ export default function Dashboard({ version }) {
 
         <div style={{ gridColumn: 'span 5' }}>
           {/* 每科走到哪了：已学 / 考点总数 */}
-          <Band title="考点进度" meta="已学 / 总数">
-            {points?.groups?.map((g) => (
-              <div key={g.key} className={`prog-group ${GROUP_HUE[g.key] || ''}`}>
-                <div className="prog-head">
-                  <i className="pt-sw" />
-                  <span className="prog-name">{g.label}</span>
-                  <span className="prog-n fig">{g.learned} / {g.total}</span>
-                  {g.due > 0 && <span className="prog-due">{g.due} 待复习</span>}
-                  {g.today > 0 && <span className="prog-today">今日 +{g.today}</span>}
-                </div>
-                {g.subjects.map((s) => (
-                  <div className="subject-row" key={s.name}>
-                    <div style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 13 }}>
-                      {s.name}
-                      {s.due > 0 && <span style={{ color: 'var(--due)', marginLeft: 10, fontSize: 11 }}>{s.due} 待复习</span>}
-                      {s.today > 0 && <span style={{ color: 'var(--accent)', marginLeft: 10, fontSize: 11 }}>+{s.today}</span>}
-                    </div>
-                    <div style={{ color: 'var(--dim)', fontSize: 12, textAlign: 'right' }}>{s.learned}<span style={{ opacity: 0.6 }}>/{s.total}</span></div>
-                    <div className="meter"><i style={{ width: `${s.total ? Math.max(s.learned ? 2 : 0, (s.learned / s.total) * 100) : 0}%` }} /></div>
+          {/* 一轮复习走到哪：每个考点在 概念 / 做题 / 理解 / 复习 / 总结 五段里的哪一段 */}
+          <Band title="一轮进度" meta="概念 → 做题 → 理解 → 复习 → 总结">
+            {stages?.groups?.map((g) => {
+              const pg = points?.groups?.find((x) => x.key === g.key);
+              return (
+                <div key={g.key} className={`prog-group ${GROUP_HUE[g.key] || ''}`}>
+                  <div className="prog-head">
+                    <i className="pt-sw" />
+                    <span className="prog-name">{g.label}</span>
+                    <span className="prog-n fig">总结 {g.counts[4]} / {g.total}</span>
+                    {pg?.due > 0 && <span className="prog-due">{pg.due} 待复习</span>}
+                    {pg?.today > 0 && <span className="prog-today">今日 +{pg.today}</span>}
                   </div>
-                ))}
+                  <StageBar counts={g.counts} total={g.total} />
+                  {g.subjects.map((s) => (
+                    <div className="stage-row" key={s.name}>
+                      <div className="stage-name">{s.name}</div>
+                      <div className="stage-nums fig">{s.counts.slice(1).map((n, k) => <span key={k} style={{ color: n ? STAGE_COLORS[k + 1] : 'var(--line-2)' }}>{n}</span>)}</div>
+                      <StageBar counts={s.counts} total={s.total} />
+                    </div>
+                  ))}
+                </div>
+              );
+            })}
+            {stages?.names && (
+              <div className="stage-legend">
+                {stages.names.map((n, k) => <span key={n}><i style={{ background: STAGE_COLORS[k] }} />{n}</span>)}
               </div>
-            ))}
-            {!points?.groups?.length && <Empty>还没有考点清单（.kb/exams/tags-*.json）</Empty>}
+            )}
+            {!stages?.groups?.length && <Empty>还没有考点清单（.kb/exams/tags-*.json）</Empty>}
           </Band>
+
+          {/* 二轮查漏：做错过的考点，总结之后还错的排最前 */}
+          <div style={{ marginTop: 48 }}>
+            <Band title="薄弱考点" meta={stages?.weak?.length ? '做错过 · 总结后仍错的靠前' : '没有'}>
+              {stages?.weak?.map((p) => (
+                <button key={`${p.group}/${p.name}`} className={`pt-row ${GROUP_HUE[p.group] || ''}`} onClick={() => openPoint(p)}>
+                  <i className="pt-sw" />
+                  <span className="pt-name">{p.name}</span>
+                  <span className="pt-sub">{p.subject} · {stages.names[p.stage]}</span>
+                  <span className={`pt-r${p.wrongAfter ? ' on' : ''}`}>错 {p.wrong} / {p.attempted}{p.wrongAfter ? ` · 总结后 ${p.wrongAfter}` : ''}</span>
+                </button>
+              ))}
+              {!stages?.weak?.length && <Empty>还没有做错过的考点——交过卷的选择题才会统计</Empty>}
+            </Band>
+          </div>
 
           {points?.next?.length > 0 && (
             <div style={{ marginTop: 48 }}>

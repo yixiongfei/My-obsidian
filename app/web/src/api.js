@@ -23,6 +23,7 @@ export const api = {
   search: (q) => j(`/api/search?q=${encodeURIComponent(q)}`),
   dashboard: () => j('/api/dashboard'),
   milestones: () => j('/api/milestones'),
+  summarize: (path, on = true) => j('/api/note/summarize', body('POST', { path, on })),
   setMilestones: (patch) => j('/api/milestones', body('PUT', patch)),
   queue: () => j('/api/review/queue'),
   review: (payload) => j('/api/review', body('POST', payload)),

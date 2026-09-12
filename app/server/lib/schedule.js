@@ -8,6 +8,7 @@ import { todayStr, daysBetween, addDays } from './review.js';
 import { holidaysInMonth, holidayOn } from './holidays.js';
 import { dailyCount, dailyBetween } from './vocabulary.js';
 import { statsBetween } from './exams.js';
+import { eventsBetween, STAGE_NAMES } from './points.js';
 
 const pad = (n) => String(n).padStart(2, '0');
 
@@ -209,6 +210,8 @@ export async function monthView(monthKey) {
   const exams = examsSafe(from, to);
   let words = new Map();
   try { words = dailyBetween(from, to); } catch { /* 词库不可用就当没背 */ }
+  let advances = new Map();
+  try { advances = eventsBetween(from, to); } catch { /* 标签清单没抓 */ }
 
   const jp = holidaysInMonth(y, m);
   const days = [];
@@ -218,11 +221,14 @@ export async function monthView(monthKey) {
     const weekday = new Date(y, m - 1, d).getDay();
     const wordsDone = words.get(date) || 0;
     const examsDone = exams.byDate?.[date] || 0;
+    const adv = advances.get(date) || [];
     days.push({
       date, day: d, weekday,
       ...c,
       words: wordsDone,
       exams: examsDone,
+      // 考点推进：这天有几个考点进到了新阶段
+      points: adv.length,
       // 这一天有没有"学过"：复习了笔记、新建了笔记、背了词、做了题，任一即算
       active: c.reviewed > 0 || c.created > 0 || wordsDone > 0 || examsDone > 0,
       holiday: jp.get(d) || null,
@@ -279,9 +285,11 @@ export function dayView(date) {
   /* 词汇完成数从 vocabulary.db 现算，不往 index.db 里复制一份：
      两处存同一个数，迟早会对不上 */
   const vocabReviewed = vocabDaily(date);
+  let advances = [];
+  try { advances = (eventsBetween(date, date).get(date) || []).map((e) => ({ ...e, stageName: STAGE_NAMES[e.stage] })); } catch { /* 无 */ }
   return {
     date,
-    due, created, reviewed, overdue, vocabReviewed,
+    due, created, reviewed, overdue, vocabReviewed, advances,
     events: listEvents(date, date),
     isToday: date === today,
     weekday: new Date(y, m - 1, d).getDay(),

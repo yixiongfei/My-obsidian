@@ -4,6 +4,7 @@ import { KB_DIR } from '../config.js';
 import { handle } from './db.js';
 import { allNotes } from './query.js';
 import { todayStr, daysBetween, addDays } from './review.js';
+import { questionResults } from './exams.js';
 
 /**
  * 考点层：真题标签（.kb/exams/tags-math.json / tags-408.json）就是考点清单。
@@ -131,6 +132,113 @@ export function pointStatus(notes, today, learnedAt) {
   if (notes.some((n) => n.reviewable !== false && n.nextReview && daysBetween(today, n.nextReview) <= 0)) return 'due';
   if (notes.some((n) => learnedAt.get(n.id) === today)) return 'today';
   return 'learned';
+}
+
+/* ------------------------------------------------------------------ *
+ * 一轮复习的阶段
+ *
+ *   0 概念   什么都还没有
+ *   1 做题   做过带这个标签的真题，或写了真题笔记（考研真题/ 目录）
+ *   2 理解   有知识点笔记
+ *   3 复习   知识点笔记复习过 ≥ 1 次
+ *   4 总结   阅读页点了「总结完成」（frontmatter stage: 总结）
+ * 二轮：总结之后再做这个考点的题，做错的进薄弱名单。
+ * 每个阶段第一次达到的日期都记下来，日历按天列「考点推进」。
+ * ------------------------------------------------------------------ */
+
+export const STAGE_NAMES = ['概念', '做题', '理解', '复习', '总结'];
+
+/** 全部考点的阶段明细 + 阶段变更事件 */
+export function stages() {
+  const today = todayStr();
+  const all = allNotes().filter((n) => !n.empty);
+  const first = new Map(handle().prepare('SELECT note_id, MIN(date) AS d FROM reviews GROUP BY note_id').all().map((r) => [r.note_id, r.d]));
+  let results = [];
+  try { results = questionResults(); } catch { /* 真题没抓也能算 */ }
+  const byQ = new Map();
+  for (const r of results) {
+    const key = `${r.kind}-${r.year}-${r.n}`;
+    if (!byQ.has(key)) byQ.set(key, []);
+    byQ.get(key).push(r);
+  }
+
+  const points = [];
+  const events = [];
+  for (const g of GROUPS) {
+    const subjects = loadTags(g.file);
+    if (!subjects) continue;
+    const pool = all.filter((n) => n.tags.includes(g.category) || n.id.startsWith(`${g.category}/`));
+    const pointNotes = pool.filter((n) => n.kind === 'point');
+    const examNotes = pool.filter((n) => n.kind === 'exam');
+    for (const s of subjects) {
+      const mapP = matchNotes(pointNotes, s.points);
+      const mapE = matchNotes(examNotes, s.points);
+      for (const p of s.points) {
+        const own = pointNotes.filter((n) => mapP.get(n.id) === p.name);
+        const ex = examNotes.filter((n) => mapE.get(n.id) === p.name);
+        const qs = (p.list || []).flatMap((it) => byQ.get(`${it.kind}-${it.year}-${it.n}`) || []);
+        const dates = [];
+        // 1 做题
+        const d1 = [...qs.map((q) => q.date), ...ex.map((n) => n.created)].filter(Boolean).sort()[0] || null;
+        // 2 理解
+        const d2 = own.map((n) => n.created).filter(Boolean).sort()[0] || null;
+        // 3 复习：复习记录表按路径存，笔记挪过目录会对不上，所以 frontmatter 的 last_reviewed 也算
+        const d3 = own.flatMap((n) => [first.get(n.id), n.reviewCount > 0 ? n.lastReviewed : null]).filter(Boolean).sort()[0] || null;
+        // 4 总结
+        const sums = own.map((n) => n.summarized).filter(Boolean);
+        const d4 = sums.length ? (sums.filter((x) => x !== 'yes').sort()[0] || d2 || today) : null;
+        const stage = d4 ? 4 : d3 ? 3 : (own.length ? 2 : (d1 || ex.length || qs.length) ? 1 : 0);
+        dates.push(null, d1, d2, d3, d4);
+        const wrong = qs.filter((q) => q.correct === false);
+        const wrongAfter = d4 ? wrong.filter((q) => q.date > d4) : [];
+        const rec = {
+          name: p.name, subject: s.name, group: g.key, items: p.items, stage, dates,
+          noteId: own[0]?.id || ex[0]?.id || null,
+          attempted: qs.length, wrong: wrong.length, wrongAfter: wrongAfter.length,
+          correct: qs.filter((q) => q.correct === true).length,
+        };
+        points.push(rec);
+        for (let k = 1; k <= stage; k += 1) if (dates[k]) events.push({ date: dates[k], stage: k, name: p.name, subject: s.name, group: g.key, noteId: rec.noteId });
+      }
+    }
+  }
+  events.sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  return { points, events };
+}
+
+/** 仪表盘：各科五段分布 + 薄弱考点 */
+export function stageSummary() {
+  const { points, events } = stages();
+  const groups = [];
+  for (const g of GROUPS) {
+    const mine = points.filter((p) => p.group === g.key);
+    if (!mine.length) continue;
+    const count = (list) => STAGE_NAMES.map((_, k) => list.filter((p) => p.stage === k).length);
+    const subjects = [...new Set(mine.map((p) => p.subject))].map((name) => ({ name, counts: count(mine.filter((p) => p.subject === name)), total: mine.filter((p) => p.subject === name).length }));
+    groups.push({ key: g.key, label: g.category, counts: count(mine), total: mine.length, subjects });
+  }
+  const weak = points.filter((p) => p.wrong > 0)
+    .sort((a, b) => (b.wrongAfter - a.wrongAfter) || (b.wrong - a.wrong) || (b.items - a.items))
+    .slice(0, 12);
+  const today = todayStr();
+  return {
+    names: STAGE_NAMES,
+    groups,
+    weak,
+    todayEvents: events.filter((e) => e.date === today),
+    recent: events.slice(0, 20),
+  };
+}
+
+/** 日历：某区间每天推进了几个考点，Map<日期, 事件[]> */
+export function eventsBetween(from, to) {
+  const map = new Map();
+  for (const e of stages().events) {
+    if (e.date < from || e.date > to) continue;
+    if (!map.has(e.date)) map.set(e.date, []);
+    map.get(e.date).push(e);
+  }
+  return map;
 }
 
 /* ------------------------------------------------------------------ *

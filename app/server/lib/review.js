@@ -49,7 +49,7 @@ function gapFor(result, reviewCount) {
  * 不用 gray-matter 的 stringify，避免它把 `tags: [a, b]` 重排成块状列表。
  * ------------------------------------------------------------------ */
 
-const FM_KEYS = ['review_count', 'last_reviewed', 'next_review'];
+const FM_KEYS = ['review_count', 'last_reviewed', 'next_review', 'stage', 'summarized'];
 
 export function patchFrontmatter(raw, updates) {
   const eol = raw.includes('\r\n') ? '\r\n' : '\n';
@@ -70,6 +70,22 @@ export function patchFrontmatter(raw, updates) {
   }
   const rebuilt = `---${eol}${lines.join(eol)}${eol}---`;
   return raw.slice(0, fmMatch.index) + rebuilt + raw.slice(fmMatch.index + fmMatch[0].length - fmMatch[2].length);
+}
+
+/**
+ * 一轮复习的最后一步「总结完成」：只有人能判断，所以是个按钮。
+ * 写 stage: 总结 / summarized: 日期 两行；取消就把 stage 改回 复习。
+ */
+export async function setSummarized(id, on = true) {
+  const note = index.get(id);
+  if (!note) throw Object.assign(new Error('笔记不存在'), { status: 404 });
+  const raw = await fsp.readFile(note.abs, 'utf8');
+  const today = todayStr();
+  const next = patchFrontmatter(raw, on ? { stage: '总结', summarized: today } : { stage: '复习', summarized: '' });
+  await fsp.writeFile(note.abs, next, 'utf8');
+  await index.update(note.abs);
+  syncNote(id);
+  return { id, summarized: on ? today : null };
 }
 
 /* ------------------------------------------------------------------ *

@@ -204,6 +204,20 @@ kbd {
 .prog-group .subject-row { padding: 9px 0 9px 14px; }
 .prog-group .subject-row:last-child { border-bottom: none; }
 .prog-group .meter > i { background: var(--hue, var(--accent)); }
+/* 一轮进度：五段分布条 */
+.stage-bar { display: flex; height: 6px; border-radius: 99px; overflow: hidden; background: var(--line); margin: 8px 0 4px; }
+.stage-bar i { display: block; height: 100%; }
+.stage-row { display: grid; grid-template-columns: 1fr auto; gap: 4px 14px; align-items: center; padding: 8px 0 6px 14px; border-bottom: var(--hair) solid var(--line); }
+.stage-row:last-child { border-bottom: none; }
+.stage-row .stage-bar { grid-column: 1 / -1; margin: 0; height: 4px; }
+.stage-name { font-size: 13px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.stage-nums { display: flex; gap: 10px; font-size: 11px; }
+.stage-legend { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 12px; font-size: 10.5px; color: var(--dim); }
+.stage-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
+/* 阅读页：总结完成 */
+.sum-btn { font-size: 11px; letter-spacing: 0.06em; padding: 2px 9px; border-radius: 99px; border: var(--hair) solid var(--line-2); color: var(--text-2); transition: color 0.12s, border-color 0.12s, background 0.12s; }
+.sum-btn:hover { color: var(--accent); border-color: var(--accent); }
+.sum-btn.on { color: var(--hue-3); border-color: var(--hue-3); background: color-mix(in srgb, var(--hue-3) 10%, transparent); }
 
 /* ==================================================================
  * 笔记
@@ -285,10 +299,6 @@ kbd {
 .kind-badge { font-size: 10px; letter-spacing: 0.12em; padding: 1px 7px; border-radius: 99px; border: var(--hair) solid var(--line-2); color: var(--text-2); }
 .kind-badge.wrong { color: var(--hue-2); border-color: var(--hue-2); }
 .kind-badge.log { color: var(--dim); }
-.tpl-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
-.tpl-n { font-size: 11px; color: var(--text-2); margin-right: 4px; }
-.tpl-chip { font-size: 10.5px; padding: 2px 8px; border-radius: 99px; border: var(--hair) solid var(--line); color: var(--dim); }
-.tpl-chip.on { color: var(--text); border-color: var(--line-2); background: var(--bg-1); }
 
 /* 思维导图 */
 .mind { position: relative; height: 100%; overflow: hidden; display: flex; flex-direction: column; }
@@ -1111,6 +1121,8 @@ mark.hl.hl-flash { animation: hl-flash 2.4s var(--ease) both; }
 .day-cell .dc-dots i.new { background: var(--hue-4); }
 .day-cell .dc-dots i.word { background: var(--hue-3); }
 .day-cell .dc-dots i.exam { background: var(--hue-2); }
+/* 考点推进：小菱形，和圆点区分开 */
+.day-cell .dc-dots i.pt, .cal-legend .lg-pt { width: 7px; height: 7px; border-radius: 1px; background: var(--accent); transform: rotate(45deg) scale(0.85); }
 
 .day-cell .dc-dots i.hol { background: var(--rest); }
 /* 日程安排：空心小方块，和实心圆点区分开 */

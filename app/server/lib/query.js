@@ -20,6 +20,7 @@ const toMeta = (r) => ({
   empty: r.words === 0,
   reviewable: r.reviewable !== 0,
   kind: r.kind || 'point',
+  summarized: r.summarized || null,
 });
 
 /** 把每篇笔记的标签聚成一列，省掉 N+1 次查询 */

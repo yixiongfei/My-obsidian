@@ -9,7 +9,7 @@ import fsp from 'node:fs/promises';
 import { VAULT_ROOT, APP_ROOT, PORT, TAGS_FILE, isIgnoredPath, REPO_ROOT, KB_DIR } from './config.js';
 import { index, toAbs, toId } from './lib/vault.js';
 import { render } from './lib/markdown.js';
-import { recordReview, readLog, todayStr } from './lib/review.js';
+import { recordReview, readLog, todayStr, setSummarized } from './lib/review.js';
 import { search, dashboard, bucketNotes, allNotes, getNoteMeta } from './lib/query.js';
 import * as points from './lib/points.js';
 import * as db from './lib/db.js';
@@ -104,6 +104,14 @@ app.get('/api/mindmap', wrap(async (_req, res) => res.json(await mindmap())));
 
 app.get('/api/dashboard', (_req, res) => res.json({
   ...dashboard(schedule.examDate()), points: points.progress(), vocab: vocab.progress(), milestones: milestones(), daily: schedule.activity(90),
+  stages: points.stageSummary(),
+}));
+
+/* 一轮复习的「总结完成」：写进笔记 frontmatter（stage: 总结 / summarized: 日期） */
+app.post('/api/note/summarize', wrap(async (req, res) => {
+  const id = String(req.body?.path || '');
+  if (!id) throw bad('缺 path');
+  res.json(await setSummarized(id, req.body?.on !== false));
 }));
 
 /* 里程碑：初试 / 复试 / 上岸 三个开关，过了就在设置里勾上；首页知识岛靠它决定小人站在哪座岛 */

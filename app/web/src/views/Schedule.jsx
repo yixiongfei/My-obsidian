@@ -176,6 +176,7 @@ function MonthView({ version, monthKey }) {
           <span className="lg"><i style={{ background: 'var(--hue-4)' }} />新建</span>
           <span className="lg"><i style={{ background: 'var(--hue-3)' }} />背词</span>
           <span className="lg"><i style={{ background: 'var(--hue-2)' }} />做题</span>
+          <span className="lg"><i className="lg-pt" />考点推进</span>
           <span className="lg"><i className="lg-plan" />日程安排</span>
           <span className="lg"><i style={{ background: 'var(--rest)' }} />休息日 · 日本の祝日</span>
         </div>
@@ -191,7 +192,7 @@ function MonthView({ version, monthKey }) {
         {Array.from({ length: data.leadingBlanks }).map((_, i) => <div className="day-cell blank" key={`b${i}`} />)}
         {data.days.map((d) => (
           <div key={d.date}
-               title={[d.holiday, d.events && `日程 ${d.events}`, d.due && `待复习 ${d.due}${d.overdue ? `（含逾期 ${d.overdue}）` : ''}`, d.reviewed && `已复习 ${d.reviewed}`, d.created && `新建 ${d.created}`, d.words && `背词 ${d.words}`, d.exams && `做题 ${d.exams}`].filter(Boolean).join(' · ') || undefined}
+               title={[d.holiday, d.events && `日程 ${d.events}`, d.points && `考点推进 ${d.points}`, d.due && `待复习 ${d.due}${d.overdue ? `（含逾期 ${d.overdue}）` : ''}`, d.reviewed && `已复习 ${d.reviewed}`, d.created && `新建 ${d.created}`, d.words && `背词 ${d.words}`, d.exams && `做题 ${d.exams}`].filter(Boolean).join(' · ') || undefined}
                className={[
                  'day-cell',
                  d.isToday ? 'today' : '',
@@ -210,6 +211,7 @@ function MonthView({ version, monthKey }) {
               {d.created > 0 && <i className="new" />}
               {d.words > 0 && <i className="word" />}
               {d.exams > 0 && <i className="exam" />}
+              {d.points > 0 && <i className="pt" title={`考点推进 ${d.points}`} />}
               {d.events > 0 && <i className="plan" title="有日程安排" />}
             </div>
             {/* 格子里只放点，数字点进日视图看；title 里带一份摘要 */}
@@ -225,6 +227,7 @@ function MonthView({ version, monthKey }) {
  * ------------------------------------------------------------------ */
 
 function DayView({ version, date }) {
+  const navigate = useNavigate();
   const [y, m, d] = date.split('-');
   const { data, loading, error, reload } = useApi(() => api.day(date), [date, version]);
   const [title, setTitle] = useState('');
@@ -316,6 +319,21 @@ function DayView({ version, date }) {
                 </div>
                 {e.added_content && <div style={{ color: 'var(--dim)', fontSize: 12, marginTop: 4 }}>{e.added_content}</div>}
               </div>
+            ))}
+          </Band>
+        </div>
+      )}
+
+      {data.advances?.length > 0 && (
+        <div style={{ marginTop: 40 }}>
+          <Band title="考点推进" meta={`${data.advances.length} 个`}>
+            {data.advances.map((e, i) => (
+              <button key={`${e.group}/${e.name}/${e.stage}`} className="pt-row" onClick={() => e.noteId && navigate(`/note/${encodeURIComponent(e.noteId)}`)}>
+                <i className="pt-sw" style={{ background: 'var(--accent)' }} />
+                <span className="pt-name">{e.name}</span>
+                <span className="pt-sub">{e.subject}</span>
+                <span className="pt-r">→ {e.stageName}</span>
+              </button>
             ))}
           </Band>
         </div>

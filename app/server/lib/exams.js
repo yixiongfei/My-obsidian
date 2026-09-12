@@ -309,6 +309,42 @@ function answeredCount(section, answers) {
 }
 
 /**
+ * 交过卷的每道题：{ kind, year, n, correct, date }。
+ * 选择 / 配对能判对错；填空、解答只知道做没做（correct = null）。考点层拿它算做题阶段与薄弱考点。
+ */
+export function questionResults() {
+  const rows = handle().prepare('SELECT exam_id, section_id, answers, submitted_at FROM exam_attempts WHERE submitted_at IS NOT NULL').all();
+  const out = [];
+  const examCache = new Map();
+  for (const r of rows) {
+    if (!examCache.has(r.exam_id)) examCache.set(r.exam_id, getExam(r.exam_id));
+    const exam = examCache.get(r.exam_id);
+    const section = exam?.sections.find((s) => s.id === r.section_id);
+    if (!section) continue;
+    let answers = {};
+    try { answers = JSON.parse(r.answers || '{}'); } catch { continue; }
+    const date = localDate(r.submitted_at);
+    if (section.type === 'choice') {
+      for (const q of section.questions) {
+        if (!String(answers[q.n] ?? '').trim()) continue;
+        out.push({ kind: exam.kind, year: exam.year, n: q.n, correct: answers[q.n] === q.answer, date });
+      }
+    } else if (section.type === 'match' && section.answers) {
+      section.numbers.forEach((n, i) => {
+        if (!String(answers[n] ?? '').trim()) return;
+        out.push({ kind: exam.kind, year: exam.year, n, correct: answers[n] === section.answers[i], date });
+      });
+    } else {
+      for (const n of section.numbers || (section.questions || []).map((q) => q.n)) {
+        if (!String(answers[n] ?? '').trim()) continue;
+        out.push({ kind: exam.kind, year: exam.year, n, correct: null, date });
+      }
+    }
+  }
+  return out;
+}
+
+/**
  * [from, to] 闭区间内交卷的题数：{ total, bySubject: {学科: n}, byDate: {日期: n} }。
  * 学科：英语、数学整体各算一类，408 按四门拆开——和标签页、目录树的分法一致。
  */

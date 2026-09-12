@@ -33,13 +33,16 @@ function countWords(text) {
   return cjk + latin;
 }
 
+const STRUCT_DIRS = new Set(['知识点', '考研真题', '错题本', '词汇复习']);
+
 function normTags(fm, id) {
   const raw = fm.tags ?? fm.tag ?? [];
   const list = Array.isArray(raw) ? raw : String(raw).split(/[,，\s]+/);
   const set = new Set(list.map((t) => String(t).trim().replace(/^#/, '')).filter(Boolean));
-  // 没写 tags 的笔记，用所在目录兜底，保证任何笔记都能被分类检索到
+  // 没写 tags 的笔记，用所在目录兜底，保证任何笔记都能被分类检索到；
+  // 「知识点 / 考研真题 / 错题本」这类只表示笔记类型的目录名不算标签
   if (set.size === 0) {
-    for (const seg of id.split('/').slice(0, -1)) set.add(seg);
+    for (const seg of id.split('/').slice(0, -1)) if (!STRUCT_DIRS.has(seg)) set.add(seg);
   }
   if (set.size === 0) set.add('未分类');
   return [...set];
@@ -63,7 +66,8 @@ function birthDate(abs) {
 
 /**
  * 笔记类型，一轮复习只看 point：
- *   point 知识点笔记（学某个考点时写的感悟）
+ *   point 知识点笔记（学某个考点时写的感悟；数学/<分支>/知识点/ 下的都是）
+ *   exam  真题笔记（做真题时记下的问题与理解；数学/<分支>/考研真题/ 下的）——算「做题」阶段的证据
  *   wrong 错题本（卷面「错题」按钮导出的，frontmatter kind: wrong-questions，或放在 错题本/ 目录）
  *   log   自动投影（词汇周日志、真题例句），reviewable: false
  *   misc  其它（个人随笔等）
@@ -73,10 +77,12 @@ function kindOf(fm, id, reviewable) {
   const k = String(fm.kind ?? fm.type ?? '').trim().toLowerCase();
   if (/^(wrong|错题|错题本|wrong-questions)$/.test(k)) return 'wrong';
   if (/^(point|知识点|考点)$/.test(k)) return 'point';
+  if (/^(exam|真题|真题笔记|考研真题)$/.test(k)) return 'exam';
   if (/^(log|日志)$/.test(k) || !reviewable) return 'log';
   if (/^(misc|其它|其他|随笔)$/.test(k)) return 'misc';
   const segs = id.split('/');
   if (segs.includes('错题本')) return 'wrong';
+  if (segs.includes('考研真题')) return 'exam';
   if (segs.includes('词汇复习')) return 'log';
   return isNotePath(id) ? 'point' : 'misc';
 }
@@ -140,6 +146,8 @@ function parseNote(abs, id, raw) {
        不该再被当成一篇要复习的笔记推给用户。 */
     reviewable: fm.reviewable !== false && String(fm.reviewable).toLowerCase() !== 'false',
     kind: kindOf(fm, id, fm.reviewable !== false && String(fm.reviewable).toLowerCase() !== 'false'),
+    // 一轮的「总结」是人工确认的一步：阅读页点「总结完成」写进 frontmatter
+    summarized: String(fm.stage || '').trim() === '总结' ? (toDateStr(fm.summarized) || 'yes') : null,
     hasFrontmatter: Object.keys(fm).length > 0,
     frontmatter: fm,
     outline,
@@ -297,6 +305,7 @@ class VaultIndex {
       headings: n.outline.length,
       empty: n.words === 0,
       kind: n.kind,
+      summarized: n.summarized,
     };
   }
 
