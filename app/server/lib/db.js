@@ -138,6 +138,8 @@ export function open() {
   fs.mkdirSync(DB_DIR, { recursive: true });
   db = new DatabaseSync(DB_PATH);
   db.exec(SCHEMA);
+  // 笔记类型（point / wrong / log / misc），老库没有这一列就补上
+  try { db.exec("ALTER TABLE notes ADD COLUMN kind TEXT NOT NULL DEFAULT 'point'"); } catch { /* 已经有了 */ }
   /* CREATE TABLE IF NOT EXISTS 不会给已有的库补列，老库要单独 ALTER 一次。
      列已存在时 SQLite 直接报错，吞掉即可——这里没有别的失败可能 */
   try { db.exec('ALTER TABLE notes ADD COLUMN reviewable INTEGER NOT NULL DEFAULT 1'); } catch { /* 已经有了 */ }

@@ -39,7 +39,7 @@ function loadTags(file) {
     const raw = JSON.parse(fs.readFileSync(abs, 'utf8'));
     data = (raw.subjects || []).map((s) => ({
       name: String(s.name),
-      points: (s.tags || []).map((t) => ({ name: String(t.name), items: (t.items || []).length })),
+      points: (s.tags || []).map((t) => ({ name: String(t.name), items: (t.items || []).length, list: t.items || [] })),
     }));
   } catch { data = null; }
   cache.set(file, { mtime: st.mtimeMs, data });
@@ -95,6 +95,36 @@ export function matchNotes(notes, points) {
   return out;
 }
 
+/**
+ * 错题本 → 考点：错题本里每道题带 <!-- kb:q:<卷子id>:<单元>:<题号> --> 标记，
+ * 卷子 id 是 <kind>-<year>，和标签清单里的 items {kind, year, n} 对得上。
+ * 返回 Map<"kind-year-n", 错题本笔记 id[]>，考点层拿它数"这个考点错过几题、记在哪篇"。
+ */
+export function wrongIndex(notes) {
+  const map = new Map();
+  for (const n of notes) {
+    if (n.kind !== 'wrong') continue;
+    const body = handle().prepare('SELECT body FROM notes WHERE id = ?').get(n.id)?.body || '';
+    for (const m of body.matchAll(/<!--\s*kb:q:([a-z0-9]+)-(\d{4}):[^:]+:(\d+)\s*-->/g)) {
+      const key = `${m[1]}-${m[2]}-${m[3]}`;
+      if (!map.has(key)) map.set(key, []);
+      if (!map.get(key).includes(n.id)) map.get(key).push(n.id);
+    }
+  }
+  return map;
+}
+
+/** 某考点在错题本里出现的题：{ count, notes: id[] } */
+export function wrongOf(point, index) {
+  const notes = new Set();
+  let count = 0;
+  for (const it of point.list || []) {
+    const hit = index.get(`${it.kind}-${it.year}-${it.n}`);
+    if (hit) { count += 1; hit.forEach((id) => notes.add(id)); }
+  }
+  return { count, notes: [...notes] };
+}
+
 /** 一个考点的状态：today（今天学的）> due（要复习）> learned > new */
 export function pointStatus(notes, today, learnedAt) {
   if (!notes.length) return 'new';
@@ -118,7 +148,8 @@ const bump = (s, st) => {
 export function progress() {
   const today = todayStr();
   const weekAgo = addDays(today, -6);
-  const notes = allNotes().filter((n) => !n.empty);
+  // 只有知识点笔记算"学过"：错题本、日志不是对考点的理解
+  const notes = allNotes().filter((n) => !n.empty && n.kind === 'point');
   const learnedAt = learnedDates();
   let week = 0;   // 近 7 天学过的考点数，用来估还要多久学完
   const groups = [];

@@ -3,7 +3,7 @@ import yaml from 'js-yaml';
 import { TAGS_FILE } from '../config.js';
 import { allNotes } from './query.js';
 import { todayStr, daysBetween } from './review.js';
-import { subjectsOf, groupKeyOf, subjectMatches, matchNotes, learnedDates, pointStatus } from './points.js';
+import { subjectsOf, groupKeyOf, subjectMatches, matchNotes, learnedDates, pointStatus, wrongIndex, wrongOf } from './points.js';
 
 /**
  * 思维导图：以 tags.yaml 的受控词表为骨架，而不是目录结构。
@@ -49,9 +49,11 @@ export async function mindmap() {
     reviewable: n.reviewable,
     words: n.words,
     empty: n.empty,
+    kind: n.kind,
     status: statusOf(n, today),
     learnedAt: learnedAt.get(n.id) || null,
   }));
+  const wrongs = wrongIndex(notes);
 
   const placed = new Set();
   const leaf = (n) => {
@@ -59,6 +61,8 @@ export async function mindmap() {
     const { tags, reviewable, empty, ...rest } = n;
     return rest;
   };
+  // 错题本 / 日志不参与"这一支有没有学过"的判断；错题本单独列一支，日志挂到分支上
+  const isEvidence = (n) => n.kind === 'point';
 
   const groups = [];
   for (const category of categories) {
@@ -76,21 +80,27 @@ export async function mindmap() {
         continue;
       }
 
-      // 有考点清单的分支：笔记先归到考点下，对不上的留在分支上
-      const map = matchNotes(hit.filter((n) => !n.empty), subject.points);
-      const stat = { total: 0, learned: 0, due: 0, today: 0 };
+      // 有考点清单的分支：知识点笔记归到考点下，对不上的留在分支上；错题本按题号挂到考点、只计数
+      const map = matchNotes(hit.filter((n) => !n.empty && isEvidence(n)), subject.points);
+      const stat = { total: 0, learned: 0, due: 0, today: 0, wrong: 0 };
       const points = subject.points.map((p) => {
         const own = hit.filter((n) => map.get(n.id) === p.name);
         const st = pointStatus(own, today, learnedAt);
+        const wrong = wrongOf(p, wrongs);
         stat.total += 1; gstat.total += 1;
         if (st !== 'new') { stat.learned += 1; gstat.learned += 1; }
         if (st === 'due') { stat.due += 1; gstat.due += 1; }
         if (st === 'today') { stat.today += 1; gstat.today += 1; }
-        return { name: p.name, items: p.items, status: st, notes: own.map(leaf) };
+        if (wrong.count) stat.wrong += 1;
+        return { name: p.name, items: p.items, status: st, notes: own.map(leaf), wrong: wrong.count, wrongNotes: wrong.notes };
       });
-      const rest = hit.filter((n) => !placed.has(n.id)).map(leaf);
+      const rest = hit.filter((n) => !placed.has(n.id) && n.kind !== 'wrong').map(leaf);
       branches.push({ name: sub, subject: subject.name, group: groupKey, points, stat, notes: rest });
     }
+
+    // 错题本：这一科所有 kind = wrong 的笔记单独一支，二轮查漏用，不算一轮的学习证据
+    const wrongNotes = notes.filter((n) => !placed.has(n.id) && n.kind === 'wrong' && (n.tags.includes(category) || n.id.startsWith(`${category}/`)));
+    if (wrongNotes.length) branches.push({ name: '错题本', kind: 'wrong', notes: wrongNotes.map(leaf) });
 
     // 打了大类标签、但没打任何分支标签的笔记
     const direct = notes.filter((n) => !placed.has(n.id) && n.tags.includes(category));

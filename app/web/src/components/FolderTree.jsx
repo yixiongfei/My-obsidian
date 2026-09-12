@@ -70,6 +70,8 @@ export default function FolderTree({ tree, activeId, filter }) {
       <NoteIcon />
       <span className="ft-name">{n.title}</span>
       {n.nextReview && n.nextReview <= today && <i className="ft-due" title="待复习" />}
+      {n.kind === 'wrong' && <span className="ft-kind wrong">错题</span>}
+      {n.kind === 'log' && <span className="ft-kind log">日志</span>}
       {n.empty && <span className="ft-empty">空</span>}
     </button>
   );

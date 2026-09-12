@@ -19,6 +19,7 @@ const toMeta = (r) => ({
   mtime: r.mtime,
   empty: r.words === 0,
   reviewable: r.reviewable !== 0,
+  kind: r.kind || 'point',
 });
 
 /** 把每篇笔记的标签聚成一列，省掉 N+1 次查询 */

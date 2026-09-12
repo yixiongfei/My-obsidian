@@ -61,6 +61,26 @@ function birthDate(abs) {
   } catch { return null; }
 }
 
+/**
+ * 笔记类型，一轮复习只看 point：
+ *   point 知识点笔记（学某个考点时写的感悟）
+ *   wrong 错题本（卷面「错题」按钮导出的，frontmatter kind: wrong-questions，或放在 错题本/ 目录）
+ *   log   自动投影（词汇周日志、真题例句），reviewable: false
+ *   misc  其它（个人随笔等）
+ * frontmatter 写了 kind / type 以它为准，否则按目录推断。
+ */
+function kindOf(fm, id, reviewable) {
+  const k = String(fm.kind ?? fm.type ?? '').trim().toLowerCase();
+  if (/^(wrong|错题|错题本|wrong-questions)$/.test(k)) return 'wrong';
+  if (/^(point|知识点|考点)$/.test(k)) return 'point';
+  if (/^(log|日志)$/.test(k) || !reviewable) return 'log';
+  if (/^(misc|其它|其他|随笔)$/.test(k)) return 'misc';
+  const segs = id.split('/');
+  if (segs.includes('错题本')) return 'wrong';
+  if (segs.includes('词汇复习')) return 'log';
+  return isNotePath(id) ? 'point' : 'misc';
+}
+
 function parseNote(abs, id, raw) {
   let fm = {};
   let body = raw;
@@ -119,6 +139,7 @@ function parseNote(abs, id, raw) {
        自动生成的词汇复习日志就带这个标记——它是投影产物，
        不该再被当成一篇要复习的笔记推给用户。 */
     reviewable: fm.reviewable !== false && String(fm.reviewable).toLowerCase() !== 'false',
+    kind: kindOf(fm, id, fm.reviewable !== false && String(fm.reviewable).toLowerCase() !== 'false'),
     hasFrontmatter: Object.keys(fm).length > 0,
     frontmatter: fm,
     outline,
@@ -275,6 +296,7 @@ class VaultIndex {
       words: n.words,
       headings: n.outline.length,
       empty: n.words === 0,
+      kind: n.kind,
     };
   }
 

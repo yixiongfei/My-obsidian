@@ -10,14 +10,14 @@ import { REVIEW_LOG, SCHEDULE_FILE } from '../config.js';
  * ------------------------------------------------------------------ */
 
 const UPSERT_NOTE = `
-INSERT INTO notes (id, title, basename, folder, created, review_count, last_reviewed, next_review, words, mtime, body, plain, reviewable)
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+INSERT INTO notes (id, title, basename, folder, created, review_count, last_reviewed, next_review, words, mtime, body, plain, reviewable, kind)
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 ON CONFLICT(id) DO UPDATE SET
   title = excluded.title, basename = excluded.basename, folder = excluded.folder,
   created = excluded.created, review_count = excluded.review_count,
   last_reviewed = excluded.last_reviewed, next_review = excluded.next_review,
   words = excluded.words, mtime = excluded.mtime, body = excluded.body, plain = excluded.plain,
-  reviewable = excluded.reviewable`;
+  reviewable = excluded.reviewable, kind = excluded.kind`;
 
 function writeNote(db, note) {
   const st = statSyncSafe(note.abs);
@@ -27,6 +27,7 @@ function writeNote(db, note) {
     note.words, st ? Math.floor(st.mtimeMs) : 0,
     note.body, note.plain.replace(/\s+/g, ' ').trim(),
     note.reviewable === false ? 0 : 1,
+    note.kind || 'point',
   );
 
   db.prepare('DELETE FROM tags     WHERE note_id = ?').run(note.id);

@@ -278,6 +278,17 @@ kbd {
 .ft-note.active .ft-ico { color: var(--accent); }
 .ft-due { width: 6px; height: 6px; flex: none; border-radius: 50%; background: var(--due); }
 .ft-empty { font-size: 10px; color: var(--dim); }
+.ft-kind { font-size: 9.5px; letter-spacing: 0.08em; padding: 0 5px; border-radius: 99px; border: var(--hair) solid currentColor; opacity: 0.85; flex: none; }
+.ft-kind.wrong { color: var(--hue-2); }
+.ft-kind.log { color: var(--dim); }
+/* 阅读页：类型徽标与模板完成度 */
+.kind-badge { font-size: 10px; letter-spacing: 0.12em; padding: 1px 7px; border-radius: 99px; border: var(--hair) solid var(--line-2); color: var(--text-2); }
+.kind-badge.wrong { color: var(--hue-2); border-color: var(--hue-2); }
+.kind-badge.log { color: var(--dim); }
+.tpl-row { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 12px; }
+.tpl-n { font-size: 11px; color: var(--text-2); margin-right: 4px; }
+.tpl-chip { font-size: 10.5px; padding: 2px 8px; border-radius: 99px; border: var(--hair) solid var(--line); color: var(--dim); }
+.tpl-chip.on { color: var(--text); border-color: var(--line-2); background: var(--bg-1); }
 
 /* 思维导图 */
 .mind { position: relative; height: 100%; overflow: hidden; display: flex; flex-direction: column; }

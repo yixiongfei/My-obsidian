@@ -312,6 +312,9 @@ export default function MindMap({ data, currentId }) {
                 <text x={p.x + 18} y={p.y + 4} fontSize="12.5" fontWeight={learned ? 500 : 400}
                       fill={p.status === 'today' ? 'var(--accent)' : learned ? 'var(--text)' : 'var(--dim)'}>{p.name}</text>
                 <text x={p.x + 18 + w + 8} y={p.y + 4} fontSize="10" letterSpacing="1" fill="var(--dim)">{p.items} 题</text>
+                {p.wrong > 0 && (
+                  <text x={p.x + 18 + w + 8 + String(p.items).length * 6 + 26} y={p.y + 4} fontSize="10" letterSpacing="1" fill="var(--hue-2)">错 {p.wrong}</text>
+                )}
               </g>
             );
           })}
@@ -321,7 +324,7 @@ export default function MindMap({ data, currentId }) {
               <rect className="mind-hit" x={n.x - 4} y={n.y - 13} width="300" height="26" fill="transparent" />
               <Marker x={n.x} y={n.y} status={n.status} />
               <text x={n.x + 18} y={n.y + 4} fontSize="12.5" fontWeight={n.current ? 600 : 400}
-                    fill={n.current ? 'var(--accent)' : n.status === 'new' || n.status === 'empty' ? 'var(--dim)' : 'var(--text)'}>
+                    fill={n.current ? 'var(--accent)' : n.kind === 'wrong' ? 'var(--hue-2)' : n.status === 'new' || n.status === 'empty' ? 'var(--dim)' : 'var(--text)'}>
                 {n.title}
               </text>
               {n.current && (
