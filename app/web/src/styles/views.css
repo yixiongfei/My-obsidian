@@ -314,9 +314,10 @@ kbd {
 }
 @keyframes readmode-in { from { opacity: 0; } to { opacity: 1; } }
 body.readmode-open { overflow: hidden; }
-.readmode-page { flex: 1; min-height: 0; overflow-y: auto; outline: none; padding: 56px 24px 140px; }
+.readmode-page { flex: 1; min-height: 0; overflow-y: auto; outline: none; padding: 56px 24px 64px; }
+/* 27 寸屏上 800px 太窄，纸放到 1120px；正文行长靠字号撑，不另限宽 */
 .readmode-paper {
-  max-width: 800px; margin: 0 auto; padding: 64px 72px 80px;
+  max-width: 1120px; margin: 0 auto; padding: 64px 96px 88px;
   background-color: var(--paper);
   background-image:
     linear-gradient(var(--grid) 1px, transparent 1px),
@@ -350,15 +351,13 @@ body.readmode-open { overflow: hidden; }
   transition: color 0.12s, background 0.12s;
 }
 .readmode-x:hover { color: var(--ink); background: #fff; }
-/* 底部记一次复习：悬浮的小条，不遮正文 */
+/* 记一次复习：紧接在纸的下面，和纸同宽，不悬浮 */
 .readmode-foot {
-  position: absolute; left: 50%; bottom: 28px; transform: translateX(-50%);
-  width: min(860px, calc(100vw - 48px));
+  max-width: 1120px; margin: 20px auto 0;
   display: flex; align-items: center; gap: 14px;
-  padding: 12px 18px; border-radius: var(--radius);
-  background: rgba(252, 251, 247, 0.96); border: 1px solid rgba(70, 80, 105, 0.16);
-  box-shadow: 0 12px 36px rgba(40, 45, 60, 0.16);
-  backdrop-filter: blur(8px);
+  padding: 16px 24px; border-radius: 3px;
+  background: var(--paper); border: 1px solid rgba(70, 80, 105, 0.12);
+  box-shadow: 0 8px 28px rgba(40, 45, 60, 0.08);
 }
 .readmode-foot > .row { flex: 1; }
 .readmode-foot .lbl-cn { display: none; }
@@ -369,7 +368,7 @@ body.readmode-open { overflow: hidden; }
 .readmode-foot .btn.primary { color: #fff; }
 .readmode-hint { flex: none; font-size: 11px; letter-spacing: 0.1em; color: rgba(35, 38, 46, 0.4); }
 @media (max-width: 720px) {
-  .readmode-page { padding: 40px 12px 200px; }
+  .readmode-page { padding: 40px 12px 48px; }
   .readmode-paper { padding: 36px 24px 48px; }
   .readmode-paper::before { left: 14px; }
   .readmode-foot { flex-wrap: wrap; }

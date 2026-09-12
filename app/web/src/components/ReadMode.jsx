@@ -56,10 +56,11 @@ export default function ReadMode({ note, onClose, onReviewed }) {
           <h1 className="readmode-title">{note.title}</h1>
           <Prose html={note.html} />
         </article>
-      </div>
-      <div className="readmode-foot">
-        <ReviewBar note={note} onDone={(out) => { onReviewed?.(out); close(); }} />
-        <span className="readmode-hint">Esc 退出</span>
+        {/* 记一次复习放在纸的最底下，读完自然就到这儿；不悬浮，不挡正文 */}
+        <div className="readmode-foot">
+          <ReviewBar note={note} onDone={(out) => { onReviewed?.(out); close(); }} />
+          <span className="readmode-hint">Esc 退出</span>
+        </div>
       </div>
     </div>
   );
