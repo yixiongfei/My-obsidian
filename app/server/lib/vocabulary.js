@@ -67,8 +67,8 @@ export function seed() {
     const delSenses = d.prepare('DELETE FROM vocab_senses WHERE word_id = ?');
     const insSense = d.prepare('INSERT INTO vocab_senses (word_id, ord, pos, gloss) VALUES (?, ?, ?, ?)');
     const delEx = d.prepare('DELETE FROM vocab_examples WHERE word_id = ?');
-    const insEx = d.prepare(`INSERT INTO vocab_examples (word_id, text, source, license, ref_id, url)
-                             VALUES (?, ?, ?, ?, ?, ?)`);
+    const insEx = d.prepare(`INSERT INTO vocab_examples (word_id, text, translation, source, license, ref_id, url)
+                             VALUES (?, ?, ?, ?, ?, ?, ?)`);
     // 卡片只在缺失时创建，已存在的一律不动
     const insCard = d.prepare('INSERT INTO vocab_cards (word_id) VALUES (?) ON CONFLICT(word_id) DO NOTHING');
     const insTag = d.prepare('INSERT INTO vocab_tags (name) VALUES (?) ON CONFLICT(name) DO NOTHING');
@@ -92,7 +92,7 @@ export function seed() {
 
       delEx.run(id);
       const one = ex.examples?.[e.termKey];
-      if (one) insEx.run(id, one.text, one.source || '', one.license || '', one.sentenceId ?? null, one.url || '');
+      if (one) insEx.run(id, one.text, one.translation || '', one.source || '', one.license || '', one.sentenceId ?? null, one.url || '');
     }
 
     d.prepare(`INSERT INTO vocab_meta (k, v) VALUES ('seed_stamp', ?)

@@ -22,6 +22,7 @@ const require = createRequire(import.meta.url);
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const WORDS_IN = path.resolve(__dirname, '../server/data/ecdict-ky.json');
+const PROJECT_IN = path.resolve(__dirname, '../server/data/project-examples.json');
 const OUT = path.resolve(__dirname, '../server/data/tatoeba-ky-examples.json');
 const TATOEBA_URL = 'https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences.tsv.bz2';
 
@@ -126,17 +127,25 @@ async function main() {
     };
   }
 
-  // 没被 Tatoeba 覆盖到的词，用项目自备的 CC0 句子兜底，保证每个词都有例句
+  // 没被 Tatoeba 覆盖到的词，用项目自己写的 CC0 例句兜底（project-examples.json，附译文）；
+  // 那里也没有的才退回占位句，并在末尾列出来提醒补写
+  let curated = {};
+  try { curated = JSON.parse(fs.readFileSync(PROJECT_IN, 'utf8')).examples || {}; } catch { /* 可选 */ }
   const missing = entries.filter((e) => !examples[e.termKey]);
+  const stillMissing = [];
   for (const e of missing) {
+    const c = curated[e.termKey];
+    if (!c) stillMissing.push(e.term);
     examples[e.termKey] = {
-      text: `The word "${e.term}" appears in this sentence as a placeholder example.`,
+      text: c ? c.text : `The word "${e.term}" appears in this sentence as a placeholder example.`,
+      translation: c ? c.translation || '' : '',
       source: 'project',
       license: 'CC0',
       sentenceId: null,
       url: null,
     };
   }
+  if (stillMissing.length) console.warn(`还有 ${stillMissing.length} 个词只有占位句，请补到 project-examples.json：${stillMissing.join(', ')}`);
 
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
   fs.writeFileSync(OUT, JSON.stringify({

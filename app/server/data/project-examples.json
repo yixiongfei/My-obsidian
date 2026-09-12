@@ -1,0 +1,22 @@
+{
+  "license": "CC0",
+  "note": "Tatoeba 没覆盖到的考研词，由本项目自己写一句真实用法的例句兜底（附中文译文）。import-tatoeba-ky-examples.mjs 会优先用这里的句子，没有的才退回占位句。",
+  "examples": {
+    "retrospection": { "text": "In retrospection, the decision to sell the house seemed hasty.", "translation": "回想起来，卖掉房子的决定显得仓促。" },
+    "despatch": { "text": "The embassy will despatch a courier with the documents tomorrow morning.", "translation": "大使馆明天早上将派信使送交这些文件。" },
+    "goodby": { "text": "She waved goodby from the train window as it pulled away.", "translation": "火车开动时，她从车窗里挥手告别。" },
+    "maltreat": { "text": "The new law makes it a crime to maltreat farm animals.", "translation": "新法律规定虐待农场动物属于犯罪。" },
+    "sufficiency": { "text": "The report questioned the sufficiency of the evidence presented at trial.", "translation": "报告质疑庭审中提交的证据是否充分。" },
+    "instrumentalist": { "text": "Every instrumentalist in the orchestra tuned up before the concert began.", "translation": "音乐会开始前，乐团里的每位演奏者都调好了音。" },
+    "malign": { "text": "It is unfair to malign a colleague who is not here to defend himself.", "translation": "诋毁一位不在场、无法为自己辩护的同事是不公平的。" },
+    "perplex": { "text": "The sudden change in policy continues to perplex economists.", "translation": "政策的突然变化仍然让经济学家们困惑不解。" },
+    "resultant": { "text": "The merger and the resultant layoffs shook the entire town.", "translation": "这次合并及其导致的裁员震动了整个小镇。" },
+    "futility": { "text": "After hours of argument, he finally recognized the futility of the debate.", "translation": "争论了几个小时后，他终于意识到这场辩论毫无意义。" },
+    "dramatize": { "text": "Newspapers tend to dramatize minor incidents to attract readers.", "translation": "报纸往往把小事件渲染得很戏剧化以吸引读者。" },
+    "appall": { "text": "The conditions in the refugee camp would appall any visitor.", "translation": "难民营里的条件会让任何来访者感到震惊。" },
+    "appal": { "text": "Reports of the famine continue to appal the international community.", "translation": "有关饥荒的报道持续令国际社会震惊。" },
+    "endow": { "text": "The foundation decided to endow a scholarship for rural students.", "translation": "基金会决定为农村学生捐设一项奖学金。" },
+    "gramme": { "text": "The recipe calls for exactly one gramme of saffron.", "translation": "这道食谱恰好需要一克藏红花。" },
+    "administrate": { "text": "The board hired a new manager to administrate the fund.", "translation": "董事会聘请了一位新经理来管理这只基金。" }
+  }
+}

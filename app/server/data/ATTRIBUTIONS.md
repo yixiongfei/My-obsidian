@@ -44,8 +44,10 @@
 - **许可**：CC0（放弃权利，可自由使用）
 - **规模**：16 条
 
-Tatoeba 没覆盖到的词由项目自己补一条占位例句，保证每个词条都有例句可显示。
-这些句子由本项目撰写，不主张任何权利。
+Tatoeba 没覆盖到的词（retrospection、despatch、goodby、maltreat、sufficiency、instrumentalist、malign、
+perplex、resultant、futility、dramatize、appall、appal、endow、gramme、administrate）由本项目自己写一句
+真实用法的例句并附中文译文，收在 `project-examples.json`；`import-tatoeba-ky-examples.mjs` 优先取这里的句子，
+没有的才退回占位句并在末尾提醒补写。这些句子由本项目撰写，不主张任何权利。
 
 ---
 
