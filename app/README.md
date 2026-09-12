@@ -54,7 +54,7 @@ pnpm start            # 生产模式，后端同时托管前端：http://127.0.0
 
 ```bash
 npm run electron:dev     # 桌面窗口里跑开发版
-npm run electron:build   # 产出 release/知识库-<版本>-setup.exe（约 100MB）
+npm run electron:build   # 产出 release/kb-<版本>-setup.exe（约 100MB）
 ```
 
 打包后第一次启动会让你选 Obsidian 仓库文件夹（选仓库根，程序自己找里面的 `My-md/`），选过一次就记住了；
@@ -77,7 +77,7 @@ git tag v1.0.1
 git push origin v1.0.1
 ```
 
-几分钟后到仓库的 Releases 页下载 `知识库-1.0.1-setup.exe`。换电脑：clone 仓库（带 `My-md/` 与 `.kb/`）→ 装安装包 → 首次启动选 clone 下来的文件夹。
+几分钟后到仓库的 Releases 页下载 `kb-1.0.1-setup.exe`。换电脑：clone 仓库（带 `My-md/` 与 `.kb/`）→ 装安装包 → 首次启动选 clone 下来的文件夹。
 
 分支约定：`dev` 日常开发；`release` 只在发版时快进到打了标签的提交，永远可装可用。
 

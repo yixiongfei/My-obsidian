@@ -4,6 +4,7 @@
   "private": true,
   "type": "module",
   "description": "个人考研知识库 · Vite + Node，可打包为 Windows 桌面程序",
+  "repository": "github:yixiongfei/My-obsidian",
   "main": "electron/main.cjs",
   "scripts": {
     "dev": "concurrently -n server,web -c blue,cyan \"npm:dev:server\" \"npm:dev:web\"",
@@ -59,7 +60,7 @@
         "nsis"
       ],
       "icon": "build/icon.ico",
-      "artifactName": "${productName}-${version}-setup.${ext}"
+      "artifactName": "kb-${version}-setup.${ext}"
     },
     "nsis": {
       "oneClick": false,

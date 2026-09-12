@@ -27,8 +27,18 @@ jobs:
 
       - run: npm ci
 
-      # vite build → dist-web/，再由 electron-builder 打成 nsis 安装包并直接发布到 Release
+      # vite build → dist-web/，再由 electron-builder 打成 nsis 安装包（只打包，不用它自带的发布器）
       - run: npm run build
-      - run: npx electron-builder --win --publish always
+      - run: npx electron-builder --win --publish never
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEBUG: electron-builder
+
+      # 挂到与标签同名的 Release（没有就建）；exe 与 blockmap 一起传，便于以后做增量更新
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            app/release/*.exe
+            app/release/*.blockmap
+            app/release/latest.yml
+          fail_on_unmatched_files: false
+          generate_release_notes: true
