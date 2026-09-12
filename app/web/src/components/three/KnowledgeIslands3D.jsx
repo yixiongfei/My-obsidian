@@ -4,10 +4,11 @@ import { createStage, projectToScreen } from './stage.js';
 
 /**
  * 2.5D 知识岛（深色主题的首页图）。
- *   等轴视角、悬浮在星空里的一串小岛：起点 → 英语 → 数学 → 408 → 初试，之字形向上，
+ *   等轴视角、悬浮在星空里的一串小岛：起点 → 英语 → 数学 → 408 → 初试 → 复试 → 上岸，之字形向上，
  *   岛与岛之间是一段段悬空的台阶。
  *   岛的状态：未开始（深蓝灰、只剩轮廓）/ 进行中（蓝，亮度随 log 进度）/ 已完成（青，满亮）；
- *   小人站着的那座岛描紫边、脚下一盏紫光；三科全完成 → 登上初试岛，戴金色桂冠。
+ *   小人站着的那座岛描紫边、脚下一盏紫光；三科全完成 → 站上初试岛；初试 / 复试在设置里勾过就往上走；
+ *   上岸才算成功：岛变金、小人举手戴桂冠。
  *   小人从起点沿台阶慢慢走到当前岛（进入页面时走一遍），到了就原地小幅呼吸。
  *   当前岛 = 有进度的科目里最靠后的那科；在岛上的位置随该科进度从入口挪向出口。
  *   镜头固定不随鼠标晃；平时只标岛名，点一座岛才弹出它的进度。星空绕一根斜轴缓缓转，像站在地上看夜空。
@@ -82,7 +83,14 @@ function buildFigure(colors, dark) {
   return { group: g, armL, armR, legL, legR, laurel };
 }
 
-export default function KnowledgeIslands3D({ steps = [], nextReview, theme }) {
+/** 三科之后的三站；done 来自设置里的里程碑开关 */
+const STAGES = [
+  { key: '初试', name: '初试', hint: '三科都学完就站上来；考完在设置里勾「初试」' },
+  { key: '复试', name: '复试', hint: '初试过了就到这儿；复试过了勾「复试」' },
+  { key: '上岸', name: '上岸', hint: '勾上「上岸」，桂冠就戴上了' },
+];
+
+export default function KnowledgeIslands3D({ steps = [], milestones = {}, nextReview, theme }) {
   const mountRef = useRef(null);
   const labelRefs = useRef([]);
   const [picked, setPicked] = useState(-1);   // 点选的岛（索引；-1 没选）
@@ -95,16 +103,27 @@ export default function KnowledgeIslands3D({ steps = [], nextReview, theme }) {
     try { demo = localStorage.getItem('kb-debug-summit') === '1'; } catch { /* 无 */ }
     return steps.map((s) => ({ ...s, lit: demo ? 1 : litOf(s.learned, s.total) }));
   }, [steps]);
-  const summit = stairs.length > 0 && stairs.every((s) => s.lit >= 0.999);
-  // 当前岛：有进度的科目里最靠后的一科（1 起；0 = 还在起点）
-  const current = summit ? stairs.length + 1 : stairs.reduce((m, s, i) => (s.lit > 0 ? i + 1 : m), 0);
+  const subjectsDone = stairs.length > 0 && stairs.every((s) => s.lit >= 0.999);
+  const stages = useMemo(() => {
+    let demo = false;
+    try { demo = localStorage.getItem('kb-debug-summit') === '1'; } catch { /* 无 */ }
+    return STAGES.map((st) => ({ ...st, done: demo || !!milestones?.[st.key], date: milestones?.[st.key] || null }));
+  }, [milestones]);
+  const landed = stages[2].done;               // 上岸 = 成功
+  const N = stairs.length;                      // 科目岛数
+  // 当前岛（索引；0 = 起点，1..N = 科目，N+1 初试，N+2 复试，N+3 上岸）：
+  // 上岸 / 复试过了 → 上岸岛；初试过了 → 复试岛；三科学完 → 初试岛；否则有进度的最靠后一科
+  const current = landed || stages[1].done ? N + 3
+    : stages[0].done ? N + 2
+      : subjectsDone ? N + 1
+        : stairs.reduce((m, s, i) => (s.lit > 0 ? i + 1 : m), 0);
 
   useEffect(() => {
     const el = mountRef.current;
     if (!el || !stairs.length) return undefined;
     let unbind = () => {};
 
-    const islands = layout(stairs.length + 2);   // 起点 + 各科 + 初试
+    const islands = layout(N + 1 + stages.length);   // 起点 + 各科 + 初试 / 复试 / 上岸
     // 让整串岛在画面中居中：包围盒中心当 lookAt 目标；等轴视口高度按跨度算
     const box = new THREE.Box3();
     islands.forEach((it) => box.expandByPoint(it.center));
@@ -130,9 +149,17 @@ export default function KnowledgeIslands3D({ steps = [], nextReview, theme }) {
         fill.position.set(-30, 10, -20);
         scene.add(fill);
 
+        /* 每座岛的状态：
+             start  起点，青
+             done   已完成，青满亮        doing  进行中，蓝、亮度随进度
+             locked 未开始，深蓝灰轮廓    gold   上岸，金 */
         const stateOf = (i) => {
           if (i === 0) return { kind: 'start', lit: 1 };
-          if (i === islands.length - 1) return { kind: 'summit', lit: summit ? 1 : 0 };
+          if (i > N) {
+            const st = stages[i - N - 1];
+            if (i === islands.length - 1) return { kind: st.done ? 'gold' : i === current ? 'doing' : 'locked', lit: st.done ? 1 : i === current ? 0.5 : 0 };
+            return { kind: st.done ? 'done' : i === current ? 'doing' : 'locked', lit: st.done ? 1 : i === current ? 0.5 : 0 };
+          }
           const s = stairs[i - 1];
           return { kind: s.lit >= 0.999 ? 'done' : s.lit > 0 ? 'doing' : 'locked', lit: s.lit, data: s };
         };
@@ -141,13 +168,13 @@ export default function KnowledgeIslands3D({ steps = [], nextReview, theme }) {
           const st = stateOf(i);
           const geo = new THREE.BoxGeometry(it.size, THICK, it.size);
           const tone = st.kind === 'done' || st.kind === 'start' ? colors.cyan
-            : st.kind === 'summit' ? (summit ? colors.due : colors.line)
+            : st.kind === 'gold' ? colors.due
               : st.kind === 'doing' ? colors.accent : colors.line;
-          const glow = st.kind === 'done' ? 0.5 : st.kind === 'start' ? 0.18 : st.kind === 'summit' && summit ? 0.6 : st.lit * 0.34;
+          const glow = st.kind === 'done' ? 0.5 : st.kind === 'start' ? 0.18 : st.kind === 'gold' ? 0.6 : st.lit * 0.34;
           const mat = new THREE.MeshStandardMaterial({
             color: tone, emissive: tone, emissiveIntensity: dark ? glow : glow * 0.4,
             roughness: 0.4, metalness: 0.35, transparent: true,
-            opacity: st.kind === 'locked' || (st.kind === 'summit' && !summit) ? 0.3 : 0.5 + st.lit * 0.45,
+            opacity: st.kind === 'locked' ? 0.3 : 0.5 + st.lit * 0.45,
           });
           const mesh = new THREE.Mesh(geo, mat);
           const group = new THREE.Group();
@@ -219,18 +246,17 @@ export default function KnowledgeIslands3D({ steps = [], nextReview, theme }) {
         };
         // 每座岛中心在路线上的距离：起点 0，之后每段 = 出口 + 台阶 + 入口 + 中心，共 STEPS+3 个点
         const centerDist = (i) => cum[Math.min(cum.length - 1, i * (STEPS + 3))];
-        // 目标：当前岛上，按该科进度从入口偏到出口（±size/2 的 70%）
+        // 目标：科目岛上按该科进度从入口偏到出口（±size/2 的 70%）；其余岛站中间
         let target;
-        if (current === 0 || current >= built.length - 1) target = centerDist(Math.min(current, built.length - 1));
-        else {
+        if (current >= 1 && current <= N) {
           const s = stairs[current - 1];
           target = centerDist(current) + (s.lit - 0.5) * built[current].size * 0.7;
-        }
+        } else target = centerDist(Math.min(current, built.length - 1));
 
         // 小人
         const fig = buildFigure(colors, dark);
         fig.group.scale.setScalar(1.25);
-        fig.laurel.visible = summit;
+        fig.laurel.visible = landed;
         scene.add(fig.group);
         const pos = new THREE.Vector3();
         const ahead = new THREE.Vector3();
@@ -247,7 +273,7 @@ export default function KnowledgeIslands3D({ steps = [], nextReview, theme }) {
         at(0, pos); fig.group.position.copy(pos);
         at(0.6, ahead); fig.group.rotation.y = Math.atan2(ahead.x - pos.x, ahead.z - pos.z);
 
-        if (summit) {
+        if (landed) {
           const halo = new THREE.PointLight(colors.due, 2, 14);
           halo.position.set(built.at(-1).center.x, built.at(-1).top + 5, built.at(-1).center.z);
           scene.add(halo);
@@ -256,7 +282,7 @@ export default function KnowledgeIslands3D({ steps = [], nextReview, theme }) {
         // 初试标记：终点岛上方的线框球
         const last = built[built.length - 1];
         const globe = new THREE.Mesh(new THREE.SphereGeometry(1.8, 18, 12),
-          new THREE.MeshBasicMaterial({ color: summit ? colors.due : colors.dim, wireframe: true, transparent: true, opacity: 0.7 }));
+          new THREE.MeshBasicMaterial({ color: landed ? colors.due : colors.dim, wireframe: true, transparent: true, opacity: 0.7 }));
         globe.position.set(last.center.x, last.top + 8.5, last.center.z);
         scene.add(globe);
         scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints([
@@ -346,7 +372,7 @@ export default function KnowledgeIslands3D({ steps = [], nextReview, theme }) {
             fig.armL.rotation.z = 0.12; fig.armR.rotation.z = -0.12;
             fig.group.rotation.x = 0.06;   // 身子微微前倾
             fig.group.position.set(pos.x, pos.y + Math.abs(Math.sin(ph)) * 0.05, pos.z);
-          } else if (summit) {
+          } else if (landed) {
             fig.armL.rotation.z = Math.PI * 0.8 + Math.sin(t * 3) * 0.12;
             fig.armR.rotation.z = -Math.PI * 0.8 - Math.sin(t * 3) * 0.12;
             fig.legL.rotation.x = 0; fig.legR.rotation.x = 0;
@@ -387,14 +413,14 @@ export default function KnowledgeIslands3D({ steps = [], nextReview, theme }) {
     });
 
     return () => { unbind(); stage.dispose(); };
-  }, [stairs, current, summit, theme]);
+  }, [stairs, stages, current, landed, theme]);
 
-  // 有进度的岛被点选：显示这一科的进度
-  const detail = picked > 0 && picked <= stairs.length ? stairs[picked - 1] : null;
+  // 科目岛被点选：底部说明也写这一科的进度
+  const detail = picked > 0 && picked <= N ? stairs[picked - 1] : null;
 
   if (!stairs.length) return <div className="orbit3d-empty">从一篇笔记开始</div>;
 
-  const tagOf = (s, i) => (current === i + 1 && !summit ? '当前' : s.lit >= 0.999 ? '已完成' : s.lit > 0 ? '进行中' : '未开始');
+  const tagOf = (s, i) => (current === i + 1 ? '当前' : s.lit >= 0.999 ? '已完成' : s.lit > 0 ? '进行中' : '未开始');
   const labels = [
     { key: 'start', name: '起点', cls: 'done' },
     ...stairs.map((s, i) => ({
@@ -403,14 +429,22 @@ export default function KnowledgeIslands3D({ steps = [], nextReview, theme }) {
       // 只有点选的那座岛才展开进度，平时只留岛名
       detail: picked === i + 1 ? { tag: tagOf(s, i), sub: `${s.learned} / ${s.total} ${s.unit}`, pct: s.total ? Math.round((s.learned / s.total) * 100) : 0 } : null,
     })),
-    { key: 'summit', name: '初试', cls: summit ? 'gold' : 'locked', detail: picked === stairs.length + 1 ? { tag: summit ? '登顶' : '未到', sub: summit ? '三科全部完成' : '三科都学完才会亮' } : null },
+    ...stages.map((st, j) => {
+      const idx = N + 1 + j;
+      return {
+        key: st.key, name: st.name,
+        cls: st.done ? (j === stages.length - 1 ? 'gold' : 'done') : idx === current ? 'doing' : 'locked',
+        detail: picked === idx ? { tag: st.done ? `已通过${st.date ? ' ' + st.date.slice(5).replace('-', '.') : ''}` : idx === current ? '当前' : '未到', sub: st.done ? '' : st.hint } : null,
+      };
+    }),
   ];
+  const where = current === 0 ? '还在起点' : current <= N ? `当前在「${stairs[current - 1].name}」岛` : `当前在「${stages[current - N - 1].name}」岛`;
 
   return (
     <div className="orbit3d">
       <div className="orbit3d-view">
         <div className="orbit3d-stage" ref={mountRef} role="img"
-             aria-label={`知识岛：${stairs.map((s) => `${s.name} ${s.learned} / ${s.total} ${s.unit}`).join('，')}${summit ? '，已登顶' : ''}`} />
+             aria-label={`知识岛：${stairs.map((s) => `${s.name} ${s.learned} / ${s.total} ${s.unit}`).join('，')}${landed ? '，已上岸' : ''}`} />
         <div className="orbit3d-labels">
           {labels.map((l, i) => (
             <div key={l.key} className={`isle-label ${l.cls}${picked === i ? ' picked' : ''}`} ref={(node) => { labelRefs.current[i] = node; }}>
@@ -423,7 +457,7 @@ export default function KnowledgeIslands3D({ steps = [], nextReview, theme }) {
       <div className="orbit-cap">
         {detail
           ? <>{detail.name}：{detail.learned} / {detail.total} {detail.unit}{detail.total ? `，${Math.round((detail.learned / detail.total) * 100)}%` : ''}</>
-          : summit ? '三座岛全亮，登顶。' : current === 0 ? '还在起点' : `当前在「${stairs[current - 1].name}」岛 · 点一座岛看进度`}
+          : landed ? '上岸了。' : `${where} · 点一座岛看进度`}
         {nextReview && <>　·　下次复习 {nextReview.slice(5).replace('-', '.')}</>}
       </div>
     </div>

@@ -382,6 +382,12 @@ export function dailyCount(date) {
   return { done: row?.done || 0, mastered: row?.mastered || 0 };
 }
 
+/** [from, to] 闭区间内每天去重后的完成词数，Map<日期, 数量>；供月历标"这天学过" */
+export function dailyBetween(from, to) {
+  return new Map(vdb.handle().prepare('SELECT date, done FROM v_vocab_daily WHERE date BETWEEN ? AND ?').all(from, to)
+    .map((r) => [r.date, r.done || 0]));
+}
+
 export function overview() {
   const d = vdb.handle();
   const today = todayStr();

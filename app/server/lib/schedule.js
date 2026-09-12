@@ -6,7 +6,7 @@ import { index, toAbs } from './vault.js';
 import { allNotes } from './query.js';
 import { todayStr, daysBetween } from './review.js';
 import { holidaysInMonth, holidayOn } from './holidays.js';
-import { dailyCount } from './vocabulary.js';
+import { dailyCount, dailyBetween } from './vocabulary.js';
 import { statsBetween } from './exams.js';
 
 const pad = (n) => String(n).padStart(2, '0');
@@ -180,7 +180,11 @@ export async function monthView(monthKey) {
   const today = todayStr();
   const [y, m] = monthKey.split('-').map(Number);
   const daysInMonth = new Date(y, m, 0).getDate();
-  const counts = countsByDay(`${monthKey}-01`, `${monthKey}-${pad(daysInMonth)}`);
+  const from = `${monthKey}-01`, to = `${monthKey}-${pad(daysInMonth)}`;
+  const counts = countsByDay(from, to);
+  const exams = examsSafe(from, to);
+  let words = new Map();
+  try { words = dailyBetween(from, to); } catch { /* 词库不可用就当没背 */ }
 
   const jp = holidaysInMonth(y, m);
   const days = [];
@@ -188,9 +192,15 @@ export async function monthView(monthKey) {
     const date = `${y}-${pad(m)}-${pad(d)}`;
     const c = counts.get(date) || { due: 0, reviewed: 0, created: 0, events: 0 };
     const weekday = new Date(y, m - 1, d).getDay();
+    const wordsDone = words.get(date) || 0;
+    const examsDone = exams.byDate?.[date] || 0;
     days.push({
       date, day: d, weekday,
       ...c,
+      words: wordsDone,
+      exams: examsDone,
+      // 这一天有没有"学过"：复习了笔记、新建了笔记、背了词、做了题，任一即算
+      active: c.reviewed > 0 || c.created > 0 || wordsDone > 0 || examsDone > 0,
       holiday: jp.get(d) || null,
       isWeekend: weekday === 0 || weekday === 6,
       isToday: date === today,
@@ -208,7 +218,7 @@ export async function monthView(monthKey) {
     milestone: plan[monthKey] || null,
     examDate: examDate(),
     // 本月做过的真题题数，按学科分（英语 / 数学 / 408 四门）
-    exams: examsSafe(`${monthKey}-01`, `${monthKey}-${pad(daysInMonth)}`),
+    exams,
   };
 }
 

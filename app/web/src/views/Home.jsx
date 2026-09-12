@@ -73,7 +73,7 @@ export default function Home({ version, theme }) {
           <div className="card hero-art">
             <Suspense fallback={<div className="orbit3d-empty" />}>
               {theme === 'dark'
-                ? <KnowledgeIslands3D steps={steps} nextReview={nextDue} theme={theme} />
+                ? <KnowledgeIslands3D steps={steps} milestones={data.milestones} nextReview={nextDue} theme={theme} />
                 : <Orrery3D subjects={groups} theme={theme} />}
             </Suspense>
           </div>

@@ -1050,7 +1050,10 @@ mark.hl.hl-flash { animation: hl-flash 2.4s var(--ease) both; }
 }
 .day-cell:hover { border-color: var(--line-2); background: var(--bg-2); }
 .day-cell.blank { border: none; background: none; cursor: default; pointer-events: none; }
-.day-cell.past { opacity: 0.55; }
+/* 学过的日子亮着（复习 / 新建 / 背词 / 做题任一），什么都没做的过去日子暗下去 */
+.day-cell.past { opacity: 0.38; }
+.day-cell.active { opacity: 1; background: var(--bg-1); border-color: var(--line-2); box-shadow: inset 0 0 0 1px var(--accent-soft), 0 0 18px -6px var(--accent); }
+.day-cell.active .dc-n { color: var(--text); }
 .day-cell.today { border-color: var(--accent); background: var(--accent-soft); opacity: 1; }
 .day-cell .dc-n { font-size: 13.5px; font-weight: 500; color: var(--text-2); }
 .day-cell.today .dc-n { color: var(--accent); }
@@ -1060,7 +1063,8 @@ mark.hl.hl-flash { animation: hl-flash 2.4s var(--ease) both; }
 .day-cell .dc-dots i { width: 6px; height: 6px; border-radius: 50%; }
 .day-cell .dc-dots i.due { background: var(--due); }
 .day-cell .dc-dots i.rev { background: var(--accent-2); }
-.day-cell .dc-dots i.new { background: var(--line-2); }
+.day-cell .dc-dots i.new { background: var(--hue-4); }
+.cal-legend .lg-lit { width: 14px; height: 9px; border-radius: 2px; background: var(--bg-1); border: 1px solid var(--line-2); box-shadow: inset 0 0 0 1px var(--accent-soft); }
 .day-cell .dc-dots i.hol { background: var(--holiday); }
 .day-cell .dc-rows { margin-top: auto; display: flex; flex-direction: column; gap: 2px; padding-top: 6px; }
 .day-cell .dc-row { display: flex; justify-content: space-between; font-size: 10.5px; }

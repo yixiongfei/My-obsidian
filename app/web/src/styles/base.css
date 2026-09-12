@@ -336,6 +336,9 @@ button { cursor: pointer; background: none; border: none; padding: 0; }
 }
 .seg button:hover { color: var(--text); }
 .seg button.on { color: var(--text); background: var(--bg-1); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12); }
+.settings-check { display: inline-flex; align-items: center; gap: 7px; font-size: 13px; color: var(--text-2); cursor: pointer; }
+.settings-check input { accent-color: var(--accent); }
+.settings-check em { font-style: normal; font-size: 10.5px; color: var(--dim); margin-left: 5px; }
 
 .main { flex: 1; min-height: 0; position: relative; overflow: hidden; display: flex; flex-direction: column; }
 

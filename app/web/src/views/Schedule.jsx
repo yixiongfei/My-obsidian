@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import { Band, Loading, ErrorBox, Empty, Item } from '../components/bits.jsx';
@@ -14,6 +14,8 @@ export default function Schedule({ version }) {
   const y = Number(year) || new Date().getFullYear();
   if (day) return <DayView version={version} date={`${y}-${pad(month)}-${pad(day)}`} />;
   if (month) return <MonthView version={version} monthKey={`${y}-${pad(month)}`} />;
+  // 顶栏点「日历」直接落到本月；年表要从面包屑或月表标题进
+  if (!year) { const now = new Date(); return <Navigate to={`/schedule/${now.getFullYear()}/${pad(now.getMonth() + 1)}`} replace />; }
   return <YearView version={version} year={y} />;
 }
 
@@ -171,7 +173,8 @@ function MonthView({ version, monthKey }) {
         <div className="cal-legend">
           <span className="lg"><i style={{ background: 'var(--accent)' }} />待复习</span>
           <span className="lg"><i style={{ background: 'var(--accent-2)' }} />已复习</span>
-          <span className="lg"><i style={{ background: 'var(--line-2)' }} />新建</span>
+          <span className="lg"><i style={{ background: 'var(--hue-4)' }} />新建</span>
+          <span className="lg"><i className="lg-lit" />学过的日子</span>
           <span className="lg"><i style={{ background: 'var(--holiday)' }} />日本の祝日</span>
         </div>
       </div>
@@ -191,6 +194,7 @@ function MonthView({ version, monthKey }) {
                  'day-cell',
                  d.isToday ? 'today' : '',
                  d.isPast && !d.isToday ? 'past' : '',
+                 d.active ? 'active' : '',
                  d.weekday === 0 ? 'sun' : '',
                  d.holiday ? 'holiday' : '',
                ].filter(Boolean).join(' ')}
@@ -207,6 +211,9 @@ function MonthView({ version, monthKey }) {
             <div className="dc-rows" style={{ marginTop: 0 }}>
               {d.due > 0 && <div className="dc-row" style={{ color: 'var(--accent)' }}><span>待复习</span><span>{d.due}</span></div>}
               {d.reviewed > 0 && <div className="dc-row" style={{ color: 'var(--text-2)' }}><span>已复习</span><span>{d.reviewed}</span></div>}
+              {d.created > 0 && <div className="dc-row" style={{ color: 'var(--hue-4)' }}><span>新建</span><span>{d.created}</span></div>}
+              {d.words > 0 && <div className="dc-row" style={{ color: 'var(--text-2)' }}><span>背词</span><span>{d.words}</span></div>}
+              {d.exams > 0 && <div className="dc-row" style={{ color: 'var(--text-2)' }}><span>做题</span><span>{d.exams}</span></div>}
             </div>
           </div>
         ))}

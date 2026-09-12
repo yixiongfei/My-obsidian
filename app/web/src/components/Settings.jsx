@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { api } from '../api.js';
 import { START_PAGES, ZOOMS, desktop, resetUiState } from '../settings.js';
 
 /**
@@ -27,10 +28,12 @@ export default function Settings({ open, onClose, theme, setTheme, settings, upd
   const ref = useRef(null);
   const [info, setInfo] = useState(null);
   const [notice, setNotice] = useState('');
+  const [ms, setMs] = useState(null);   // 里程碑：{初试, 复试, 上岸} → 通过日期或 null
 
   useEffect(() => {
     if (!open) return;
     if (desktop) desktop.getInfo().then(setInfo).catch(() => setInfo(null));
+    api.milestones().then(setMs).catch(() => setMs(null));
     const onKey = (e) => { if (e.key === 'Escape') onClose(); };
     const onDown = (e) => { if (ref.current && !ref.current.contains(e.target) && !e.target.closest?.('.settings-btn')) onClose(); };
     window.addEventListener('keydown', onKey);
@@ -95,6 +98,22 @@ export default function Settings({ open, onClose, theme, setTheme, settings, upd
           </div>
         </>
       )}
+
+      <div className="settings-sec">
+        <div className="settings-k">里程碑</div>
+        <div className="row" style={{ gap: 14, flexWrap: 'wrap' }}>
+          {['初试', '复试', '上岸'].map((k) => (
+            <label key={k} className="settings-check">
+              <input type="checkbox" checked={!!ms?.[k]} disabled={!ms}
+                     onChange={async (e) => {
+                       try { setMs(await api.setMilestones({ [k]: e.target.checked })); } catch (err) { setNotice(err.message); }
+                     }} />
+              <span>{k}{ms?.[k] ? <em>{ms[k].slice(5).replace('-', '.')}</em> : null}</span>
+            </label>
+          ))}
+        </div>
+        <div className="settings-hint">考完、过了就勾上：首页知识岛上的小人会往前走；上岸那一格勾上才算成功。记在仓库的 .kb 里，换电脑也在。</div>
+      </div>
 
       <div className="settings-sec">
         <div className="settings-k">本机状态</div>

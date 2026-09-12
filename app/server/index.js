@@ -102,7 +102,22 @@ app.get('/api/mindmap', wrap(async (_req, res) => res.json(await mindmap())));
  * 复习
  * ------------------------------------------------------------------ */
 
-app.get('/api/dashboard', (_req, res) => res.json({ ...dashboard(schedule.examDate()), points: points.progress(), vocab: vocab.progress() }));
+app.get('/api/dashboard', (_req, res) => res.json({ ...dashboard(schedule.examDate()), points: points.progress(), vocab: vocab.progress(), milestones: milestones() }));
+
+/* 里程碑：初试 / 复试 / 上岸 三个开关，过了就在设置里勾上；首页知识岛靠它决定小人站在哪座岛 */
+const MILESTONES = ['初试', '复试', '上岸'];
+const milestones = () => Object.fromEntries(MILESTONES.map((k) => [k, db.getMeta(`milestone:${k}`) || null]));
+app.get('/api/milestones', (_req, res) => res.json(milestones()));
+app.put('/api/milestones', (req, res) => {
+  const b = req.body || {};
+  for (const k of MILESTONES) {
+    if (!(k in b)) continue;
+    // 值是通过的日期；传 false / null 就是取消
+    if (b[k]) db.setMeta(`milestone:${k}`, typeof b[k] === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(b[k]) ? b[k] : todayStr());
+    else db.handle().prepare('DELETE FROM meta WHERE k = ?').run(`milestone:${k}`);
+  }
+  res.json(milestones());
+});
 
 app.get('/api/review/queue', (_req, res) => res.json(bucketNotes()));
 app.get('/api/review/log', wrap(async (_req, res) => res.json(await readLog())));

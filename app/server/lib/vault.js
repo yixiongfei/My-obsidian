@@ -51,6 +51,16 @@ function normTags(fm, id) {
 
 const WIKILINK_RE = /(!?)\[\[([^\]|#]+?)(?:#([^\]|]+?))?(?:\|([^\]]+?))?\]\]/g;
 
+/** 文件系统的创建时间（Windows / macOS 可靠），YYYY-MM-DD 本地日期 */
+function birthDate(abs) {
+  try {
+    const ms = fs.statSync(abs).birthtimeMs;
+    if (!ms) return null;
+    const d = new Date(ms);
+    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  } catch { return null; }
+}
+
 function parseNote(abs, id, raw) {
   let fm = {};
   let body = raw;
@@ -100,7 +110,8 @@ function parseNote(abs, id, raw) {
     basename,
     folder: path.dirname(id) === '.' ? '' : path.dirname(id),
     tags: normTags(fm, id),
-    created: toDateStr(fm.created) || null,
+    // frontmatter 没写 created 的（用户笔记多半没有），拿文件创建时间当新建日
+    created: toDateStr(fm.created) || birthDate(abs),
     reviewCount: Number.isFinite(Number(fm.review_count)) ? Number(fm.review_count) : 0,
     lastReviewed: toDateStr(fm.last_reviewed),
     nextReview: toDateStr(fm.next_review),

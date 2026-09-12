@@ -22,6 +22,8 @@ export const api = {
   mindmap: () => j('/api/mindmap'),
   search: (q) => j(`/api/search?q=${encodeURIComponent(q)}`),
   dashboard: () => j('/api/dashboard'),
+  milestones: () => j('/api/milestones'),
+  setMilestones: (patch) => j('/api/milestones', body('PUT', patch)),
   queue: () => j('/api/review/queue'),
   review: (payload) => j('/api/review', body('POST', payload)),
 
