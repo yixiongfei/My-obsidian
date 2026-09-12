@@ -34,7 +34,7 @@ export default function Home({ version, theme }) {
     { to: '/notes', k: '笔记', v: counts.notes, unit: '篇', d: '按词表铺开的结构图与阅读页' },
     { to: '/review', k: '复习', v: counts.reviews, unit: '次', d: '到期笔记逐篇过，折叠即自测' },
     { to: '/schedule', k: '日历', v: Math.round((daysToExam || 0) / 7), unit: '周', d: '年 → 月 → 日，含日本の祝日' },
-    { to: '/resources', k: '资源', v: exams?.filter((e) => e.submitted >= e.units).length ?? 0, unit: `/ ${exams?.length ?? 0} 套真题`, d: '英语一 / 英语二历年真题，整卷作答再对答案' },
+    { to: '/resources', k: '资源', v: exams?.filter((e) => e.submitted >= e.units).length ?? 0, unit: `/ ${exams?.length ?? 0} 套真题`, d: '数学、英语、408 历年真题，整卷作答再对答案' },
   ];
 
   return (

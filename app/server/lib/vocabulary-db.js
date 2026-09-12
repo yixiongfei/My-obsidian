@@ -172,6 +172,8 @@ export function open() {
     'ALTER TABLE vocab_cards ADD COLUMN marked_at TEXT',
     'ALTER TABLE vocab_cards ADD COLUMN mark_source TEXT',
     'ALTER TABLE vocab_words ADD COLUMN added_at TEXT',
+    // 用户在单词列表里改过释义 / 例句的词：重新灌种子时跳过，别把人工修正冲掉
+    'ALTER TABLE vocab_words ADD COLUMN user_edited INTEGER NOT NULL DEFAULT 0',
   ]) {
     try { db.exec(sql); } catch { /* 已经有了 */ }
   }

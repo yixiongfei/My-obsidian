@@ -188,16 +188,22 @@ export default function Notes({ version, onReviewed }) {
                 <button className="on">结构</button>
               </div>
               <span style={{ fontSize: 11, color: 'var(--text-2)' }}>
-                {mind ? `${mind.counts.emptyBranches} 个考点尚无笔记` : ''}
+                {mind?.counts.points
+                  ? <>考点已学 <b className="fig">{mind.counts.points.learned}</b> / {mind.counts.points.total}
+                      {mind.counts.points.today > 0 && <span style={{ color: 'var(--accent)', marginLeft: 12 }}>今日 {mind.counts.points.today}</span>}
+                      {mind.counts.points.due > 0 && <span style={{ color: 'var(--due)', marginLeft: 12 }}>{mind.counts.points.due} 待复习</span>}
+                      <span className="dim" style={{ marginLeft: 12 }}>点学科 / 分支可折叠</span></>
+                  : ''}
               </span>
             </div>
 
             {mindLoading && !mind ? <Loading /> : mind ? <MindMap data={mind} currentId={noteId} /> : null}
 
             <div className="mind-foot">
-              <span className="lg"><i style={{ width: 8, height: 8, background: 'var(--accent)' }} />待复习</span>
-              <span className="lg"><i style={{ width: 7, height: 7, border: '1px solid var(--text-2)' }} />已排期</span>
-              <span className="lg"><i style={{ width: 7, height: 7, border: '1px solid var(--line-2)' }} />未纳入</span>
+              <span className="lg"><i style={{ width: 8, height: 8, background: 'var(--accent)' }} />今日学习</span>
+              <span className="lg"><i style={{ width: 8, height: 8, background: 'var(--due)' }} />待复习</span>
+              <span className="lg"><i style={{ width: 7, height: 7, border: '1px solid var(--text-2)' }} />已学 / 已排期</span>
+              <span className="lg"><i style={{ width: 7, height: 7, border: '1px solid var(--line-2)' }} />未学考点 / 未纳入</span>
               <span className="lg"><i style={{ width: 8, height: 1, background: 'var(--line-2)' }} />空笔记</span>
               <span className="lg"><i style={{ width: 12, height: 1, background: 'repeating-linear-gradient(90deg,var(--line-2) 0 2px,transparent 2px 7px)' }} />词表已声明 · 待填充</span>
               <span className="lg"><i style={{ width: 5, height: 5, borderRadius: 5, background: 'var(--accent)' }} />未归类到分支</span>

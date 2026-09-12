@@ -61,8 +61,9 @@ export function seed() {
       VALUES (?, ?, ?, ?, ?, ?, ?, ?)
       ON CONFLICT(term_key) DO UPDATE SET
         term = excluded.term, phonetic = excluded.phonetic, frequency = excluded.frequency,
-        translation = excluded.translation, definition = excluded.definition`);
-    const getId = d.prepare('SELECT id FROM vocab_words WHERE term_key = ?');
+        translation = excluded.translation, definition = excluded.definition
+      WHERE vocab_words.user_edited = 0`);
+    const getId = d.prepare('SELECT id, user_edited FROM vocab_words WHERE term_key = ?');
     const delSenses = d.prepare('DELETE FROM vocab_senses WHERE word_id = ?');
     const insSense = d.prepare('INSERT INTO vocab_senses (word_id, ord, pos, gloss) VALUES (?, ?, ?, ?)');
     const delEx = d.prepare('DELETE FROM vocab_examples WHERE word_id = ?');
@@ -77,7 +78,14 @@ export function seed() {
     for (const e of words.entries) {
       upWord.run(e.termKey, e.term, e.phonetic || '', e.frequency || 0,
         e.translation || '', e.definition || '', srcId, deckId);
-      const id = getId.get(e.termKey).id;
+      const { id, user_edited: edited } = getId.get(e.termKey);
+      insCard.run(id);
+      for (const t of e.tags || []) {
+        insTag.run(t);
+        linkTag.run(id, getTag.get(t).id);
+      }
+      // 人工改过释义 / 例句的词，字典内容以人工为准
+      if (edited) continue;
 
       delSenses.run(id);
       (e.senses || []).forEach((s, i) => insSense.run(id, i, s.pos || '', s.gloss));
@@ -85,12 +93,6 @@ export function seed() {
       delEx.run(id);
       const one = ex.examples?.[e.termKey];
       if (one) insEx.run(id, one.text, one.source || '', one.license || '', one.sentenceId ?? null, one.url || '');
-
-      insCard.run(id);
-      for (const t of e.tags || []) {
-        insTag.run(t);
-        linkTag.run(id, getTag.get(t).id);
-      }
     }
 
     d.prepare(`INSERT INTO vocab_meta (k, v) VALUES ('seed_stamp', ?)
@@ -210,7 +212,8 @@ const CARD_SELECT = `
 
 function decorate(d, row, today) {
   const senses = d.prepare('SELECT pos, gloss FROM vocab_senses WHERE word_id = ? ORDER BY ord').all(row.id);
-  const ex = d.prepare('SELECT text, translation, source, license, ref_id, url FROM vocab_examples WHERE word_id = ? LIMIT 1').get(row.id);
+  const examples = d.prepare('SELECT id, text, translation, source, license, ref_id, url FROM vocab_examples WHERE word_id = ? ORDER BY id').all(row.id);
+  const ex = examples[0];
   const tags = d.prepare(
     'SELECT t.name FROM vocab_tags t JOIN vocab_word_tags wt ON wt.tag_id = t.id WHERE wt.word_id = ? LIMIT 5',
   ).all(row.id).map((t) => t.name);
@@ -233,6 +236,7 @@ function decorate(d, row, today) {
     translation: row.translation,
     definition: row.definition,
     example: ex || null,
+    examples,
     tags,
     state: row.state,
     due: scheduled ? row.due : null,

@@ -11,6 +11,7 @@ import { index, toAbs, toId } from './lib/vault.js';
 import { render } from './lib/markdown.js';
 import { recordReview, readLog, todayStr } from './lib/review.js';
 import { search, dashboard, bucketNotes, allNotes, getNoteMeta } from './lib/query.js';
+import * as points from './lib/points.js';
 import * as db from './lib/db.js';
 import { syncAll, syncNote } from './lib/sync.js';
 import * as schedule from './lib/schedule.js';
@@ -99,7 +100,7 @@ app.get('/api/mindmap', wrap(async (_req, res) => res.json(await mindmap())));
  * 复习
  * ------------------------------------------------------------------ */
 
-app.get('/api/dashboard', (_req, res) => res.json(dashboard(schedule.examDate())));
+app.get('/api/dashboard', (_req, res) => res.json({ ...dashboard(schedule.examDate()), points: points.progress() }));
 
 app.get('/api/review/queue', (_req, res) => res.json(bucketNotes()));
 app.get('/api/review/log', wrap(async (_req, res) => res.json(await readLog())));
@@ -184,10 +185,27 @@ app.get('/api/vocabulary/words', (req, res) => {
   }));
 });
 
+app.get('/api/vocabulary/words/:id', (req, res) => {
+  const id = Number(req.params.id);
+  if (!Number.isInteger(id)) throw bad('id 不合法');
+  const w = marks.detail(id);
+  if (!w) return res.status(404).json({ error: '没有这个词' });
+  res.json(w);
+});
+
+/* 同一个 PATCH 两种用法：{important} 只切换标注；{phonetic, senses, examples} 改词条内容 */
 app.patch('/api/vocabulary/words/:id', (req, res) => {
   const id = Number(req.params.id);
   if (!Number.isInteger(id)) throw bad('id 不合法');
-  res.json(marks.setImportant(id, !!req.body?.important));
+  const b = req.body || {};
+  if ('important' in b) marks.setImportant(id, !!b.important);
+  if ('senses' in b || 'examples' in b || 'phonetic' in b) {
+    try { return res.json(marks.update(id, b)); } catch (e) {
+      if (e.code === 'NOT_FOUND') return res.status(404).json({ error: e.message });
+      throw e;
+    }
+  }
+  res.json({ ok: true });
 });
 
 /* ------------------------------------------------------------------ *

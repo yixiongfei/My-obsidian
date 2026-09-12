@@ -1,5 +1,5 @@
-import { useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import { Loading, ErrorBox } from '../components/bits.jsx';
@@ -8,6 +8,7 @@ import { Loading, ErrorBox } from '../components/bits.jsx';
  * 真题标签：知识点 → 历年出现过的题号。
  * 数据来自站点的「真题标签」页（scripts/import-exams.mjs tags），
  * 点一个题号就跳到那张卷子里的那道题（?q=题号）。本地没抓到的年份只显示不能点。
+ * 结构图里点一个还没学的考点会带 ?tag=考点名 过来：切到它所在的科目、展开并滚到那一行。
  */
 
 const KIND_SHORT = { 408: '', math1: '数一', math2: '数二', math3: '数三' };
@@ -16,12 +17,25 @@ const TYPE_ORDER = ['选择题', '填空题', '解答题'];
 export default function ExamTags() {
   const { group } = useParams();
   const navigate = useNavigate();
+  const [params] = useSearchParams();
+  const want = params.get('tag') || '';
   const { data, loading, error, reload } = useApi(() => api.examTags(group), [group]);
   const [subject, setSubject] = useState('');
   const [q, setQ] = useState('');
-  const [open, setOpen] = useState(() => new Set());
+  const [open, setOpen] = useState(() => new Set(want ? [want] : []));
 
   const subjects = data?.subjects || [];
+
+  // ?tag= 深链：数据到了再定位
+  useEffect(() => {
+    if (!data || !want) return;
+    const owner = data.subjects.find((s) => s.tags.some((t) => t.name === want));
+    if (!owner) return;
+    setSubject(owner.name);
+    setOpen((s) => new Set(s).add(want));
+    const id = setTimeout(() => document.getElementById(`tag-${want}`)?.scrollIntoView({ block: 'center' }), 60);
+    return () => clearTimeout(id);
+  }, [data, want]);
   const cur = subjects.find((s) => s.name === subject) || subjects[0];
   const available = useMemo(() => new Set(data?.available || []), [data]);
   const needle = q.trim().toLowerCase();
@@ -71,7 +85,7 @@ export default function ExamTags() {
           const others = t.items.filter((it) => !TYPE_ORDER.includes(it.type));
           if (others.length) groups.push({ type: '其他', items: others });
           return (
-            <div key={t.name} className={`tag-row${isOpen ? ' open' : ''}`}>
+            <div key={t.name} id={`tag-${t.name}`} className={`tag-row${isOpen ? ' open' : ''}${t.name === want ? ' want' : ''}`}>
               <button className="tag-row-h" onClick={() => toggle(t.name)}>
                 <i className="tag-caret" />
                 <span className="tag-name">{t.name}</span>

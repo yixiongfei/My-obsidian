@@ -36,6 +36,8 @@ export const api = {
   markWord: (term, opts = {}) => j('/api/vocabulary/mark', body('POST', { term, ...opts })),
   words: (view, q = '') => j(`/api/vocabulary/words?view=${encodeURIComponent(view)}&q=${encodeURIComponent(q)}`),
   setWordImportant: (id, important) => j(`/api/vocabulary/words/${id}`, body('PATCH', { important })),
+  word: (id) => j(`/api/vocabulary/words/${id}`),
+  updateWord: (id, patch) => j(`/api/vocabulary/words/${id}`, body('PATCH', patch)),
 
   // 学习资源：历年真题。答案只在 submit 之后随响应下发
   exams: () => j('/api/exams'),

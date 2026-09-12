@@ -44,8 +44,8 @@ export default function Review({ version, onReviewed }) {
   const [notice, setNotice] = useState('');
   // 发音开关记在本机；开着时翻卡就读单词，卡背的例句旁有单独的朗读按钮
   const [voice, setVoice] = useState(() => canSpeak && localStorage.getItem('kb-voice') === 'on');
-  // 例句摘录：一张卡一次；换卡就清
-  const [exampleMarked, setExampleMarked] = useState(false);
+  // 例句摘录：每句一次；换卡就清
+  const [exampleMarked, setExampleMarked] = useState(() => new Set());
   useEffect(() => { localStorage.setItem('kb-voice', voice ? 'on' : 'off'); }, [voice]);
 
   // 锁住并发：双击、键盘连击、React 还没重绘时的重复提交都会走到这儿
@@ -91,11 +91,11 @@ export default function Review({ version, onReviewed }) {
     onReviewed?.();
   }, [onReviewed]);
 
-  const markExample = useCallback(async () => {
-    if (!card?.example?.text || exampleMarked) return;
+  const markExample = useCallback(async (text) => {
+    if (!card || !text || exampleMarked.has(text)) return;
     try {
-      await api.markExampleSentence(card.term, card.example.text);
-      setExampleMarked(true);
+      await api.markExampleSentence(card.term, text);
+      setExampleMarked((prev) => new Set(prev).add(text));
       setNotice('已摘录到 英语/语法/真题例句.md（词卡例句），稍后合并写入');
     } catch (e) { setNotice(e.message); }
   }, [card, exampleMarked]);
@@ -122,7 +122,7 @@ export default function Review({ version, onReviewed }) {
     inFlight.current = false;
   }, [card, flipped, total, finishRound]);
 
-  useEffect(() => { setExampleMarked(false); }, [card?.id]);
+  useEffect(() => { setExampleMarked(new Set()); }, [card?.id]);
 
   useEffect(() => {
     const onKey = (e) => {
@@ -177,6 +177,8 @@ export default function Review({ version, onReviewed }) {
     // 旧数据没有结构化义项时的回退，绝不能让卡背空白
     : (card.meanings || []).filter(Boolean).map((m) => ({ pos: '', gloss: m }));
   const fallbackText = !senses.length ? (card.translation || card.definition || '') : '';
+  // 单词列表里可以给一个词加好几句例句；老数据只有 example 一条
+  const examples = (card.examples?.length ? card.examples : [card.example]).filter((e) => e?.text);
 
   return (
     <div className="scroll"><div className="vocab-stage">
@@ -232,22 +234,22 @@ export default function Review({ version, onReviewed }) {
             ))}
             {fallbackText && <div className="vocab-sense"><span className="vs-gloss">{fallbackText}</span></div>}
 
-            {card.example?.text && (
+            {examples.map((ex, i) => (
               /* 点整张例句卡就朗读（拖选文字时不读，好复制）；右上角可把这句摘到 真题例句.md */
-              <div className="vocab-usage" title="点击朗读例句"
-                   onClick={(e) => { e.stopPropagation(); if (window.getSelection?.()?.toString().trim()) return; speak(card.example.text, { rate: 0.95 }); }}>
+              <div className="vocab-usage" title="点击朗读例句" key={ex.id ?? i}
+                   onClick={(e) => { e.stopPropagation(); if (window.getSelection?.()?.toString().trim()) return; speak(ex.text, { rate: 0.95 }); }}>
                 <div className="vu-head">
-                  <div className="lbl">USAGE EXAMPLE</div>
+                  <div className="lbl">USAGE EXAMPLE{examples.length > 1 ? ` ${i + 1}` : ''}</div>
                   <span className="vu-hint">点击朗读</span>
-                  <button className={`vu-mark${exampleMarked ? ' on' : ''}`} title="把这句摘到 英语/语法/真题例句.md"
-                          onClick={(e) => { e.stopPropagation(); markExample(); }}>
-                    {exampleMarked ? '✓ 已摘录' : '摘录例句'}
+                  <button className={`vu-mark${exampleMarked.has(ex.text) ? ' on' : ''}`} title="把这句摘到 英语/语法/真题例句.md"
+                          onClick={(e) => { e.stopPropagation(); markExample(ex.text); }}>
+                    {exampleMarked.has(ex.text) ? '✓ 已摘录' : '摘录例句'}
                   </button>
                 </div>
-                <p className="vu-en">{card.example.text}</p>
-                {card.example.translation && <p className="vu-cn">{card.example.translation}</p>}
+                <p className="vu-en">{ex.text}</p>
+                {ex.translation && <p className="vu-cn">{ex.translation}</p>}
               </div>
-            )}
+            ))}
 
             {card.tags?.length > 0 && (
               <div className="vocab-tags">

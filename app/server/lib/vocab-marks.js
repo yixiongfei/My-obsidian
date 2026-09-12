@@ -127,6 +127,74 @@ export function setImportant(wordId, on) {
 }
 
 /* ------------------------------------------------------------------ *
+ * 单词编辑：释义（义项）与例句
+ *
+ * 种子里的释义来自 ECDICT、例句来自 Tatoeba，两边都可能出错；这里让人
+ * 直接改。改过的词打上 vocab_words.user_edited，seed() 重灌时跳过它，
+ * 否则下次词表升级会把人工修正冲掉。
+ * ------------------------------------------------------------------ */
+
+/** 编辑面板要的完整词条 */
+export function detail(wordId) {
+  const d = vdb.handle();
+  const w = d.prepare(`SELECT w.id, w.term, w.term_key, w.phonetic, w.translation, w.user_edited, s.name AS source, c.important
+                       FROM vocab_words w LEFT JOIN vocab_sources s ON s.id = w.source_id
+                       LEFT JOIN vocab_cards c ON c.word_id = w.id WHERE w.id = ?`).get(wordId);
+  if (!w) return null;
+  return {
+    ...publicWord(w),
+    phonetic: w.phonetic,
+    translation: w.translation,
+    edited: !!w.user_edited,
+    senses: d.prepare('SELECT pos, gloss FROM vocab_senses WHERE word_id = ? ORDER BY ord').all(wordId),
+    examples: d.prepare('SELECT id, text, translation, source FROM vocab_examples WHERE word_id = ? ORDER BY id').all(wordId),
+  };
+}
+
+const clip = (v, n) => String(v ?? '').replace(/\s+/g, ' ').trim().slice(0, n);
+
+/**
+ * 整体替换义项与例句（面板保存时一次提交，省得逐条同步）。
+ * 义项最多 6 条、例句最多 6 条；空行丢掉。例句保留原 id 的 ref / url，
+ * 新加的记 source = 'user'。
+ */
+export function update(wordId, { phonetic, senses, examples } = {}) {
+  return vdb.tx((d) => {
+    const w = d.prepare('SELECT id FROM vocab_words WHERE id = ?').get(wordId);
+    if (!w) { const e = new Error('没有这个词'); e.code = 'NOT_FOUND'; throw e; }
+
+    if (typeof phonetic === 'string') {
+      d.prepare('UPDATE vocab_words SET phonetic = ? WHERE id = ?').run(clip(phonetic, 80).replace(/^\/|\/$/g, ''), wordId);
+    }
+
+    if (Array.isArray(senses)) {
+      const rows = senses.map((s) => ({ pos: clip(s?.pos, 20), gloss: clip(s?.gloss, 200) })).filter((s) => s.gloss).slice(0, 6);
+      d.prepare('DELETE FROM vocab_senses WHERE word_id = ?').run(wordId);
+      const ins = d.prepare('INSERT INTO vocab_senses (word_id, ord, pos, gloss) VALUES (?, ?, ?, ?)');
+      rows.forEach((s, i) => ins.run(wordId, i, s.pos, s.gloss));
+    }
+
+    if (Array.isArray(examples)) {
+      const old = new Map(d.prepare('SELECT id, text, source, license, ref_id, url FROM vocab_examples WHERE word_id = ?').all(wordId).map((r) => [r.id, r]));
+      const rows = examples.map((e) => ({ id: Number(e?.id) || 0, text: clip(e?.text, 600), translation: clip(e?.translation, 600) }))
+        .filter((e) => e.text).slice(0, 6);
+      d.prepare('DELETE FROM vocab_examples WHERE word_id = ?').run(wordId);
+      const ins = d.prepare(`INSERT INTO vocab_examples (word_id, text, translation, source, license, ref_id, url)
+                             VALUES (?, ?, ?, ?, ?, ?, ?)`);
+      for (const e of rows) {
+        const keep = old.get(e.id);
+        // 原句一字未改才还是 Tatoeba 那一句；改过字就是自己的句子了，来源记 user
+        if (keep && keep.text === e.text) ins.run(wordId, e.text, e.translation, keep.source || 'user', keep.license || '', keep.ref_id ?? null, keep.url || '');
+        else ins.run(wordId, e.text, e.translation, 'user', '', null, '');
+      }
+    }
+
+    d.prepare('UPDATE vocab_words SET user_edited = 1 WHERE id = ?').run(wordId);
+    return detail(wordId);
+  });
+}
+
+/* ------------------------------------------------------------------ *
  * 单词列表
  * ------------------------------------------------------------------ */
 

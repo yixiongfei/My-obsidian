@@ -16,6 +16,7 @@ const toMeta = (r) => ({
   lastReviewed: r.last_reviewed,
   nextReview: r.next_review,
   words: r.words,
+  mtime: r.mtime,
   empty: r.words === 0,
   reviewable: r.reviewable !== 0,
 });
