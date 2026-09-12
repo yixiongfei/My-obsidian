@@ -102,7 +102,7 @@ app.get('/api/mindmap', wrap(async (_req, res) => res.json(await mindmap())));
  * 复习
  * ------------------------------------------------------------------ */
 
-app.get('/api/dashboard', (_req, res) => res.json({ ...dashboard(schedule.examDate()), points: points.progress() }));
+app.get('/api/dashboard', (_req, res) => res.json({ ...dashboard(schedule.examDate()), points: points.progress(), vocab: vocab.progress() }));
 
 app.get('/api/review/queue', (_req, res) => res.json(bucketNotes()));
 app.get('/api/review/log', wrap(async (_req, res) => res.json(await readLog())));

@@ -294,6 +294,16 @@ export function buildQueue() {
   };
 }
 
+/** 首页阶梯用的词汇进度：学过（进过队列、评过分）的词 / 词表总数 */
+export function progress() {
+  const r = vdb.handle().prepare(`
+    SELECT COUNT(*) AS total,
+           SUM(CASE WHEN state <> 'new' THEN 1 ELSE 0 END) AS learned,
+           SUM(CASE WHEN state = 'mastered' THEN 1 ELSE 0 END) AS mastered
+    FROM vocab_cards`).get();
+  return { total: r.total || 0, learned: r.learned || 0, mastered: r.mastered || 0 };
+}
+
 /* ══════════════════════════════════════════════════════════════
  * 四、评分
  * ══════════════════════════════════════════════════════════════ */
