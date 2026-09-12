@@ -211,9 +211,17 @@ md.renderer.rules.link_open = (tokens, i, opts, env, self) => {
 md.renderer.rules.table_open = () => '<div class="table-wrap"><table>';
 md.renderer.rules.table_close = () => '</table></div>';
 
+/**
+ * Obsidian 里 `$$…$$` 单独占一行、行尾还带两个空格（硬换行的习惯）很常见。
+ * markdown-it-katex 判断"单行块公式"要求 `$$` 正好在行尾，多两个空格就当成多行块的开头，
+ * 一路吞到下一个 `$$`——中间整段正文都成了红色的公式源码。这里把这类行的行尾空白去掉；
+ * breaks: true 之下换行本来就断行，去掉尾随空格不影响排版。只改渲染输入，不动文件。
+ */
+const normalizeMath = (body) => body.replace(/^([ \t]*\$\$.*\$\$)[ \t]+$/gm, '$1');
+
 /** 给标题加锚点 id，供大纲跳转 */
 export function render(body) {
-  const tokens = md.parse(body, {});
+  const tokens = md.parse(normalizeMath(body), {});
   const seen = new Map();
   for (let i = 0; i < tokens.length; i++) {
     if (tokens[i].type !== 'heading_open') continue;

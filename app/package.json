@@ -1,6 +1,6 @@
 {
   "name": "obsidian-knowledge-base",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "private": true,
   "type": "module",
   "description": "个人考研知识库 · Vite + Node，可打包为 Windows 桌面程序",
