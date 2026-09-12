@@ -27,7 +27,8 @@ if (!app.requestSingleInstanceLock()) {
  * ---------------------------------------------------------------- */
 
 function readConfig() {
-  try { return JSON.parse(fs.readFileSync(CONFIG_FILE(), 'utf8')); } catch { return {}; }
+  // 手改过的 config.json 可能带 BOM，剥掉再解析
+  try { return JSON.parse(fs.readFileSync(CONFIG_FILE(), 'utf8').replace(/^\uFEFF/, '')); } catch { return {}; }
 }
 function writeConfig(cfg) {
   try { fs.mkdirSync(path.dirname(CONFIG_FILE()), { recursive: true }); } catch { /* 已存在 */ }
