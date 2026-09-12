@@ -169,6 +169,12 @@ app.post('/api/vocabulary/mark', (req, res) => {
   }
 });
 
+/* 词卡例句摘录：和荧光笔同一张表、同一个 Markdown */
+app.post('/api/vocabulary/example-mark', (req, res) => {
+  const { term, text } = req.body || {};
+  res.json(examMarks.addVocabSentence(String(term || ''), String(text || '')));
+});
+
 app.get('/api/vocabulary/words', (req, res) => {
   res.json(marks.list({
     view: String(req.query.view || 'today'),

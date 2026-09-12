@@ -292,7 +292,7 @@ kbd {
 .vocab-bar { height: 2px; background: var(--line); border-radius: 99px; overflow: hidden; }
 .vocab-bar > i { display: block; height: 2px; background: var(--accent); transition: width var(--dur-2) var(--ease); }
 .vocab-top-meta {
-  display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap;
+  display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
   margin-top: 12px; font-size: 11px; letter-spacing: 0.12em; color: var(--text-2);
 }
 .vocab-top-meta .due { color: var(--due); }
@@ -310,8 +310,12 @@ kbd {
   overflow: hidden;
   transition: border-color var(--dur-2) var(--ease), transform var(--dur-2) var(--ease);
 }
+.vocab-card { cursor: pointer; }
 .vocab-card:hover { border-color: var(--line-2); transform: translateY(-2px); }
 .vocab-card.open { cursor: default; }
+.vocab-card.open .vocab-face { cursor: pointer; }
+.vocab-face { user-select: none; }
+.vocab-back { user-select: text; }
 
 /* 正面：未翻开时单词独占整张卡、居中；翻开后收成卡顶的一行标题，把空间让给释义 */
 .vocab-face {
@@ -347,7 +351,22 @@ kbd {
 .vocab-sense .vs-gloss { font-size: 15px; color: var(--text); line-height: 1.7; }
 
 /* 英英长释义单独成区，不跟中文义项混在一起 */
-.vocab-usage { margin-top: 26px; padding: 18px 20px; background: var(--bg-2); border-radius: var(--radius-s); }
+.vocab-usage {
+  margin-top: 26px; padding: 16px 20px 18px; background: var(--bg-2); border-radius: var(--radius-s);
+  border: var(--hair) solid transparent; cursor: pointer;
+  transition: border-color 0.14s, background 0.14s;
+}
+.vocab-usage:hover { border-color: var(--line-2); }
+.vu-head { display: flex; align-items: center; gap: 12px; }
+.vu-hint { font-size: 10px; letter-spacing: 0.08em; color: var(--dim); opacity: 0; transition: opacity 0.14s; }
+.vocab-usage:hover .vu-hint { opacity: 1; }
+.vu-mark {
+  margin-left: auto; padding: 3px 9px; border-radius: 99px;
+  font-size: 11px; color: var(--dim); border: var(--hair) solid var(--line);
+  transition: color 0.12s, border-color 0.12s, background 0.12s;
+}
+.vu-mark:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
+.vu-mark.on { color: var(--accent); border-color: var(--accent); }
 .vocab-usage .vu-en { margin: 10px 0 0; font-size: 14.5px; line-height: 1.75; color: var(--text-2); }
 .vocab-usage .vu-cn { margin: 6px 0 0; font-size: 13px; color: var(--dim); }
 .vocab-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 22px; }
@@ -796,7 +815,9 @@ mark.hl.hl-flash { animation: hl-flash 2.4s var(--ease) both; }
 .voice-btn.on { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
 .voice-btn.sm { width: 22px; height: 22px; border-color: transparent; background: none; color: var(--accent); }
 .voice-btn.sm:hover { background: var(--accent-soft); }
-.vocab-top-meta .voice-btn { align-self: center; }
+/* 顶栏里的开关：22px、负外边距抵消掉高度，不把这一行撑高；圆圈只在开启时出现 */
+.vocab-top-meta .voice-btn { width: 22px; height: 22px; margin: -6px 0; }
+.vocab-top-meta .voice-btn svg { width: 14px; height: 14px; }
 
 /* ── 资源页：我的标注词 ────────────────────────────────── */
 .marked-words { margin-top: 14px; padding: 12px 16px 10px; border: var(--hair) solid var(--line); border-radius: var(--radius); background: var(--bg-1); }

@@ -59,6 +59,23 @@ export function addMark(examId, sectionId, text, q = null, color = 'y') {
   return rowOut(d.prepare('SELECT * FROM exam_marks WHERE exam_id = ? AND section_id = ? AND text = ?').get(examId, sectionId, t));
 }
 
+/**
+ * 词卡上的例句也能摘到同一个文件里：exam_id 写成 vocab:<词>，section_id = example。
+ * 渲染时单独归到「词卡例句」一节，不参与卷子分组。
+ */
+export function addVocabSentence(term, text) {
+  const t = normText(text);
+  const key = String(term || '').trim().toLowerCase();
+  if (!key || t.length < 2) throw Object.assign(new Error('没有例句'), { status: 400 });
+  const d = handle();
+  d.prepare(`INSERT INTO exam_marks (exam_id, section_id, q, text, color, created_at) VALUES (?, 'example', NULL, ?, 'y', ?)
+             ON CONFLICT(exam_id, section_id, text) DO NOTHING`)
+    .run(`vocab:${key}`, t, todayStr());
+  setMeta(DIRTY_KEY, '1');
+  scheduleIdleFlush();
+  return rowOut(d.prepare("SELECT * FROM exam_marks WHERE exam_id = ? AND section_id = 'example' AND text = ?").get(`vocab:${key}`, t));
+}
+
 export function recolorMark(id, color) {
   if (!COLORS.has(color)) throw Object.assign(new Error('颜色只能是 y / g / b / p'), { status: 400 });
   const r = handle().prepare('UPDATE exam_marks SET color = ? WHERE id = ?').run(color, id);
@@ -72,13 +89,15 @@ export function removeMark(id) {
 }
 
 function renderSentences() {
-  const rows = handle().prepare('SELECT * FROM exam_marks ORDER BY exam_id, id').all();
+  const all = handle().prepare('SELECT * FROM exam_marks ORDER BY exam_id, id').all();
+  const vocabRows = all.filter((r) => r.exam_id.startsWith('vocab:'));
+  const rows = all.filter((r) => !r.exam_id.startsWith('vocab:'));
   const byExam = new Map();
   for (const r of rows) {
     if (!byExam.has(r.exam_id)) byExam.set(r.exam_id, []);
     byExam.get(r.exam_id).push(r);
   }
-  const lines = [AUTO_START, '', `共 **${rows.length}** 句，来自 ${byExam.size} 套卷子。`, ''];
+  const lines = [AUTO_START, '', `真题里划的 **${rows.length}** 句（${byExam.size} 套卷子），词卡摘录 **${vocabRows.length}** 句。`, ''];
   const exams = [...byExam.keys()].map((id) => ({ id, exam: getExam(id) })).filter((x) => x.exam)
     .sort((a, b) => b.exam.year - a.exam.year || a.id.localeCompare(b.id));
   for (const { id, exam } of exams) {
@@ -93,6 +112,13 @@ function renderSentences() {
       // 链接带 hl=标记 id：打开后直接滚到这一句并闪一下，像书签
       lines.push(`标于 ${r.created_at.replaceAll('-', '.')}${r.q ? ` · 第 ${r.q} 题` : ''} · [跳到原句](${appUrl(id, r.q, r.id)})`, '');
     }
+  }
+  if (vocabRows.length) {
+    lines.push('## 词卡例句', '');
+    for (const r of vocabRows.sort((a, b) => b.created_at.localeCompare(a.created_at) || a.id - b.id)) {
+      lines.push(`- **${r.exam_id.slice(6)}** — ${r.text.replace(/\n/g, ' ')}　<sub>${r.created_at.replaceAll('-', '.')}</sub>`);
+    }
+    lines.push('');
   }
   lines.push(AUTO_END);
   return lines.join('\n');

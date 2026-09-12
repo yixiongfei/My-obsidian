@@ -44,6 +44,8 @@ export default function Review({ version, onReviewed }) {
   const [notice, setNotice] = useState('');
   // 发音开关记在本机；开着时翻卡就读单词，卡背的例句旁有单独的朗读按钮
   const [voice, setVoice] = useState(() => canSpeak && localStorage.getItem('kb-voice') === 'on');
+  // 例句摘录：一张卡一次；换卡就清
+  const [exampleMarked, setExampleMarked] = useState(false);
   useEffect(() => { localStorage.setItem('kb-voice', voice ? 'on' : 'off'); }, [voice]);
 
   // 锁住并发：双击、键盘连击、React 还没重绘时的重复提交都会走到这儿
@@ -89,6 +91,15 @@ export default function Review({ version, onReviewed }) {
     onReviewed?.();
   }, [onReviewed]);
 
+  const markExample = useCallback(async () => {
+    if (!card?.example?.text || exampleMarked) return;
+    try {
+      await api.markExampleSentence(card.term, card.example.text);
+      setExampleMarked(true);
+      setNotice('已摘录到 英语/语法/真题例句.md（词卡例句），稍后合并写入');
+    } catch (e) { setNotice(e.message); }
+  }, [card, exampleMarked]);
+
   const grade = useCallback(async (rating) => {
     if (!card || inFlight.current || !flipped) return;
     inFlight.current = true;
@@ -110,6 +121,8 @@ export default function Review({ version, onReviewed }) {
     setFlipped(false);
     inFlight.current = false;
   }, [card, flipped, total, finishRound]);
+
+  useEffect(() => { setExampleMarked(false); }, [card?.id]);
 
   useEffect(() => {
     const onKey = (e) => {
@@ -190,9 +203,10 @@ export default function Review({ version, onReviewed }) {
         </div>
       </div>
 
-      <button className={`vocab-card${flipped ? ' open' : ''}`}
-              onClick={() => setFlipped((f) => { if (!f && voice) speak(card.term); return !f; })}
-              aria-label={flipped ? '收起释义' : '查看释义'}>
+      {/* 用 div 不用 button：button 里的文字选不中，卡背的例句要能选中复制 */}
+      <div className={`vocab-card${flipped ? ' open' : ''}`} role="button" tabIndex={0}
+           onClick={() => setFlipped((f) => { if (!f && voice) speak(card.term); return !f; })}
+           aria-label={flipped ? '收起释义' : '查看释义'}>
         <div className="vocab-face">
           <div className="vocab-term">{card.term}{card.important && <span className="vocab-imp" title="标注词">★</span>}</div>
           {card.phonetic && <div className="vocab-ph">/{card.phonetic}/</div>}
@@ -219,16 +233,16 @@ export default function Review({ version, onReviewed }) {
             {fallbackText && <div className="vocab-sense"><span className="vs-gloss">{fallbackText}</span></div>}
 
             {card.example?.text && (
-              <div className="vocab-usage">
-                <div className="row" style={{ gap: 10 }}>
+              /* 点整张例句卡就朗读（拖选文字时不读，好复制）；右上角可把这句摘到 真题例句.md */
+              <div className="vocab-usage" title="点击朗读例句"
+                   onClick={(e) => { e.stopPropagation(); if (window.getSelection?.()?.toString().trim()) return; speak(card.example.text, { rate: 0.95 }); }}>
+                <div className="vu-head">
                   <div className="lbl">USAGE EXAMPLE</div>
-                  {voice && (
-                    <span role="button" tabIndex={0} className="voice-btn sm" title="朗读例句"
-                          onClick={(e) => { e.stopPropagation(); speak(card.example.text, { rate: 0.95 }); }}
-                          onKeyDown={(e) => { if (e.key === 'Enter') { e.stopPropagation(); speak(card.example.text, { rate: 0.95 }); } }}>
-                      <SpeakerIcon on />
-                    </span>
-                  )}
+                  <span className="vu-hint">点击朗读</span>
+                  <button className={`vu-mark${exampleMarked ? ' on' : ''}`} title="把这句摘到 英语/语法/真题例句.md"
+                          onClick={(e) => { e.stopPropagation(); markExample(); }}>
+                    {exampleMarked ? '✓ 已摘录' : '摘录例句'}
+                  </button>
                 </div>
                 <p className="vu-en">{card.example.text}</p>
                 {card.example.translation && <p className="vu-cn">{card.example.translation}</p>}
@@ -242,7 +256,7 @@ export default function Review({ version, onReviewed }) {
             )}
           </div>
         )}
-      </button>
+      </div>
 
       {notice && <div className="vocab-notice">{notice}</div>}
 
