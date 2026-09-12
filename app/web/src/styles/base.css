@@ -308,6 +308,34 @@ button { cursor: pointer; background: none; border: none; padding: 0; }
   transition: color 0.15s, background 0.15s;
 }
 .icon-btn:hover { color: var(--text-2); background: var(--bg-2); }
+.icon-btn.settings-btn { padding: 0 9px; }
+.icon-btn.settings-btn.on { color: var(--accent); background: var(--accent-soft); }
+
+/* 设置面板：挂在顶栏右下，宽一点放分段开关 */
+.topbar { position: relative; }
+.settings-pop {
+  position: absolute; top: calc(var(--top) - 6px); right: 28px; z-index: 90;
+  width: 400px; max-width: calc(100vw - 40px); max-height: calc(100vh - var(--top) - 20px); overflow: auto;
+  padding: 16px 18px 14px; background: var(--bg-1);
+  border: var(--hair) solid var(--line-2); border-radius: var(--radius);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.2);
+  animation: rise var(--dur-1) var(--ease) both;
+  cursor: default;
+}
+.settings-head { display: flex; align-items: baseline; gap: 12px; padding-bottom: 12px; border-bottom: var(--hair) solid var(--rule-hard); }
+.settings-title { font-size: 15px; font-weight: 600; color: var(--text); }
+.settings-sec { padding: 13px 0 4px; border-bottom: var(--hair) solid var(--line); }
+.settings-sec:last-child { border-bottom: none; }
+.settings-k { font-size: 11px; letter-spacing: 0.12em; color: var(--dim); margin-bottom: 8px; }
+.settings-hint { font-size: 11.5px; color: var(--dim); margin-top: 8px; line-height: 1.6; }
+.settings-path { font-family: var(--mono); font-size: 11.5px; color: var(--text-2); word-break: break-all; }
+.seg { display: inline-flex; padding: 3px; gap: 2px; background: var(--bg-2); border-radius: var(--radius-s); flex-wrap: wrap; }
+.seg button {
+  padding: 5px 12px; border-radius: calc(var(--radius-s) - 2px);
+  font-size: 12.5px; color: var(--text-2); transition: color 0.12s, background 0.12s;
+}
+.seg button:hover { color: var(--text); }
+.seg button.on { color: var(--text); background: var(--bg-1); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12); }
 
 .main { flex: 1; min-height: 0; position: relative; overflow: hidden; display: flex; flex-direction: column; }
 

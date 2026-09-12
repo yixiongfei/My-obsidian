@@ -1,8 +1,10 @@
-import { useCallback, useState } from 'react';
-import { Routes, Route, useLocation, Navigate, useParams } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { Routes, Route, useLocation, useNavigate, Navigate, useParams } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import Shell from './components/Shell.jsx';
+import Settings from './components/Settings.jsx';
+import { useSettings } from './settings.js';
 import CommandPalette from './components/CommandPalette.jsx';
 import Home from './views/Home.jsx';
 import Dashboard from './views/Dashboard.jsx';
@@ -28,9 +30,20 @@ const fade = {
 
 export default function App() {
   const version = useVaultVersion();
-  const [theme, toggleTheme] = useTheme();
+  const [theme, toggleTheme, setTheme] = useTheme();
   const [paletteOpen, setPaletteOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [settings, updateSettings] = useSettings();
   const location = useLocation();
+  const navigate = useNavigate();
+
+  // 「启动时打开」只在这次会话第一次进入时生效，之后刷新 / 回首页都不再跳
+  useEffect(() => {
+    if (sessionStorage.getItem('kb-started')) return;
+    sessionStorage.setItem('kb-started', '1');
+    if (settings.startPage !== '/' && location.pathname === '/') navigate(settings.startPage, { replace: true });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const { data: meta } = useApi(() => api.meta(), [version]);
   const { data: dash, reload: reloadDash } = useApi(() => api.dashboard(), [version]);
@@ -45,6 +58,12 @@ export default function App() {
         theme={theme}
         onToggleTheme={toggleTheme}
         onSearch={() => setPaletteOpen(true)}
+        onSettings={() => setSettingsOpen((o) => !o)}
+        settingsOpen={settingsOpen}
+        settingsPanel={(
+          <Settings open={settingsOpen} onClose={() => setSettingsOpen(false)}
+                    theme={theme} setTheme={setTheme} settings={settings} update={updateSettings} meta={meta} />
+        )}
       >
         <AnimatePresence mode="wait">
           <motion.div key={routeKey(location.pathname)} className="view" {...fade}>

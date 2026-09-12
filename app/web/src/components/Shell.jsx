@@ -17,6 +17,13 @@ const Sparkle = (p) => (
   </svg>
 );
 
+const Gear = (p) => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" {...p}>
+    <circle cx="12" cy="12" r="3" />
+    <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h.1a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v.1a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" />
+  </svg>
+);
+
 const Search = (p) => (
   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" {...p}>
     <circle cx="11" cy="11" r="7" />
@@ -24,7 +31,7 @@ const Search = (p) => (
   </svg>
 );
 
-export default function Shell({ children, meta, badges = {}, theme, onToggleTheme, onSearch }) {
+export default function Shell({ children, meta, badges = {}, theme, onToggleTheme, onSearch, onSettings, settingsOpen, settingsPanel }) {
   const { pathname } = useLocation();
   const isMac = typeof navigator !== 'undefined' && /Mac/i.test(navigator.platform || '');
 
@@ -55,6 +62,9 @@ export default function Shell({ children, meta, badges = {}, theme, onToggleThem
         </nav>
 
         <div className="topbar-right">
+          <button className={`icon-btn settings-btn${settingsOpen ? ' on' : ''}`} onClick={onSettings} title="设置" aria-expanded={settingsOpen}>
+            <Gear />
+          </button>
           <button className="icon-btn" onClick={onToggleTheme} title="切换日夜模式">
             {theme === 'dark' ? '白天' : '夜间'}
           </button>
@@ -63,6 +73,7 @@ export default function Shell({ children, meta, badges = {}, theme, onToggleThem
             <span className="kbd-hint">{isMac ? '⌘' : 'Ctrl'} K</span>
           </button>
         </div>
+        {settingsPanel}
       </header>
 
       <main className="main">{children}</main>

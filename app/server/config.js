@@ -12,7 +12,24 @@ export const APP_ROOT = path.resolve(__dirname, '..');
  * 默认取 app/ 的上一级（本仓库自身即 vault）。
  * 打包成桌面程序后由 VAULT_ROOT 环境变量指定用户自己的 vault 路径。
  */
-export const REPO_ROOT = path.resolve(process.env.VAULT_ROOT || path.resolve(APP_ROOT, '..'));
+export const NOTES_DIR = (process.env.NOTES_DIR ?? 'My-md').trim();
+
+const isDir = (p) => { try { return fs.statSync(p).isDirectory(); } catch { return false; } };
+
+/**
+ * 桌面版让用户选文件夹时，选到 My-md/ 本身（而不是它上一级的仓库根）是很自然的事——
+ * 那样 .kb/、app/tags.yaml 全都找不到，真题、标签、复习记录一起消失。
+ * 所以：选中的目录自己没有 .kb/ 但上一级有、且它正是上一级的 NOTES_DIR，就把上一级当仓库根。
+ */
+function resolveRepoRoot(given) {
+  const root = path.resolve(given);
+  const parent = path.dirname(root);
+  // 选错一次之后 My-md/ 里会被建出一个空的 .kb/，所以不能拿「自己有没有 .kb」当依据，只看名字和上一级
+  if (parent !== root && path.basename(root) === NOTES_DIR && isDir(path.join(parent, '.kb'))) return parent;
+  return root;
+}
+
+export const REPO_ROOT = resolveRepoRoot(process.env.VAULT_ROOT || path.resolve(APP_ROOT, '..'));
 
 /**
  * 笔记根目录：仓库里的 My-md/。笔记、图片、画布全部收在这一个文件夹里，
@@ -21,9 +38,8 @@ export const REPO_ROOT = path.resolve(process.env.VAULT_ROOT || path.resolve(APP
  * 复习记录、错题本、词汇日志里的路径失效。
  * 可用 NOTES_DIR 环境变量换名字；该目录不存在时退回整个仓库根（老布局）。
  */
-export const NOTES_DIR = (process.env.NOTES_DIR ?? 'My-md').trim();
 const notesRoot = NOTES_DIR ? path.join(REPO_ROOT, NOTES_DIR) : REPO_ROOT;
-export const VAULT_ROOT = fs.existsSync(notesRoot) ? notesRoot : REPO_ROOT;
+export const VAULT_ROOT = isDir(notesRoot) ? notesRoot : REPO_ROOT;
 
 /** 派生数据目录：SQLite 索引、词汇库、真题 JSON、语音缓存 */
 export const KB_DIR = path.join(REPO_ROOT, '.kb');
@@ -70,9 +86,15 @@ export const IMAGE_EXT = new Set(['.png', '.jpg', '.jpeg', '.gif', '.webp', '.sv
 /** 间隔重复表：第 n 次复习之后，距离下一次的天数 */
 export const INTERVALS = [1, 2, 4, 7, 15, 30];
 
-/* 复习日志与标签词表跟着站点走，放在 app/ 下，不再散落在 vault 根目录 */
-export const REVIEW_LOG = path.join(APP_ROOT, 'review_log.jsonl');
-export const TAGS_FILE = path.join(APP_ROOT, 'tags.yaml');
+/* 复习日志与标签词表是用户数据，跟着仓库走：本仓库放在 <仓库>/app/ 下。
+   打包后的程序 APP_ROOT 在安装目录里，绝不能把这两个文件写到那儿去（升级就丢）——
+   仓库里没有 app/ 的（别人的 vault）就落到 .kb/ */
+const userFile = (name) => {
+  const inApp = path.join(REPO_ROOT, 'app', name);
+  return isDir(path.join(REPO_ROOT, 'app')) ? inApp : path.join(KB_DIR, name);
+};
+export const REVIEW_LOG = userFile('review_log.jsonl');
+export const TAGS_FILE = userFile('tags.yaml');
 /** 旧版日程文件，仅用于首次启动时向 SQLite 迁移 */
 export const SCHEDULE_FILE = path.join(REPO_ROOT, 'schedule.json');
 

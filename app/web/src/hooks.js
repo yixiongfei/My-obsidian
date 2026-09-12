@@ -57,5 +57,5 @@ export function useTheme() {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem('kb-theme', theme);
   }, [theme]);
-  return [theme, () => setTheme((t) => (t === 'dark' ? 'light' : 'dark'))];
+  return [theme, () => setTheme((t) => (t === 'dark' ? 'light' : 'dark')), setTheme];
 }

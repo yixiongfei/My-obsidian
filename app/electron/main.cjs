@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-const { app, BrowserWindow, dialog, Menu, shell } = require('electron');
+const { app, BrowserWindow, dialog, Menu, shell, ipcMain } = require('electron');
 const path = require('node:path');
 const fs = require('node:fs');
 const net = require('node:net');
@@ -37,7 +37,7 @@ function writeConfig(cfg) {
 const looksLikeVault = (dir) =>
   !!dir && fs.existsSync(dir) && fs.statSync(dir).isDirectory();
 
-async function pickVault(promptTitle = '选择你的 Obsidian 仓库文件夹') {
+async function pickVault(promptTitle = '选择你的 Obsidian 仓库文件夹（含 .kb 的那一层，不是 My-md）') {
   const { canceled, filePaths } = await dialog.showOpenDialog({
     title: promptTitle,
     properties: ['openDirectory'],
@@ -93,10 +93,25 @@ async function restartWithVault(vaultRoot) {
  * 窗口
  * ---------------------------------------------------------------- */
 
+/* 窗口模式：window（记住上次大小位置）/ maximized / fullscreen。
+   设置面板改了就立刻生效并写进 config.json，下次启动照用 */
+const WINDOW_MODES = new Set(['window', 'maximized', 'fullscreen']);
+
+function applyWindowMode(mode) {
+  if (!win) return;
+  if (mode === 'fullscreen') { win.setFullScreen(true); return; }
+  if (win.isFullScreen()) win.setFullScreen(false);
+  if (mode === 'maximized') win.maximize();
+  else if (win.isMaximized()) win.unmaximize();
+}
+
 function createWindow() {
+  const cfg = readConfig();
+  const bounds = cfg.bounds && cfg.bounds.width > 400 ? cfg.bounds : {};
   win = new BrowserWindow({
     width: 1440,
     height: 940,
+    ...bounds,
     minWidth: 900,
     minHeight: 620,
     backgroundColor: '#05070b',
@@ -104,11 +119,42 @@ function createWindow() {
     icon: path.join(__dirname, '..', 'build', 'icon.png'),
     show: false,
     autoHideMenuBar: true,
-    webPreferences: { contextIsolation: true, nodeIntegration: false },
+    webPreferences: {
+      contextIsolation: true,
+      nodeIntegration: false,
+      preload: path.join(__dirname, 'preload.cjs'),
+    },
   });
 
-  win.once('ready-to-show', () => win.show());
+  win.once('ready-to-show', () => {
+    applyWindowMode(WINDOW_MODES.has(cfg.windowMode) ? cfg.windowMode : 'window');
+    win.show();
+  });
+  // 普通窗口模式下记住大小位置；最大化 / 全屏时 getNormalBounds 给的还是还原后的尺寸
+  win.on('close', () => {
+    try { writeConfig({ ...readConfig(), bounds: win.getNormalBounds() }); } catch { /* 无所谓 */ }
+  });
   win.loadURL(isDev ? 'http://127.0.0.1:5173' : `http://127.0.0.1:${port}`);
+
+  // KB_SMOKE=1：无人值守地过一遍 preload 桥和窗口模式，打印结果就退出（CI / 本机自检用）
+  if (process.env.KB_SMOKE === '1') {
+    win.webContents.once('did-finish-load', async () => {
+      try {
+        const info = await win.webContents.executeJavaScript('window.kbDesktop.getInfo()');
+        const results = { info };
+        for (const mode of ['maximized', 'fullscreen', 'window']) {
+          await win.webContents.executeJavaScript(`window.kbDesktop.setWindowMode(${JSON.stringify(mode)})`);
+          await new Promise((r) => setTimeout(r, 400));
+          results[mode] = { maximized: win.isMaximized(), fullscreen: win.isFullScreen() };
+        }
+        results.savedMode = readConfig().windowMode;
+        console.log('KB_SMOKE ' + JSON.stringify(results));
+      } catch (err) {
+        console.log('KB_SMOKE_ERROR ' + err.message);
+      }
+      app.exit(0);
+    });
+  }
 
   // 外链交给系统浏览器，不在应用里开新窗口
   win.webContents.setWindowOpenHandler(({ url }) => {
@@ -149,6 +195,36 @@ function buildMenu() {
   ]));
 }
 
+/* ---------------------------------------------------------------- *
+ * 设置面板走的 IPC
+ * ---------------------------------------------------------------- */
+
+function registerIpc(vaultRoot) {
+  ipcMain.handle('kb:info', () => ({
+    vaultRoot,
+    windowMode: WINDOW_MODES.has(readConfig().windowMode) ? readConfig().windowMode : 'window',
+    version: app.getVersion(),
+    port,
+  }));
+  ipcMain.handle('kb:window-mode', (_e, mode) => {
+    if (!WINDOW_MODES.has(mode)) return false;
+    writeConfig({ ...readConfig(), windowMode: mode });
+    applyWindowMode(mode);
+    return true;
+  });
+  ipcMain.handle('kb:pick-vault', async () => {
+    const picked = await pickVault('选择另一个 Obsidian 仓库（含 .kb 的那一层）');
+    if (picked) restartWithVault(picked);
+    return !!picked;
+  });
+  ipcMain.handle('kb:open-path', async (_e, p) => {
+    const target = path.resolve(String(p || ''));
+    // 只开仓库里面的路径，别让页面拿这个口子开任意目录
+    if (!target.startsWith(path.resolve(vaultRoot))) return false;
+    return (await shell.openPath(target)) === '';
+  });
+}
+
 /* ---------------------------------------------------------------- */
 
 app.whenReady().then(async () => {
@@ -163,6 +239,7 @@ app.whenReady().then(async () => {
     return;
   }
 
+  registerIpc(vaultRoot);
   buildMenu();
   createWindow();
 

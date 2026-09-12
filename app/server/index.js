@@ -6,7 +6,7 @@ import fs from 'node:fs';
 import yaml from 'js-yaml';
 import fsp from 'node:fs/promises';
 
-import { VAULT_ROOT, APP_ROOT, PORT, TAGS_FILE, isIgnoredPath } from './config.js';
+import { VAULT_ROOT, APP_ROOT, PORT, TAGS_FILE, isIgnoredPath, REPO_ROOT, KB_DIR } from './config.js';
 import { index, toAbs, toId } from './lib/vault.js';
 import { render } from './lib/markdown.js';
 import { recordReview, readLog, todayStr } from './lib/review.js';
@@ -60,6 +60,8 @@ app.get('/api/stream', (req, res) => {
 app.get('/api/meta', (_req, res) => {
   res.json({
     vault: VAULT_ROOT,
+    repo: REPO_ROOT,
+    kb: KB_DIR,
     name: path.basename(VAULT_ROOT),
     notes: index.notes.size,
     images: index.images.size,
