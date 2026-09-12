@@ -9,6 +9,14 @@ const WEEK = ['日', '月', '火', '水', '木', '金', '土'];
 const WEEK_CN = ['日', '月', '火', '水', '木', '金', '土'];
 const pad = (n) => String(n).padStart(2, '0');
 
+/** 日程备注：藏掉脚本用的 plan:… 标记，把网址变成可点的链接 */
+function noteBits(note) {
+  const text = String(note).split(' · ').filter((x) => !/^plan:/.test(x)).join(' · ');
+  return text.split(/(https?:\/\/\S+)/).map((part, i) => (/^https?:\/\//.test(part)
+    ? <a key={i} href={part} target="_blank" rel="noreferrer" style={{ color: 'var(--accent)' }}>{part.includes('bilibili') ? '▶ 打开视频' : part}</a>
+    : part));
+}
+
 export default function Schedule({ version }) {
   const { year, month, day } = useParams();
   const y = Number(year) || new Date().getFullYear();
@@ -171,7 +179,7 @@ function MonthView({ version, monthKey }) {
 
       <div className="row" style={{ justifyContent: 'flex-end', margin: '40px 0 14px' }}>
         <div className="cal-legend">
-          <span className="lg"><i style={{ background: 'var(--accent)' }} />待复习</span>
+          <span className="lg"><i style={{ background: 'var(--due)' }} />待复习</span>
           <span className="lg"><i style={{ background: 'var(--accent-2)' }} />已复习</span>
           <span className="lg"><i style={{ background: 'var(--hue-4)' }} />新建</span>
           <span className="lg"><i style={{ background: 'var(--hue-3)' }} />背词</span>
@@ -355,7 +363,7 @@ function DayView({ version, date }) {
                     onClick={async () => { await api.patchEvent(e.id, { done: !e.done }); reload(); }} />
               <div style={{ flex: 1, minWidth: 0 }}>
                 <div className="er-title" style={{ color: 'var(--text)', fontSize: 13.5 }}>{e.title}</div>
-                {e.note && <div style={{ color: 'var(--dim)', fontSize: 11.5 }}>{e.note}</div>}
+                {e.note && <div style={{ color: 'var(--dim)', fontSize: 11.5 }}>{noteBits(e.note)}</div>}
               </div>
               <button className="btn ghost sm" title="删除"
                       onClick={async () => { await api.deleteEvent(e.id); reload(); }}>删除</button>
