@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { createStage, projectToScreen } from './stage.js';
 
@@ -10,6 +10,7 @@ import { createStage, projectToScreen } from './stage.js';
  *   小人站着的那座岛描紫边、脚下一盏紫光；三科全完成 → 登上初试岛，戴金色桂冠。
  *   小人从起点沿台阶慢慢走到当前岛（进入页面时走一遍），到了就原地小幅呼吸。
  *   当前岛 = 有进度的科目里最靠后的那科；在岛上的位置随该科进度从入口挪向出口。
+ *   镜头固定不随鼠标晃；平时只标岛名，点一座岛才弹出它的进度。星空绕一根斜轴缓缓转，像站在地上看夜空。
  */
 
 const ISLAND = 8;         // 岛的边长（正方形）
@@ -84,6 +85,9 @@ function buildFigure(colors, dark) {
 export default function KnowledgeIslands3D({ steps = [], nextReview, theme }) {
   const mountRef = useRef(null);
   const labelRefs = useRef([]);
+  const [picked, setPicked] = useState(-1);   // 点选的岛（索引；-1 没选）
+  const pickedRef = useRef(-1);
+  useEffect(() => { pickedRef.current = picked; }, [picked]);
 
   // localStorage kb-debug-summit=1：三科全点亮，看登顶的样子（调试用）
   const stairs = useMemo(() => {
@@ -152,7 +156,7 @@ export default function KnowledgeIslands3D({ steps = [], nextReview, theme }) {
           const edgeMat = new THREE.LineBasicMaterial({ color: i === current ? colors.purple : tone, transparent: true, opacity: i === current ? 1 : 0.7 });
           group.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo), edgeMat));
           scene.add(group);
-          return { ...it, i, st, group, mat, edgeMat, top: it.center.y + THICK / 2 };
+          return { ...it, i, st, group, mesh, mat, edgeMat, tone, top: it.center.y + THICK / 2 };
         });
 
         // 当前岛脚下一盏紫光
@@ -230,10 +234,18 @@ export default function KnowledgeIslands3D({ steps = [], nextReview, theme }) {
         scene.add(fig.group);
         const pos = new THREE.Vector3();
         const ahead = new THREE.Vector3();
-        let walked = 0;                        // 已走的路线距离
-        const speed = Math.max(3.2, target / 9); // 最长约 9 秒走到
+        let walked = 0;                          // 已走的路线距离
+        const speed = Math.max(2.4, target / 12); // 慢慢走，最长约 12 秒
         let facing = 0;
+        // 角度插值走最短弧，别在 ±π 处转一整圈
+        const turnTo = (cur, want, k) => {
+          let d = want - cur;
+          while (d > Math.PI) d -= Math.PI * 2;
+          while (d < -Math.PI) d += Math.PI * 2;
+          return cur + d * k;
+        };
         at(0, pos); fig.group.position.copy(pos);
+        at(0.6, ahead); fig.group.rotation.y = Math.atan2(ahead.x - pos.x, ahead.z - pos.z);
 
         if (summit) {
           const halo = new THREE.PointLight(colors.due, 2, 14);
@@ -251,73 +263,106 @@ export default function KnowledgeIslands3D({ steps = [], nextReview, theme }) {
           new THREE.Vector3(last.center.x, last.top, last.center.z), new THREE.Vector3(last.center.x, last.top + 6.7, last.center.z)]),
         new THREE.LineBasicMaterial({ color: colors.line, transparent: true, opacity: 0.6 })));
 
-        // 星野
-        const n = 520;
-        const sp = new Float32Array(n * 3);
-        for (let i = 0; i < n; i += 1) {
-          const r = 90 + Math.random() * 80, th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
-          sp[i * 3] = mid.x + r * Math.sin(ph) * Math.cos(th); sp[i * 3 + 1] = mid.y + r * Math.cos(ph) * 0.8; sp[i * 3 + 2] = mid.z + r * Math.sin(ph) * Math.sin(th);
-        }
-        const starGeo = new THREE.BufferGeometry();
-        starGeo.setAttribute('position', new THREE.BufferAttribute(sp, 3));
-        const stars = new THREE.Points(starGeo, new THREE.PointsMaterial({
-          color: dark ? colors.text : colors.dim, size: dark ? 0.7 : 0.5, transparent: true, opacity: dark ? 0.65 : 0.4, depthWrite: false, sizeAttenuation: false,
-        }));
-        scene.add(stars);
-
-        // 指针视差：轻微转动等轴相机
-        const par = { x: 0, y: 0, tx: 0, ty: 0 };
-        const onMove = (ev) => {
-          if (ev.pointerType === 'touch') return;
-          const r = el.getBoundingClientRect();
-          par.tx = ((ev.clientX - r.left) / r.width - 0.5) * 2;
-          par.ty = ((ev.clientY - r.top) / r.height - 0.5) * 2;
+        // 星空：两层——满天细小的暗星 + 少量亮星，一起绕一根斜轴慢转（像在地上看周日视运动）
+        const sky = new THREE.Group();
+        sky.position.copy(mid);
+        const makeStars = (count, size, opacity) => {
+          const arr = new Float32Array(count * 3);
+          for (let i = 0; i < count; i += 1) {
+            const r = 160 + Math.random() * 120, th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
+            arr[i * 3] = r * Math.sin(ph) * Math.cos(th); arr[i * 3 + 1] = r * Math.cos(ph); arr[i * 3 + 2] = r * Math.sin(ph) * Math.sin(th);
+          }
+          const geo = new THREE.BufferGeometry();
+          geo.setAttribute('position', new THREE.BufferAttribute(arr, 3));
+          return new THREE.Points(geo, new THREE.PointsMaterial({
+            color: dark ? colors.text : colors.dim, size, transparent: true, opacity, depthWrite: false, sizeAttenuation: false,
+          }));
         };
-        const onLeave = () => { par.tx = 0; par.ty = 0; };
-        el.addEventListener('pointermove', onMove);
-        el.addEventListener('pointerleave', onLeave);
-        unbind = () => { el.removeEventListener('pointermove', onMove); el.removeEventListener('pointerleave', onLeave); };
+        sky.add(makeStars(1600, dark ? 0.9 : 0.6, dark ? 0.45 : 0.3));
+        sky.add(makeStars(200, dark ? 1.4 : 1.0, dark ? 0.7 : 0.5));
+        scene.add(sky);
+        // 天极：从画面左上方斜插进来的一根轴，星星绕它转
+        const pole = new THREE.Vector3(-1, 1.7, -1).normalize();
+
+        // 点选：射线打在哪座岛上就选中它（再点一次取消）
+        const ray = new THREE.Raycaster();
+        const ndc = new THREE.Vector2();
+        const onClick = (ev) => {
+          const r = el.getBoundingClientRect();
+          ndc.x = ((ev.clientX - r.left) / r.width) * 2 - 1;
+          ndc.y = -((ev.clientY - r.top) / r.height) * 2 + 1;
+          ray.setFromCamera(ndc, camera);
+          const hit = ray.intersectObjects(built.map((b) => b.mesh), false)[0];
+          const idx = hit ? built.findIndex((b) => b.mesh === hit.object) : -1;
+          setPicked((cur) => (cur === idx ? -1 : idx));
+        };
+        const onHover = (ev) => {
+          const r = el.getBoundingClientRect();
+          ndc.x = ((ev.clientX - r.left) / r.width) * 2 - 1;
+          ndc.y = -((ev.clientY - r.top) / r.height) * 2 + 1;
+          ray.setFromCamera(ndc, camera);
+          el.style.cursor = ray.intersectObjects(built.map((b) => b.mesh), false).length ? 'pointer' : '';
+        };
+        el.addEventListener('click', onClick);
+        el.addEventListener('pointermove', onHover);
+        unbind = () => { el.removeEventListener('click', onClick); el.removeEventListener('pointermove', onHover); el.style.cursor = ''; };
 
         const tmp = new THREE.Vector3();
         const anchor = new THREE.Vector3();
         const R = 90;
+        // 镜头固定：标准等轴角度，不跟鼠标
+        const el2 = Math.atan(1 / Math.SQRT2);
+        camera.position.set(mid.x + R * Math.cos(el2) * Math.SQRT1_2, mid.y + R * Math.sin(el2), mid.z + R * Math.cos(el2) * Math.SQRT1_2);
+        camera.lookAt(mid);
 
         return (t, dt) => {
-          par.x += (par.tx - par.x) * 0.05;
-          par.y += (par.ty - par.y) * 0.05;
-
-          // 岛在宇宙里轻轻浮动，各自相位不同
+          // 岛在宇宙里轻轻浮动，各自相位不同；选中的岛描亮边
+          const sel = pickedRef.current;
           built.forEach((b, i) => {
-            b.group.position.y = b.center.y + Math.sin(t * 0.6 + i * 1.3) * 0.18;
-            if (i === current) b.edgeMat.opacity = 0.75 + Math.sin(t * 2.4) * 0.25;
+            b.group.position.y = b.center.y + Math.sin(t * 0.6 + i * 1.3) * 0.14;
+            if (i === sel) { b.edgeMat.color.copy(colors.text); b.edgeMat.opacity = 1; }
+            else {
+              b.edgeMat.color.copy(i === current ? colors.purple : b.tone);
+              b.edgeMat.opacity = i === current ? 0.75 + Math.sin(t * 2.4) * 0.25 : 0.7;
+            }
           });
+
+          // 星空绕天极慢转：一圈约 12 分钟，肉眼能察觉在动又不抢戏
+          sky.rotateOnAxis(pole, dt * 0.0085);
 
           // 小人：先沿路线走到目标，再原地呼吸；登顶则举手戴冠
           const moving = walked < target - 0.05;
           if (moving) {
             walked = Math.min(target, walked + speed * dt);
             at(walked, pos);
-            at(Math.min(total, walked + 0.6), ahead);
+            at(Math.min(total, walked + 0.8), ahead);
             if (ahead.distanceToSquared(pos) > 1e-4) facing = Math.atan2(ahead.x - pos.x, ahead.z - pos.z);
-            fig.group.rotation.y += (facing - fig.group.rotation.y) * 0.2;
-            const sw = Math.sin(t * 7) * 0.55;
+            fig.group.rotation.y = turnTo(fig.group.rotation.y, facing, 0.12);
+            // 步幅跟着走过的距离算，不跟时间——速度变了脚步也不会打滑
+            const ph = walked * 2.9;
+            const sw = Math.sin(ph) * 0.48;
             fig.legL.rotation.x = sw; fig.legR.rotation.x = -sw;
-            fig.armL.rotation.x = -sw * 0.7; fig.armR.rotation.x = sw * 0.7;
-            fig.group.position.set(pos.x, pos.y + Math.abs(Math.sin(t * 7)) * 0.07, pos.z);
+            fig.armL.rotation.x = -sw * 0.55; fig.armR.rotation.x = sw * 0.55;
+            fig.armL.rotation.z = 0.12; fig.armR.rotation.z = -0.12;
+            fig.group.rotation.x = 0.06;   // 身子微微前倾
+            fig.group.position.set(pos.x, pos.y + Math.abs(Math.sin(ph)) * 0.05, pos.z);
           } else if (summit) {
             fig.armL.rotation.z = Math.PI * 0.8 + Math.sin(t * 3) * 0.12;
             fig.armR.rotation.z = -Math.PI * 0.8 - Math.sin(t * 3) * 0.12;
             fig.legL.rotation.x = 0; fig.legR.rotation.x = 0;
             fig.group.position.set(pos.x, pos.y + Math.abs(Math.sin(t * 3)) * 0.3, pos.z);
-            fig.group.rotation.y += (Math.PI * 0.25 - fig.group.rotation.y) * 0.05;
+            fig.group.rotation.x = 0;
+            fig.group.rotation.y = turnTo(fig.group.rotation.y, Math.PI * 0.25, 0.05);
             fig.laurel.rotation.y = t * 0.6;
           } else {
             // 站定：面朝下一段台阶的方向，轻微呼吸
             const nextDir = built[Math.min(current, built.length - 1)].dir;
             const face = Math.atan2(nextDir.x, nextDir.z);
-            fig.group.rotation.y += (face - fig.group.rotation.y) * 0.05;
-            fig.legL.rotation.x *= 0.9; fig.legR.rotation.x *= 0.9;
-            fig.armL.rotation.x = Math.sin(t * 1.4) * 0.06; fig.armR.rotation.x = -Math.sin(t * 1.4) * 0.06;
+            fig.group.rotation.y = turnTo(fig.group.rotation.y, face, 0.05);
+            fig.group.rotation.x *= 0.9;
+            fig.legL.rotation.x *= 0.85; fig.legR.rotation.x *= 0.85;
+            fig.armL.rotation.x *= 0.85; fig.armR.rotation.x *= 0.85;
+            fig.armL.rotation.z = 0.12 + Math.sin(t * 1.4) * 0.03; fig.armR.rotation.z = -0.12 - Math.sin(t * 1.4) * 0.03;
             fig.group.position.set(pos.x, pos.y + Math.sin(t * 1.4) * 0.03, pos.z);
           }
           // 岛在浮动，小人跟着最近的那座岛一起动
@@ -327,16 +372,6 @@ export default function KnowledgeIslands3D({ steps = [], nextReview, theme }) {
 
           globe.rotation.y = t * 0.25;
           globe.rotation.x = Math.sin(t * 0.4) * 0.15;
-
-          // 等轴相机：固定 45° 俯角方向，只做轻微视差
-          const az = Math.PI / 4 + par.x * 0.09 + Math.sin(t * 0.1) * 0.03;
-          const el2 = Math.atan(1 / Math.SQRT2) + par.y * 0.05;
-          camera.position.set(
-            mid.x + R * Math.cos(el2) * Math.sin(az),
-            mid.y + R * Math.sin(el2),
-            mid.z + R * Math.cos(el2) * Math.cos(az),
-          );
-          camera.lookAt(mid);
 
           // 标签吊在各岛最前面那个角的下方（等轴里那是岛的最低点），不压台阶
           built.forEach((b, i) => {
@@ -354,17 +389,21 @@ export default function KnowledgeIslands3D({ steps = [], nextReview, theme }) {
     return () => { unbind(); stage.dispose(); };
   }, [stairs, current, summit, theme]);
 
+  // 有进度的岛被点选：显示这一科的进度
+  const detail = picked > 0 && picked <= stairs.length ? stairs[picked - 1] : null;
+
   if (!stairs.length) return <div className="orbit3d-empty">从一篇笔记开始</div>;
 
+  const tagOf = (s, i) => (current === i + 1 && !summit ? '当前' : s.lit >= 0.999 ? '已完成' : s.lit > 0 ? '进行中' : '未开始');
   const labels = [
-    { key: 'start', name: '起点', sub: '', cls: 'done' },
+    { key: 'start', name: '起点', cls: 'done' },
     ...stairs.map((s, i) => ({
       key: s.key, name: s.name,
-      sub: `${s.learned} / ${s.total} ${s.unit}`,
       cls: s.lit >= 0.999 ? 'done' : s.lit > 0 ? 'doing' : 'locked',
-      tag: current === i + 1 && !summit ? '当前' : s.lit >= 0.999 ? '已完成' : s.lit > 0 ? '进行中' : '未开始',
+      // 只有点选的那座岛才展开进度，平时只留岛名
+      detail: picked === i + 1 ? { tag: tagOf(s, i), sub: `${s.learned} / ${s.total} ${s.unit}`, pct: s.total ? Math.round((s.learned / s.total) * 100) : 0 } : null,
     })),
-    { key: 'summit', name: '初试', sub: summit ? '登顶' : '', cls: summit ? 'gold' : 'locked' },
+    { key: 'summit', name: '初试', cls: summit ? 'gold' : 'locked', detail: picked === stairs.length + 1 ? { tag: summit ? '登顶' : '未到', sub: summit ? '三科全部完成' : '三科都学完才会亮' } : null },
   ];
 
   return (
@@ -374,15 +413,17 @@ export default function KnowledgeIslands3D({ steps = [], nextReview, theme }) {
              aria-label={`知识岛：${stairs.map((s) => `${s.name} ${s.learned} / ${s.total} ${s.unit}`).join('，')}${summit ? '，已登顶' : ''}`} />
         <div className="orbit3d-labels">
           {labels.map((l, i) => (
-            <div key={l.key} className={`isle-label ${l.cls}`} ref={(node) => { labelRefs.current[i] = node; }}>
-              <span className="il-n">{l.name}{l.tag && <i className="il-tag">{l.tag}</i>}</span>
-              {l.sub && <span className="il-v fig">{l.sub}</span>}
+            <div key={l.key} className={`isle-label ${l.cls}${picked === i ? ' picked' : ''}`} ref={(node) => { labelRefs.current[i] = node; }}>
+              <span className="il-n">{l.name}{l.detail?.tag && <i className="il-tag">{l.detail.tag}</i>}</span>
+              {l.detail?.sub && <span className="il-v fig">{l.detail.sub}{l.detail.pct != null && ` · ${l.detail.pct}%`}</span>}
             </div>
           ))}
         </div>
       </div>
       <div className="orbit-cap">
-        {summit ? '三座岛全亮，登顶。' : current === 0 ? '还在起点' : `当前在「${stairs[current - 1].name}」岛`}
+        {detail
+          ? <>{detail.name}：{detail.learned} / {detail.total} {detail.unit}{detail.total ? `，${Math.round((detail.learned / detail.total) * 100)}%` : ''}</>
+          : summit ? '三座岛全亮，登顶。' : current === 0 ? '还在起点' : `当前在「${stairs[current - 1].name}」岛 · 点一座岛看进度`}
         {nextReview && <>　·　下次复习 {nextReview.slice(5).replace('-', '.')}</>}
       </div>
     </div>

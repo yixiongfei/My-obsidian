@@ -118,6 +118,12 @@ kbd {
 .isle-label.done .il-n { color: var(--hue-3); font-weight: 600; }
 .isle-label.done .il-v { color: var(--text-2); }
 .isle-label.gold .il-n { color: var(--due); font-weight: 600; }
+/* 点选后：名字提亮，进度那行带底 */
+.isle-label.picked .il-n { color: var(--text); }
+.isle-label.picked .il-v {
+  padding: 2px 8px; border-radius: 99px; color: var(--text);
+  background: var(--bg-1); border: var(--hair) solid var(--line-2);
+}
 .orbit-cap {
   font-size: 12.5px; color: var(--dim); letter-spacing: 0.1em;
   padding-top: 14px;
