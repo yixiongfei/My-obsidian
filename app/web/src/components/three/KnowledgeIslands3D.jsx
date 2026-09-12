@@ -434,7 +434,8 @@ export default function KnowledgeIslands3D({ steps = [], milestones = {}, nextRe
       return {
         key: st.key, name: st.name,
         cls: st.done ? (j === stages.length - 1 ? 'gold' : 'done') : idx === current ? 'doing' : 'locked',
-        detail: picked === idx ? { tag: st.done ? `已通过${st.date ? ' ' + st.date.slice(5).replace('-', '.') : ''}` : idx === current ? '当前' : '未到', sub: st.done ? '' : st.hint } : null,
+        // 只给一个状态标签；怎么亮起来不写出来，留作彩蛋
+        detail: picked === idx ? { tag: st.done ? `已通过${st.date ? ' ' + st.date.slice(5).replace('-', '.') : ''}` : idx === current ? '当前' : '未到' } : null,
       };
     }),
   ];

@@ -4,7 +4,7 @@ import { handle, getMeta, setMeta } from './db.js';
 import { DEFAULT_EXAM_DATE } from '../config.js';
 import { index, toAbs } from './vault.js';
 import { allNotes } from './query.js';
-import { todayStr, daysBetween } from './review.js';
+import { todayStr, daysBetween, addDays } from './review.js';
 import { holidaysInMonth, holidayOn } from './holidays.js';
 import { dailyCount, dailyBetween } from './vocabulary.js';
 import { statsBetween } from './exams.js';
@@ -124,6 +124,23 @@ const countsByDay = (from, to) => {
   for (const r of db.prepare('SELECT date d, COUNT(*) c FROM events WHERE date BETWEEN ? AND ? GROUP BY d').all(from, to)) bump(r.d, 'events', r.c);
   return map;
 };
+
+/** 近 days 天每日活动（含今天）：笔记复习 / 新建 / 背词 / 做题，仪表盘的节奏图用 */
+export function activity(days = 90) {
+  const today = todayStr();
+  const from = addDays(today, -(days - 1));
+  const counts = countsByDay(from, today);
+  const exams = examsSafe(from, today);
+  let words = new Map();
+  try { words = dailyBetween(from, today); } catch { /* 词库不可用 */ }
+  const out = [];
+  for (let i = 0; i < days; i += 1) {
+    const date = addDays(from, i);
+    const c = counts.get(date) || { reviewed: 0, created: 0 };
+    out.push({ date, reviews: c.reviewed || 0, created: c.created || 0, words: words.get(date) || 0, exams: exams.byDate?.[date] || 0 });
+  }
+  return out;
+}
 
 /** 年表：12 张月卡片 */
 export async function yearView(year) {

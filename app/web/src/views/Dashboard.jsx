@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import { Band, Loading, ErrorBox, Empty, Item } from '../components/bits.jsx';
+import Trend from '../components/Trend.jsx';
 
 /**
  * 仪表盘按学习过程来摆：
@@ -109,6 +110,19 @@ export default function Dashboard({ version }) {
           </div>
 
           <div style={{ marginTop: 48 }}>
+            <Band title="复习节奏" meta={`近 26 周 · ${counts.reviews} 次`}>
+              <div className="rhythm">
+                <div className="heat" style={{ gridTemplateColumns: `repeat(${Math.ceil(heatmap.length / 7)}, 9px)` }}>
+                  {heatmap.map((d) => (
+                    <i key={d.date} data-l={level(d.count)} data-f={d.future ? 1 : 0} title={`${d.date}　${d.count} 次`} />
+                  ))}
+                </div>
+                <Trend daily={data.daily || []} />
+              </div>
+            </Band>
+          </div>
+
+          <div style={{ marginTop: 48 }}>
             <Band title={due.length ? '今日待复习笔记' : '即将到期的笔记'} meta="间隔　逾期">
               {list.map((n, i) => (
                 <Item key={n.id} note={n} index={i}
@@ -195,15 +209,6 @@ export default function Dashboard({ version }) {
             </div>
           )}
 
-          <div style={{ marginTop: 48 }}>
-            <Band title="复习节奏" meta={`近 26 周 · ${counts.reviews} 次`}>
-              <div className="heat" style={{ marginTop: 18, gridTemplateColumns: `repeat(${Math.ceil(heatmap.length / 7)}, 9px)` }}>
-                {heatmap.map((d) => (
-                  <i key={d.date} data-l={level(d.count)} data-f={d.future ? 1 : 0} title={`${d.date}　${d.count} 次`} />
-                ))}
-              </div>
-            </Band>
-          </div>
 
           <div style={{ marginTop: 48 }}>
             <Band title="标签分布" meta="篇数">

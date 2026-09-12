@@ -102,7 +102,9 @@ app.get('/api/mindmap', wrap(async (_req, res) => res.json(await mindmap())));
  * 复习
  * ------------------------------------------------------------------ */
 
-app.get('/api/dashboard', (_req, res) => res.json({ ...dashboard(schedule.examDate()), points: points.progress(), vocab: vocab.progress(), milestones: milestones() }));
+app.get('/api/dashboard', (_req, res) => res.json({
+  ...dashboard(schedule.examDate()), points: points.progress(), vocab: vocab.progress(), milestones: milestones(), daily: schedule.activity(90),
+}));
 
 /* 里程碑：初试 / 复试 / 上岸 三个开关，过了就在设置里勾上；首页知识岛靠它决定小人站在哪座岛 */
 const MILESTONES = ['初试', '复试', '上岸'];

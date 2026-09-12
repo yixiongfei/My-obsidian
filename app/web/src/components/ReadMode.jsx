@@ -8,7 +8,7 @@ import ReviewBar from './ReviewBar.jsx';
  *
  * 退出：Esc、右上角 ×，或底部记一次复习（记完自动退出）。
  * 进入时会请求浏览器 / 窗口全屏（拿不到也不要紧，遮罩本身就是整页）；
- * 纸永远是白的，夜间主题下临时把根元素切到 light，退出时切回来。
+ * 白天是细格子白纸，夜间是深色点阵——不翻白，反差伤眼。
  */
 export default function ReadMode({ note, onClose, onReviewed }) {
   const closing = useRef(false);
@@ -22,8 +22,6 @@ export default function ReadMode({ note, onClose, onReviewed }) {
 
   useEffect(() => {
     const root = document.documentElement;
-    const prevTheme = root.dataset.theme;
-    if (prevTheme !== 'light') root.dataset.theme = 'light';
     document.body.classList.add('readmode-open');
 
     let wentFullscreen = false;
@@ -43,7 +41,6 @@ export default function ReadMode({ note, onClose, onReviewed }) {
       window.removeEventListener('keydown', onKey);
       document.removeEventListener('fullscreenchange', onFs);
       document.body.classList.remove('readmode-open');
-      if (prevTheme !== 'light') root.dataset.theme = prevTheme || 'dark';
       if (document.fullscreenElement) document.exitFullscreen?.().catch?.(() => {});
     };
   }, [close]);

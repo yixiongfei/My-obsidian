@@ -145,6 +145,16 @@ kbd {
   scrollbar-width: none;
 }
 .heat::-webkit-scrollbar { display: none; }
+/* 复习节奏：热力图 + 每日进度的柱线图并排，窄了就换行 */
+.rhythm { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; margin-top: 18px; }
+.trend { flex: 1 1 260px; min-width: 240px; }
+.trend-head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 11px; color: var(--dim); }
+.trend-head .seg { padding: 2px; }
+.trend-head .seg button { padding: 3px 8px; font-size: 11px; }
+.trend-head input[type='range'] { width: 90px; accent-color: var(--accent); }
+.trend svg { display: block; width: 100%; height: auto; overflow: visible; }
+.trend-legend { display: flex; gap: 14px; margin-top: 6px; font-size: 10.5px; color: var(--dim); }
+.trend-legend i { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 5px; vertical-align: -1px; }
 .heat i { width: 9px; height: 9px; background: var(--heat-0); border-radius: 2px; }
 .heat i[data-l='1'] { background: var(--heat-1); }
 .heat i[data-l='2'] { background: var(--heat-2); }
@@ -324,7 +334,8 @@ kbd {
 .readmode {
   position: fixed; inset: 0; z-index: 120;
   --paper: #FCFBF7; --ink: #23262E; --ink-2: #3A3E48; --grid: rgba(70, 80, 105, 0.085); --ruler: rgba(43, 79, 212, 0.16);
-  background-color: #F3F2EC;
+  --readmode-bg: #F3F2EC;
+  background-color: var(--readmode-bg);
   background-image:
     linear-gradient(var(--grid) 1px, transparent 1px),
     linear-gradient(90deg, var(--grid) 1px, transparent 1px);
@@ -345,11 +356,35 @@ body.readmode-open { overflow: hidden; }
     linear-gradient(90deg, var(--grid) 1px, transparent 1px);
   background-size: 24px 24px;
   background-position: -1px -1px;
-  border: 1px solid rgba(70, 80, 105, 0.12);
+  border: 1px solid var(--readmode-line, rgba(70, 80, 105, 0.12));
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 18px 48px rgba(40, 45, 60, 0.12);
   border-radius: 3px;
   position: relative;
 }
+/* 夜间：不翻成白纸（反差伤眼），改成 Obsidian 那种深色点阵，纸和底同色，只靠点阵和一圈细边分层 */
+:root[data-theme='dark'] .readmode {
+  --paper: #0E1118; --ink: #E6E9F0; --ink-2: #B9C0CE; --grid: transparent; --ruler: rgba(127, 160, 255, 0.28);
+  --readmode-bg: #0B0E15; --readmode-line: rgba(160, 175, 210, 0.16);
+  background-image: radial-gradient(rgba(170, 185, 220, 0.22) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+}
+:root[data-theme='dark'] .readmode-paper {
+  background-image: radial-gradient(rgba(170, 185, 220, 0.16) 1px, transparent 1.4px);
+  background-size: 22px 22px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+:root[data-theme='dark'] .readmode-title { border-bottom-color: rgba(160, 175, 210, 0.2); }
+:root[data-theme='dark'] .readmode .prose code { background: rgba(160, 175, 210, 0.12); }
+:root[data-theme='dark'] .readmode .prose a { color: var(--accent-2); }
+:root[data-theme='dark'] .readmode .prose img { background: transparent; }
+:root[data-theme='dark'] .readmode-x { color: rgba(230, 233, 240, 0.6); background: rgba(14, 17, 24, 0.9); border-color: rgba(160, 175, 210, 0.2); }
+:root[data-theme='dark'] .readmode-x:hover { color: #fff; background: #161b26; }
+:root[data-theme='dark'] .readmode-foot { border-color: rgba(160, 175, 210, 0.16); box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4); }
+:root[data-theme='dark'] .readmode-foot .input { color: var(--ink); border-bottom-color: rgba(160, 175, 210, 0.3); }
+:root[data-theme='dark'] .readmode-foot .input::placeholder { color: rgba(230, 233, 240, 0.4); }
+:root[data-theme='dark'] .readmode-foot .btn { color: var(--ink-2); border-color: rgba(160, 175, 210, 0.35); }
+:root[data-theme='dark'] .readmode-foot .btn:hover { color: var(--ink); border-color: var(--ink-2); }
+:root[data-theme='dark'] .readmode-hint { color: rgba(230, 233, 240, 0.4); }
 /* 左侧一道淡淡的装订线，像本子上的红边 */
 .readmode-paper::before {
   content: ''; position: absolute; top: 0; bottom: 0; left: 48px; width: 1px; background: var(--ruler);
@@ -1064,6 +1099,8 @@ mark.hl.hl-flash { animation: hl-flash 2.4s var(--ease) both; }
 .day-cell .dc-dots i.due { background: var(--due); }
 .day-cell .dc-dots i.rev { background: var(--accent-2); }
 .day-cell .dc-dots i.new { background: var(--hue-4); }
+.day-cell .dc-dots i.word { background: var(--hue-3); }
+.day-cell .dc-dots i.exam { background: var(--hue-2); }
 .cal-legend .lg-lit { width: 14px; height: 9px; border-radius: 2px; background: var(--bg-1); border: 1px solid var(--line-2); box-shadow: inset 0 0 0 1px var(--accent-soft); }
 .day-cell .dc-dots i.hol { background: var(--holiday); }
 .day-cell .dc-rows { margin-top: auto; display: flex; flex-direction: column; gap: 2px; padding-top: 6px; }
