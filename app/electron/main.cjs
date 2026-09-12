@@ -12,6 +12,16 @@ let win = null;
 let server = null;
 let port = 0;
 
+/* 只允许一个实例：两份程序同时开会各起一个服务、各监听一次仓库，
+   SQLite 虽然扛得住，但复习记录会被写两遍。第二次启动只把已有窗口拉到前面 */
+if (!app.requestSingleInstanceLock()) {
+  app.quit();
+} else {
+  app.on('second-instance', () => {
+    if (win) { if (win.isMinimized()) win.restore(); win.focus(); }
+  });
+}
+
 /* ---------------------------------------------------------------- *
  * 配置：记住用户选的 Obsidian 仓库路径
  * ---------------------------------------------------------------- */
@@ -91,6 +101,7 @@ function createWindow() {
     minHeight: 620,
     backgroundColor: '#05070b',
     title: '知识库',
+    icon: path.join(__dirname, '..', 'build', 'icon.png'),
     show: false,
     autoHideMenuBar: true,
     webPreferences: { contextIsolation: true, nodeIntegration: false },

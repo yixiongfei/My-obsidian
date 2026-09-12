@@ -1,0 +1,9 @@
+# Google Drive 桌面同步产生的临时文件夹
+.tmp.driveupload/
+
+# Obsidian 本地 UI 状态（纯本地，无需同步）
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+
+# Claudian AI 对话历史记录（本地隐私内容，不同步）
+.claudian/sessions/

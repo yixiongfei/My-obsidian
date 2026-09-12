@@ -54,10 +54,32 @@ pnpm start            # 生产模式，后端同时托管前端：http://127.0.0
 
 ```bash
 npm run electron:dev     # 桌面窗口里跑开发版
-npm run electron:build   # 产出 release/ 里的安装包
+npm run electron:build   # 产出 release/知识库-<版本>-setup.exe（约 100MB）
 ```
 
-打包后第一次启动会让你选 Obsidian 仓库文件夹，选过一次就记住了；菜单里可以随时切换。
+打包后第一次启动会让你选 Obsidian 仓库文件夹（选仓库根，程序自己找里面的 `My-md/`），选过一次就记住了；
+菜单里可以随时切换。程序自带后端，随机挑一个空闲端口，不会和别的服务抢；只允许开一个实例，
+再点一次图标只会把已有窗口拉到前面。
+
+Windows 本机打包时 electron-builder 会解压 `winCodeSign`，里面两个 macOS 符号链接在没有
+「创建符号链接」权限的账户下会报错。绕过：用 7za 手动把
+`%LOCALAPPDATA%\electron-builder\Cache\winCodeSign\<随机数>.7z` 解到同目录的 `winCodeSign-2.6.0/`
+（两个 dylib 报错忽略），再跑一次 build 就会直接用缓存。
+
+### 发布：打标签，GitHub 自动出安装包
+
+安装包超过 GitHub 单文件 100MB 上限，不进 git 分支；由 [`.github/workflows/release.yml`](../.github/workflows/release.yml)
+在推送 `v*` 标签时于 windows-latest 上打包，并挂到同名 Release：
+
+```bash
+# 改 app/package.json 的 version，提交后：
+git tag v1.0.1
+git push origin v1.0.1
+```
+
+几分钟后到仓库的 Releases 页下载 `知识库-1.0.1-setup.exe`。换电脑：clone 仓库（带 `My-md/` 与 `.kb/`）→ 装安装包 → 首次启动选 clone 下来的文件夹。
+
+分支约定：`dev` 日常开发；`release` 只在发版时快进到打了标签的提交，永远可装可用。
 
 ## 六个视图
 
