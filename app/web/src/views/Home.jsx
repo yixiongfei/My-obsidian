@@ -6,7 +6,7 @@ import { Loading, ErrorBox } from '../components/bits.jsx';
 /* three.js 单独占约 200KB gzip，而首页这张图只是装饰，不该挡着首屏。
    拆成独立分块后台加载，占位块尺寸和成品一致，不会有布局跳动。 */
 const Orrery3D = lazy(() => import('../components/three/Orrery3D.jsx'));
-const StairClimb3D = lazy(() => import('../components/three/StairClimb3D.jsx'));
+const KnowledgeIslands3D = lazy(() => import('../components/three/KnowledgeIslands3D.jsx'));
 
 const dot = (d) => (d ? d.replaceAll('-', '.') : '—');
 
@@ -29,7 +29,7 @@ export default function Home({ version, theme }) {
     .map((g) => ({ name: g.name, notes: g.count, mastery: g.mastery }));
   const nextDue = upcoming[0]?.nextReview || due[0]?.nextReview;
 
-  // 夜间的登阶图：英语看学过的词，数学 / 408 看学过的考点
+  // 夜间的知识岛：英语看学过的词，数学 / 408 看学过的考点
   const pg = (key) => data.points?.groups?.find((g) => g.key === key);
   const steps = [
     { key: 'english', name: '英语', learned: data.vocab?.learned || 0, total: data.vocab?.total || 0, unit: '词' },
@@ -73,7 +73,7 @@ export default function Home({ version, theme }) {
           <div className="card hero-art">
             <Suspense fallback={<div className="orbit3d-empty" />}>
               {theme === 'dark'
-                ? <StairClimb3D steps={steps} nextReview={nextDue} theme={theme} />
+                ? <KnowledgeIslands3D steps={steps} nextReview={nextDue} theme={theme} />
                 : <Orrery3D subjects={groups} theme={theme} />}
             </Suspense>
           </div>

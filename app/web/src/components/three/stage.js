@@ -29,6 +29,8 @@ export function themeColors() {
     text: pick('--text', '#E8ECF5'),
     dim: pick('--dim', '#5A6479'),
     line: pick('--line-2', '#2E3950'),
+    cyan: pick('--hue-3', '#3FC0C8'),
+    purple: pick('--hue-5', '#A98DF2'),
   };
 }
 
@@ -42,10 +44,11 @@ export function prefersReducedMotion() {
  * @param {number}      opts.fov
  * @param {[number,number,number]} opts.cameraAt
  * @param {number}      opts.bloom    辉光强度，0 表示不挂后期
+ * @param {number}      [opts.ortho]  给了就用正交相机（2.5D 等轴），值是视口高度对应的世界单位
  * @param {(ctx) => (t: number, dt: number) => void} opts.build
  *        构建场景，返回每帧调用的 update
  */
-export function createStage(el, { fov = 38, cameraAt = [0, 0, 60], bloom = 0.7, shadows = false, build }) {
+export function createStage(el, { fov = 38, cameraAt = [0, 0, 60], bloom = 0.7, shadows = false, ortho = 0, build }) {
   const dark = document.documentElement.getAttribute('data-theme') === 'dark';
   const colors = themeColors();
 
@@ -72,9 +75,20 @@ export function createStage(el, { fov = 38, cameraAt = [0, 0, 60], bloom = 0.7, 
   renderer.domElement.style.display = 'block';
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(fov, width / height, 0.1, 2000);
+  const orthoFrustum = (cam, w, h) => {
+    const a = w / h;
+    cam.left = -ortho * a / 2; cam.right = ortho * a / 2; cam.top = ortho / 2; cam.bottom = -ortho / 2;
+  };
+  let camera;
+  if (ortho > 0) {
+    camera = new THREE.OrthographicCamera(-1, 1, 1, -1, -500, 1000);
+    orthoFrustum(camera, width, height);
+  } else {
+    camera = new THREE.PerspectiveCamera(fov, width / height, 0.1, 2000);
+  }
   camera.position.set(...cameraAt);
   camera.lookAt(0, 0, 0);
+  camera.updateProjectionMatrix();
 
   const composer = new EffectComposer(renderer);
   composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -108,7 +122,8 @@ export function createStage(el, { fov = 38, cameraAt = [0, 0, 60], bloom = 0.7, 
     const h = Math.max(1, el.clientHeight);
     size.width = w;
     size.height = h;
-    camera.aspect = w / h;
+    if (ortho > 0) orthoFrustum(camera, w, h);
+    else camera.aspect = w / h;
     camera.updateProjectionMatrix();
     renderer.setSize(w, h);
     composer.setSize(w, h);
