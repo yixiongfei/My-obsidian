@@ -5,6 +5,7 @@ import { useApi } from '../hooks.js';
 import Prose from '../components/Prose.jsx';
 import MindMap from '../components/MindMap.jsx';
 import ReviewBar from '../components/ReviewBar.jsx';
+import ReadMode from '../components/ReadMode.jsx';
 import FolderTree from '../components/FolderTree.jsx';
 import { Loading, ErrorBox, Empty } from '../components/bits.jsx';
 
@@ -17,9 +18,10 @@ function Reader({ id, version, onReviewed }) {
   const scrollRef = useRef(null);
   const reviewRef = useRef(null);
   const [active, setActive] = useState('');
+  const [reading, setReading] = useState(false);
   const { data: note, loading, error, reload } = useApi(() => api.note(id), [id, version]);
 
-  useEffect(() => { scrollRef.current?.scrollTo({ top: 0 }); }, [id]);
+  useEffect(() => { scrollRef.current?.scrollTo({ top: 0 }); setReading(false); }, [id]);
 
   useEffect(() => {
     const root = scrollRef.current;
@@ -45,6 +47,9 @@ function Reader({ id, version, onReviewed }) {
 
   return (
     <div className="reader scroll" ref={scrollRef}>
+      {reading && note.words > 0 && (
+        <ReadMode note={note} onClose={() => setReading(false)} onReviewed={() => { reload(); onReviewed?.(); }} />
+      )}
       <div className="reader-inner">
         <div className="reader-article">
           <header className="reader-head">
@@ -55,10 +60,10 @@ function Reader({ id, version, onReviewed }) {
             <div className="rh-title">
               <h1>{note.title}</h1>
               {/* 不再跳去 /review——那儿现在是英语词汇 Anki。
-                  深度复习就在这一页正文下方完成，按钮只负责把人送过去 */}
-              <button className="btn primary" title="滚动到本页的复习记录"
-                      onClick={() => reviewRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' })}>
-                复习这篇　↓
+                  深度复习 = 全屏阅读模式：只剩标题和正文，读完在底部记一次 */}
+              <button className="btn primary" title="全屏阅读模式，只显示知识本身；Esc 退出"
+                      onClick={() => setReading(true)}>
+                复习这篇　⤢
               </button>
             </div>
             <div className="reader-meta">
