@@ -112,7 +112,7 @@ export default function Settings({ open, onClose, theme, setTheme, settings, upd
             </label>
           ))}
         </div>
-        <div className="settings-hint">考完、过了就勾上：首页知识岛上的小人会往前走；上岸那一格勾上才算成功。记在仓库的 .kb 里，换电脑也在。</div>
+        <div className="settings-hint">考完、过了就勾上</div>
       </div>
 
       <div className="settings-sec">

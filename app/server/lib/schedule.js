@@ -113,12 +113,19 @@ export async function roadmap() {
 
 const countsByDay = (from, to) => {
   const db = handle();
+  const today = todayStr();
   const map = new Map();
   const bump = (date, key, n = 1) => {
-    if (!map.has(date)) map.set(date, { due: 0, reviewed: 0, created: 0, events: 0 });
+    if (!map.has(date)) map.set(date, { due: 0, reviewed: 0, created: 0, events: 0, overdue: 0 });
     map.get(date)[key] += n;
   };
-  for (const r of db.prepare('SELECT next_review d, COUNT(*) c FROM notes WHERE reviewable = 1 AND next_review BETWEEN ? AND ? GROUP BY d').all(from, to)) bump(r.d, 'due', r.c);
+  /* 待复习只挂在今天和以后：昨天该复习没复习的，不是"昨天的事"，是今天还欠着——
+     所以 next_review 早于今天的一律记到今天，另外记一份 overdue 好在格子里说明 */
+  for (const r of db.prepare('SELECT next_review d, COUNT(*) c FROM notes WHERE reviewable = 1 AND next_review >= ? AND next_review BETWEEN ? AND ? GROUP BY d').all(today, from, to)) bump(r.d, 'due', r.c);
+  if (today >= from && today <= to) {
+    const late = db.prepare('SELECT COUNT(*) c FROM notes WHERE reviewable = 1 AND next_review < ?').get(today).c;
+    if (late) { bump(today, 'due', late); bump(today, 'overdue', late); }
+  }
   for (const r of db.prepare('SELECT date d, COUNT(*) c FROM reviews WHERE date BETWEEN ? AND ? GROUP BY d').all(from, to)) bump(r.d, 'reviewed', r.c);
   for (const r of db.prepare('SELECT created d, COUNT(*) c FROM notes WHERE created BETWEEN ? AND ? GROUP BY d').all(from, to)) bump(r.d, 'created', r.c);
   for (const r of db.prepare('SELECT date d, COUNT(*) c FROM events WHERE date BETWEEN ? AND ? GROUP BY d').all(from, to)) bump(r.d, 'events', r.c);
@@ -207,7 +214,7 @@ export async function monthView(monthKey) {
   const days = [];
   for (let d = 1; d <= daysInMonth; d++) {
     const date = `${y}-${pad(m)}-${pad(d)}`;
-    const c = counts.get(date) || { due: 0, reviewed: 0, created: 0, events: 0 };
+    const c = counts.get(date) || { due: 0, reviewed: 0, created: 0, events: 0, overdue: 0 };
     const weekday = new Date(y, m - 1, d).getDay();
     const wordsDone = words.get(date) || 0;
     const examsDone = exams.byDate?.[date] || 0;

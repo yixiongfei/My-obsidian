@@ -1072,8 +1072,7 @@ mark.hl.hl-flash { animation: hl-flash 2.4s var(--ease) both; }
 
 .cal-head { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
 .cal-head > div { font-size: 11px; letter-spacing: 0.14em; color: var(--dim); text-align: center; padding-bottom: 10px; }
-.cal-head > div.sun { color: var(--holiday); }
-.cal-head > div.sat { color: var(--text-2); }
+.cal-head > div.sun, .cal-head > div.sat { color: var(--rest); }
 
 .cal { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; }
 .day-cell {
@@ -1092,8 +1091,8 @@ mark.hl.hl-flash { animation: hl-flash 2.4s var(--ease) both; }
 .day-cell.today { border-color: var(--accent); background: var(--accent-soft); opacity: 1; }
 .day-cell .dc-n { font-size: 13.5px; font-weight: 500; color: var(--text-2); }
 .day-cell.today .dc-n { color: var(--accent); }
-.day-cell.sun .dc-n, .day-cell.holiday .dc-n { color: var(--holiday); }
-.day-cell .dc-hol { font-size: 10px; color: var(--holiday); margin-top: 3px; line-height: 1.3; }
+.day-cell.sun .dc-n, .day-cell.sat .dc-n, .day-cell.holiday .dc-n { color: var(--rest); }
+.day-cell .dc-hol { font-size: 10px; color: var(--rest); margin-top: 3px; line-height: 1.3; }
 .day-cell .dc-dots { display: flex; gap: 4px; margin-top: auto; padding-top: 8px; }
 .day-cell .dc-dots i { width: 6px; height: 6px; border-radius: 50%; }
 .day-cell .dc-dots i.due { background: var(--due); }
@@ -1101,8 +1100,11 @@ mark.hl.hl-flash { animation: hl-flash 2.4s var(--ease) both; }
 .day-cell .dc-dots i.new { background: var(--hue-4); }
 .day-cell .dc-dots i.word { background: var(--hue-3); }
 .day-cell .dc-dots i.exam { background: var(--hue-2); }
-.cal-legend .lg-lit { width: 14px; height: 9px; border-radius: 2px; background: var(--bg-1); border: 1px solid var(--line-2); box-shadow: inset 0 0 0 1px var(--accent-soft); }
-.day-cell .dc-dots i.hol { background: var(--holiday); }
+
+.day-cell .dc-dots i.hol { background: var(--rest); }
+/* 日程安排：空心小方块，和实心圆点区分开 */
+.day-cell .dc-dots i.plan { width: 7px; height: 7px; border-radius: 2px; background: none; border: 1.5px solid var(--accent-2); box-sizing: border-box; }
+.cal-legend .lg-plan { width: 8px; height: 8px; border-radius: 2px; border: 1.5px solid var(--accent-2); box-sizing: border-box; }
 .day-cell .dc-rows { margin-top: auto; display: flex; flex-direction: column; gap: 2px; padding-top: 6px; }
 .day-cell .dc-row { display: flex; justify-content: space-between; font-size: 10.5px; }
 

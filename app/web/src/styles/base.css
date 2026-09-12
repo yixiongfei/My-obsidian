@@ -34,6 +34,7 @@
   --due:         #E8A33D;   /* 琥珀：到期 / 逾期 */
   --due-soft:    rgba(232, 163, 61, 0.12);
   --holiday:     #E05C5C;
+  --rest:        #B9A7F0;   /* 薰衣草：周末与祝日，放松的颜色，日历专用 */
 
   --heat-0: #10151F;
   --heat-1: #1B2B52;
@@ -89,6 +90,7 @@
   --due:         #A9670F;
   --due-soft:    rgba(169, 103, 15, 0.10);
   --holiday:     #C0392B;
+  --rest:        #7A5CD6;
 
   --heat-0: #E8EBF2;
   --heat-1: #C4D0F0;

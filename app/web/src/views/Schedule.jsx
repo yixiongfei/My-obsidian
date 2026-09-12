@@ -143,7 +143,7 @@ function MonthView({ version, monthKey }) {
               <div className="stat-k" style={{ marginTop: 0, marginBottom: 6 }}>本月の祝日</div>
               {data.holidays.map((h) => (
                 <div className="row" key={h.day} style={{ gap: 9, padding: '2px 0' }}>
-                  <span style={{ width: 6, height: 6, borderRadius: 9, background: 'var(--holiday)', flex: 'none' }} />
+                  <span style={{ width: 6, height: 6, borderRadius: 9, background: 'var(--rest)', flex: 'none' }} />
                   <span style={{ fontSize: 12, color: 'var(--text-2)' }}>{h.day} 日</span>
                   <span style={{ fontSize: 12, color: 'var(--dim)' }}>{h.name}</span>
                 </div>
@@ -176,8 +176,8 @@ function MonthView({ version, monthKey }) {
           <span className="lg"><i style={{ background: 'var(--hue-4)' }} />新建</span>
           <span className="lg"><i style={{ background: 'var(--hue-3)' }} />背词</span>
           <span className="lg"><i style={{ background: 'var(--hue-2)' }} />做题</span>
-          <span className="lg"><i className="lg-lit" />学过的日子</span>
-          <span className="lg"><i style={{ background: 'var(--holiday)' }} />日本の祝日</span>
+          <span className="lg"><i className="lg-plan" />日程安排</span>
+          <span className="lg"><i style={{ background: 'var(--rest)' }} />休息日 · 日本の祝日</span>
         </div>
       </div>
 
@@ -191,13 +191,13 @@ function MonthView({ version, monthKey }) {
         {Array.from({ length: data.leadingBlanks }).map((_, i) => <div className="day-cell blank" key={`b${i}`} />)}
         {data.days.map((d) => (
           <div key={d.date}
-               title={[d.holiday, d.due && `待复习 ${d.due}`, d.reviewed && `已复习 ${d.reviewed}`, d.created && `新建 ${d.created}`, d.words && `背词 ${d.words}`, d.exams && `做题 ${d.exams}`].filter(Boolean).join(' · ') || undefined}
+               title={[d.holiday, d.events && `日程 ${d.events}`, d.due && `待复习 ${d.due}${d.overdue ? `（含逾期 ${d.overdue}）` : ''}`, d.reviewed && `已复习 ${d.reviewed}`, d.created && `新建 ${d.created}`, d.words && `背词 ${d.words}`, d.exams && `做题 ${d.exams}`].filter(Boolean).join(' · ') || undefined}
                className={[
                  'day-cell',
                  d.isToday ? 'today' : '',
                  d.isPast && !d.isToday ? 'past' : '',
                  d.active ? 'active' : '',
-                 d.weekday === 0 ? 'sun' : '',
+                 d.weekday === 0 ? 'sun' : d.weekday === 6 ? 'sat' : '',
                  d.holiday ? 'holiday' : '',
                ].filter(Boolean).join(' ')}
                onClick={() => navigate(`/schedule/${y}/${m}/${pad(d.day)}`)}>
@@ -210,7 +210,7 @@ function MonthView({ version, monthKey }) {
               {d.created > 0 && <i className="new" />}
               {d.words > 0 && <i className="word" />}
               {d.exams > 0 && <i className="exam" />}
-              {d.events > 0 && <i className="due" />}
+              {d.events > 0 && <i className="plan" title="有日程安排" />}
             </div>
             {/* 格子里只放点，数字点进日视图看；title 里带一份摘要 */}
           </div>
@@ -255,7 +255,7 @@ function DayView({ version, date }) {
 
       <div style={{ borderTop: 'var(--hair) solid var(--line-2)', paddingTop: 26, display: 'flex', alignItems: 'flex-end', gap: 40, flexWrap: 'wrap', marginBottom: 8 }}>
         <div className="row" style={{ alignItems: 'baseline', gap: 14 }}>
-          <span className="fig" style={{ fontSize: 88, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 0.85, color: data.holiday ? 'var(--holiday)' : data.isToday ? 'var(--accent)' : 'var(--text)' }}>
+          <span className="fig" style={{ fontSize: 88, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 0.85, color: data.holiday ? 'var(--rest)' : data.isToday ? 'var(--accent)' : 'var(--text)' }}>
             {pad(Number(d))}
           </span>
           <div>
@@ -265,8 +265,8 @@ function DayView({ version, date }) {
             </div>
             {data.holiday && (
               <div className="row" style={{ gap: 7, marginTop: 5 }}>
-                <span style={{ width: 6, height: 6, borderRadius: 9, background: 'var(--holiday)', flex: 'none' }} />
-                <span style={{ fontSize: 12, color: 'var(--holiday)' }}>{data.holiday}</span>
+                <span style={{ width: 6, height: 6, borderRadius: 9, background: 'var(--rest)', flex: 'none' }} />
+                <span style={{ fontSize: 12, color: 'var(--rest)' }}>{data.holiday}</span>
               </div>
             )}
           </div>
