@@ -1,7 +1,7 @@
 import { DatabaseSync } from 'node:sqlite';
 import fs from 'node:fs';
 import path from 'node:path';
-import { VAULT_ROOT } from '../config.js';
+import { KB_DIR } from '../config.js';
 
 /**
  * 英语词汇的独立数据库。
@@ -15,7 +15,7 @@ import { VAULT_ROOT } from '../config.js';
  * 不跨 index.db 做混合事务。
  */
 
-const DB_DIR = path.join(VAULT_ROOT, '.kb');
+const DB_DIR = KB_DIR;
 export const VOCAB_DB_PATH = process.env.KB_VOCAB_DB || path.join(DB_DIR, 'vocabulary.db');
 
 export const SCHEMA_VERSION = 2;

@@ -1,7 +1,7 @@
 import { DatabaseSync } from 'node:sqlite';
 import fs from 'node:fs';
 import path from 'node:path';
-import { VAULT_ROOT } from '../config.js';
+import { KB_DIR } from '../config.js';
 
 /**
  * SQLite 的定位：**派生索引层 + 应用数据**。
@@ -13,7 +13,7 @@ import { VAULT_ROOT } from '../config.js';
  * - 日程（events）以本库为准，schedule.json 不再需要，启动时自动迁移一次。
  */
 
-const DB_DIR = path.join(VAULT_ROOT, '.kb');
+const DB_DIR = KB_DIR;
 export const DB_PATH = process.env.KB_DB || path.join(DB_DIR, 'index.db');
 
 let db = null;

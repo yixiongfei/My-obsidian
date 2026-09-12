@@ -31,8 +31,22 @@ pnpm start            # 生产模式，后端同时托管前端：http://127.0.0
 | 真题作答记录、划的句子 | `.kb/index.db` 的 `exam_attempts` / `exam_marks` | **不能**（随仓库提交） |
 | 考点标签受控词表 | `app/tags.yaml` | —— 手写维护，思维导图与首页学科图的骨架 |
 
-`.kb/` 一直被 git 忽略，里面是你的私人 SQLite 数据。换电脑时手动复制 `index.db` 和
-`vocabulary.db`；如果库里还有没 checkpoint 的写入，`-wal` / `-shm` 也要一起带上。
+## 仓库布局：笔记全在 `My-md/`
+
+```
+<Obsidian 仓库>/
+  My-md/            ← 笔记根目录：数学 / 英语 / 408 / 图像 / 个人，云端只需保留这一个文件夹
+  .kb/              ← 派生数据：index.db、vocabulary.db、exams/、tts/（随 git 走，不需要另外同步）
+  app/              ← 本站
+  .obsidian/
+```
+
+服务端以 `My-md/` 为笔记根（`config.js` 的 `VAULT_ROOT`），笔记 id 相对它计算——还是 `数学/高等数学/xxx.md`，
+所以复习记录、错题本、词汇日志、划句的路径都不受搬家影响。`NOTES_DIR` 环境变量可以换名字；
+目录不存在时退回整个仓库根（老布局）。`.kb/` 始终在仓库根，由 `KB_DIR` 指定。
+
+`.kb/` 里的两个 `.db` 已随仓库提交，clone 下来就能用；提交前跑 `node scripts/checkpoint-db.mjs`
+把 `-wal` 里的写入并进主文件。
 
 重导公开词表**不会**重置你的卡片进度——种子只补充释义、音标、例句，一行都不碰 `vocab_cards`。
 

@@ -34,7 +34,7 @@ import fsp from 'node:fs/promises';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { parse } from 'node-html-parser';
-import { VAULT_ROOT } from '../server/config.js';
+import { KB_DIR } from '../server/config.js';
 
 const SITE = 'https://www.csgraduates.com';
 
@@ -56,7 +56,7 @@ const TAG_PAGES = {
   math: { path: 'tags/math', label: '数学真题标签', kindOf: (href) => /math(\d)/.exec(href)?.[0] || 'math1' },
 };
 
-const OUT_DIR = path.join(VAULT_ROOT, '.kb', 'exams');
+const OUT_DIR = path.join(KB_DIR, 'exams');
 const RAW_DIR = path.join(OUT_DIR, 'raw');
 const IMG_DIR = path.join(OUT_DIR, 'img');
 const UA = 'Mozilla/5.0 (personal study tool; kb-exams importer)';

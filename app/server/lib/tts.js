@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { VAULT_ROOT } from '../config.js';
+import { KB_DIR } from '../config.js';
 
 /**
  * 词卡发音：走你自己那个 Cloudflare Worker（AIchat 仓库里的 tts-voice-magic），
@@ -15,7 +15,7 @@ import { VAULT_ROOT } from '../config.js';
 
 const TTS_URL = process.env.TTS_URL || 'https://tts-voice-magic.yixiongfei1785.workers.dev/v1/audio/speech';
 const TTS_KEY = process.env.TTS_API_KEY || '';
-const CACHE_DIR = path.join(VAULT_ROOT, '.kb', 'tts');
+const CACHE_DIR = path.join(KB_DIR, 'tts');
 const DEFAULT_VOICE = 'en-US-JennyNeural';
 const VOICES = new Set(['en-US-JennyNeural', 'en-US-AriaNeural', 'en-US-GuyNeural', 'en-GB-SoniaNeural', 'en-GB-RyanNeural']);
 

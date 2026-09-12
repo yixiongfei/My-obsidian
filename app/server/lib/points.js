@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { VAULT_ROOT } from '../config.js';
+import { KB_DIR } from '../config.js';
 import { handle } from './db.js';
 import { allNotes } from './query.js';
 import { todayStr, daysBetween, addDays } from './review.js';
@@ -18,7 +18,7 @@ import { todayStr, daysBetween, addDays } from './review.js';
  * 英语没有考点清单，词表分支下的笔记照旧直接挂在分支上。
  */
 
-const EXAMS_DIR = path.join(VAULT_ROOT, '.kb', 'exams');
+const EXAMS_DIR = path.join(KB_DIR, 'exams');
 /** tags.yaml 的大类 → 真题标签文件。用数组不用对象：对象会把 "408" 这种数字键排到最前 */
 const GROUPS = [
   { category: '数学', key: 'math', file: 'tags-math.json' },

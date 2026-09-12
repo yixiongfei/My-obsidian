@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -7,11 +8,25 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export const APP_ROOT = path.resolve(__dirname, '..');
 
 /**
- * Obsidian 仓库根目录。
+ * Obsidian 仓库根目录（.obsidian、.kb、app 都在这一层）。
  * 默认取 app/ 的上一级（本仓库自身即 vault）。
  * 打包成桌面程序后由 VAULT_ROOT 环境变量指定用户自己的 vault 路径。
  */
-export const VAULT_ROOT = path.resolve(process.env.VAULT_ROOT || path.resolve(APP_ROOT, '..'));
+export const REPO_ROOT = path.resolve(process.env.VAULT_ROOT || path.resolve(APP_ROOT, '..'));
+
+/**
+ * 笔记根目录：仓库里的 My-md/。笔记、图片、画布全部收在这一个文件夹里，
+ * 云端只需保留它；索引、真题、语音缓存这些派生数据留在仓库根的 .kb/，不混进去。
+ * 笔记 id 相对这一层算（数学/…、英语/…），所以把文件夹整体搬进 My-md 不会让
+ * 复习记录、错题本、词汇日志里的路径失效。
+ * 可用 NOTES_DIR 环境变量换名字；该目录不存在时退回整个仓库根（老布局）。
+ */
+export const NOTES_DIR = (process.env.NOTES_DIR ?? 'My-md').trim();
+const notesRoot = NOTES_DIR ? path.join(REPO_ROOT, NOTES_DIR) : REPO_ROOT;
+export const VAULT_ROOT = fs.existsSync(notesRoot) ? notesRoot : REPO_ROOT;
+
+/** 派生数据目录：SQLite 索引、词汇库、真题 JSON、语音缓存 */
+export const KB_DIR = path.join(REPO_ROOT, '.kb');
 
 export const PORT = Number(process.env.PORT) || 5174;
 
@@ -59,7 +74,7 @@ export const INTERVALS = [1, 2, 4, 7, 15, 30];
 export const REVIEW_LOG = path.join(APP_ROOT, 'review_log.jsonl');
 export const TAGS_FILE = path.join(APP_ROOT, 'tags.yaml');
 /** 旧版日程文件，仅用于首次启动时向 SQLite 迁移 */
-export const SCHEDULE_FILE = path.join(VAULT_ROOT, 'schedule.json');
+export const SCHEDULE_FILE = path.join(REPO_ROOT, 'schedule.json');
 
 /** 考试日期，可被 schedule.json 的 examDate 覆盖 */
 export const DEFAULT_EXAM_DATE = '2027-12-21';

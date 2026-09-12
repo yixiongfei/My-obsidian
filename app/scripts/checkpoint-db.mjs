@@ -9,10 +9,10 @@
 import { DatabaseSync } from 'node:sqlite';
 import fs from 'node:fs';
 import path from 'node:path';
-import { VAULT_ROOT } from '../server/config.js';
+import { KB_DIR } from '../server/config.js';
 
 for (const name of ['index.db', 'vocabulary.db']) {
-  const file = path.join(VAULT_ROOT, '.kb', name);
+  const file = path.join(KB_DIR, name);
   if (!fs.existsSync(file)) { console.log(`${name}：不存在，跳过`); continue; }
   const db = new DatabaseSync(file);
   db.exec('PRAGMA busy_timeout = 10000;');

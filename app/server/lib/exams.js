@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { VAULT_ROOT } from '../config.js';
+import { KB_DIR } from '../config.js';
 import { handle } from './db.js';
 
 /**
@@ -17,7 +17,7 @@ import { handle } from './db.js';
  *   free    翻译 / 作文 / 解答题，一个长答                   answers {"text":"…"}
  */
 
-export const EXAMS_DIR = path.join(VAULT_ROOT, '.kb', 'exams');
+export const EXAMS_DIR = path.join(KB_DIR, 'exams');
 export const EXAMS_IMG_DIR = path.join(EXAMS_DIR, 'img');
 const INDEX_FILE = path.join(EXAMS_DIR, 'index.json');
 
