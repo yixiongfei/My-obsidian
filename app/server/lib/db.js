@@ -21,6 +21,8 @@ let db = null;
 const SCHEMA = `
 PRAGMA journal_mode = WAL;
 PRAGMA foreign_keys = ON;
+-- 桌面版和开发服务、或者 checkpoint 脚本可能同时写这个库：等 5 秒再报 busy，别一碰就炸
+PRAGMA busy_timeout = 5000;
 
 CREATE TABLE IF NOT EXISTS notes (
   id            TEXT PRIMARY KEY,       -- 相对 vault 的 POSIX 路径

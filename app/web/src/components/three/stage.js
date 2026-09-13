@@ -55,8 +55,11 @@ export function createStage(el, { fov = 38, cameraAt = [0, 0, 60], bloom = 0.7, 
   const width = Math.max(1, el.clientWidth);
   const height = Math.max(1, el.clientHeight);
 
+  /* 像素比封顶 1.5：27 寸 2K/4K 屏上 dpr 2 意味着后期的每张渲染目标都是四倍像素，
+     辉光那一串半精度 mip 目标加起来几百 MB；1.5 在这种画面上看不出差别 */
+  const DPR = Math.min(window.devicePixelRatio || 1, 1.5);
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(DPR);
   renderer.setSize(width, height);
   /* 画布透明，底色交给外层卡片的 CSS 背景。
      用不透明清屏色的话，那个值会在合成器管线里被多做一次 sRGB 编码——
@@ -91,7 +94,7 @@ export function createStage(el, { fov = 38, cameraAt = [0, 0, 60], bloom = 0.7, 
   camera.updateProjectionMatrix();
 
   const composer = new EffectComposer(renderer);
-  composer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  composer.setPixelRatio(DPR);
   composer.setSize(width, height);
   composer.addPass(new RenderPass(scene, camera));
 
@@ -188,8 +191,13 @@ export function createStage(el, { fov = 38, cameraAt = [0, 0, 60], bloom = 0.7, 
         if (Array.isArray(m)) m.forEach((x) => x.dispose?.());
         else m?.dispose?.();
       });
+      /* EffectComposer.dispose 只放掉它自己的两张目标；UnrealBloomPass 里那一串 mip 目标
+         得逐个 pass 调 dispose，否则每挂载一次就漏几十到几百 MB 显存。
+         再强制丢掉 WebGL 上下文：不等浏览器攒到 16 个才回收 */
+      for (const pass of composer.passes) pass.dispose?.();
       composer.dispose?.();
       renderer.dispose();
+      renderer.forceContextLoss?.();
       renderer.domElement.remove();
     },
   };

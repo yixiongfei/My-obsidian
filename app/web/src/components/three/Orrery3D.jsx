@@ -61,7 +61,10 @@ export default function Orrery3D({ subjects = [], theme }) {
   const mountRef = useRef(null);
   const labelRefs = useRef([]);
 
-  const bodies = useMemo(() => layout(subjects), [subjects]);
+  // 按内容比较：父组件每次重渲染都是新数组，不能拿数组本身当依赖，否则舞台反复重建
+  const bodiesKey = JSON.stringify(subjects);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const bodies = useMemo(() => layout(JSON.parse(bodiesKey)), [bodiesKey]);
 
   useEffect(() => {
     const el = mountRef.current;
@@ -248,7 +251,8 @@ export default function Orrery3D({ subjects = [], theme }) {
     });
 
     return () => stage.dispose();
-  }, [bodies, theme]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bodiesKey, theme]);
 
   if (!bodies.length) {
     return (

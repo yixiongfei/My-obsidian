@@ -370,10 +370,13 @@ function onFsEvent(type, abs) {
   const changed = type === 'unlink' ? index.remove(abs) : index.update(abs);
   Promise.resolve(changed).then((ok) => {
     if (!ok) return;
-    if (abs.toLowerCase().endsWith('.md')) syncNote(toId(abs));
+    // 另一个进程（桌面版 / checkpoint 脚本）正写库时这里会 busy；同步丢一次没关系，下次改动会补上，进程不能倒
+    if (abs.toLowerCase().endsWith('.md')) {
+      try { syncNote(toId(abs)); } catch (err) { console.warn(`[知识库] 同步 ${toId(abs)} 失败：${err.message}`); }
+    }
     clearTimeout(debounce);
     debounce = setTimeout(() => broadcast({ type: 'vault', version: index.version }), 120);
-  });
+  }).catch((err) => console.warn(`[知识库] 监听处理失败：${err.message}`));
 }
 
 export async function start() {

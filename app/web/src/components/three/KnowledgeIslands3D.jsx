@@ -97,18 +97,24 @@ export default function KnowledgeIslands3D({ steps = [], milestones = {}, nextRe
   const pickedRef = useRef(-1);
   useEffect(() => { pickedRef.current = picked; }, [picked]);
 
+  /* 父组件每次重渲染都会传一个新的 steps 数组（SSE 一跳、仪表盘一刷就来一次）；
+     若拿数组本身当依赖，整个 WebGL 舞台会被反复拆了重建。按内容比较，数字没变就不动。 */
+  const stepsKey = JSON.stringify(steps);
+  const msKey = JSON.stringify(milestones || {});
   // localStorage kb-debug-summit=1：三科全点亮，看登顶的样子（调试用）
   const stairs = useMemo(() => {
     let demo = false;
     try { demo = localStorage.getItem('kb-debug-summit') === '1'; } catch { /* 无 */ }
-    return steps.map((s) => ({ ...s, lit: demo ? 1 : litOf(s.learned, s.total) }));
-  }, [steps]);
+    return JSON.parse(stepsKey).map((s) => ({ ...s, lit: demo ? 1 : litOf(s.learned, s.total) }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stepsKey]);
   const subjectsDone = stairs.length > 0 && stairs.every((s) => s.lit >= 0.999);
   const stages = useMemo(() => {
     let demo = false;
     try { demo = localStorage.getItem('kb-debug-summit') === '1'; } catch { /* 无 */ }
-    return STAGES.map((st) => ({ ...st, done: demo || !!milestones?.[st.key], date: milestones?.[st.key] || null }));
-  }, [milestones]);
+    const ms = JSON.parse(msKey);
+    return STAGES.map((st) => ({ ...st, done: demo || !!ms[st.key], date: ms[st.key] || null }));
+  }, [msKey]);
   const landed = stages[2].done;               // 上岸 = 成功
   const N = stairs.length;                      // 科目岛数
   // 当前岛（索引；0 = 起点，1..N = 科目，N+1 初试，N+2 复试，N+3 上岸）：
