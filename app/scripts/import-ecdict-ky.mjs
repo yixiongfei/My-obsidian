@@ -1,6 +1,17 @@
 #!/usr/bin/env node
 /**
- * 从 ECDICT 里挑出考研词表，生成离线种子 app/server/data/ecdict-ky.json。
+ * 生成考研词表种子 app/server/data/ecdict-ky.json。
+ *
+ * 词表本身来自 server/data/lists/ 下三份清单的并集（不再用 ECDICT 的 ky 标签）：
+ *   syllabus-2025.txt      2025 英语（一）大纲词汇
+ *   zhenti-2025.txt        《考研真相》真题词汇篇（按章节：高频 / 中频 / 低频 / 基础 / 超纲）
+ *   netem_full_list.json   exam-data/NETEMVocabulary 的 5530 词真题词频（CC BY-NC-SA 4.0）
+ * ECDICT 只负责给每个词补音标、释义、义项。
+ *
+ * 每个词带三个记忆用的字段：
+ *   frequency  NETEM 真题词频（次数，越大越常考；不在 NETEM 里的为 0）
+ *   tier       core（真题 40 次以上）/ mid（10–39）/ low（1–9）/ extra（真题里出现过的超纲、派生词）/ basic（the、family 这类基础词）
+ *   rank       排队顺序：core → mid → low → extra，同档按词频降序；basic 排最后且默认不进队列
  *
  * 用法：
  *   node scripts/import-ecdict-ky.mjs [ecdict.csv 的路径]
@@ -19,6 +30,8 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.resolve(__dirname, '../server/data/ecdict-ky.json');
+const LISTS = path.resolve(__dirname, '../server/data/lists');
+const LIST_VERSION = '2025-syllabus+zhenti+netem';
 
 const ECDICT_COMMIT = 'bc015ed2e24a7abef49fc6dbbb7fe32c1dadaf8b';
 const ECDICT_URL = `https://raw.githubusercontent.com/skywind3000/ECDICT/${ECDICT_COMMIT}/ecdict.csv`;
@@ -60,7 +73,54 @@ function parseCsvLine(line) {
  * 必须按 token 精确匹配：用 includes('ky') 会把 "ky" 之外的东西也算进来
  * （例如将来出现 "kyx" 这类标签），词表规模就对不上了。
  */
-const hasKy = (tag) => (tag || '').split(/\s+/).includes('ky');
+
+const norm = (t) => String(t || '').trim().toLowerCase().replace(/[’']/g, "'");
+const readList = (name) => fs.readFileSync(path.join(LISTS, name), 'utf8').replace(/^\uFEFF/, '')
+  .split(/\r?\n/).map(norm).filter(Boolean);
+
+/**
+ * 目标词表：并集，附 tier / frequency。
+ * 《考研真相》的行号就是章节：1–978 高频、979–1970 中频、1971–3819 低频、3820–5648 基础、5649– 超纲派生。
+ * tier 以 NETEM 词频为准（40 次以上 core，10–39 mid，1–9 low），基础章的词一律 basic，
+ * 只出现在超纲章、NETEM 里又没有的记 extra。
+ */
+function targetWords() {
+  const syllabus = readList('syllabus-2025.txt');
+  const zhenti = readList('zhenti-2025.txt');
+  const netem = JSON.parse(fs.readFileSync(path.join(LISTS, 'netem_full_list.json'), 'utf8'))['5530考研词汇词频排序表'];
+  const freq = new Map();
+  const gloss = new Map();
+  for (const row of netem) {
+    const k = norm(row.单词);
+    freq.set(k, Math.max(freq.get(k) || 0, Number(row.词频) || 0));
+    if (row.释义 && !gloss.has(k)) gloss.set(k, String(row.释义).trim());
+  }
+  // ECDICT / NETEM 都没有的合成词，用项目手写的释义（lists/glosses.json）
+  const manual = JSON.parse(fs.readFileSync(path.join(LISTS, 'glosses.json'), 'utf8')).glosses || {};
+  for (const [k, g] of Object.entries(manual)) if (!gloss.has(norm(k))) gloss.set(norm(k), g);
+  const chapter = new Map();
+  zhenti.forEach((w, i) => {
+    const n = i + 1;
+    const ch = n <= 978 ? 'high' : n <= 1970 ? 'mid' : n <= 3819 ? 'low' : n <= 5648 ? 'basic' : 'extra';
+    if (!chapter.has(w)) chapter.set(w, ch);
+  });
+  const out = new Map();
+  for (const w of [...syllabus, ...zhenti]) {
+    if (out.has(w)) continue;
+    const f = freq.get(w) || 0;
+    const ch = chapter.get(w);
+    let tier;
+    if (ch === 'basic') tier = 'basic';
+    else if (f >= 40) tier = 'core';
+    else if (f >= 10) tier = 'mid';
+    else if (f >= 1) tier = 'low';
+    else tier = ch === 'extra' || !chapter.has(w) ? 'extra' : 'low';
+    out.set(w, { tier, frequency: f, netemGloss: gloss.get(w) || '', inSyllabus: syllabus.includes(w), inZhenti: chapter.has(w) });
+  }
+  return out;
+}
+
+const TIER_ORDER = { core: 0, mid: 1, low: 2, extra: 3, basic: 4 };
 
 /** 把多行 translation 按词性分组，每词最多 3 个义项、每义项最多 3 个短语 */
 function parseSenses(translation) {
@@ -119,6 +179,8 @@ async function main() {
   let idx = null;
   let scanned = 0;
   const byKey = new Map();
+  const target = targetWords();
+  console.log(`目标词表 ${target.size} 条（大纲 ∪ 真题词汇），开始扫 ECDICT…`);
 
   for await (const line of rl) {
     if (!line.trim()) continue;
@@ -132,26 +194,40 @@ async function main() {
     }
     scanned += 1;
     const f = parseCsvLine(line);
-    if (!hasKy(f[idx.tag])) continue;
-
     const word = (f[idx.word] || '').trim();
-    if (!word) continue;
+    const key = norm(word);
+    if (!word || !target.has(key)) continue;
     const rec = {
       term: word,
-      termKey: word.toLowerCase(),
+      termKey: key,
       phonetic: (f[idx.phonetic] || '').trim(),
       translation: (f[idx.translation] || '').trim(),
       definition: (f[idx.definition] || '').trim(),
-      frequency: Number(f[idx.frq] || 0) || 0,
-      tags: ['考研', '英语一', 'ECDICT'],
+      // ECDICT 自己的语料词频留着做兜底排序用
+      corpusFreq: Number(f[idx.frq] || 0) || 0,
     };
     const prev = byKey.get(rec.termKey);
     byKey.set(rec.termKey, prev ? richer(prev, rec) : rec);
   }
 
-  const entries = [...byKey.values()]
-    .map((r) => ({ ...r, senses: parseSenses(r.translation) }))
-    .sort((a, b) => (b.frequency - a.frequency) || a.termKey.localeCompare(b.termKey));
+  // ECDICT 里没有的（多是真题里的合成词、派生词），用 NETEM 的释义或空释义占位，等人工在单词列表里补
+  let missing = 0;
+  for (const [key, t] of target) {
+    if (byKey.has(key)) continue;
+    missing += 1;
+    byKey.set(key, { term: key, termKey: key, phonetic: '', translation: t.netemGloss, definition: '', corpusFreq: 0 });
+  }
+
+  const entries = [...byKey.values()].map((r) => {
+    const t = target.get(r.termKey);
+    const senses = parseSenses(r.translation);
+    if (!senses.length && t.netemGloss) senses.push({ pos: '', gloss: t.netemGloss });
+    const tags = ['考研', '英语一'];
+    if (t.inSyllabus) tags.push('大纲2025');
+    if (t.inZhenti) tags.push('真题词汇');
+    return { ...r, senses, frequency: t.frequency, tier: t.tier, tags };
+  }).sort((a, b) => (TIER_ORDER[a.tier] - TIER_ORDER[b.tier]) || (b.frequency - a.frequency) || (b.corpusFreq - a.corpusFreq) || a.termKey.localeCompare(b.termKey))
+    .map((e, i) => ({ ...e, rank: i + 1 }));
 
   fs.mkdirSync(path.dirname(OUT), { recursive: true });
   fs.writeFileSync(OUT, JSON.stringify({
@@ -159,14 +235,17 @@ async function main() {
     license: 'MIT',
     url: 'https://github.com/skywind3000/ECDICT',
     commit: ECDICT_COMMIT,
-    filter: 'tag token == "ky"',
+    lists: LIST_VERSION,
+    filter: 'lists/syllabus-2025 ∪ lists/zhenti-2025, tier/frequency from NETEMVocabulary',
     generatedAt: new Date().toISOString().slice(0, 10),
     count: entries.length,
+    tiers: Object.fromEntries(Object.keys(TIER_ORDER).map((t) => [t, entries.filter((e) => e.tier === t).length])),
     entries,
   }, null, 0), 'utf8');
 
   const noSense = entries.filter((e) => !e.senses.length).length;
-  console.log(`扫描 ${scanned} 行，命中 ky ${byKey.size} 条，去重后 ${entries.length} 条`);
+  console.log(`扫描 ${scanned} 行，词表 ${entries.length} 条，ECDICT 没收的 ${missing} 条`);
+  console.log('各档：', Object.entries(Object.fromEntries(Object.keys(TIER_ORDER).map((t) => [t, entries.filter((e) => e.tier === t).length]))).map(([k, v]) => `${k} ${v}`).join('，'));
   console.log(`没有解析出义项的：${noSense} 条`);
   console.log(`写入 ${OUT}（${(fs.statSync(OUT).size / 1e6).toFixed(2)} MB）`);
 }

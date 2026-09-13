@@ -29,11 +29,13 @@ export default function Settings({ open, onClose, theme, setTheme, settings, upd
   const [info, setInfo] = useState(null);
   const [notice, setNotice] = useState('');
   const [ms, setMs] = useState(null);   // 里程碑：{初试, 复试, 上岸} → 通过日期或 null
+  const [vp, setVp] = useState(null);   // 词汇偏好：{queueBasic}
 
   useEffect(() => {
     if (!open) return;
     if (desktop) desktop.getInfo().then(setInfo).catch(() => setInfo(null));
     api.milestones().then(setMs).catch(() => setMs(null));
+    api.vocabPrefs().then(setVp).catch(() => setVp(null));
     const onKey = (e) => { if (e.key === 'Escape') onClose(); };
     const onDown = (e) => { if (ref.current && !ref.current.contains(e.target) && !e.target.closest?.('.settings-btn')) onClose(); };
     window.addEventListener('keydown', onKey);
@@ -113,6 +115,18 @@ export default function Settings({ open, onClose, theme, setTheme, settings, upd
           ))}
         </div>
         <div className="settings-hint">考完、过了就勾上</div>
+      </div>
+
+      <div className="settings-sec">
+        <div className="settings-k">单词队列</div>
+        <label className="settings-check">
+          <input type="checkbox" checked={!!vp?.queueBasic} disabled={!vp}
+                 onChange={async (e) => {
+                   try { setVp(await api.setVocabPrefs({ queueBasic: e.target.checked })); } catch (err) { setNotice(err.message); }
+                 }} />
+          <span>基础词也进新词队列</span>
+        </label>
+        <div className="settings-hint">新词按真题词频出：高频 → 中频 → 低频 → 超纲。大纲里 1,800 多个基础词（the、family 这类）默认跳过</div>
       </div>
 
       <div className="settings-sec">

@@ -4,6 +4,7 @@ import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import { Loading, ErrorBox } from '../components/bits.jsx';
 import { speak, canSpeak } from '../tts.js';
+import { TierTag } from './Words.jsx';
 
 /**
  * 英语词汇 Anki。
@@ -253,6 +254,7 @@ export default function Review({ version, onReviewed }) {
 
             {card.tags?.length > 0 && (
               <div className="vocab-tags">
+                <TierTag tier={card.tier} frequency={card.frequency} />
                 {card.tags.slice(0, 5).map((t) => <span className="tag" key={t}>{t}</span>)}
               </div>
             )}

@@ -201,12 +201,14 @@ export function update(wordId, { phonetic, senses, examples } = {}) {
 export const importanceOf = (c) =>
   Math.min(4, (c.important ? 2 : 0) + (c.lapses >= 1 ? 1 : 0) + (c.lapses >= 3 ? 1 : 0));
 
+/* 「未学习」只列会进队列的词（不含退休词和基础词），按排队顺序；其它栏按各自逻辑，退休词只在搜索时露面 */
 const VIEWS = {
   today: (today) => ({ where: '(c.last_review = ? OR c.marked_at = ? OR w.added_at = ?)', args: [today, today, today], order: 'c.important DESC, c.last_review DESC, w.term_key' }),
-  new: () => ({ where: "c.state = 'new'", args: [], order: 'c.important DESC, w.frequency DESC, w.term_key' }),
+  new: () => ({ where: "c.state = 'new' AND w.retired = 0 AND w.tier <> 'basic'", args: [], order: 'c.important DESC, w.rank ASC, w.frequency DESC, w.term_key' }),
   learning: () => ({ where: "c.state = 'review'", args: [], order: 'c.due ASC, c.important DESC, w.term_key' }),
   known: () => ({ where: "c.state = 'mastered'", args: [], order: 'c.last_review DESC, w.term_key' }),
-  all: () => ({ where: '1 = 1', args: [], order: 'c.important DESC, w.frequency DESC, w.term_key' }),
+  all: () => ({ where: 'w.retired = 0', args: [], order: 'c.important DESC, w.rank ASC, w.frequency DESC, w.term_key' }),
+  basic: () => ({ where: "w.tier = 'basic' AND w.retired = 0", args: [], order: 'w.frequency DESC, w.term_key' }),
 };
 
 export function list({ view = 'today', q = '', limit = 200, offset = 0 } = {}) {
@@ -214,12 +216,13 @@ export function list({ view = 'today', q = '', limit = 200, offset = 0 } = {}) {
   const today = todayStr();
   const v = (VIEWS[view] || VIEWS.today)(today);
   const needle = keyOf(q);
-  const where = [v.where];
+  // 搜索时放开退休词和基础词的限制：找得到才能编辑 / 标注
+  const where = [needle ? v.where.replace(/ AND w\.retired = 0| AND w\.tier <> 'basic'/g, '').replace(/^w\.retired = 0$/, '1 = 1') : v.where];
   const args = [...v.args];
   if (needle) { where.push('(w.term_key LIKE ? OR EXISTS (SELECT 1 FROM vocab_senses s WHERE s.word_id = w.id AND s.gloss LIKE ?))'); args.push(`%${needle}%`, `%${q.trim()}%`); }
 
   const rows = d.prepare(`
-    SELECT w.id, w.term, w.term_key, w.phonetic, w.added_at, src.name AS source,
+    SELECT w.id, w.term, w.term_key, w.phonetic, w.added_at, w.tier, w.rank, w.frequency, w.retired, src.name AS source,
            c.state, c.due, c.interval, c.repetitions, c.lapses, c.last_review, c.important, c.marked_at,
            (SELECT group_concat(CASE WHEN pos <> '' THEN pos || ' ' || gloss ELSE gloss END, '；')
               FROM (SELECT pos, gloss FROM vocab_senses WHERE word_id = w.id ORDER BY ord LIMIT 2)) AS gloss
@@ -232,22 +235,28 @@ export function list({ view = 'today', q = '', limit = 200, offset = 0 } = {}) {
   const counts = d.prepare(`
     SELECT
       SUM(CASE WHEN c.last_review = ? OR c.marked_at = ? OR w.added_at = ? THEN 1 ELSE 0 END) AS today,
-      SUM(CASE WHEN c.state = 'new' THEN 1 ELSE 0 END) AS new,
+      SUM(CASE WHEN c.state = 'new' AND w.retired = 0 AND w.tier <> 'basic' THEN 1 ELSE 0 END) AS new,
       SUM(CASE WHEN c.state = 'review' THEN 1 ELSE 0 END) AS learning,
       SUM(CASE WHEN c.state = 'mastered' THEN 1 ELSE 0 END) AS known,
+      SUM(CASE WHEN w.tier = 'basic' AND w.retired = 0 THEN 1 ELSE 0 END) AS basic,
+      SUM(CASE WHEN w.retired = 1 THEN 1 ELSE 0 END) AS retired,
       SUM(c.important) AS important
     FROM vocab_cards c JOIN vocab_words w ON w.id = c.word_id`).get(today, today, today);
 
   return {
     today,
     view,
-    counts: { today: counts.today || 0, new: counts.new || 0, learning: counts.learning || 0, known: counts.known || 0, important: counts.important || 0 },
+    counts: { today: counts.today || 0, new: counts.new || 0, learning: counts.learning || 0, known: counts.known || 0, basic: counts.basic || 0, retired: counts.retired || 0, important: counts.important || 0 },
     items: rows.map((r) => ({
       id: r.id,
       term: r.term,
       phonetic: r.phonetic,
       gloss: r.gloss || '',
       inList: r.source !== CUSTOM_SOURCE,
+      tier: r.tier || 'low',
+      rank: r.rank || 0,
+      frequency: r.frequency || 0,
+      retired: !!r.retired,
       state: r.state,
       due: r.state === 'review' ? r.due : null,
       interval: r.interval,

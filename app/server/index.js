@@ -118,6 +118,13 @@ app.post('/api/note/summarize', wrap(async (req, res) => {
 const MILESTONES = ['初试', '复试', '上岸'];
 const milestones = () => Object.fromEntries(MILESTONES.map((k) => [k, db.getMeta(`milestone:${k}`) || null]));
 app.get('/api/milestones', (_req, res) => res.json(milestones()));
+
+/* 词汇偏好：基础词（the、family 这类）默认不进新词队列 */
+app.get('/api/vocabulary/prefs', (_req, res) => res.json({ queueBasic: vocab.basicOn() }));
+app.put('/api/vocabulary/prefs', (req, res) => {
+  if ('queueBasic' in (req.body || {})) vocab.setBasicOn(!!req.body.queueBasic);
+  res.json({ queueBasic: vocab.basicOn() });
+});
 app.put('/api/milestones', (req, res) => {
   const b = req.body || {};
   for (const k of MILESTONES) {

@@ -24,3 +24,4 @@ app/design/kaoyan-knowledge-base.html
 app/.shot.cjs
 .vscode/
 .kb/tts/
+app/web/dist/

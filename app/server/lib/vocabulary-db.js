@@ -18,7 +18,7 @@ import { KB_DIR } from '../config.js';
 const DB_DIR = KB_DIR;
 export const VOCAB_DB_PATH = process.env.KB_VOCAB_DB || path.join(DB_DIR, 'vocabulary.db');
 
-export const SCHEMA_VERSION = 2;
+export const SCHEMA_VERSION = 3;
 
 let db = null;
 
@@ -174,10 +174,17 @@ export function open() {
     'ALTER TABLE vocab_words ADD COLUMN added_at TEXT',
     // 用户在单词列表里改过释义 / 例句的词：重新灌种子时跳过，别把人工修正冲掉
     'ALTER TABLE vocab_words ADD COLUMN user_edited INTEGER NOT NULL DEFAULT 0',
+    /* v3：按 2025 大纲 ∪ 真题词汇 + NETEM 词频重排。
+       tier core/mid/low/extra/basic，rank 排队顺序；不在新词表里的旧词 retired=1，
+       不删——上面可能有复习记录 */
+    "ALTER TABLE vocab_words ADD COLUMN tier TEXT NOT NULL DEFAULT 'low'",
+    'ALTER TABLE vocab_words ADD COLUMN rank INTEGER NOT NULL DEFAULT 0',
+    'ALTER TABLE vocab_words ADD COLUMN retired INTEGER NOT NULL DEFAULT 0',
   ]) {
     try { db.exec(sql); } catch { /* 已经有了 */ }
   }
   db.exec('CREATE INDEX IF NOT EXISTS idx_vc_important ON vocab_cards(important)');
+  db.exec('CREATE INDEX IF NOT EXISTS idx_vw_rank ON vocab_words(rank)');
   setMeta('schema_version', SCHEMA_VERSION);
   return db;
 }

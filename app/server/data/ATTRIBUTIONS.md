@@ -1,7 +1,23 @@
 # 离线数据来源与署名
 
-本目录下的两个 JSON 都是离线种子，由 `app/scripts/` 里的脚本从公开数据源生成。
+本目录下的 JSON 都是离线种子，由 `app/scripts/` 里的脚本从公开数据源生成。
 运行时和复习过程**不访问任何第三方网络**。
+
+---
+
+## lists/ — 词表范围与词频（2025 版）
+
+词表不再靠 ECDICT 的 `ky` 标签，而是下面三份清单的并集，ECDICT 只负责补音标和释义。
+
+| 文件 | 内容 | 来源 / 许可 |
+|---|---|---|
+| `syllabus-2025.txt` | 2025 硕士研究生英语（一）大纲词汇，5,680 词 | 教育部考试中心公开大纲；纯词形清单 |
+| `zhenti-2025.txt` | 《2025 考研真相·真题词汇篇》词形清单，按章节排列：高频 / 中频 / 低频 / 基础 / 超纲派生 | 仅取词形，不含书中释义与例句；作个人学习范围使用 |
+| `netem_full_list.json` | [exam-data/NETEMVocabulary](https://github.com/exam-data/NETEMVocabulary) 的「5530 考研词汇词频排序表」 | **CC BY-NC-SA 4.0**，作者 exam-data；本项目非商业使用，取 `词频` 与 `释义` 两列 |
+
+分档（`tier`）：`basic` = 真题词汇篇「基础」章；其余按 NETEM 真题词频 ≥40 `core`、10–39 `mid`、1–9 `low`、
+未在 NETEM 出现的超纲 / 派生词 `extra`。`rank` = core → mid → low → extra 顺序、同档词频降序，是复习队列的出词顺序；
+basic 排最后、默认不进队列（设置里可打开）。
 
 ---
 
@@ -10,14 +26,17 @@
 - **来源**：[ECDICT](https://github.com/skywind3000/ECDICT)
 - **许可**：MIT License
 - **锁定版本**：commit `bc015ed2e24a7abef49fc6dbbb7fe32c1dadaf8b`
-- **筛选口径**：`tag` 字段按空格切分后，token 精确等于 `ky`
-- **规模**：4,801 条（去重后）
+- **筛选口径**：词形落在 `lists/` 并集内（小写、`’`→`'`）；ECDICT 没收的 13 个合成词用 NETEM 释义占位
+- **规模**：6,065 条（core 1,158 / mid 1,373 / low 1,299 / extra 412 / basic 1,823）
 - **重新生成**：`node scripts/import-ecdict-ky.mjs [ecdict.csv]`
 
 钉死 commit 而不是跟 master：ECDICT 会持续更新词条和标签，跟着 master 走会让
 每次重新生成的词表都不一样，对不上账。
 
-保留字段：英文词形、音标、中文释义、英英释义、词频，以及 `考研 / 英语一 / ECDICT` 标签。
+保留字段：英文词形、音标、中文释义、英英释义、NETEM 词频、`tier` / `rank`，以及 `考研 / 英语一 / 大纲2025 / 真题词汇` 标签。
+
+换词表后原 `ky` 词表里多出来的 236 个词（abundance、accustomed 这类）在库里标 `retired = 1`：不再出新词，
+但已有的复习记录和到期复习照旧。
 
 ---
 
@@ -28,7 +47,7 @@
 - **输入包**：`https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences.tsv.bz2`
 - **输入包 SHA-256**：记录在 JSON 的 `inputSha256` 字段里
 - **匹配口径**：大小写不敏感的**精确 token 匹配**（剥掉首尾标点后整词相等）
-- **规模**：4,785 条 Tatoeba 例句
+- **规模**：5,952 条 Tatoeba 例句
 - **重新生成**：`node scripts/import-tatoeba-ky-examples.mjs [eng_sentences.tsv.bz2]`
 
 每条例句都保留原始 sentence id 和可回溯 URL（`https://tatoeba.org/en/sentences/show/<id>`），
@@ -42,10 +61,9 @@
 ## 项目自备兜底例句
 
 - **许可**：CC0（放弃权利，可自由使用）
-- **规模**：16 条
+- **规模**：122 条
 
-Tatoeba 没覆盖到的词（retrospection、despatch、goodby、maltreat、sufficiency、instrumentalist、malign、
-perplex、resultant、futility、dramatize、appall、appal、endow、gramme、administrate）由本项目自己写一句
+Tatoeba 没覆盖到的词（多是英式拼写变体、合成词和短语，如 utilise、peer-review、status quo、per cent）由本项目自己写一句
 真实用法的例句并附中文译文，收在 `project-examples.json`；`import-tatoeba-ky-examples.mjs` 优先取这里的句子，
 没有的才退回占位句并在末尾提醒补写。这些句子由本项目撰写，不主张任何权利。
 

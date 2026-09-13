@@ -21,8 +21,23 @@ const VIEWS = [
   { key: 'learning', label: '学习中' },
   { key: 'known', label: '已熟识' },
   { key: 'all', label: '全部' },
+  { key: 'basic', label: '基础词' },
 ];
 const WHY = { reviewed: '今天复习', marked: '今天标注', added: '今天添加' };
+/* 词表分档（见 server/data/ATTRIBUTIONS.md）：core 真题 40 次以上，mid 10–39，low 1–9，
+   extra 只在真题里露过面的超纲 / 派生词，basic 大纲里的基础词——默认不进队列 */
+export const TIERS = {
+  core: { label: '高频', title: '真题出现 40 次以上' },
+  mid: { label: '中频', title: '真题出现 10–39 次' },
+  low: { label: '低频', title: '真题出现 1–9 次' },
+  extra: { label: '超纲', title: '真题里的超纲 / 派生词' },
+  basic: { label: '基础', title: '基础词，默认不进复习队列' },
+};
+export const TierTag = ({ tier, frequency }) => {
+  const t = TIERS[tier];
+  if (!t) return null;
+  return <span className={`tier-tag ${tier}`} title={frequency > 0 ? `${t.title} · 真题 ${frequency} 次` : t.title}>{t.label}</span>;
+};
 const dot = (d) => (d ? d.replaceAll('-', '.') : '');
 // 列表那一格的释义摘要，和服务端 list() 的拼法保持一致（前两条）
 const glossOf = (senses) => senses.slice(0, 2).map((s) => (s.pos ? `${s.pos} ${s.gloss}` : s.gloss)).join('；');
@@ -205,8 +220,11 @@ export default function Words() {
                 <span className="word-dots" title={`重要度 ${w.importance} / 4`}>
                   {[1, 2, 3, 4].map((i) => <i key={i} className={i <= w.importance ? 'on' : ''} />)}
                 </span>
-                <span className={`word-term${w.inList ? '' : ' own'}`}>{w.term}</span>
-                <span className="word-ph">{w.phonetic ? `/${w.phonetic}/` : ''}</span>
+                <span className={`word-term${w.inList ? '' : ' own'}${w.retired ? ' retired' : ''}`} title={w.retired ? '不在 2025 词表里，不再出新词' : undefined}>{w.term}</span>
+                <span className="word-ph">
+                  {w.inList && <TierTag tier={w.tier} frequency={w.frequency} />}
+                  {w.phonetic ? `/${w.phonetic}/` : ''}
+                </span>
                 <span className="word-gloss">{w.gloss || <em className="dim">（还没有释义）</em>}</span>
                 <span className="word-meta">
                   {view === 'today' && w.todayWhy && <span>{WHY[w.todayWhy]}</span>}
@@ -224,6 +242,11 @@ export default function Words() {
           ))}
           {!items.length && <div className="empty">这一栏还没有词</div>}
           {items.length >= 200 && <div className="dim" style={{ fontSize: 11, padding: '12px 0' }}>只显示前 200 个，用搜索缩小范围</div>}
+          {view === 'new' && !q && counts.retired > 0 && (
+            <div className="dim" style={{ fontSize: 11, padding: '12px 0' }}>
+              队列按 高频 → 中频 → 低频 → 超纲 出词；{counts.retired} 个旧词表里的生僻词已退出，搜索仍能找到
+            </div>
+          )}
         </div>
       )}
     </div></div>

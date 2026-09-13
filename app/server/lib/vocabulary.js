@@ -41,7 +41,7 @@ const readJson = (name) => JSON.parse(fs.readFileSync(path.join(DATA_DIR, name),
 export function seed() {
   const words = readJson('ecdict-ky.json');
   const ex = readJson('tatoeba-ky-examples.json');
-  const stamp = `${words.commit}:${words.count}:${ex.inputSha256?.slice(0, 12)}`;
+  const stamp = `${words.commit}:${words.lists || 'ky'}:${words.count}:${ex.inputSha256?.slice(0, 12)}`;
   if (vdb.getMeta('seed_stamp') === stamp) return { skipped: true, count: words.count };
 
   return vdb.tx((d) => {
@@ -56,13 +56,18 @@ export function seed() {
     const srcId = d.prepare('SELECT id FROM vocab_sources WHERE name = ?').get('ECDICT').id;
     const deckId = d.prepare('SELECT id FROM vocab_decks WHERE name = ?').get(DECK_NAME).id;
 
+    /* 词条内容（音标 / 释义）只在没人工改过时覆盖；tier / rank / frequency 是排队用的，永远跟种子走。
+       之前手动加的自定义词若这次进了词表，也一并接管：源改成 ECDICT、退出「我的标注」牌组 */
     const upWord = d.prepare(`
-      INSERT INTO vocab_words (term_key, term, phonetic, frequency, translation, definition, source_id, deck_id)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO vocab_words (term_key, term, phonetic, frequency, translation, definition, source_id, deck_id, tier, rank, retired)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)
       ON CONFLICT(term_key) DO UPDATE SET
-        term = excluded.term, phonetic = excluded.phonetic, frequency = excluded.frequency,
-        translation = excluded.translation, definition = excluded.definition
-      WHERE vocab_words.user_edited = 0`);
+        term = CASE WHEN vocab_words.user_edited = 0 THEN excluded.term ELSE vocab_words.term END,
+        phonetic = CASE WHEN vocab_words.user_edited = 0 THEN excluded.phonetic ELSE vocab_words.phonetic END,
+        translation = CASE WHEN vocab_words.user_edited = 0 THEN excluded.translation ELSE vocab_words.translation END,
+        definition = CASE WHEN vocab_words.user_edited = 0 THEN excluded.definition ELSE vocab_words.definition END,
+        frequency = excluded.frequency, tier = excluded.tier, rank = excluded.rank, retired = 0,
+        source_id = excluded.source_id, deck_id = excluded.deck_id`);
     const getId = d.prepare('SELECT id, user_edited FROM vocab_words WHERE term_key = ?');
     const delSenses = d.prepare('DELETE FROM vocab_senses WHERE word_id = ?');
     const insSense = d.prepare('INSERT INTO vocab_senses (word_id, ord, pos, gloss) VALUES (?, ?, ?, ?)');
@@ -74,12 +79,15 @@ export function seed() {
     const insTag = d.prepare('INSERT INTO vocab_tags (name) VALUES (?) ON CONFLICT(name) DO NOTHING');
     const getTag = d.prepare('SELECT id FROM vocab_tags WHERE name = ?');
     const linkTag = d.prepare('INSERT INTO vocab_word_tags (word_id, tag_id) VALUES (?, ?) ON CONFLICT DO NOTHING');
+    // 标签是种子的附属信息，整组跟种子走（旧种子的 ECDICT 标签换词表后要清掉）
+    const delTags = d.prepare('DELETE FROM vocab_word_tags WHERE word_id = ?');
 
     for (const e of words.entries) {
       upWord.run(e.termKey, e.term, e.phonetic || '', e.frequency || 0,
-        e.translation || '', e.definition || '', srcId, deckId);
+        e.translation || '', e.definition || '', srcId, deckId, e.tier || 'low', e.rank || 0);
       const { id, user_edited: edited } = getId.get(e.termKey);
       insCard.run(id);
+      delTags.run(id);
       for (const t of e.tags || []) {
         insTag.run(t);
         linkTag.run(id, getTag.get(t).id);
@@ -95,9 +103,18 @@ export function seed() {
       if (one) insEx.run(id, one.text, one.translation || '', one.source || '', one.license || '', one.sentenceId ?? null, one.url || '');
     }
 
+    /* 不在新词表里的 ECDICT 旧词：退休。不删，复习记录和「重要」标记都留着；
+       自定义词（真题里双击标的）不是种子管的，不动 */
+    const keys = new Set(words.entries.map((e) => e.termKey));
+    const retire = d.prepare('UPDATE vocab_words SET retired = 1 WHERE id = ? AND retired = 0');
+    let retired = 0;
+    for (const r of d.prepare('SELECT id, term_key FROM vocab_words WHERE source_id = ?').all(srcId)) {
+      if (!keys.has(r.term_key)) retired += retire.run(r.id).changes;
+    }
+
     d.prepare(`INSERT INTO vocab_meta (k, v) VALUES ('seed_stamp', ?)
                ON CONFLICT(k) DO UPDATE SET v = excluded.v`).run(stamp);
-    return { skipped: false, count: words.entries.length };
+    return { skipped: false, count: words.entries.length, retired };
   });
 }
 
@@ -206,7 +223,7 @@ export function migrateFromIndexDb(indexDb) {
  * ══════════════════════════════════════════════════════════════ */
 
 const CARD_SELECT = `
-  SELECT w.id, w.term, w.term_key, w.phonetic, w.frequency, w.translation, w.definition,
+  SELECT w.id, w.term, w.term_key, w.phonetic, w.frequency, w.translation, w.definition, w.tier, w.rank, w.retired,
          c.state, c.due, c.interval, c.repetitions, c.ease, c.lapses, c.last_review, c.important
   FROM vocab_words w JOIN vocab_cards c ON c.word_id = w.id`;
 
@@ -230,6 +247,8 @@ function decorate(d, row, today) {
     term: row.term,
     phonetic: row.phonetic,
     frequency: row.frequency,
+    tier: row.tier || 'low',
+    rank: row.rank || 0,
     senses,
     // 旧前端可能还在读这两个字段，保留以免卡背空白
     meanings: senses.map((s) => [s.pos, s.gloss].filter(Boolean).join(' ')),
@@ -253,28 +272,36 @@ function decorate(d, row, today) {
  * 一轮开始后前端只从这份快照里移除，不再补词——中途补入会让
  * "本轮还剩几张"一直在变，用户永远看不到尽头。
  */
+/** 基础词要不要进新词队列：默认不进，设置里可开 */
+export const basicOn = () => vdb.getMeta('queue_basic') === '1';
+export const setBasicOn = (on) => vdb.setMeta('queue_basic', on ? '1' : '0');
+/** 新词队列的准入条件（SQL 片段，c / w 两个别名） */
+const QUEUE_FILTER = () => `w.retired = 0 AND (w.tier <> 'basic' OR c.important = 1${basicOn() ? " OR 1 = 1" : ''})`;
+
 export function buildQueue() {
   const d = vdb.handle();
   const today = todayStr();
 
+  // 到期的照常复习，哪怕这个词已经退休——学过的不能因为换词表就断掉
   const due = d.prepare(`${CARD_SELECT}
     WHERE c.state <> 'mastered' AND c.state <> 'new' AND c.due <= ?
-    ORDER BY c.due ASC, c.important DESC, w.frequency DESC, w.term ASC LIMIT ?`).all(today, SESSION_DUE_LIMIT);
+    ORDER BY c.due ASC, c.important DESC, w.rank ASC, w.frequency DESC, w.term ASC LIMIT ?`).all(today, SESSION_DUE_LIMIT);
 
-  // 标注词（真题里双击标的、手动加的）插队排在新词最前面
+  /* 新词：标注词插队排最前，其余按 rank（core → mid → low → extra，同档按真题词频）。
+     退休词和基础词（the、family 这种）不出新词；基础词可以在设置里打开 */
   const fresh = d.prepare(`${CARD_SELECT}
-    WHERE c.state = 'new'
-    ORDER BY c.important DESC, w.frequency DESC, w.term ASC LIMIT ?`).all(SESSION_NEW_LIMIT);
+    WHERE c.state = 'new' AND ${QUEUE_FILTER()}
+    ORDER BY c.important DESC, w.rank ASC, w.frequency DESC, w.term ASC LIMIT ?`).all(SESSION_NEW_LIMIT);
 
   const counts = d.prepare(`
     SELECT
-      SUM(CASE WHEN state <> 'mastered' AND state <> 'new' AND due <= ? THEN 1 ELSE 0 END) AS due,
-      SUM(CASE WHEN state = 'new' THEN 1 ELSE 0 END) AS new,
-      SUM(CASE WHEN state <> 'mastered' AND state <> 'new' AND due > ? THEN 1 ELSE 0 END) AS upcoming,
-      SUM(CASE WHEN state = 'mastered' THEN 1 ELSE 0 END) AS mastered,
-      SUM(CASE WHEN important = 1 AND state <> 'mastered' THEN 1 ELSE 0 END) AS important,
-      COUNT(*) AS total
-    FROM vocab_cards`).get(today, today);
+      SUM(CASE WHEN c.state <> 'mastered' AND c.state <> 'new' AND c.due <= ? THEN 1 ELSE 0 END) AS due,
+      SUM(CASE WHEN c.state = 'new' AND ${QUEUE_FILTER()} THEN 1 ELSE 0 END) AS new,
+      SUM(CASE WHEN c.state <> 'mastered' AND c.state <> 'new' AND c.due > ? THEN 1 ELSE 0 END) AS upcoming,
+      SUM(CASE WHEN c.state = 'mastered' THEN 1 ELSE 0 END) AS mastered,
+      SUM(CASE WHEN c.important = 1 AND c.state <> 'mastered' THEN 1 ELSE 0 END) AS important,
+      SUM(CASE WHEN w.retired = 0 AND (w.tier <> 'basic' OR ${basicOn() ? 1 : 0}) THEN 1 ELSE 0 END) AS total
+    FROM vocab_cards c JOIN vocab_words w ON w.id = c.word_id`).get(today, today);
 
   return {
     today,
@@ -296,11 +323,13 @@ export function buildQueue() {
 
 /** 首页阶梯用的词汇进度：学过（进过队列、评过分）的词 / 词表总数 */
 export function progress() {
+  // 分母只算要背的：没退休、不是基础词（基础词开进队列时才算）
   const r = vdb.handle().prepare(`
     SELECT COUNT(*) AS total,
-           SUM(CASE WHEN state <> 'new' THEN 1 ELSE 0 END) AS learned,
-           SUM(CASE WHEN state = 'mastered' THEN 1 ELSE 0 END) AS mastered
-    FROM vocab_cards`).get();
+           SUM(CASE WHEN c.state <> 'new' THEN 1 ELSE 0 END) AS learned,
+           SUM(CASE WHEN c.state = 'mastered' THEN 1 ELSE 0 END) AS mastered
+    FROM vocab_cards c JOIN vocab_words w ON w.id = c.word_id
+    WHERE w.retired = 0 AND (w.tier <> 'basic' OR ${basicOn() ? 1 : 0})`).get();
   return { total: r.total || 0, learned: r.learned || 0, mastered: r.mastered || 0 };
 }
 

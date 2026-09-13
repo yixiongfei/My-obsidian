@@ -1,0 +1,18 @@
+{
+  "note": "ECDICT 和 NETEM 都没收的真题合成词 / 派生词，由本项目手写释义（CC0）。import-ecdict-ky.mjs 生成种子时兜底。",
+  "glosses": {
+    "agro-technological": "adj. 农业技术的",
+    "café": "n. 咖啡馆，小餐馆",
+    "life-enriching": "adj. 丰富人生的，使生活充实的",
+    "lineage-specific": "adj. 谱系特有的，某一支系独有的",
+    "long-fished": "adj. 长期被捕捞的",
+    "low-stress": "adj. 低压力的，压力小的",
+    "on-trend": "adj. 时下流行的，赶潮流的",
+    "precedent-setting": "adj. 开创先例的",
+    "prescription-drug": "n. 处方药（作定语）",
+    "résumé": "n. 简历；摘要",
+    "stress-free": "adj. 无压力的，轻松的",
+    "under-nutrition": "n. 营养不足",
+    "well-orchestrated": "adj. 精心策划的，组织周密的"
+  }
+}
