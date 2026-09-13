@@ -181,8 +181,16 @@ export function recoverPending() {
 const esc = (t) => t.replace(/([*_`[\]])/g, '\\$1');
 /** KaTeX 渲染文本的线性化：没有 TeX 源，只能这样凑合；顺手去掉零宽空格 */
 const texText = (node) => node.text.replace(/\u200B/g, '').replace(/\s+/g, ' ').trim();
+/* KaTeX 的 HTML 压成一行再嵌进 Markdown：换行会被当成段落边界，
+   而 Markdown 语法字符（* _ ~）在 KaTeX 里都是 ∗ 之类的 Unicode，不会被误解析 */
+const katexHtml = (node) => node.outerHTML.replace(/\s*\n\s*/g, ' ');
 
-/** 尽力而为的 HTML → Markdown。公式没有 TeX 源，只能取 KaTeX 渲染文本裹在反引号里 */
+/**
+ * 尽力而为的 HTML → Markdown。
+ * 公式没有 TeX 源（题源只给了 KaTeX 渲染后的 HTML），所以把 KaTeX 的 HTML 原样嵌进 Markdown：
+ * 笔记渲染器开了 html，且页面本来就带 KaTeX 样式，错题本里的公式就和卷面 / 解析一模一样。
+ * 只有英语完形的下划线空格另写成 ___7___。
+ */
 function toMd(html, { examId, q } = {}) {
   if (!html) return '';
   // <pre> 默认被当成原文块不解析，显式列出块级原文元素才能拿到里面的 <code>
@@ -192,12 +200,12 @@ function toMd(html, { examId, q } = {}) {
     if (node.nodeType !== 1) return '';
     const tag = node.tagName.toLowerCase();
     const cls = node.classList;
-    if (cls?.contains('katex-display')) { const t = texText(node); return t ? `\n\n\`${t}\`\n\n` : ''; }
+    if (cls?.contains('katex-display')) return `\n\n${katexHtml(node)}\n\n`;
     if (cls?.contains('katex')) {
       const t = texText(node);
       // 英语题干里的空是 \underline{\quad}，渲染文本为空 → 写成下划线
       if (!t || node.querySelector('.mord.underline')) return t ? ` ___${t}___ ` : ' ______ ';
-      return `\`${t}\``;
+      return katexHtml(node);
     }
     if (cls?.contains('blank')) return ` ___${node.text.trim()}___ `;
     const kids = () => node.childNodes.map((c) => walk(c, ctx)).join('');
@@ -266,7 +274,9 @@ function clozeSentence(section, n, mine, submitted) {
 export function questionMd(exam, section, n, submitted, mine) {
   const marker = `<!-- kb:q:${exam.id}:${section.id}:${n ?? 'all'} -->`;
   const ctx = { examId: exam.id, q: n };
-  const head = `## ${n != null ? `第 ${n} 题` : section.label}${section.subject ? ` · ${section.subject}` : ''}`;
+  // 数学 / 408 按知识点归档，一个文件里跨年份，标题要带卷子；英语按卷归档，只写题号
+  const paper = exam.group === 'english' ? '' : `${KIND_NAME[exam.kind] || exam.kindLabel} ${exam.year} · `;
+  const head = `## ${paper}${n != null ? `第 ${n} 题` : section.label}${section.subject ? ` · ${section.subject}` : ''}`;
   const out = [marker, head, ''];
   let tags = [];
 
@@ -330,8 +340,13 @@ export async function exportQuestion(examId, sectionId, n, { drill = false } = {
   }
   const { marker, md, tags } = questionMd(exam, section, n, submitted, mine);
 
+  /* 归档位置：数学 / 408 按最具体的知识点一个文件（泰勒公式 错题.md），同一考点历年的错题聚在一起；
+     英语没有知识点标签，仍按卷归档（2026 英语二.md） */
+  const point = exam.group !== 'english' && tags.length ? tags[tags.length - 1].replace(/[\\/:*?"<>|]/g, '_') : '';
   const folder = path.join(VAULT_ROOT, GROUP_FOLDER[exam.group] || exam.kindLabel, '错题本');
-  const file = path.join(folder, `${exam.year} ${KIND_NAME[exam.kind] || exam.kindLabel}.md`);
+  const file = path.join(folder, point ? `${point} 错题.md` : `${exam.year} ${KIND_NAME[exam.kind] || exam.kindLabel}.md`);
+  const title = point ? `${point} 错题` : `${exam.year} ${KIND_NAME[exam.kind] || exam.kindLabel} 错题`;
+  const h1 = point ? `${point} · 错题本` : `${exam.year} 年 ${KIND_NAME[exam.kind] || exam.kindLabel} · 错题本`;
   await fsp.mkdir(folder, { recursive: true });
 
   let existing = '';
@@ -342,7 +357,7 @@ export async function exportQuestion(examId, sectionId, n, { drill = false } = {
   let body;
   if (!existing) {
     const subject = GROUP_FOLDER[exam.group] || exam.kindLabel;
-    body = `---\ntitle: ${exam.year} ${KIND_NAME[exam.kind] || exam.kindLabel} 错题\ntags: [${[subject, '错题', ...tags].map((t) => t.replace(/[,\s]/g, '_')).join(', ')}]\ncreated: ${todayStr()}\nkind: wrong-questions\n---\n\n# ${exam.year} 年 ${KIND_NAME[exam.kind] || exam.kindLabel} · 错题本\n\n${md}\n`;
+    body = `---\ntitle: ${title}\ntags: [${[subject, '错题', ...tags].map((t) => t.replace(/[,\s]/g, '_')).join(', ')}]\ncreated: ${todayStr()}\nkind: wrong-questions\n---\n\n# ${h1}\n\n${md}\n`;
   } else {
     body = `${existing.trimEnd()}\n\n${md}\n`;
     // 新标签补进 frontmatter 的 tags 行，方便按知识点检索
