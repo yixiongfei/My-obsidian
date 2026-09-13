@@ -434,6 +434,12 @@ function Passage({ passage, answers, questions, keyAnswers, onJump }) {
     for (const q of questions) for (const o of q.options) m.set(`${q.n}${o.k}`, o.text);
     return (n, k) => (k ? m.get(`${n}${k}`) : null);
   }, [questions]);
+  // 每个空按四个选项里最长的那个预留宽度：选了词之后空不再变宽，整段文字不会跳
+  const widthOf = useMemo(() => {
+    const m = new Map();
+    for (const q of questions) m.set(q.n, Math.max(4, ...q.options.map((o) => String(o.text || '').replace(/<[^>]+>/g, '').length)));
+    return (n) => m.get(n) || 6;
+  }, [questions]);
 
   return (
     <div className="paper-passage">
@@ -445,7 +451,7 @@ function Passage({ passage, answers, questions, keyAnswers, onJump }) {
               {p.segs.map((seg, j) => (typeof seg === 'string'
                 ? <span key={j} dangerouslySetInnerHTML={html(seg)} />
                 : (
-                  <Blank key={j} n={seg.n} mine={answers[seg.n]} word={wordOf(seg.n, answers[seg.n])}
+                  <Blank key={j} n={seg.n} mine={answers[seg.n]} word={wordOf(seg.n, answers[seg.n])} chars={widthOf(seg.n)}
                          right={keyAnswers ? keyAnswers[seg.n] : null}
                          rightWord={keyAnswers ? wordOf(seg.n, keyAnswers[seg.n]) : null}
                          onClick={() => onJump(seg.n)} />
@@ -457,13 +463,15 @@ function Passage({ passage, answers, questions, keyAnswers, onJump }) {
   );
 }
 
-function Blank({ n, mine, word, right, rightWord, onClick }) {
+function Blank({ n, mine, word, right, rightWord, chars = 6, onClick }) {
   const graded = right != null;
   const cls = ['blank'];
   if (mine) cls.push('on');
   if (graded) cls.push(mine === right ? 'right' : 'wrong');
+  // 0.7em/字母：比这套字体的平均字宽宽一点，全是 m、w 的词也基本装得下；对完答案要并排放错答案和正确答案，宽度另算
+  const width = graded && mine && mine !== right ? undefined : `${Math.round(chars * 0.7 * 10) / 10 + 1}em`;
   return (
-    <button className={cls.join(' ')} onClick={onClick} title={`第 ${n} 题`}>
+    <button className={cls.join(' ')} onClick={onClick} title={`第 ${n} 题`} style={width ? { minWidth: width } : undefined}>
       <sup className="fig">{n}</sup>
       {graded && mine && mine !== right && <s dangerouslySetInnerHTML={html(word)} />}
       {graded

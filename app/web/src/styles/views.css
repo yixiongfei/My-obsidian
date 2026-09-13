@@ -707,7 +707,9 @@ body.readmode-open { overflow: hidden; }
 }
 .blank:hover { background: var(--accent-soft); }
 .blank sup { position: absolute; left: 0; top: -4px; font-size: 9px; color: var(--dim); font-weight: 400; line-height: 1; }
-.blank .bl-empty { display: inline-block; width: 2.6em; }
+.blank .bl-empty { display: inline-block; width: 1px; }
+/* 空和填了词的空都占同一个宽度（按最长选项算，见 Exam.jsx），文字才不会随选择跳来跳去 */
+.blank > span { display: inline-block; white-space: nowrap; }
 .blank s { color: var(--holiday); margin-right: 6px; font-weight: 400; }
 .blank.right { border-bottom-color: var(--accent); }
 .blank.wrong { border-bottom-color: var(--holiday); }
