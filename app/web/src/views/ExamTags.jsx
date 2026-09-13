@@ -94,22 +94,13 @@ export default function ExamTags() {
               </button>
               {isOpen && (
                 <div className="tag-panel">
-                  {(() => {
-                    const local = t.items.filter((it) => available.has(it.exam)).length;
+                  {t.items.some((it) => available.has(it.exam)) && (() => {
                     const p = data.drill?.[t.name];
-                    if (!local) return null;
                     return (
-                      <div className="tag-group tag-drill">
-                        <span className="tag-group-l">专题训练</span>
-                        <span className="tag-links">
-                          <button className="btn sm primary" onClick={() => navigate(`/resources/drill/${group}?tag=${encodeURIComponent(t.name)}`)}>
-                            {p ? '继续训练' : '开始训练'}　→
-                          </button>
-                          <span className="dim" style={{ fontSize: 12, alignSelf: 'center' }}>
-                            本地有 {local} 题{p ? ` · 已做 ${p.done}${p.right ? `，答对 ${p.right}` : ''}` : ' · 一题一交，做一题看一题的答案'}
-                          </span>
-                        </span>
-                      </div>
+                      <button className="btn sm primary tag-drill-btn" title={p ? `已做 ${p.done} 题` : '专题训练：一题一交'}
+                              onClick={() => navigate(`/resources/drill/${group}?tag=${encodeURIComponent(t.name)}`)}>
+                        {p ? '继续训练' : '专题训练'}　→
+                      </button>
                     );
                   })()}
                   {groups.map((g) => (

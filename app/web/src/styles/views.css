@@ -872,8 +872,9 @@ body.readmode-open { overflow: hidden; }
 .paper-rail .rail-item.bad .rail-dot { border-color: var(--due); background: var(--due); }
 .paper-rail .rail-item.bad .rail-score { color: var(--due); }
 .paper.drill .unit-head .paper-link { font-size: 11px; margin-right: 10px; }
-.tag-drill { padding-bottom: 6px; margin-bottom: 4px; border-bottom: var(--hair) dashed var(--line); }
-.tag-drill .tag-links { align-items: center; gap: 12px; }
+/* 知识点展开后，训练按钮靠右浮在题号区旁边 */
+.tag-panel { position: relative; }
+.tag-drill-btn { position: absolute; right: 0; top: 6px; }
 .paper-rail .rail-total { display: flex; justify-content: space-between; padding-top: 12px; font-size: 11px; letter-spacing: 0.08em; color: var(--dim); }
 
 @media (max-width: 1180px) {

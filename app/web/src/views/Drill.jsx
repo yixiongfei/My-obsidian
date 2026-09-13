@@ -82,7 +82,6 @@ export default function Drill() {
             <div className="reader-meta">
               <span>历年 {data.total} 题 · 本地 {items.length} 题 · 已做 {done}</span>
               {gradable.length > 0 && <span>选择题答对 <b className="fig" style={{ color: 'var(--text)' }}>{right}</b> / {gradable.filter((it) => it.attempt).length}</span>}
-              <span className="dim" style={{ fontSize: 11 }}>一题一交：做完一题就能看这一题的答案</span>
               {data.missing > 0 && <span className="dim" style={{ fontSize: 11 }}>有 {data.missing} 题所在年份本地没有卷子</span>}
             </div>
           </header>
@@ -159,7 +158,7 @@ function DrillQuestion({ item, index, onAnswer, onReset, onExport, onOpenPaper }
     </div>
   );
 
-  const foot = (hint) => (
+  const foot = () => (
     attempt
       ? (
         <div className="unit-foot done">
@@ -176,10 +175,9 @@ function DrillQuestion({ item, index, onAnswer, onReset, onExport, onOpenPaper }
         </div>
       ) : (
         <div className="unit-foot">
-          <span className="dim" style={{ fontSize: 12 }}>{hint}</span>
           <span className="spacer" />
           <button className="btn primary" disabled={busy || (section.type !== 'free' && !String(mine).trim())} onClick={() => submit()}>
-            {section.type === 'choice' ? '交这一题，看答案　→' : '提交，看参考答案　→'}
+            看答案　→
           </button>
         </div>
       )
@@ -225,7 +223,7 @@ function DrillQuestion({ item, index, onAnswer, onReset, onExport, onOpenPaper }
             )}
           </div>
         </div>
-        {foot(mine ? '已选择' : '选一个答案')}
+        {foot()}
       </section>
     );
   }
@@ -255,7 +253,7 @@ function DrillQuestion({ item, index, onAnswer, onReset, onExport, onOpenPaper }
             )}
           </div>
         </div>
-        {foot(mine.trim() ? '' : '填上答案再交')}
+        {foot()}
       </section>
     );
   }
@@ -275,7 +273,7 @@ function DrillQuestion({ item, index, onAnswer, onReset, onExport, onOpenPaper }
                   placeholder="在这里作答（解题过程也可以写在纸上，这里只记要点）…"
                   onChange={(e) => setMine(e.target.value)} />
       </div>
-      {foot(mine.trim() ? '' : '写点要点再交；也可以直接看参考答案')}
+      {foot()}
       {key && (
         <div className="paper-ref">
           <div className="row" style={{ gap: 14, flexWrap: 'wrap' }}>
