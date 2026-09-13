@@ -240,7 +240,29 @@ function toMd(html, { examId, q } = {}) {
 const mdTags = (tags) => tags.map((t) => `#${t.replace(/[\s#]/g, '_')}`).join(' ');
 
 /** 一道题的 Markdown 片段 */
-function questionMd(exam, section, n, submitted) {
+/**
+ * 完形：把带这个空的那一句原文抠出来。
+ * 这个空填正确答案（加粗），我选错的话划掉放前面；同句里别的空也填上答案，读起来是一句完整的话。
+ */
+function clozeSentence(section, n, mine, submitted) {
+  const TOK = (k) => `\u0001${k}\u0002`;
+  const html = (section.passage || []).map((p) => (p.segs || []).map((seg) => (typeof seg === 'string' ? seg : TOK(seg.n))).join('')).join('\n\n');
+  const text = toMd(html, {}).replace(/\s+/g, ' ').trim();
+  // 按句号 / 问号 / 感叹号切句，取含本空的那句
+  const sentences = text.split(/(?<=[.!?])\s+(?=[A-Z"“])/);
+  const hit = sentences.find((x) => x.includes(TOK(n))) || text;
+  const wordOf = (k, key) => section.questions.find((q) => q.n === k)?.options.find((o) => o.k === key)?.text || '';
+  return hit.replace(/\u0001(\d+)\u0002/g, (_, k) => {
+    const q = section.questions.find((x) => x.n === Number(k));
+    if (!q) return '____';
+    if (!submitted) return Number(k) === n ? '**____**' : '____';
+    const right = wordOf(q.n, q.answer);
+    if (Number(k) !== n) return right || '____';
+    return mine && mine !== q.answer ? `~~${wordOf(q.n, mine)}~~ **${right}**` : `**${right}**`;
+  });
+}
+
+export function questionMd(exam, section, n, submitted, mine) {
   const marker = `<!-- kb:q:${exam.id}:${section.id}:${n ?? 'all'} -->`;
   const ctx = { examId: exam.id, q: n };
   const head = `## ${n != null ? `第 ${n} 题` : section.label}${section.subject ? ` · ${section.subject}` : ''}`;
@@ -253,13 +275,16 @@ function questionMd(exam, section, n, submitted) {
     tags = q.tags || [];
     if (tags.length) out.push(mdTags(tags), '');
     if (section.id === 'cloze') {
-      out.push(`完形第 ${n} 空（原文见 [卷面](${appUrl(exam.id, n)})）`, '');
+      // 错题本要一眼看出错在哪：直接给原句，不让人再跳回卷面
+      out.push(`> ${clozeSentence(section, n, mine, submitted)}`, '');
     } else if (q.stem) {
       out.push(toMd(q.stem, ctx), '');
     }
-    out.push(...q.options.map((o) => `- ${o.k}. ${toMd(o.text, ctx).replace(/\n+/g, ' ')}`), '');
+    // 交过卷：正确项打 ✓，我选错的打 ✗
+    const mark = (o) => (!submitted ? '' : o.k === q.answer ? '✓ ' : mine && o.k === mine ? '✗ ' : '');
+    out.push(...q.options.map((o) => `- ${mark(o)}${o.k}. ${toMd(o.text, ctx).replace(/\n+/g, ' ')}`), '');
     if (submitted) {
-      out.push(`**答案：${q.answer}**`, '');
+      out.push(`**答案：${q.answer}**${mine && mine !== q.answer ? `　我选了 ${mine}` : ''}`, '');
       if (q.explanation) out.push(toMd(q.explanation, ctx), '');
     } else {
       out.push('（这一单元还没交卷，答案与解析未附）', '');
@@ -280,7 +305,6 @@ function questionMd(exam, section, n, submitted) {
     if (submitted) out.push('**参考答案**', '', toMd(section.solution, ctx), '');
     else out.push('（这一单元还没交卷，参考答案未附）', '');
   }
-  out.push(`来源：${exam.year} 年 ${KIND_NAME[exam.kind] || exam.kindLabel} · [在站内打开](${appUrl(exam.id, n)})`, '');
   return { marker, md: out.join('\n'), tags };
 }
 
@@ -292,8 +316,10 @@ export async function exportQuestion(examId, sectionId, n) {
   const exam = getExam(examId);
   const section = exam?.sections.find((s) => s.id === sectionId);
   if (!section) throw Object.assign(new Error('单元不存在'), { status: 404 });
-  const submitted = !!attemptsOf(examId)[sectionId]?.submittedAt;
-  const { marker, md, tags } = questionMd(exam, section, n, submitted);
+  const attempt = attemptsOf(examId)[sectionId];
+  const submitted = !!attempt?.submittedAt;
+  const mine = n != null ? attempt?.answers?.[n] || null : null;
+  const { marker, md, tags } = questionMd(exam, section, n, submitted, mine);
 
   const folder = path.join(VAULT_ROOT, GROUP_FOLDER[exam.group] || exam.kindLabel, '错题本');
   const file = path.join(folder, `${exam.year} ${KIND_NAME[exam.kind] || exam.kindLabel}.md`);
