@@ -655,6 +655,9 @@ body.readmode-open { overflow: hidden; }
 }
 .tag-link:hover { color: var(--hue, var(--accent)); border-color: var(--hue, var(--accent)); background: var(--bg-2); }
 .tag-link.off { color: var(--dim); opacity: 0.55; cursor: default; }
+.tag-link.right { color: var(--hl-g); border-color: color-mix(in srgb, var(--hl-g) 55%, var(--line)); background: color-mix(in srgb, var(--hl-g) 10%, var(--bg-1)); }
+.tag-link.wrong { color: var(--hue-2); border-color: color-mix(in srgb, var(--hue-2) 55%, var(--line)); background: color-mix(in srgb, var(--hue-2) 10%, var(--bg-1)); }
+.tag-link.done { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); }
 
 /* ── 卷面 ──────────────────────────────────────────── */
 .paper-layout {

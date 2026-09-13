@@ -14,6 +14,7 @@ import { Loading, ErrorBox } from '../components/bits.jsx';
 
 const html = (s) => ({ __html: s || '' });
 const KIND_SHORT = { 408: '408', math1: '数一', math2: '数二', math3: '数三' };
+const PAGE = 30;
 
 export default function Drill() {
   const { group } = useParams();
@@ -23,9 +24,11 @@ export default function Drill() {
   const { data, loading, error, reload } = useApi(() => api.drill(group, tag), [group, tag]);
   const [items, setItems] = useState(null);
   const [toast, setToast] = useState(null);
+  // 大专题（一元函数微分学有近两百题）分批渲染，别一次把几百段 KaTeX 塞进页面
+  const [shown, setShown] = useState(PAGE);
   const scrollRef = useRef(null);
 
-  useEffect(() => { setItems(data && data.tag === tag ? data.items : null); }, [data, tag]);
+  useEffect(() => { setItems(data && data.tag === tag ? data.items : null); setShown(PAGE); }, [data, tag]);
   useEffect(() => { scrollRef.current?.scrollTo({ top: 0 }); }, [tag]);
 
   const notify = useCallback((text, kind = '') => {
@@ -53,7 +56,11 @@ export default function Drill() {
     } catch (err) { notify(err.message, 'err'); }
   }, [notify]);
 
-  const jump = (id) => document.getElementById(`drill-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const jump = (id) => {
+    const i = items.findIndex((it) => it.id === id);
+    if (i >= shown) setShown(Math.ceil((i + 1) / PAGE) * PAGE);
+    setTimeout(() => document.getElementById(`drill-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), i >= shown ? 120 : 0);
+  };
 
   if (loading && !data) return <Loading />;
   if (error) return <ErrorBox error={error} onRetry={reload} />;
@@ -86,7 +93,7 @@ export default function Drill() {
             </div>
           </header>
 
-          {items.map((it, i) => (
+          {items.slice(0, shown).map((it, i) => (
             <div key={it.id} id={`drill-${it.id}`} className="unit-anchor">
               <DrillQuestion key={`${it.id}:${it.gen || 0}`} item={it} index={i + 1}
                              onAnswer={onAnswer} onReset={onReset} onExport={onExport}
@@ -94,6 +101,11 @@ export default function Drill() {
             </div>
           ))}
           {!items.length && <div className="empty">这个知识点的题所在年份本地都还没有卷子</div>}
+          {shown < items.length && (
+            <div className="unit-foot" style={{ justifyContent: 'center' }}>
+              <button className="btn" onClick={() => setShown((n) => n + PAGE)}>继续加载　{Math.min(PAGE, items.length - shown)} 题（剩 {items.length - shown}）</button>
+            </div>
+          )}
         </article>
 
         {toast && <div className={`mark-toast ${toast.kind}`}>{toast.text}</div>}
@@ -154,7 +166,7 @@ function DrillQuestion({ item, index, onAnswer, onReset, onExport, onOpenPaper }
       {section.points != null && <span className="unit-pts">{section.type === 'free' ? `${section.points} 分` : `${Math.round((section.points / section.count) * 10) / 10} 分`}</span>}
       <span className="spacer" />
       <button className="paper-link" onClick={onOpenPaper}>在卷面里看</button>
-      <button className="q-md-btn" title="加入错题本（Markdown）" onClick={() => onExport(item)}>错题</button>
+      {attempt && <button className="q-md-btn" title="加入错题本（Markdown）" onClick={() => onExport(item)}>错题</button>}
     </div>
   );
 

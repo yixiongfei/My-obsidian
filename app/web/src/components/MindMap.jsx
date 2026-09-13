@@ -256,8 +256,10 @@ export default function MindMap({ data, currentId }) {
   const onUp = () => { moved.current = drag.current?.moved || 0; drag.current = null; };
   const clicked = (fn) => (e) => { e.stopPropagation(); if (moved.current > 4) return; fn(); };
 
+  // 有真题的考点直接进专题训练；没有真题的才退回笔记 / 标签页
   const openPoint = (p) => {
-    if (p.notes.length) navigate(`/note/${encodeURIComponent(p.notes[0].id)}`);
+    if (p.group && p.items > 0) navigate(`/resources/drill/${p.group}?tag=${encodeURIComponent(p.name)}`);
+    else if (p.notes.length) navigate(`/note/${encodeURIComponent(p.notes[0].id)}`);
     else if (p.group) navigate(`/resources/tags/${p.group}?tag=${encodeURIComponent(p.name)}`);
   };
 

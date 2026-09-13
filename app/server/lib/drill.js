@@ -142,14 +142,20 @@ export function reset(examId, sectionId, n) {
   return { ok: true, removed: r.changes };
 }
 
-/** 各知识点的训练进度：{ '泰勒公式': { done, right } }，给标签页显示 */
+/**
+ * 训练进度，给标签页：
+ *   tags  { '泰勒公式': { done, right } }
+ *   items { 'math2-2021:5': true | false | null }   每道题对 / 错 / 交了但不能判
+ */
 export function progressOf(group) {
   const tags = getTags(group);
-  if (!tags) return {};
+  if (!tags) return { tags: {}, items: {} };
   // 题号在一份卷子里唯一（数学 1–22、408 1–47），不用打开卷子文件对单元
   const rows = db().prepare('SELECT exam_id, n, correct FROM exam_drill').all();
   const done = new Map(rows.map((r) => [`${r.exam_id}:${r.n}`, r]));
   const out = {};
+  const items = {};
+  for (const [k, r] of done) items[k] = r.correct == null ? null : !!r.correct;
   for (const s of tags.subjects) {
     for (const t of s.tags) {
       let d = 0;
@@ -161,5 +167,5 @@ export function progressOf(group) {
       if (d) out[t.name] = { done: d, right };
     }
   }
-  return out;
+  return { tags: out, items };
 }

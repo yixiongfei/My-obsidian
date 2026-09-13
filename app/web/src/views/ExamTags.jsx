@@ -95,7 +95,7 @@ export default function ExamTags() {
               {isOpen && (
                 <div className="tag-panel">
                   {t.items.some((it) => available.has(it.exam)) && (() => {
-                    const p = data.drill?.[t.name];
+                    const p = data.drill?.tags?.[t.name];
                     return (
                       <button className="btn sm primary tag-drill-btn" title={p ? `已做 ${p.done} 题` : '专题训练：一题一交'}
                               onClick={() => navigate(`/resources/drill/${group}?tag=${encodeURIComponent(t.name)}`)}>
@@ -110,8 +110,11 @@ export default function ExamTags() {
                         {g.items.map((it, i) => {
                           const ok = available.has(it.exam);
                           const label = `${KIND_SHORT[it.kind] ?? it.kind} ${String(it.year).slice(2)}#${it.n}`.trim();
+                          // 专题训练里做过的题：对了绿、错了红、交了但没法判分的按已做
+                          const r = data.drill?.items?.[`${it.exam}:${it.n}`];
+                          const cls = `tag-link${r === true ? ' right' : r === false ? ' wrong' : r === null ? ' done' : ''}`;
                           return ok
-                            ? <button key={i} className="tag-link" onClick={() => navigate(`/resources/exam/${it.exam}?q=${it.n}`)}>{label}</button>
+                            ? <button key={i} className={cls} onClick={() => navigate(`/resources/exam/${it.exam}?q=${it.n}`)}>{label}</button>
                             : <span key={i} className="tag-link off" title="本地没有这一年的卷子">{label}</span>;
                         })}
                       </span>
