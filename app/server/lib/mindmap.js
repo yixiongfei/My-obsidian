@@ -98,7 +98,24 @@ export async function mindmap() {
       branches.push({ name: sub, subject: subject.name, group: groupKey, points, stat, notes: rest });
     }
 
-    // 错题本：这一科所有 kind = wrong 的笔记单独一支，二轮查漏用，不算一轮的学习证据
+    /* 有考点清单的科目（数学 / 408）：错题本笔记直接挂到它对应的考点后面，不再单列一支。
+       先按标题对（「泰勒公式 错题」→ 泰勒公式），对不上再看它里面的题号落在哪个考点，取最具体的那个 */
+    if (subjects) {
+      const allPoints = branches.flatMap((b) => b.points || []);
+      const normTitle = (t) => String(t || '').replace(/\s*错题.*$/, '').replace(/[\s·:：、（）()\-]/g, '').toLowerCase();
+      for (const n of notes) {
+        if (placed.has(n.id) || n.kind !== 'wrong' || !(n.tags.includes(category) || n.id.startsWith(`${category}/`))) continue;
+        const key = normTitle(n.title);
+        let target = allPoints.find((p) => normTitle(p.name) === key);
+        if (!target) {
+          const cands = allPoints.filter((p) => p.wrongNotes.includes(n.id));
+          if (cands.length) target = cands.reduce((a, b) => (b.items < a.items ? b : a));
+        }
+        if (target) target.notes.push(leaf(n));
+      }
+    }
+
+    // 错题本：没挂到考点上的（英语没有考点清单，全部在这）单独一支，二轮查漏用，不算一轮的学习证据
     const wrongNotes = notes.filter((n) => !placed.has(n.id) && n.kind === 'wrong' && (n.tags.includes(category) || n.id.startsWith(`${category}/`)));
     if (wrongNotes.length) branches.push({ name: '错题本', kind: 'wrong', notes: wrongNotes.map(leaf) });
 

@@ -540,13 +540,6 @@ body.readmode-open { overflow: hidden; }
 .vu-head { display: flex; align-items: center; gap: 12px; }
 .vu-hint { font-size: 10px; letter-spacing: 0.08em; color: var(--dim); opacity: 0; transition: opacity 0.14s; }
 .vocab-usage:hover .vu-hint { opacity: 1; }
-.vu-mark {
-  margin-left: auto; padding: 3px 9px; border-radius: 99px;
-  font-size: 11px; color: var(--dim); border: var(--hair) solid var(--line);
-  transition: color 0.12s, border-color 0.12s, background 0.12s;
-}
-.vu-mark:hover { color: var(--accent); border-color: var(--accent); background: var(--accent-soft); }
-.vu-mark.on { color: var(--accent); border-color: var(--accent); }
 .vocab-usage .vu-en { margin: 10px 0 0; font-size: 14.5px; line-height: 1.75; color: var(--text-2); }
 .vocab-usage .vu-cn { margin: 6px 0 0; font-size: 13px; color: var(--dim); }
 .vocab-tags { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 22px; }

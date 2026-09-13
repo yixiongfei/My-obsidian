@@ -16,9 +16,7 @@ const body = (method, payload) => ({
 export const api = {
   meta: () => j('/api/meta'),
   tree: () => j('/api/tree'),
-  notes: () => j('/api/notes'),
   note: (id) => j(`/api/note?path=${encodeURIComponent(id)}`),
-  tags: () => j('/api/tags'),
   mindmap: () => j('/api/mindmap'),
   search: (q) => j(`/api/search?q=${encodeURIComponent(q)}`),
   dashboard: () => j('/api/dashboard'),
@@ -27,7 +25,6 @@ export const api = {
   setMilestones: (patch) => j('/api/milestones', body('PUT', patch)),
   vocabPrefs: () => j('/api/vocabulary/prefs'),
   setVocabPrefs: (patch) => j('/api/vocabulary/prefs', body('PUT', patch)),
-  queue: () => j('/api/review/queue'),
   review: (payload) => j('/api/review', body('POST', payload)),
 
   // 英语词汇 Anki
@@ -35,7 +32,6 @@ export const api = {
   rateWord: (id, rating) => j('/api/vocabulary/review', body('POST', { id, rating })),
   // 发完就走，不等磁盘：失败也不该挡住用户翻下一张卡
   syncVocabMarkdown: () => fetch('/api/vocabulary/sync-markdown', body('POST', {})).catch(() => {}),
-  vocabOverview: () => j('/api/vocabulary/overview'),
   // 标注词与单词列表
   vocabMarks: () => j('/api/vocabulary/marks'),
   markWord: (term, opts = {}) => j('/api/vocabulary/mark', body('POST', { term, ...opts })),

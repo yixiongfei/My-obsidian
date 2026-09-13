@@ -3,14 +3,12 @@ import cors from 'cors';
 import chokidar from 'chokidar';
 import path from 'node:path';
 import fs from 'node:fs';
-import yaml from 'js-yaml';
-import fsp from 'node:fs/promises';
 
-import { VAULT_ROOT, APP_ROOT, PORT, TAGS_FILE, isIgnoredPath, REPO_ROOT, KB_DIR } from './config.js';
+import { VAULT_ROOT, APP_ROOT, PORT, isIgnoredPath, REPO_ROOT, KB_DIR } from './config.js';
 import { index, toAbs, toId } from './lib/vault.js';
 import { render } from './lib/markdown.js';
 import { recordReview, readLog, todayStr, setSummarized } from './lib/review.js';
-import { search, dashboard, bucketNotes, allNotes, getNoteMeta } from './lib/query.js';
+import { search, dashboard, allNotes, getNoteMeta } from './lib/query.js';
 import * as points from './lib/points.js';
 import * as db from './lib/db.js';
 import { syncAll, syncNote } from './lib/sync.js';
@@ -88,14 +86,6 @@ app.get('/api/note', wrap(async (req, res) => {
   res.json({ ...getNoteMeta(id), html: render(note.body), outline: note.outline, backlinks, outlinks });
 }));
 
-app.get('/api/tags', wrap(async (_req, res) => {
-  let vocab = {};
-  try { vocab = yaml.load(await fsp.readFile(TAGS_FILE, 'utf8')) || {}; } catch { /* tags.yaml 可选 */ }
-  const used = new Map();
-  for (const n of index.allMeta()) for (const t of n.tags) used.set(t, (used.get(t) || 0) + 1);
-  res.json({ vocab, used: [...used.entries()].map(([tag, count]) => ({ tag, count })).sort((a, b) => b.count - a.count) });
-}));
-
 app.get('/api/search', (req, res) => res.json(search(req.query.q, Number(req.query.limit) || 30)));
 app.get('/api/mindmap', wrap(async (_req, res) => res.json(await mindmap())));
 
@@ -137,7 +127,6 @@ app.put('/api/milestones', (req, res) => {
   res.json(milestones());
 });
 
-app.get('/api/review/queue', (_req, res) => res.json(bucketNotes()));
 app.get('/api/review/log', wrap(async (_req, res) => res.json(await readLog())));
 
 app.post('/api/review', wrap(async (req, res) => {
@@ -182,7 +171,6 @@ app.post('/api/vocabulary/sync-markdown', (_req, res) => {
   res.status(202).json({ queued });
 });
 
-app.get('/api/vocabulary/overview', (_req, res) => res.json(vocab.overview()));
 
 /* 发音：Worker 合成 + 本地缓存；失败回 502，前端退回系统语音 */
 app.get('/api/tts', wrap(async (req, res) => {
@@ -203,12 +191,6 @@ app.post('/api/vocabulary/mark', (req, res) => {
     if (err.code === 'BAD_TERM') throw bad(err.message, 400);
     throw err;
   }
-});
-
-/* 词卡例句摘录：和荧光笔同一张表、同一个 Markdown */
-app.post('/api/vocabulary/example-mark', (req, res) => {
-  const { term, text } = req.body || {};
-  res.json(examMarks.addVocabSentence(String(term || ''), String(text || '')));
 });
 
 app.get('/api/vocabulary/words', (req, res) => {

@@ -6,7 +6,7 @@ import { AnimatePresence, motion } from 'framer-motion';
  * 渲染后端产出的笔记 HTML。
  * 站内 wiki 链接走前端路由（不整页刷新），图片点开是灯箱。
  */
-export default function Prose({ html, className = '' }) {
+export default function Prose({ html, className = '', kind = '' }) {
   const navigate = useNavigate();
   const [zoom, setZoom] = useState(null);
 
@@ -25,7 +25,7 @@ export default function Prose({ html, className = '' }) {
 
   return (
     <>
-      <div className={`prose ${className}`} onClick={onClick} dangerouslySetInnerHTML={{ __html: html }} />
+      <div className={`prose ${className}`} data-kind={kind || undefined} onClick={onClick} dangerouslySetInnerHTML={{ __html: html }} />
       <AnimatePresence>
         {zoom && (
           <motion.div

@@ -92,7 +92,7 @@ function Reader({ id, version, onReviewed }) {
 
           {note.words === 0
             ? <Empty>这篇笔记还是空的，去 Obsidian 里补充内容吧</Empty>
-            : <Prose html={note.html} />}
+            : <Prose html={note.html} kind={note.kind} />}
 
           <section className="note-review" ref={reviewRef}>
             <div className="band">

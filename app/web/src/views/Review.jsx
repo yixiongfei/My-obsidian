@@ -66,8 +66,6 @@ export default function Review({ version, onReviewed }) {
   const [notice, setNotice] = useState('');
   // 发音开关记在本机；开着时翻卡就读单词，卡背的例句旁有单独的朗读按钮
   const [voice, setVoice] = useState(() => canSpeak && localStorage.getItem('kb-voice') === 'on');
-  // 例句摘录：每句一次；换卡就清
-  const [exampleMarked, setExampleMarked] = useState(() => new Set());
   useEffect(() => { localStorage.setItem('kb-voice', voice ? 'on' : 'off'); }, [voice]);
 
   // 锁住并发：双击、键盘连击、React 还没重绘时的重复提交都会走到这儿
@@ -139,15 +137,6 @@ export default function Review({ version, onReviewed }) {
     onReviewed?.();
   }, [onReviewed]);
 
-  const markExample = useCallback(async (text) => {
-    if (!card || !text || exampleMarked.has(text)) return;
-    try {
-      await api.markExampleSentence(card.term, text);
-      setExampleMarked((prev) => new Set(prev).add(text));
-      setNotice('已摘录到 英语/语法/真题例句.md（词卡例句），稍后合并写入');
-    } catch (e) { setNotice(e.message); }
-  }, [card, exampleMarked]);
-
   const grade = useCallback(async (rating) => {
     if (!card || inFlight.current || !flipped) return;
     inFlight.current = true;
@@ -169,8 +158,6 @@ export default function Review({ version, onReviewed }) {
     setFlipped(false);
     inFlight.current = false;
   }, [card, flipped, total, finishRound]);
-
-  useEffect(() => { setExampleMarked(new Set()); }, [card?.id]);
 
   /* 翻卡 + 朗读放在一起，而且不写在 setState 的更新函数里：
      StrictMode 下更新函数会跑两遍，读音就会叠在一起 */
@@ -291,16 +278,12 @@ export default function Review({ version, onReviewed }) {
             {fallbackText && <div className="vocab-sense"><span className="vs-gloss">{fallbackText}</span></div>}
 
             {examples.map((ex, i) => (
-              /* 点整张例句卡就朗读（拖选文字时不读，好复制）；右上角可把这句摘到 真题例句.md */
+              /* 点整张例句卡就朗读（拖选文字时不读，好复制） */
               <div className="vocab-usage" title="点击朗读例句" key={ex.id ?? i}
                    onClick={(e) => { e.stopPropagation(); if (window.getSelection?.()?.toString().trim()) return; speak(ex.text, { rate: 0.95 }); }}>
                 <div className="vu-head">
                   <div className="lbl">USAGE EXAMPLE{examples.length > 1 ? ` ${i + 1}` : ''}</div>
                   <span className="vu-hint">点击朗读</span>
-                  <button className={`vu-mark${exampleMarked.has(ex.text) ? ' on' : ''}`} title="把这句摘到 英语/语法/真题例句.md"
-                          onClick={(e) => { e.stopPropagation(); markExample(ex.text); }}>
-                    {exampleMarked.has(ex.text) ? '✓ 已摘录' : '摘录例句'}
-                  </button>
                 </div>
                 <p className="vu-en">{ex.text}</p>
                 {ex.translation && <p className="vu-cn">{ex.translation}</p>}

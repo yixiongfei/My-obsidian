@@ -417,37 +417,6 @@ export function dailyBetween(from, to) {
     .map((r) => [r.date, r.done || 0]));
 }
 
-export function overview() {
-  const d = vdb.handle();
-  const today = todayStr();
-
-  const deck = d.prepare(`
-    SELECT SUM(CASE WHEN state = 'new' THEN 1 ELSE 0 END) AS new,
-           SUM(CASE WHEN state = 'review' THEN 1 ELSE 0 END) AS review,
-           SUM(CASE WHEN state = 'mastered' THEN 1 ELSE 0 END) AS mastered,
-           COUNT(*) AS total
-    FROM vocab_cards`).get();
-
-  const byPos = d.prepare(`
-    SELECT s.pos AS pos, COUNT(DISTINCT s.word_id) AS total,
-           SUM(CASE WHEN c.state = 'mastered' THEN 1 ELSE 0 END) AS mastered
-    FROM vocab_senses s JOIN vocab_cards c ON c.word_id = s.word_id
-    WHERE s.ord = 0 AND s.pos <> ''
-    GROUP BY s.pos ORDER BY total DESC LIMIT 12`).all();
-
-  const since = addDays(today, -89);
-  const trend = d.prepare('SELECT date, done, mastered FROM v_vocab_daily WHERE date >= ? ORDER BY date').all(since);
-
-  const weak = d.prepare(`
-    SELECT term, reviews, agains, hards, lapses, state, last_date
-    FROM v_vocab_word_stats
-    WHERE reviews > 0
-    ORDER BY agains DESC, hards DESC, lapses DESC, reviews DESC
-    LIMIT 30`).all();
-
-  return { today, deck, byPos, trend, weak };
-}
-
 /* ══════════════════════════════════════════════════════════════
  * 六、Markdown 投影
  * ══════════════════════════════════════════════════════════════ */

@@ -60,23 +60,6 @@ export function addMark(examId, sectionId, text, q = null, color = 'y') {
   return rowOut(d.prepare('SELECT * FROM exam_marks WHERE exam_id = ? AND section_id = ? AND text = ?').get(examId, sectionId, t));
 }
 
-/**
- * 词卡上的例句也能摘到同一个文件里：exam_id 写成 vocab:<词>，section_id = example。
- * 渲染时单独归到「词卡例句」一节，不参与卷子分组。
- */
-export function addVocabSentence(term, text) {
-  const t = normText(text);
-  const key = String(term || '').trim().toLowerCase();
-  if (!key || t.length < 2) throw Object.assign(new Error('没有例句'), { status: 400 });
-  const d = handle();
-  d.prepare(`INSERT INTO exam_marks (exam_id, section_id, q, text, color, created_at) VALUES (?, 'example', NULL, ?, 'y', ?)
-             ON CONFLICT(exam_id, section_id, text) DO NOTHING`)
-    .run(`vocab:${key}`, t, todayStr());
-  setMeta(DIRTY_KEY, '1');
-  scheduleIdleFlush();
-  return rowOut(d.prepare("SELECT * FROM exam_marks WHERE exam_id = ? AND section_id = 'example' AND text = ?").get(`vocab:${key}`, t));
-}
-
 export function recolorMark(id, color) {
   if (!COLORS.has(color)) throw Object.assign(new Error('颜色只能是 y / g / b / p'), { status: 400 });
   const r = handle().prepare('UPDATE exam_marks SET color = ? WHERE id = ?').run(color, id);
@@ -90,15 +73,13 @@ export function removeMark(id) {
 }
 
 function renderSentences() {
-  const all = handle().prepare('SELECT * FROM exam_marks ORDER BY exam_id, id').all();
-  const vocabRows = all.filter((r) => r.exam_id.startsWith('vocab:'));
-  const rows = all.filter((r) => !r.exam_id.startsWith('vocab:'));
+  const rows = handle().prepare('SELECT * FROM exam_marks ORDER BY exam_id, id').all();
   const byExam = new Map();
   for (const r of rows) {
     if (!byExam.has(r.exam_id)) byExam.set(r.exam_id, []);
     byExam.get(r.exam_id).push(r);
   }
-  const lines = [AUTO_START, '', `真题里划的 **${rows.length}** 句（${byExam.size} 套卷子），词卡摘录 **${vocabRows.length}** 句。`, ''];
+  const lines = [AUTO_START, '', `真题里划的 **${rows.length}** 句（${byExam.size} 套卷子）。`, ''];
   const exams = [...byExam.keys()].map((id) => ({ id, exam: getExam(id) })).filter((x) => x.exam)
     .sort((a, b) => b.exam.year - a.exam.year || a.id.localeCompare(b.id));
   for (const { id, exam } of exams) {
@@ -112,13 +93,6 @@ function renderSentences() {
       // 只留句子本身；哪年哪张卷已经在标题里，标注日期和站内链接都是噪音
       lines.push(`> ${r.text.replace(/\n/g, ' ')}${r.q ? `　<sub>第 ${r.q} 题</sub>` : ''}`, '');
     }
-  }
-  if (vocabRows.length) {
-    lines.push('## 词卡例句', '');
-    for (const r of vocabRows.sort((a, b) => b.created_at.localeCompare(a.created_at) || a.id - b.id)) {
-      lines.push(`- **${r.exam_id.slice(6)}** — ${r.text.replace(/\n/g, ' ')}　<sub>${r.created_at.replaceAll('-', '.')}</sub>`);
-    }
-    lines.push('');
   }
   lines.push(AUTO_END);
   return lines.join('\n');
@@ -246,7 +220,9 @@ function toMd(html, { examId, q } = {}) {
   return walk(root.firstChild).replace(/[ \t]+\n/g, '\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
-const mdTags = (tags) => tags.map((t) => `#${t.replace(/[\s#]/g, '_')}`).join(' ');
+/* 题干写成引用块：错题本笔记里引用块被样式成醒目的题面（标签只进 frontmatter，正文不再重复一行 #）
+   空行也要带 >，否则引用块在空行处断开 */
+const quote = (md) => md.trim().split('\n').map((l) => (l ? `> ${l}` : '>')).join('\n');
 
 /** 一道题的 Markdown 片段 */
 /**
@@ -284,12 +260,11 @@ export function questionMd(exam, section, n, submitted, mine) {
     const q = section.questions.find((x) => x.n === n);
     if (!q) throw Object.assign(new Error('题目不存在'), { status: 404 });
     tags = q.tags || [];
-    if (tags.length) out.push(mdTags(tags), '');
     if (section.id === 'cloze') {
       // 错题本要一眼看出错在哪：直接给原句，不让人再跳回卷面
       out.push(`> ${clozeSentence(section, n, mine, submitted)}`, '');
     } else if (q.stem) {
-      out.push(toMd(q.stem, ctx), '');
+      out.push(quote(toMd(q.stem, ctx)), '');
     }
     // 交过卷：正确项打 ✓，我选错的打 ✗
     const mark = (o) => (!submitted ? '' : o.k === q.answer ? '✓ ' : mine && o.k === mine ? '✗ ' : '');
@@ -304,15 +279,13 @@ export function questionMd(exam, section, n, submitted, mine) {
     const q = section.questions.find((x) => x.n === n);
     if (!q) throw Object.assign(new Error('题目不存在'), { status: 404 });
     tags = q.tags || [];
-    if (tags.length) out.push(mdTags(tags), '');
-    out.push(toMd(q.stem, ctx), '');
+    out.push(quote(toMd(q.stem, ctx)), '');
     if (submitted) out.push('**参考答案**', '', toMd(q.solution, ctx), '');
     else out.push('（这一单元还没交卷，答案未附）', '');
   } else {
     tags = section.tags || [];
-    if (tags.length) out.push(mdTags(tags), '');
     if (section.directions) out.push(toMd(section.directions, ctx), '');
-    out.push(toMd(section.body, ctx), '');
+    out.push(quote(toMd(section.body, ctx)), '');
     if (submitted) out.push('**参考答案**', '', toMd(section.solution, ctx), '');
     else out.push('（这一单元还没交卷，参考答案未附）', '');
   }
