@@ -20,6 +20,7 @@ import * as vocab from './lib/vocabulary.js';
 import * as vocabDb from './lib/vocabulary-db.js';
 import * as exams from './lib/exams.js';
 import * as marks from './lib/vocab-marks.js';
+import * as drill from './lib/drill.js';
 import * as examMarks from './lib/exam-marks.js';
 import * as tts from './lib/tts.js';
 
@@ -254,7 +255,22 @@ app.get('/api/exams', (_req, res) => res.json(exams.listExams()));
 app.get('/api/exams/tags/:group', (req, res) => {
   const tags = exams.getTags(req.params.group);
   if (!tags) throw bad('还没有这一科的标签数据，先运行 scripts/import-exams.mjs tags', 404);
-  res.json(tags);
+  res.json({ ...tags, drill: drill.progressOf(req.params.group) });
+});
+
+/* 专题训练：一个知识点名下的历年题，一题一交 */
+app.get('/api/exams/drill/:group', (req, res) => {
+  const out = drill.drill(req.params.group, String(req.query.tag || ''));
+  if (!out) throw bad('没有这个知识点', 404);
+  res.json(out);
+});
+app.post('/api/exams/drill/answer', (req, res) => {
+  const { exam, section, n, answer } = req.body || {};
+  res.json(drill.answer(String(exam || ''), String(section || ''), Number(n), answer));
+});
+app.post('/api/exams/drill/reset', (req, res) => {
+  const { exam, section, n } = req.body || {};
+  res.json(drill.reset(String(exam || ''), String(section || ''), Number(n)));
 });
 
 app.get('/api/exams/assets/:file', (req, res, next) => {
@@ -285,7 +301,8 @@ app.post('/api/exams/marks/sync', (_req, res) => {
 /* 错题本：显式动作，直接写 Markdown */
 app.post('/api/exams/:id/:section/export', wrap(async (req, res) => {
   const n = req.body?.n;
-  const out = await examMarks.exportQuestion(req.params.id, req.params.section, Number.isInteger(n) ? n : null);
+  // 专题训练里点「错题」：以这一题的训练作答为准（整卷可能还没交）
+  const out = await examMarks.exportQuestion(req.params.id, req.params.section, Number.isInteger(n) ? n : null, { drill: !!req.body?.drill });
   res.json(out);
 }));
 

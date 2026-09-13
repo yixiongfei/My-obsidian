@@ -77,12 +77,13 @@ Windows 本机打包时 electron-builder 会解压 `winCodeSign`，里面两个 
 在推送 `v*` 标签时于 windows-latest 上打包，并挂到同名 Release：
 
 ```bash
-# 改 app/package.json 的 version，提交后：
-git tag v1.0.1
-git push origin v1.0.1
+npm run ship -- "release: 1.0.10（一句话说明）"   # 一条命令：落库 → 提交 → 打标签推送 → 本机打包 → 覆盖安装 → 重启桌面端 → 等 Release
+npm run ship -- -v 1.1.0 "release: 1.1.0（…）"     # 指定版本；默认 patch +1
+npm run ship -- --no-build "…"                     # 只提交推送（--no-install 不装、--no-wait 不等 Actions）
 ```
 
-几分钟后到仓库的 Releases 页下载 `kb-1.0.1-setup.exe`。换电脑：clone 仓库（带 `My-md/` 与 `.kb/`）→ 装安装包 → 首次启动选 clone 下来的文件夹。
+手动等价于：改 `app/package.json` 的 version → commit → `git tag vX.Y.Z && git push origin dev vX.Y.Z` → `release` 快进。
+几分钟后到仓库的 Releases 页下载 `kb-<版本>-setup.exe`。换电脑：clone 仓库（带 `My-md/` 与 `.kb/`）→ 装安装包 → 首次启动选 clone 下来的文件夹。
 
 分支约定：`dev` 日常开发；`release` 只在发版时快进到打了标签的提交，永远可装可用。
 
@@ -124,6 +125,10 @@ git push origin v1.0.1
 wiki 链接的关系图没有做——Obsidian 自带的 graph view 已经覆盖了。
 
 ## 历年真题
+
+**专题训练**：真题标签页里每个知识点下有「开始训练」，把这个知识点历年出现过的题（本地有卷子的）按年份从新到旧排成一列，
+**一题一交**——选好 / 写好就看这一题的答案和解析，不用像整卷那样做完一个单元才对答案。作答记在 `exam_drill` 表，
+和整卷成绩互不影响，每题可单独重做；「错题」按钮、解析、知识点标签和卷面一致。结构图 / 仪表盘里点一个考点会带到标签页对应的行。
 
 题面抓自 [计算机考研杂货铺](https://www.csgraduates.com/study_methods/)，一次抓完放在 `.kb/exams/`（英语 34 套、数学 57 套、408 18 套，
 加两份知识点标签）。该站声明保留所有权利，抓下来只作个人练习，所以数据和 SQLite 一样留在 `.kb/` 里、不进 git：

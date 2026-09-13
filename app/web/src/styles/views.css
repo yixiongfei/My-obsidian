@@ -868,6 +868,12 @@ body.readmode-open { overflow: hidden; }
 .paper-rail .rail-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .paper-rail .rail-score { font-size: 11px; color: var(--dim); }
 .paper-rail .rail-item.done .rail-score { color: var(--accent); }
+/* 专题训练：答错的题在题单里标红 */
+.paper-rail .rail-item.bad .rail-dot { border-color: var(--due); background: var(--due); }
+.paper-rail .rail-item.bad .rail-score { color: var(--due); }
+.paper.drill .unit-head .paper-link { font-size: 11px; margin-right: 10px; }
+.tag-drill { padding-bottom: 6px; margin-bottom: 4px; border-bottom: var(--hair) dashed var(--line); }
+.tag-drill .tag-links { align-items: center; gap: 12px; }
 .paper-rail .rail-total { display: flex; justify-content: space-between; padding-top: 12px; font-size: 11px; letter-spacing: 0.08em; color: var(--dim); }
 
 @media (max-width: 1180px) {

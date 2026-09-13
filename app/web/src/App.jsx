@@ -15,6 +15,7 @@ import Resources from './views/Resources.jsx';
 import Exam from './views/Exam.jsx';
 import ExamTags from './views/ExamTags.jsx';
 import Words from './views/Words.jsx';
+import Drill from './views/Drill.jsx';
 
 import { api } from './api.js';
 import { useApi, useHotkey, useTheme, useVaultVersion } from './hooks.js';
@@ -84,6 +85,7 @@ export default function App() {
               <Route path="/resources" element={<Resources />} />
               <Route path="/resources/exam/:id" element={<Exam />} />
               <Route path="/resources/tags/:group" element={<ExamTags />} />
+              <Route path="/resources/drill/:group" element={<Drill />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </motion.div>

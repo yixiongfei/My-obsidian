@@ -1,6 +1,6 @@
 {
   "name": "obsidian-knowledge-base",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "private": true,
   "type": "module",
   "description": "个人考研知识库 · Vite + Node，可打包为 Windows 桌面程序",
@@ -13,7 +13,8 @@
     "build": "vite build",
     "start": "cross-env NODE_ENV=production node --disable-warning=ExperimentalWarning server/index.js",
     "electron:dev": "cross-env ELECTRON_DEV=1 electron .",
-    "electron:build": "npm run build && electron-builder --win"
+    "electron:build": "npm run build && electron-builder --win",
+    "ship": "node scripts/ship.mjs"
   },
   "dependencies": {
     "@fontsource-variable/archivo": "^5.3.0",

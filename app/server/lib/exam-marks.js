@@ -4,6 +4,7 @@ import { parse } from 'node-html-parser';
 import { VAULT_ROOT, PORT } from '../config.js';
 import { handle, getMeta, setMeta } from './db.js';
 import { getExam, attemptsOf } from './exams.js';
+import { attemptOf as drillAttemptOf } from './drill.js';
 import { todayStr } from './review.js';
 
 /**
@@ -312,13 +313,21 @@ export function questionMd(exam, section, n, submitted, mine) {
  * 把一道题追加到错题本。同一道题只追加一次（靠 marker 去重）。
  * 文件是给 Obsidian 编辑的，所以只追加、不重写已有内容。
  */
-export async function exportQuestion(examId, sectionId, n) {
+export async function exportQuestion(examId, sectionId, n, { drill = false } = {}) {
   const exam = getExam(examId);
   const section = exam?.sections.find((s) => s.id === sectionId);
   if (!section) throw Object.assign(new Error('单元不存在'), { status: 404 });
-  const attempt = attemptsOf(examId)[sectionId];
-  const submitted = !!attempt?.submittedAt;
-  const mine = n != null ? attempt?.answers?.[n] || null : null;
+  let submitted;
+  let mine;
+  if (drill && n != null) {
+    const a = drillAttemptOf(examId, sectionId, n);
+    submitted = !!a;
+    mine = a?.answer || null;
+  } else {
+    const attempt = attemptsOf(examId)[sectionId];
+    submitted = !!attempt?.submittedAt;
+    mine = n != null ? attempt?.answers?.[n] || null : null;
+  }
   const { marker, md, tags } = questionMd(exam, section, n, submitted, mine);
 
   const folder = path.join(VAULT_ROOT, GROUP_FOLDER[exam.group] || exam.kindLabel, '错题本');

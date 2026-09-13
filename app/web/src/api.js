@@ -57,7 +57,11 @@ export const api = {
   removeExamMark: (mid) => j(`/api/exams/marks/${mid}`, { method: 'DELETE' }),
   recolorExamMark: (mid, color) => j(`/api/exams/marks/${mid}`, body('PATCH', { color })),
   syncExamMarks: () => fetch('/api/exams/marks/sync', body('POST', {})).catch(() => {}),
-  exportQuestion: (id, section, n) => j(`/api/exams/${encodeURIComponent(id)}/${section}/export`, body('POST', { n })),
+  exportQuestion: (id, section, n, drill = false) => j(`/api/exams/${encodeURIComponent(id)}/${section}/export`, body('POST', { n, drill })),
+  // 专题训练：一个知识点的历年题，一题一交
+  drill: (group, tag) => j(`/api/exams/drill/${encodeURIComponent(group)}?tag=${encodeURIComponent(tag)}`),
+  drillAnswer: (exam, section, n, answer) => j('/api/exams/drill/answer', body('POST', { exam, section, n, answer })),
+  drillReset: (exam, section, n) => j('/api/exams/drill/reset', body('POST', { exam, section, n })),
   year: (y) => j(`/api/schedule/year/${y}`),
   month: (m) => j(`/api/schedule/month/${m}`),
   day: (d) => j(`/api/schedule/day/${d}`),
