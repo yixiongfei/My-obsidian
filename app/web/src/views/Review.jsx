@@ -33,6 +33,27 @@ const SpeakerIcon = ({ on }) => (
   </svg>
 );
 
+/* ── 本轮快照（localStorage）──
+   只认当天的：隔夜的队列早就过时，直接丢 */
+const ROUND_KEY = 'kb-vocab-round';
+function loadRound(today) {
+  try {
+    const r = JSON.parse(localStorage.getItem(ROUND_KEY) || 'null');
+    if (!r || r.day !== today || !Array.isArray(r.queue) || !r.queue.length) return null;
+    if ((r.doneIds || []).length >= r.queue.length) return null;
+    return r;
+  } catch { return null; }
+}
+function saveRound(r) { try { localStorage.setItem(ROUND_KEY, JSON.stringify(r)); } catch { /* 满了就算了 */ } }
+function clearRound() { try { localStorage.removeItem(ROUND_KEY); } catch { /* 忽略 */ } }
+
+/** 把新拉到的、本轮还没有的标注词（用户刚加的、真题里刚标的）接到队列末尾；没有新词就原样返回 */
+function appendFresh(queue, cards) {
+  const have = new Set(queue.map((c) => c.id));
+  const fresh = (cards || []).filter((c) => c.type === 'word' && c.important && c.state === 'new' && !have.has(c.id));
+  return fresh.length ? [...queue, ...fresh] : queue;
+}
+
 export default function Review({ version, onReviewed }) {
   const navigate = useNavigate();
   const { data, loading, error, reload } = useApi(() => api.cards(), [version]);
@@ -68,13 +89,39 @@ export default function Review({ version, onReviewed }) {
     finished.current = words.length === 0;
   }, []);
 
+  /* 首次加载：当天有没做完的一轮就接着做（去单词列表加了个词再回来，不该从 01/20 重来），
+     没有才开新一轮。接着做的时候，新标注 / 新添加的词补到本轮末尾 */
   useEffect(() => {
     if (!data || !wantNewRound.current) return;
     wantNewRound.current = false;
-    startRound(data.cards);
+    const saved = loadRound(data.today);
+    if (!saved) { startRound(data.cards); return; }
+    const words = appendFresh(saved.queue, data.cards);
+    setQueue(words);
+    setDoneIds(new Set(saved.doneIds));
+    setMasteredCount(saved.masteredCount || 0);
+    setFlipped(false);
+    finished.current = saved.doneIds.length >= words.length;
   }, [data, startRound]);
 
-  const newRound = useCallback(() => { wantNewRound.current = true; reload(); }, [reload]);
+  // 本轮进行中 cards 被重新拉取（标注了词、SSE）：只往末尾补新标注的词，已有顺序不动
+  useEffect(() => {
+    if (!data || wantNewRound.current || !queue) return;
+    setQueue((prev) => {
+      const next = appendFresh(prev, data.cards);
+      if (next.length > prev.length) finished.current = false;
+      return next === prev ? prev : next;
+    });
+  }, [data]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // 本轮快照落到本机，换页面、刷新都不丢；做完或开新一轮就清掉
+  useEffect(() => {
+    if (!queue || !data) return;
+    if (doneIds.size >= queue.length) { clearRound(); return; }
+    saveRound({ day: data.today, queue, doneIds: [...doneIds], masteredCount });
+  }, [queue, doneIds, masteredCount, data]);
+
+  const newRound = useCallback(() => { clearRound(); wantNewRound.current = true; reload(); }, [reload]);
 
   const remaining = useMemo(
     () => (queue || []).filter((c) => !doneIds.has(c.id)),
@@ -125,13 +172,21 @@ export default function Review({ version, onReviewed }) {
 
   useEffect(() => { setExampleMarked(new Set()); }, [card?.id]);
 
+  /* 翻卡 + 朗读放在一起，而且不写在 setState 的更新函数里：
+     StrictMode 下更新函数会跑两遍，读音就会叠在一起 */
+  const flip = useCallback(() => {
+    if (!card) return;
+    if (!flipped && voice) speak(card.term);
+    setFlipped(!flipped);
+  }, [card, flipped, voice]);
+
   useEffect(() => {
     const onKey = (e) => {
       if (e.target.matches?.('input, textarea')) return;
       if (!card) return;
       if (e.key === ' ' || e.key === 'Enter') {
         e.preventDefault();
-        setFlipped((f) => { if (!f && voice) speak(card.term); return !f; });
+        flip();
         return;
       }
       if (!flipped) return;
@@ -140,7 +195,7 @@ export default function Review({ version, onReviewed }) {
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [card, flipped, grade, voice]);
+  }, [card, flipped, grade, flip]);
 
   if (loading && !data) return <Loading />;
   if (error) return <ErrorBox error={error} onRetry={reload} />;
@@ -198,7 +253,7 @@ export default function Review({ version, onReviewed }) {
           <span className="dim">已掌握 {counts.mastered ?? 0}</span>
           {canSpeak && (
             <button className={`voice-btn${voice ? ' on' : ''}`} title={voice ? '发音：开（翻卡即读）' : '发音：关'}
-                    onClick={() => setVoice((v) => { if (!v) speak(card.term); return !v; })}>
+                    onClick={() => { if (!voice) speak(card.term); setVoice(!voice); }}>
               <SpeakerIcon on={voice} />
             </button>
           )}
@@ -208,7 +263,7 @@ export default function Review({ version, onReviewed }) {
 
       {/* 用 div 不用 button：button 里的文字选不中，卡背的例句要能选中复制 */}
       <div className={`vocab-card${flipped ? ' open' : ''}`} role="button" tabIndex={0}
-           onClick={() => setFlipped((f) => { if (!f && voice) speak(card.term); return !f; })}
+           onClick={flip}
            aria-label={flipped ? '收起释义' : '查看释义'}>
         <div className="vocab-face">
           <div className="vocab-term">{card.term}{card.important && <span className="vocab-imp" title="标注词">★</span>}</div>

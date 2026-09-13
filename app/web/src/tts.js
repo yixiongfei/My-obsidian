@@ -34,9 +34,15 @@ function speakSystem(text, rate) {
  * @param text  要读的英文
  * @param rate  语速倍率，默认 1
  */
+let last = { text: '', at: 0 };
+
 export function speak(text, { rate = 1, voice = DEFAULT_VOICE } = {}) {
   const t = String(text || '').trim();
   if (!t) return;
+  // 同一段文字 300ms 内的重复调用（点击 + 键盘、两个处理器都触发）只读一次
+  const now = Date.now();
+  if (t === last.text && now - last.at < 300) return;
+  last = { text: t, at: now };
   stop();
   const url = `/api/tts?text=${encodeURIComponent(t)}&voice=${encodeURIComponent(voice)}&speed=${rate}`;
   const a = new Audio(url);
