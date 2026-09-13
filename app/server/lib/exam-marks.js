@@ -108,9 +108,8 @@ function renderSentences() {
     for (const r of list) {
       const sec = exam.sections.find((s) => s.id === r.section_id);
       if (r.section_id !== lastSec) { lines.push(`### ${sec?.label || r.section_id}`, ''); lastSec = r.section_id; }
-      lines.push(`> ${r.text.replace(/\n/g, ' ')}`, '');
-      // 链接带 hl=标记 id：打开后直接滚到这一句并闪一下，像书签
-      lines.push(`标于 ${r.created_at.replaceAll('-', '.')}${r.q ? ` · 第 ${r.q} 题` : ''} · [跳到原句](${appUrl(id, r.q, r.id)})`, '');
+      // 只留句子本身；哪年哪张卷已经在标题里，标注日期和站内链接都是噪音
+      lines.push(`> ${r.text.replace(/\n/g, ' ')}${r.q ? `　<sub>第 ${r.q} 题</sub>` : ''}`, '');
     }
   }
   if (vocabRows.length) {
