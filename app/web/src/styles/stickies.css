@@ -2,9 +2,8 @@
  * 便利贴
  *
  * 整站的质感规矩是「无渐变、无阴影，层级只靠亮度与线重」。便利贴是这条规矩里
- * 唯一的例外，而且只破一条：投影。原因不是好看——纸片压在正文上，没有那一层
- * 2px 的暗边就分不清「纸」和「被纸盖住的字」，投影在这里是**功能**。
- * 渐变、纹理一概没有：纸片是一块实色。
+ * 唯一的例外是纸张自身的物理质感：很淡的纤维、受光和接触阴影。它们只用来说明
+ * 这是能被钉住、揭起和撕掉的纸，强度必须低到不干扰阅读。
  *
  * 颜色即语义：黄 疑问 / 蓝 推导 / 绿 结论 / 红 易错。四种纸都用深墨写字，
  * 对比度都在 10:1 以上——纸片常常压在正文上，读不动就白贴。
@@ -93,12 +92,36 @@
   position: absolute; z-index: 2;
   isolation: isolate;          /* 图的正片叠底只跟这张纸混，别透到底下的正文 */
   pointer-events: auto;
-  background: var(--sn-bg); color: var(--sn-ink);
+  background:
+    radial-gradient(ellipse at 16% 8%, rgba(255,255,255,.20), transparent 38%),
+    linear-gradient(112deg, rgba(255,255,255,.06), transparent 42%, rgba(54,42,12,.045)),
+    var(--sn-bg);
+  color: var(--sn-ink);
   border-radius: 2px;
   box-shadow: var(--sn-shadow);
   cursor: grab;
   transition: box-shadow var(--dur-1) var(--ease), transform var(--dur-2) var(--ease), opacity var(--dur-2) var(--ease);
 }
+/* 两层非周期细纹模拟纸浆纤维。纹理不参与命中，也不会盖住文字。 */
+.sn::before, .sn-full::before, .sn-chip::before, .sn-ghost::before {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background-image:
+    repeating-linear-gradient(7deg, transparent 0 3px, rgba(54,42,12,.022) 3px 4px),
+    repeating-linear-gradient(97deg, rgba(255,255,255,.025) 0 1px, transparent 1px 5px);
+  mix-blend-mode: multiply; opacity: .62;
+}
+.sn::after, .sn-full::after {
+  content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  box-shadow: inset 0 1px rgba(255,255,255,.20), inset 0 -1px rgba(54,42,12,.09);
+}
+/* 图片本身是不透明的，通用纹理层放在它下面会完全看不见。图片纸把纤维提到图像
+   上方；图钉、撕角和缩放把手都是 z-index: 3，仍然压在纹理之上。 */
+.sn.media::before {
+  z-index: 2;
+  mix-blend-mode: soft-light;
+  opacity: .42;
+}
+.sn.media::after { z-index: 2; }
 .sn:hover { box-shadow: var(--sn-shadow-up); z-index: 4; }
 .sn:active { cursor: grabbing; }
 .sn.pinned { cursor: default; }
@@ -120,10 +143,18 @@
   overflow: visible;           /* 纸尖会甩出纸片原来的框 */
   pointer-events: none;
 }
+.sn-crease {
+  stroke: var(--sn-back-deep);
+  opacity: .22;
+}
+.sn-paper-depth {
+  fill: var(--sn-back-deep);
+  opacity: .9;
+}
 /* 只有真正悬起来的纸（翻平的片、露出的纸背）投影子：它们离页面有两个卷的高度，影子软而偏；
    抬起段上那层背光渐变是纸上的光，不是纸，不能带影子；贴地那条线的硬影子在 SVG 里另画 */
-.sn-lift { filter: drop-shadow(-3px 5px 7px rgba(0, 0, 0, 0.34)); }
-:root[data-theme='light'] .sn-lift { filter: drop-shadow(-3px 5px 7px rgba(16, 20, 28, 0.26)); }
+.sn-lift { filter: drop-shadow(-4px 7px 9px rgba(0, 0, 0, 0.38)); }
+:root[data-theme='light'] .sn-lift { filter: drop-shadow(-4px 7px 9px rgba(16, 20, 28, 0.28)); }
 
 .sn-body {
   position: absolute; inset: 0;
@@ -150,14 +181,14 @@
 .sn-empty { opacity: 0.42; font-style: normal; }
 
 /* 贴上来的图就是这张纸：铺满整张，不留白边（纸片建出来时就是原图的比例，见 fitSize）。
-   用正片叠底把图「印」在纸上——白底变成纸的颜色，字迹、荧光笔照旧，纸是黄的图就是黄的。
-   点开看的大图（.sn-full-img）不动：那是证据，一个像素都不改 */
+   用正片叠底把图「印」在纸上——白底变成纸的颜色，字迹、荧光笔照旧；
+   缩略图和展开原图使用同一种纸色处理，切换大小时不会突然变回白底。 */
 .sn.media .sn-body { padding: 0; border-radius: inherit; }
 .sn-img { display: block; width: 100%; height: 100%; object-fit: contain; mix-blend-mode: multiply; }
 /* 正文里的图夜里会被反相以融进暗底；纸片上的图不参与 */
 :root[data-theme='dark'] .sn-img, :root[data-theme='light'] .sn-img { filter: none; background: transparent; }
 :root[data-theme='dark'] .sn-full-img, :root[data-theme='light'] .sn-full-img {
-  filter: none; mix-blend-mode: normal; background: transparent;
+  filter: none; mix-blend-mode: multiply; background: transparent;
 }
 .sn-pdf { display: block; width: 100%; height: 100%; border: none; background: #fff; border-radius: 1px; }
 
@@ -166,7 +197,11 @@
   position: absolute; inset: 0;
   padding: 19px 12px 11px 12px;
   border: none; outline: none; resize: none;
-  background: var(--sn-bg); color: var(--sn-ink);
+  background:
+    radial-gradient(ellipse at 16% 8%, rgba(255,255,255,.20), transparent 38%),
+    linear-gradient(112deg, rgba(255,255,255,.06), transparent 42%, rgba(54,42,12,.045)),
+    var(--sn-bg);
+  color: var(--sn-ink);
   font-family: var(--font); font-size: 12.5px; line-height: 1.66;
   border-radius: 2px;
 }
@@ -275,7 +310,9 @@
 .sn-dock-lbl { font-size: 9px; letter-spacing: 0.18em; color: var(--dim); margin-bottom: 2px; }
 .sn-chip {
   width: 38px; height: 25px; border-radius: 2px;
-  background: var(--sn-bg); color: var(--sn-ink);
+  position: relative; overflow: hidden;
+  background: linear-gradient(112deg, rgba(255,255,255,.13), transparent 55%, rgba(54,42,12,.035)), var(--sn-bg);
+  color: var(--sn-ink);
   border: var(--hair) solid color-mix(in srgb, var(--sn-line) 55%, transparent);
   font-size: 10px; letter-spacing: 0.04em;
   display: grid; place-items: center; cursor: grab;
@@ -292,7 +329,9 @@
 .sn-ghost {
   position: fixed; z-index: 300; pointer-events: none;
   width: 80px; height: 44px; border-radius: 2px;
-  background: var(--sn-bg); box-shadow: var(--sn-shadow-up);
+  overflow: hidden;
+  background: linear-gradient(112deg, rgba(255,255,255,.13), transparent 55%, rgba(54,42,12,.035)), var(--sn-bg);
+  box-shadow: var(--sn-shadow-up);
   opacity: 0.85; transform: rotate(-3deg);
 }
 
@@ -300,18 +339,24 @@
 
 .sn-modal {
   position: fixed; inset: 0; z-index: 210;
-  display: grid; place-items: center; padding: 48px;
-  background: color-mix(in srgb, var(--bg) 86%, #000);
+  pointer-events: none;
   animation: sn-in var(--dur-2) var(--ease);
 }
 @keyframes sn-in { from { opacity: 0; } to { opacity: 1; } }
 
 .sn-full {
-  background: var(--sn-bg); color: var(--sn-ink);
+  position: fixed;
+  background:
+    radial-gradient(ellipse at 16% 8%, rgba(255,255,255,.18), transparent 42%),
+    linear-gradient(112deg, rgba(255,255,255,.05), transparent 46%, rgba(54,42,12,.04)),
+    var(--sn-bg);
+  color: var(--sn-ink);
   border-radius: 2px; box-shadow: var(--sn-shadow-up);
-  width: min(680px, 100%); max-height: 100%;
+  width: min(680px, calc(100vw - 32px)); max-height: calc(100vh - 32px);
   display: flex; flex-direction: column; overflow: hidden;
+  pointer-events: auto;
 }
+.sn-full > * { position: relative; z-index: 1; }
 .sn-full-bar {
   display: flex; align-items: center; gap: 7px;
   padding: 9px 12px;
@@ -334,21 +379,22 @@
 }
 .sn-full-btn:hover { background: color-mix(in srgb, var(--sn-ink) 10%, transparent); }
 .sn-full-body { padding: 18px 20px 20px; overflow: auto; }
+.sn-full-body.media {
+  padding: 0; flex: 1; min-height: 0;
+  background: var(--sn-bg); isolation: isolate;
+  cursor: zoom-out;
+}
 .sn-full-body .sn-rich { font-size: 15px; line-height: 1.85; }
-.sn-full-img { display: block; max-width: 100%; margin: 0 auto; }
-.sn-full-pdf { display: block; width: 100%; height: 72vh; border: none; background: #fff; }
+.sn-full-img { display: block; max-width: 100%; max-height: calc(100vh - 74px); margin: 0 auto; object-fit: contain; }
+.sn-full-pdf { display: block; width: 100%; height: 100%; border: none; background: #fff; }
 .sn-full-edit {
   display: block; width: 100%; min-height: 220px; resize: vertical;
   border: none; outline: none; background: transparent; color: var(--sn-ink);
   font-family: var(--font); font-size: 15px; line-height: 1.85;
 }
 
-/* 阅读模式：那张纸自己有配色，纸片的墨色和四色纸照旧——换的是脚下的纸，不是纸片本身。
-   只把投影压淡一档：素白纸上夜间那种浓影会显脏 */
-.readmode .sn { box-shadow: 0 1px 5px rgba(40, 45, 60, 0.18), 0 0 0 1px rgba(40, 45, 60, 0.07); }
-.readmode .sn:hover, .readmode .sn.editing { box-shadow: 0 6px 18px rgba(40, 45, 60, 0.24), 0 0 0 1px rgba(40, 45, 60, 0.09); }
-:root[data-theme='dark'] .readmode .sn { box-shadow: var(--sn-shadow); }
-:root[data-theme='dark'] .readmode .sn:hover, :root[data-theme='dark'] .readmode .sn.editing { box-shadow: var(--sn-shadow-up); }
+/* 阅读页和复习全屏共用同一个 Stickies 组件，也必须共用同一套纸张材质与阴影；
+   不在 .readmode 下另写便利贴外观，避免两个入口逐渐分叉。 */
 /* 阅读模式的滚动容器是它自己那一层，展开卡片要压在最上面 */
 .readmode ~ .sn-modal, .sn-modal { z-index: 210; }
 

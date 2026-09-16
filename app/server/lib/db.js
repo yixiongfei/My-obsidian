@@ -119,6 +119,16 @@ CREATE TABLE IF NOT EXISTS exam_marks (
 );
 CREATE INDEX IF NOT EXISTS idx_exam_marks_exam ON exam_marks(exam_id);
 
+-- 阅读批注模式的私有画布。普通卷面不读取这张表；整篇阅读的手写、文本标记和
+-- 翻译便签合在一份 JSON 里，便于前端原子保存与撤销重做。
+CREATE TABLE IF NOT EXISTS exam_reading_annotations (
+  exam_id    TEXT NOT NULL,
+  section_id TEXT NOT NULL,
+  data       TEXT NOT NULL DEFAULT '{"strokes":[],"highlights":[],"notes":[]}',
+  updated_at TEXT NOT NULL,
+  PRIMARY KEY (exam_id, section_id)
+);
+
 -- 便利贴：贴在笔记正文上的纸片。坐标相对正文栏左上角，箭头锚点存 JSON。
 -- 批注不是笔记内容，不写回 .md——否则拖一下纸片就触发重新索引，脚下的正文会跟着重渲染
 CREATE TABLE IF NOT EXISTS stickies (

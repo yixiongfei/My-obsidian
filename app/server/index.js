@@ -20,12 +20,13 @@ import * as exams from './lib/exams.js';
 import * as marks from './lib/vocab-marks.js';
 import * as drill from './lib/drill.js';
 import * as examMarks from './lib/exam-marks.js';
+import * as readingAnnotations from './lib/reading-annotations.js';
 import * as stickies from './lib/stickies.js';
 import * as tts from './lib/tts.js';
 
 const app = express();
 app.use(cors());
-app.use(express.json({ limit: '256kb' }));
+app.use(express.json({ limit: '1mb' }));
 
 const wrap = (fn) => (req, res, next) => Promise.resolve(fn(req, res, next)).catch(next);
 const bad = (msg, status = 400) => Object.assign(new Error(msg), { status });
@@ -281,6 +282,14 @@ app.post('/api/exams/marks/sync', (_req, res) => {
   res.status(202).json({ ok: true });
 });
 
+/* 阅读批注：只属于阅读模式，不写 Markdown，也不混入普通卷面的句子荧光笔。 */
+app.get('/api/exams/:id/:section/reading-annotations', (req, res) => {
+  res.json(readingAnnotations.read(req.params.id, req.params.section));
+});
+app.put('/api/exams/:id/:section/reading-annotations', (req, res) => {
+  res.json(readingAnnotations.write(req.params.id, req.params.section, req.body || {}));
+});
+
 /* 错题本：显式动作，直接写 Markdown */
 app.post('/api/exams/:id/:section/export', wrap(async (req, res) => {
   const n = req.body?.n;
@@ -349,7 +358,7 @@ app.patch('/api/stickies/:id', (req, res) => res.json(stickies.update(Number(req
 app.delete('/api/stickies/:id', (req, res) => res.json(stickies.remove(Number(req.params.id))));
 
 /* 贴图：截图、拖进来的图片、PDF。
-   走 application/octet-stream 裸流而不是 base64——全局那个 express.json 只有 256kb，
+   走 application/octet-stream 裸流而不是 base64——全局 express.json 仍只适合轻量结构化数据，
    而 base64 还要再胖三分之一，一张 4K 截图光编码就白烧几十毫秒。文件名和类型走查询串。 */
 app.post('/api/stickies/media',
   express.raw({ type: () => true, limit: '24mb' }),

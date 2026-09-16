@@ -53,6 +53,10 @@ export const api = {
   removeExamMark: (mid) => j(`/api/exams/marks/${mid}`, { method: 'DELETE' }),
   recolorExamMark: (mid, color) => j(`/api/exams/marks/${mid}`, body('PATCH', { color })),
   syncExamMarks: () => fetch('/api/exams/marks/sync', body('POST', {})).catch(() => {}),
+  readingAnnotations: (id, section) =>
+    j(`/api/exams/${encodeURIComponent(id)}/${encodeURIComponent(section)}/reading-annotations`),
+  saveReadingAnnotations: (id, section, data) =>
+    j(`/api/exams/${encodeURIComponent(id)}/${encodeURIComponent(section)}/reading-annotations`, body('PUT', data)),
   exportQuestion: (id, section, n, drill = false) => j(`/api/exams/${encodeURIComponent(id)}/${section}/export`, body('POST', { n, drill })),
   // 专题训练：一个知识点的历年题，一题一交
   drill: (group, tag) => j(`/api/exams/drill/${encodeURIComponent(group)}?tag=${encodeURIComponent(tag)}`),

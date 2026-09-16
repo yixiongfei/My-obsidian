@@ -3,6 +3,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import { Loading, ErrorBox } from '../components/bits.jsx';
+import ExamReadingMode from '../components/ExamReadingMode.jsx';
 import { useWordMarks, useHighlights, HL_COLORS } from '../wordmarks.js';
 
 /**
@@ -340,8 +341,10 @@ function ChoiceUnit({ section, examId, onSubmit, onReset, onExport }) {
   const [answers, update, flush, locked] = useDraft(examId, section);
   const [submit, busy] = useSubmit(section, answers, flush, onSubmit);
   const [open, setOpen] = useState(() => new Set());
+  const [reading, setReading] = useState(false);
   const key = section.key;
   const isCloze = section.id === 'cloze';
+  const canRead = !isCloze && section.passage?.length > 0 && section.questions?.length > 0;
 
   const unanswered = section.questions.filter((q) => !answers[q.n]).length;
   const choose = (n, k) => update((prev) => ({ ...prev, [n]: prev[n] === k ? undefined : k }));
@@ -352,7 +355,11 @@ function ChoiceUnit({ section, examId, onSubmit, onReset, onExport }) {
 
   return (
     <section className={`unit${locked ? ' locked' : ''}`}>
-      <UnitHead section={section} />
+      <UnitHead section={section} right={canRead ? (
+        <button className="reading-mode-btn" onClick={() => setReading(true)} title="文章与题目双栏阅读，并在专用画布上批注">
+          <span>阅读批注</span><i>⤢</i>
+        </button>
+      ) : null} />
       {section.directions && <div className="paper-directions" dangerouslySetInnerHTML={html(section.directions)} />}
 
       {section.passage?.length > 0 && (
@@ -422,6 +429,11 @@ function ChoiceUnit({ section, examId, onSubmit, onReset, onExport }) {
           <summary>{key.extras[0].title}{key.extras.length > 1 ? ` 等 ${key.extras.length} 项` : ''}</summary>
           {key.extras.map((x, i) => <div key={i} className="paper-ref-body" dangerouslySetInnerHTML={html(x.html)} />)}
         </details>
+      )}
+
+      {reading && (
+        <ExamReadingMode examId={examId} section={section} answers={answers} locked={locked}
+                         onChoose={choose} onClose={() => setReading(false)} />
       )}
     </section>
   );

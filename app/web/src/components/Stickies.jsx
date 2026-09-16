@@ -138,7 +138,6 @@ const RETURN_DURATION = 460;
 function DogEar({ id, s, geo, fade }) {
   if (!geo) return null;
   const uid = `sn-peel-${id}`;
-  const edge = 'rgba(40, 30, 6, 0.28)';
   return (
     <svg
       className={`sn-dogear c-${s.color}`} aria-hidden="true"
@@ -167,6 +166,18 @@ function DogEar({ id, s, geo, fade }) {
         <filter id={`${uid}-blur`} x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation={Math.max(2, geo.r * 0.22)} />
         </filter>
+        {/* 很轻的纸纤维。只改变明暗，不给纸染色，四种便签仍保留各自语义色。 */}
+        <filter id={`${uid}-paper`} x="-12%" y="-12%" width="124%" height="124%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.55 0.12" numOctaves="3" seed="17" result="fiber" />
+          <feColorMatrix in="fiber" type="saturate" values="0" result="grayFiber" />
+          <feComponentTransfer in="grayFiber" result="softFiber">
+            <feFuncA type="table" tableValues="0 0.075" />
+          </feComponentTransfer>
+          {/* turbulence 本身是一张矩形位图，必须再用纸面的 alpha 裁一次；
+              否则透明区也会被它染黑，露出整块滤镜边界。 */}
+          <feComposite in="softFiber" in2="SourceAlpha" operator="in" result="paperFiber" />
+          <feBlend in="SourceGraphic" in2="paperFiber" mode="soft-light" />
+        </filter>
       </defs>
       {/* 正在抬起的正面：半透明的背光，不能带投影——它不是一块纸，是纸上的光 */}
       {geo.rise && <path d={geo.rise} fill={`url(#${uid}-rise)`} />}
@@ -181,11 +192,22 @@ function DogEar({ id, s, geo, fade }) {
       )}
       {/* 真正悬起来的纸：翻平的片和露出的纸背，只有它们投影子 */}
       <g className="sn-lift">
-        {geo.flap && <path d={geo.flap} fill={`url(#${uid}-flap)`} stroke={edge} strokeWidth="0.8" strokeLinejoin="round" />}
-        {geo.roll && <path d={geo.roll} fill={`url(#${uid}-roll)`} stroke={edge} strokeWidth="0.8" strokeLinejoin="round" />}
+        {/* 整片纸向右下错开一层同色纸芯，只露出下缘和右缘：这是纸的厚度，
+            不是悬空投影。两个几何面合成一个 path，内部不会出现接缝。 */}
+        <path
+          className="sn-paper-depth"
+          d={[geo.flap, geo.roll].filter(Boolean).join(' ')}
+          transform="translate(1.8 2.2)"
+        />
+        {/* 两个面一起进入同一个滤镜，浏览器先把它们合成完整纸面再加纹理，
+            避免分别光栅化在公共边留下那条斜线。 */}
+        <g filter={`url(#${uid}-paper)`}>
+          {geo.flap && <path d={geo.flap} fill={`url(#${uid}-flap)`} />}
+          {geo.roll && <path d={geo.roll} fill={`url(#${uid}-roll)`} />}
+        </g>
       </g>
       {/* 顶棱：纸绕过圆柱最高处那条线，迎光最亮 */}
-      {geo.crest && <path d={geo.crest} fill="none" stroke="rgba(255, 255, 255, 0.34)" strokeWidth="1.2" strokeLinecap="round" />}
+      {geo.crest && <path className="sn-crease" d={geo.crest} fill="none" strokeWidth="1.1" strokeLinecap="round" />}
     </svg>
   );
 }
@@ -321,6 +343,13 @@ export default function Stickies({ noteId, scrollRef, children, active = true })
   const overs = useRef(new Map());             // 哪些纸片装不下自己的内容
   const noteOver = useCallback((id, v) => { overs.current.set(id, v); }, []);
   const canOpen = (s) => !!s.media || overs.current.get(s.id) === true;
+  const openExpanded = (s, rect) => setExpanded({
+    id: s.id,
+    origin: rect ? {
+      left: rect.left, top: rect.top, right: rect.right, bottom: rect.bottom,
+      width: rect.width, height: rect.height,
+    } : null,
+  });
 
   /* ---- 落盘。拖动只在松手时发一次；改字防抖 600ms ---- */
   const pending = useRef(new Map());
@@ -608,7 +637,8 @@ export default function Stickies({ noteId, scrollRef, children, active = true })
     setSelArrow(null);
     const rect = hostRect();
     if (!rect) return;
-    if (s.pinned) { drag(e, { onMove: () => {}, onUp: (moved) => { if (!moved && canOpen(s)) setExpanded(s.id); } }); return; }
+    const sourceRect = e.currentTarget.getBoundingClientRect();
+    if (s.pinned) { drag(e, { onMove: () => {}, onUp: (moved) => { if (!moved && canOpen(s)) openExpanded(s, sourceRect); } }); return; }
     const x0 = s.x;
     const y0 = s.y;
     drag(e, {
@@ -621,7 +651,7 @@ export default function Stickies({ noteId, scrollRef, children, active = true })
         if (moved) { commitLive(s.id); return; }
         setLive(null);
         // 内容在纸片里放得下就没什么好展开的——点一下不该平白弹个窗
-        if (canOpen(s)) setExpanded(s.id);
+        if (canOpen(s)) openExpanded(s, sourceRect);
       },
     });
   };
@@ -765,7 +795,7 @@ export default function Stickies({ noteId, scrollRef, children, active = true })
     setSelArrow(null);
   };
 
-  const expandedItem = items.find((s) => s.id === expanded) || null;
+  const expandedItem = items.find((s) => s.id === expanded?.id) || null;
   const drawn = draw ? arrowPath(draw.from, draw.to) : null;
 
   return (
@@ -825,7 +855,10 @@ export default function Stickies({ noteId, scrollRef, children, active = true })
               editing={editing === s.id}
               tear={tear && tear.id === s.id ? tear : null}
               onDown={(e) => startMove(e, s)}
-              onDoubleClick={() => setEditing(s.id)}
+              onDoubleClick={(e) => {
+                if (s.media) openExpanded(s, e.currentTarget.getBoundingClientRect());
+                else setEditing(s.id);
+              }}
               onPin={() => patch(s.id, { pinned: !s.pinned })}
               onTear={(e) => startTear(e, s)}
               onResize={(e) => startResize(e, s)}
@@ -849,6 +882,7 @@ export default function Stickies({ noteId, scrollRef, children, active = true })
       {expandedItem && createPortal(
         <Expanded
           s={expandedItem}
+          origin={expanded.origin}
           onClose={() => setExpanded(null)}
           onText={(v) => patch(expandedItem.id, { text: v }, 600)}
           onColor={(c) => patch(expandedItem.id, { color: c })}
@@ -917,19 +951,46 @@ function Dock({ onAdd, onDrop, hostRef, onFiles, busy }) {
  * 展开：纸片装不下的内容在这儿看全
  * ------------------------------------------------------------------ */
 
-function Expanded({ s, onClose, onText, onColor }) {
+function Expanded({ s, origin, onClose, onText, onColor }) {
   const [edit, setEdit] = useState(!s.media && !s.text.trim());
+  const [naturalSize, setNaturalSize] = useState(null);
+  const [viewport, setViewport] = useState(() => ({ w: window.innerWidth, h: window.innerHeight }));
   const html = useMemo(() => (s.media ? '' : renderSticky(s.text)), [s.text, s.media]);
 
   useEffect(() => {
     const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+    const onResize = () => setViewport({ w: window.innerWidth, h: window.innerHeight });
     window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('resize', onResize);
+    };
   }, [onClose]);
 
+  /* 原图有多大就看多大；屏幕放不下时才等比收小。工具条预留 42px，
+     四边各留 16px，避免贴着窗口边缘显得像另一个全屏层。 */
+  const viewSize = useMemo(() => {
+    if (!s.media || s.mediaKind === 'pdf') return null;
+    const source = naturalSize || { w: Math.max(s.w, 320), h: Math.max(s.h, 180) };
+    const scale = Math.min(1, (viewport.w - 32) / source.w, (viewport.h - 74) / source.h);
+    return { w: Math.round(source.w * scale), h: Math.round(source.h * scale) };
+  }, [naturalSize, s.h, s.media, s.mediaKind, s.w, viewport]);
+
+  const panelSize = viewSize
+    ? { w: viewSize.w, h: viewSize.h + 42 }
+    : { w: Math.min(680, viewport.w - 32), h: Math.min(620, viewport.h - 32) };
+  const placeBelow = origin ? origin.top + origin.height / 2 < viewport.h / 2 : false;
+  const panelStyle = {
+    left: Math.max(16, viewport.w - panelSize.w - 16),
+    top: placeBelow ? Math.max(16, viewport.h - panelSize.h - 16) : 16,
+    width: panelSize.w,
+    ...(s.mediaKind === 'pdf' ? { height: panelSize.h } : null),
+  };
+
   return (
-    <div className="sn-modal" onPointerDown={onClose}>
-      <div className={`sn-full c-${s.color}`} onPointerDown={(e) => e.stopPropagation()}>
+    <div className="sn-modal">
+      <div className={`sn-full${s.media ? ' media' : ''} c-${s.color}`} style={panelStyle}>
         <div className="sn-full-bar">
           {SN_COLORS.map((c) => (
             <button
@@ -938,7 +999,7 @@ function Expanded({ s, onClose, onText, onColor }) {
             />
           ))}
           <span className="sn-full-hint">
-            {s.mediaKind === 'pdf' ? '原 PDF' : s.media ? '原图'
+            {s.mediaKind === 'pdf' ? '原 PDF' : s.media ? '原图 · 双击关闭'
               : <>粗体 <code>**…**</code>　条目 <code>-</code>　公式 <code>$…$</code></>}
           </span>
           {!s.media && (
@@ -947,11 +1008,22 @@ function Expanded({ s, onClose, onText, onColor }) {
           <button className="sn-full-btn" onClick={onClose}>关闭</button>
         </div>
 
-        <div className="sn-full-body">
+        <div
+          className={`sn-full-body${s.media ? ' media' : ''}`}
+          onDoubleClick={s.media && s.mediaKind !== 'pdf' ? onClose : undefined}
+          title={s.media && s.mediaKind !== 'pdf' ? '双击关闭原图' : undefined}
+        >
           {s.media
             ? (s.mediaKind === 'pdf'
               ? <iframe className="sn-full-pdf" src={vaultUrl(s.media)} title="PDF" />
-              : <img className="sn-full-img" src={vaultUrl(s.media)} alt="" />)
+              : <img
+                  className="sn-full-img" src={vaultUrl(s.media)} alt=""
+                  style={viewSize ? { width: viewSize.w, height: viewSize.h } : undefined}
+                  onLoad={(e) => setNaturalSize({
+                    w: e.currentTarget.naturalWidth || s.w,
+                    h: e.currentTarget.naturalHeight || s.h,
+                  })}
+                />)
             : edit
               ? <textarea className="sn-full-edit" value={s.text} autoFocus onChange={(e) => onText(e.target.value)} />
               : <div className="sn-rich" dangerouslySetInnerHTML={{ __html: html }} />}
