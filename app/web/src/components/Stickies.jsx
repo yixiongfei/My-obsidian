@@ -2,7 +2,7 @@ import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } fr
 import { createPortal } from 'react-dom';
 import { api, vaultUrl } from '../api.js';
 import { renderSticky, SN_PLACEHOLDER } from '../sticky-text.js';
-import { anchorAt, pointOf } from '../sticky-anchor.js';
+import { anchorAt, pointOf, blockAnchorAt, blockPoint } from '../sticky-anchor.js';
 
 /* ================================================================== *
  * 便利贴 —— 复习时贴在笔记旁边的纸片
@@ -32,6 +32,13 @@ const MIN_H = 76;
 const SIDES = ['t', 'r', 'b', 'l'];
 
 const clamp = (v, lo, hi) => Math.min(hi, Math.max(lo, v));
+
+/* 认不认这个文件：MIME 优先，认不出来就看扩展名。
+   剪贴板、某些文件管理器、跨盘拖拽给过来的 File 常常是空 type 或 octet-stream，
+   只信 MIME 的话，用户拖一张图进来什么都不会发生，还没有任何提示 */
+const isMedia = (f) => /^image\//.test(f.type)
+  || f.type === 'application/pdf'
+  || /\.(png|jpe?g|gif|webp|avif|bmp|pdf)$/i.test(f.name || '');
 
 /** 纸片某条边的中点（相对 host 左上角）——箭头从这儿出发 */
 const sidePoint = (s, side) => ({
@@ -147,9 +154,9 @@ function Sticky({ s, editing, onDown, onDoubleClick, onPin, onTear, onResize, on
 
       <div className="sn-body" ref={bodyRef}>
         {s.media
-          ? (s.mediaKind === 'pdf'
+          ? (s.mediaKind === 'pdf' && !s.poster
             ? <iframe className="sn-pdf" src={`${vaultUrl(s.media)}#toolbar=0&navpanes=0&view=FitH`} title="PDF" />
-            : <img className="sn-img" src={vaultUrl(s.media)} alt="" draggable={false} />)
+            : <img className="sn-img" src={vaultUrl(s.poster || s.media)} alt="" draggable={false} />)
           : (s.text.trim()
             ? <div className="sn-rich" dangerouslySetInnerHTML={{ __html: html }} />
             : <div className="sn-rich sn-empty">{SN_PLACEHOLDER}</div>)}
@@ -190,7 +197,11 @@ function Sticky({ s, editing, onDown, onDoubleClick, onPin, onTear, onResize, on
  * 图层
  * ------------------------------------------------------------------ */
 
-export default function Stickies({ noteId, scrollRef, children }) {
+/**
+ * active：一页上可能同时挂着两层便利贴——阅读页底下一层，全屏阅读模式上面一层。
+ * 被盖住的那层必须交出粘贴、指针、键盘这些全局监听，否则 Ctrl+V 会一次贴出两张纸。
+ */
+export default function Stickies({ noteId, scrollRef, children, active = true }) {
   const hostRef = useRef(null);
   const fieldRef = useRef(null);   // 纸片场：向正文栏两侧的留白借出来的那块地
   const [items, setItems] = useState([]);
@@ -230,14 +241,19 @@ export default function Stickies({ noteId, scrollRef, children }) {
     save(id, delta, delay);
   }, [save]);
 
-  /* ---- 取纸片 ---- */
+  /* ---- 取纸片 ----
+     active 也在依赖里：阅读模式那层贴的纸，退出来之后这层要重新取一次，
+     否则两层各记各的，回到阅读页会发现刚写的那张不见了 */
   useEffect(() => {
     let alive = true;
-    setItems([]); setEditing(null); setExpanded(null); setSelArrow(null);
-    if (!noteId) return undefined;
+    setEditing(null); setExpanded(null); setSelArrow(null);
+    if (!noteId || !active) return undefined;
     api.stickies(noteId).then((l) => { if (alive) setItems(l); }).catch(() => {});
     return () => { alive = false; };
-  }, [noteId]);
+  }, [noteId, active]);
+
+  // 换一篇笔记先清空，别让上一篇的纸片在新正文上闪一下
+  useEffect(() => { setItems([]); }, [noteId]);
 
   /* ---- 布局一变，箭头就要重算 ---- */
   useLayoutEffect(() => {
@@ -247,11 +263,16 @@ export default function Stickies({ noteId, scrollRef, children }) {
        把这段留白量出来借给纸片场，便利贴就能贴在正文**旁边**，而不是只能压在字上。
        量的是 grid 解析后的真实列宽，比自己按 padding、gap 推算靠得住。 */
     const fit = () => {
-      const inner = host.closest('.reader-inner');
       let out = 0;
+      const inner = host.closest('.reader-inner');
+      const paper = host.closest('.readmode-paper');
       if (inner) {
         const col = parseFloat(getComputedStyle(inner).gridTemplateColumns.split(' ')[0]);
         if (Number.isFinite(col)) out = Math.max(0, Math.floor((col - host.clientWidth) / 2));
+      } else if (paper) {
+        // 阅读模式：那张素白纸左右各有近百像素的天地，纸片正好贴在页边空白上
+        const pad = parseFloat(getComputedStyle(paper).paddingRight);
+        if (Number.isFinite(pad)) out = Math.max(0, Math.floor(pad) - 12);
       }
       host.style.setProperty('--sn-out', `${out}px`);
     };
@@ -269,6 +290,23 @@ export default function Stickies({ noteId, scrollRef, children }) {
     return () => { ro.disconnect(); window.removeEventListener('resize', bump); };
   }, [noteId, children]);
 
+  /* ---- 纸片落在哪儿：段落锚说了算，锚不上才退回绝对坐标 ----
+     纸片贴的是「这一段旁边」，不是「屏幕上这个像素」。所以在 Obsidian 里往前面
+     插一段、或者换到全屏阅读模式（字号行距纸宽全不同），纸片都跟着它那一段走。 */
+  const placed = useMemo(() => {
+    const field = fieldRef.current;
+    const host = hostRef.current;
+    if (!field || !host) return items;
+    const rect = field.getBoundingClientRect();
+    const prose = host.querySelector('.prose');
+    return items.map((s) => {
+      const p = s.anchor ? blockPoint(s.anchor, prose, rect) : null;
+      if (!p) return s;
+      return { ...s, x: clamp(p.x, 0, Math.max(0, rect.width - s.w)), y: Math.max(0, p.y) };
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [items, tick]);
+
   const viewOf = useCallback((s) => (live && live.id === s.id ? { ...s, ...live } : s), [live]);
 
   /* ---- 几何：纸片边中点 → 正文锚点 ---- */
@@ -279,7 +317,7 @@ export default function Stickies({ noteId, scrollRef, children }) {
     const rect = field.getBoundingClientRect();
     const prose = host.querySelector('.prose');
     const arrows = [];
-    for (const raw of items) {
+    for (const raw of placed) {
       const s = viewOf(raw);
       (s.arrows || []).forEach((a, i) => {
         arrows.push({ id: s.id, i, color: s.color, from: sidePoint(s, a.side), to: pointOf(a, prose, rect) });
@@ -287,7 +325,7 @@ export default function Stickies({ noteId, scrollRef, children }) {
     }
     return { w: rect.width, h: rect.height, arrows };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items, live, tick, viewOf]);
+  }, [placed, live, tick, viewOf]);
 
   /* 所有坐标都相对纸片场左上角 */
   const hostRect = () => fieldRef.current?.getBoundingClientRect();
@@ -302,14 +340,14 @@ export default function Stickies({ noteId, scrollRef, children }) {
     let x = Math.max(0, rect.width - w - 8);
     let y = top + 72;
     for (let i = 0; i < 60; i++) {
-      const hit = items.some((s) => Math.abs(s.x - x) < w * 0.5 && Math.abs(s.y - y) < h * 0.5);
+      const hit = placed.some((s) => Math.abs(s.x - x) < w * 0.5 && Math.abs(s.y - y) < h * 0.5);
       if (!hit) break;
       y += 28;
       x -= 16;
       if (x < 0) { x = Math.max(0, rect.width - w - 8); y += 18; }
     }
     return { x: clamp(x, 0, Math.max(0, rect.width - w)), y: Math.max(0, y) };
-  }, [items, scrollRef]);
+  }, [placed, scrollRef]);
 
   const add = useCallback(async (color, at, extra = {}) => {
     if (!noteId) return null;
@@ -319,7 +357,9 @@ export default function Stickies({ noteId, scrollRef, children }) {
     const pos = at
       ? { x: clamp(at.x - w / 2, 0, Math.max(0, (rect?.width || w) - w)), y: Math.max(0, at.y - 16) }
       : spot(w, h);
-    const row = await api.addSticky({ path: noteId, color, ...pos, w, h, text: '', ...extra });
+    const prose = hostRef.current?.querySelector('.prose');
+    const anchor = rect ? blockAnchorAt(pos.x, pos.y, prose, rect) : null;
+    const row = await api.addSticky({ path: noteId, color, ...pos, w, h, text: '', anchor, ...extra });
     setItems((l) => [...l, row]);
     if (!row.media && !row.text) setEditing(row.id);
     return row;
@@ -332,13 +372,32 @@ export default function Stickies({ noteId, scrollRef, children }) {
       const up = await api.uploadStickyMedia(file);
       let w = 300;
       let h = 380;
-      if (up.kind === 'image') {
+      let poster = '';
+
+      if (up.kind === 'pdf') {
+        /* PDF 在纸片上要的是一张封面图，不是一个带滚动条的阅读器。
+           首页在前端光栅化成 PNG 存成第二份素材；原 PDF 留着，点开纸片仍是完整阅读器。
+           pdf.js 近 1MB，只在真的拖进来 PDF 时才动态加载 */
+        try {
+          const { pdfPoster } = await import('../pdf-poster.js');
+          const shot = await pdfPoster(vaultUrl(up.path));
+          const name = file.name?.replace(/\.pdf$/i, '') || 'pdf';
+          const cover = await api.uploadStickyMedia(new File([shot.blob], `${name}-p1.png`, { type: 'image/png' }));
+          poster = cover.path;
+          w = clamp(shot.w, MIN_W, 300);
+          h = clamp(Math.round((w * shot.h) / (shot.w || 1)), MIN_H, 460);
+        } catch (err) {
+          // 渲不出来（加密、损坏、字体缺失）就退回 iframe 预览，别让一张 PDF 把贴纸卡死
+          console.warn('[便利贴] PDF 首页渲染失败，退回浏览器预览', err);
+        }
+      } else if (up.kind === 'image') {
         const nat = await natural(vaultUrl(up.path));
         // 原图比例照搬，只限个上限：贴纸是缩略，点开才是原图
         w = clamp(nat.w, MIN_W, 360);
         h = clamp(Math.round((w * nat.h) / (nat.w || 1)), MIN_H, 460);
       }
-      return await add(color, at, { media: up.path, mediaKind: up.kind, w, h });
+
+      return await add(color, at, { media: up.path, mediaKind: up.kind, poster, w, h });
     } catch (err) {
       console.warn('[便利贴] 贴图失败', err);
       return null;
@@ -349,7 +408,7 @@ export default function Stickies({ noteId, scrollRef, children }) {
     const rect = hostRect();
     let i = 0;
     for (const f of [...files].slice(0, 8)) {
-      if (!/^image\//.test(f.type) && f.type !== 'application/pdf') continue;
+      if (!isMedia(f)) continue;
       const pt = at ? { x: at.x + i * 22, y: at.y + i * 22 } : null;
       // eslint-disable-next-line no-await-in-loop
       await addMedia(f, pt && rect ? pt : null);
@@ -359,7 +418,7 @@ export default function Stickies({ noteId, scrollRef, children }) {
 
   /* ---- 粘贴：截图直接变纸片 ---- */
   useEffect(() => {
-    if (!noteId) return undefined;
+    if (!noteId || !active) return undefined;
     const onPaste = (e) => {
       const el = document.activeElement;
       if (el && el.closest?.('input, textarea, [contenteditable="true"]')) return;  // 正在打字，别抢
@@ -374,28 +433,29 @@ export default function Stickies({ noteId, scrollRef, children }) {
     };
     window.addEventListener('paste', onPaste);
     return () => window.removeEventListener('paste', onPaste);
-  }, [noteId, takeFiles, add]);
+  }, [noteId, takeFiles, add, active]);
 
   useEffect(() => {
+    if (!active) return undefined;
     const track = (e) => { lastPt.current = { x: e.clientX, y: e.clientY }; };
     window.addEventListener('pointermove', track, { passive: true });
     return () => window.removeEventListener('pointermove', track);
-  }, []);
+  }, [active]);
 
   /* ---- 点到别处就取消选中，别让那个叉一直悬着 ---- */
   useEffect(() => {
-    if (!selArrow) return undefined;
+    if (!selArrow || !active) return undefined;
     const onDown = (e) => {
       if (e.target.closest?.('.sn-wire, .sn')) return;
       setSelArrow(null);
     };
     window.addEventListener('pointerdown', onDown);
     return () => window.removeEventListener('pointerdown', onDown);
-  }, [selArrow]);
+  }, [selArrow, active]);
 
   /* ---- 键盘：选中箭头后按 Delete 删掉 ---- */
   useEffect(() => {
-    if (!selArrow) return undefined;
+    if (!selArrow || !active) return undefined;
     const onKey = (e) => {
       if (e.key !== 'Delete' && e.key !== 'Backspace') return;
       const el = document.activeElement;
@@ -406,17 +466,26 @@ export default function Stickies({ noteId, scrollRef, children }) {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selArrow]);
+  }, [selArrow, active]);
 
   /* ---- 拖动 / 放缩 / 撕去 / 图钉 ---- */
   /* 拖动过程中位置只在 live 里，松手时用 live 的值落盘 */
   const liveRef = useRef(null);
   useEffect(() => { liveRef.current = live; }, [live]);
+  const placedRef = useRef([]);
+  useEffect(() => { placedRef.current = placed; }, [placed]);
   const commitLive = useCallback((id) => {
     const l = liveRef.current;
     if (!l || l.id !== id) return;
     const { id: _drop, ...geo } = l;
-    patch(id, geo);
+    // 落到哪一段旁边，这时候才算得准
+    const rect = fieldRef.current?.getBoundingClientRect();
+    const prose = hostRef.current?.querySelector('.prose');
+    const cur = placedRef.current.find((s) => s.id === id);
+    const x = geo.x ?? cur?.x ?? 0;
+    const y = geo.y ?? cur?.y ?? 0;
+    const anchor = rect ? blockAnchorAt(x, y, prose, rect) : null;
+    patch(id, { ...geo, x, y, ...(anchor ? { anchor } : {}) });
     setLive(null);
   }, [patch]);
 
@@ -562,7 +631,7 @@ export default function Stickies({ noteId, scrollRef, children }) {
           )}
         </svg>
 
-        {items.map((raw) => {
+        {placed.map((raw) => {
           const s = viewOf(raw);
           return (
             <Sticky
@@ -587,7 +656,9 @@ export default function Stickies({ noteId, scrollRef, children }) {
         })}
       </div>
 
-      <Dock busy={busy} onAdd={(c) => add(c)} onDrop={(c, at) => add(c, at)} hostRef={hostRef} onFiles={takeFiles} />
+      {active && (
+        <Dock busy={busy} onAdd={(c) => add(c)} onDrop={(c, at) => add(c, at)} hostRef={hostRef} onFiles={takeFiles} />
+      )}
 
       {expandedItem && createPortal(
         <Expanded
@@ -681,7 +752,8 @@ function Expanded({ s, onClose, onText, onColor }) {
             />
           ))}
           <span className="sn-full-hint">
-            {s.media ? '原图' : <>粗体 <code>**…**</code>　条目 <code>-</code>　公式 <code>$…$</code></>}
+            {s.mediaKind === 'pdf' ? '原 PDF' : s.media ? '原图'
+              : <>粗体 <code>**…**</code>　条目 <code>-</code>　公式 <code>$…$</code></>}
           </span>
           {!s.media && (
             <button className="sn-full-btn" onClick={() => setEdit((v) => !v)}>{edit ? '完成' : '编辑'}</button>

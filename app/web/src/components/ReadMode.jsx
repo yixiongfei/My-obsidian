@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef } from 'react';
 import Prose from './Prose.jsx';
 import ReviewBar from './ReviewBar.jsx';
+import Stickies from './Stickies.jsx';
 
 /**
  * 阅读模式：只剩标题和正文，铺在一张细格子的素白笔记纸上，全屏，没有顶栏侧栏。
@@ -51,7 +52,11 @@ export default function ReadMode({ note, onClose, onReviewed }) {
       <div className="readmode-page scroll" ref={pageRef} tabIndex={-1}>
         <article className="readmode-paper">
           <h1 className="readmode-title">{note.title}</h1>
-          <Prose html={note.html} kind={note.kind} />
+          {/* 便利贴跟着笔记走，不跟着某个页面走：纸片记的是「贴在哪一段旁边」，
+              所以这儿和阅读页是同一批纸，只是落在这张更宽的素白纸上 */}
+          <Stickies noteId={note.id} scrollRef={pageRef}>
+            <Prose html={note.html} kind={note.kind} />
+          </Stickies>
         </article>
         {/* 记一次复习放在纸的最底下，读完自然就到这儿；不悬浮，不挡正文 */}
         <div className="readmode-foot">

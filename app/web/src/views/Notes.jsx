@@ -92,7 +92,7 @@ function Reader({ id, version, onReviewed }) {
           </header>
 
           {/* 正文外面套一层便利贴图层：纸片、箭头都贴在这一层上，坐标相对正文栏左上角 */}
-          <Stickies noteId={note.id} scrollRef={scrollRef}>
+          <Stickies noteId={note.id} scrollRef={scrollRef} active={!reading}>
             {note.words === 0
               ? <Empty>这篇笔记还是空的，去 Obsidian 里补充内容吧</Empty>
               : <Prose html={note.html} kind={note.kind} />}

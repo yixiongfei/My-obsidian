@@ -48,10 +48,25 @@ const rowOut = (r) => r && ({
   text: r.text,
   media: r.media || '',
   mediaKind: r.media_kind || '',
+  poster: r.poster || '',
+  anchor: parseAnchor(r.anchor),
   pinned: !!r.pinned,
   arrows: parseArrows(r.arrows),
   updatedAt: r.updated_at,
 });
+
+/** 纸片自己的锚：贴在哪一段旁边。解析不出来就当没有，退回绝对坐标 */
+function parseAnchor(s) {
+  try {
+    const a = JSON.parse(s || '{}');
+    if (!a || typeof a !== 'object' || typeof a.sel !== 'string') return null;
+    return { sel: a.sel.slice(0, 120), txt: String(a.txt ?? '').slice(0, 60), dx: Number(a.dx) || 0, dy: Number(a.dy) || 0 };
+  } catch { return null; }
+}
+
+const cleanAnchor = (v) => (v && typeof v === 'object' && typeof v.sel === 'string'
+  ? JSON.stringify({ sel: v.sel.slice(0, 120), txt: String(v.txt ?? '').slice(0, 60), dx: clamp(v.dx, -20000, 20000, 0), dy: clamp(v.dy, -20000, 200000, 0) })
+  : '{}');
 
 function parseArrows(s) {
   try {
@@ -96,8 +111,8 @@ export function create(noteId, p = {}) {
   const d = handle();
   const t = nowIso();
   const info = d.prepare(`
-    INSERT INTO stickies (note_id, color, x, y, w, h, text, media, media_kind, pinned, arrows, created_at, updated_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?)`).run(
+    INSERT INTO stickies (note_id, color, x, y, w, h, text, media, media_kind, poster, anchor, pinned, arrows, created_at, updated_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?)`).run(
     noteId,
     COLORS.has(p.color) ? p.color : 'y',
     clamp(p.x, 0, 20000, 0), clamp(p.y, 0, 200000, 0),
@@ -105,6 +120,8 @@ export function create(noteId, p = {}) {
     String(p.text ?? '').slice(0, 8000),
     String(p.media ?? '').slice(0, 400),
     ['image', 'pdf'].includes(p.mediaKind) ? p.mediaKind : '',
+    String(p.poster ?? '').slice(0, 400),
+    cleanAnchor(p.anchor),
     cleanArrows(p.arrows),
     t, t,
   );
@@ -129,6 +146,8 @@ export function update(id, p = {}) {
   if ('text' in p) put('text', String(p.text ?? '').slice(0, 8000));
   if ('media' in p) put('media', String(p.media ?? '').slice(0, 400));
   if ('mediaKind' in p) put('media_kind', ['image', 'pdf'].includes(p.mediaKind) ? p.mediaKind : '');
+  if ('poster' in p) put('poster', String(p.poster ?? '').slice(0, 400));
+  if ('anchor' in p) put('anchor', cleanAnchor(p.anchor));
   if ('pinned' in p) put('pinned', p.pinned ? 1 : 0);
   if ('arrows' in p) put('arrows', cleanArrows(p.arrows));
   if (!set.length) return rowOut(row);
@@ -144,15 +163,17 @@ export function remove(id) {
   const row = d.prepare('SELECT * FROM stickies WHERE id = ?').get(id);
   if (!row) return { ok: false };
   d.prepare('DELETE FROM stickies WHERE id = ?').run(id);
-  if (row.media) trashMedia(row.media);
+  if (row.media) trashMedia(row.media, 'media');
+  if (row.poster) trashMedia(row.poster, 'poster');
   return { ok: true };
 }
 
 /** 图片只在没有别的便利贴引用、且确实是贴纸目录里的文件时才进回收站 */
-function trashMedia(rel) {
+function trashMedia(rel, col = 'media') {
   if (!rel.startsWith(`${MEDIA_REL}/`)) return;
-  const still = handle().prepare('SELECT 1 FROM stickies WHERE media = ? LIMIT 1').get(rel);
+  const still = handle().prepare('SELECT 1 FROM stickies WHERE media = ? OR poster = ? LIMIT 1').get(rel, rel);
   if (still) return;
+  void col;
   const abs = path.join(VAULT_ROOT, rel.split('/').join(path.sep));
   if (!fs.existsSync(abs)) return;
   try {

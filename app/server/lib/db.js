@@ -132,6 +132,8 @@ CREATE TABLE IF NOT EXISTS stickies (
   text       TEXT NOT NULL DEFAULT '',
   media      TEXT NOT NULL DEFAULT '',    -- 相对 vault 的图片 / PDF 路径
   media_kind TEXT NOT NULL DEFAULT '',    -- '' | image | pdf
+  poster     TEXT NOT NULL DEFAULT '',    -- PDF 的首页渲染图，纸片上显示它
+  anchor     TEXT NOT NULL DEFAULT '{}',  -- JSON：贴在哪一段旁边（段落路径 + 偏移）
   pinned     INTEGER NOT NULL DEFAULT 0,  -- 按下图钉：不能移动、放缩、撕去
   arrows     TEXT NOT NULL DEFAULT '[]',  -- JSON：指向正文具体位置的箭头
   created_at TEXT NOT NULL,
@@ -167,6 +169,8 @@ export function open() {
      列已存在时 SQLite 直接报错，吞掉即可——这里没有别的失败可能 */
   try { db.exec('ALTER TABLE notes ADD COLUMN reviewable INTEGER NOT NULL DEFAULT 1'); } catch { /* 已经有了 */ }
   try { db.exec("ALTER TABLE exam_marks ADD COLUMN color TEXT NOT NULL DEFAULT 'y'"); } catch { /* 已经有了 */ }
+  try { db.exec("ALTER TABLE stickies ADD COLUMN poster TEXT NOT NULL DEFAULT ''"); } catch { /* 已经有了 */ }
+  try { db.exec("ALTER TABLE stickies ADD COLUMN anchor TEXT NOT NULL DEFAULT '{}'"); } catch { /* 已经有了 */ }
   try {
     db.exec(FTS_SCHEMA);
     db.prepare('SELECT rowid FROM notes_fts LIMIT 1').get();

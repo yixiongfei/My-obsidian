@@ -219,7 +219,8 @@
 /* ── 取纸台 ───────────────────────────────────────── */
 
 .sn-dock {
-  position: fixed; right: 16px; bottom: 16px; z-index: 60;
+  /* 130 是为了压过阅读模式那层遮罩（z-index 120）——两处都要够得着取纸台 */
+  position: fixed; right: 16px; bottom: 16px; z-index: 130;
   display: flex; flex-direction: column; align-items: flex-end; gap: 5px;
   padding: 8px 8px 9px; border-radius: var(--radius);
   border: var(--hair) solid var(--line);
@@ -298,6 +299,15 @@
   border: none; outline: none; background: transparent; color: var(--sn-ink);
   font-family: var(--font); font-size: 15px; line-height: 1.85;
 }
+
+/* 阅读模式：那张纸自己有配色，纸片的墨色和四色纸照旧——换的是脚下的纸，不是纸片本身。
+   只把投影压淡一档：素白纸上夜间那种浓影会显脏 */
+.readmode .sn { box-shadow: 0 1px 5px rgba(40, 45, 60, 0.18), 0 0 0 1px rgba(40, 45, 60, 0.07); }
+.readmode .sn:hover, .readmode .sn.editing { box-shadow: 0 6px 18px rgba(40, 45, 60, 0.24), 0 0 0 1px rgba(40, 45, 60, 0.09); }
+:root[data-theme='dark'] .readmode .sn { box-shadow: var(--sn-shadow); }
+:root[data-theme='dark'] .readmode .sn:hover, :root[data-theme='dark'] .readmode .sn.editing { box-shadow: var(--sn-shadow-up); }
+/* 阅读模式的滚动容器是它自己那一层，展开卡片要压在最上面 */
+.readmode ~ .sn-modal, .sn-modal { z-index: 210; }
 
 @media (prefers-reduced-motion: reduce) {
   .sn, .sn-chip, .sn-swatch, .sn-pin, .sn-modal { transition: none; animation: none; }

@@ -18,6 +18,8 @@ app/release/
 schedule.json.migrated
 # 便利贴撕掉后图片挪进来的回收站：本地兜底用，不同步
 .kb/trash/
+# pdf.js 的 cMap 与标准字体，构建时从 node_modules 镜像过来（见 app/vite.config.js）
+app/web/public/pdfjs/
 
 # 设计稿的合成产物（约 2MB，由 app/design/*.dc.html 重新生成）
 app/design/kaoyan-knowledge-base.html

@@ -164,3 +164,47 @@ function boxPoint(el, a, hostRect) {
     y: r.top + (a.fy ?? 0.5) * r.height - hostRect.top,
   };
 }
+
+/* ------------------------------------------------------------------ *
+ * 纸片自己的锚：它贴在哪一段旁边
+ *
+ * 比箭头的逐字锚粗一档——纸片是贴在**某一段边上**的，不是贴在某个字上。
+ * 存「这一段的路径 + 相对这一段顶边的偏移 + 相对正文栏左边的偏移」，于是：
+ *   · 在 Obsidian 里往前面插一段，纸片跟着它那一段往下走，而不是停在原来的像素上；
+ *   · 换到全屏阅读模式（字号行距都不同、纸也更宽）时，纸片仍然落在同一段旁边。
+ * 解析不出来（笔记被改得面目全非）就退回建它时的绝对坐标。
+ * ------------------------------------------------------------------ */
+
+/** 纸片左上角 (x, y)（纸片场坐标）→ 段落锚 */
+export function blockAnchorAt(x, y, prose, fieldRect) {
+  if (!prose) return null;
+  const blocks = [...prose.children];
+  if (!blocks.length) return null;
+  // 块级流里各段的 top 单调递增，取最后一个不超过 y 的
+  let pick = blocks[0];
+  for (const el of blocks) {
+    if (el.getBoundingClientRect().top - fieldRect.top <= y) pick = el;
+    else break;
+  }
+  const sel = pathOf(pick, prose);
+  if (sel === null) return null;
+  const r = pick.getBoundingClientRect();
+  const pr = prose.getBoundingClientRect();
+  return {
+    sel,
+    txt: norm(pick.textContent).slice(0, 24),
+    dx: Math.round(x - (pr.left - fieldRect.left)),
+    dy: Math.round(y - (r.top - fieldRect.top)),
+  };
+}
+
+/** 段落锚 → 当前布局下纸片左上角该在哪儿；解析不出来返回 null，由调用方退回绝对坐标 */
+export function blockPoint(a, prose, fieldRect) {
+  if (!prose || !a || a.sel == null || a.sel === '') return null;
+  const el = elOf(a.sel, prose) || findByText(prose, a.txt);
+  if (!el) return null;
+  const r = el.getBoundingClientRect();
+  const pr = prose.getBoundingClientRect();
+  if (!r.height && !r.width) return null;
+  return { x: (pr.left - fieldRect.left) + (a.dx || 0), y: (r.top - fieldRect.top) + (a.dy || 0) };
+}
