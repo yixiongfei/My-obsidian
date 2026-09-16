@@ -1,236 +1,242 @@
 /**
- * 撕页几何 —— 一个控制点 D，推出整张纸的形状
+ * 剥离几何 —— 一个控制点 D，推出整张纸的形状
  *
- * 这是从 Android 那套 TearOffPaperView / TearGeometry 的模型搬过来的，换成 Web 的等价件：
- * Canvas.clipPath → CSS `clip-path: path()`，Canvas.drawPath → 一个 SVG `<path>`。
- * 模型本身一模一样，而且是**纯函数**：进来一个 D，出去两条路径，不碰 DOM、不管动画，
- * 所以可以单独测、单独用。
+ * 这不是「翻页」：纸是整张背面涂了胶贴在页面上的，捏住右上角 C 往左下拉到 D，
+ * 胶从剥离线开始一点点松开，松开的纸**绕着一根平行于剥离线的圆柱弯起来**，
+ * 弯过顶点之后平平地翻回来，一路伸到手指。俯视下来是这么几段：
  *
- * ── 模型 ────────────────────────────────────────────────────────────
+ *        M ──────────────╮ C(w,0)          t = (p − M)·a  是纸上每个点到剥离线的有符号距离
+ *        ┆ ░░░░░░░░░░░░░ │                 t ≤ 0        还粘着，原样不动
+ *   D ·←─┆░░ 卷 ░░│      │                 0 < t ≤ θR   绕在半径 R 的圆柱上，θ 是纸角绕到的角度
+ *        ┆ ░░░░░░░░░░░░░ │                 t > πR       已经绕过顶点，平铺在高度 2R 上往回伸
+ *        ┆                │
+ *        └────────────────┘               a 是从 D 指向 C 的单位向量，剥离线过 M 且垂直于 a
  *
- * 纸是矩形 (0,0)-(w,h)，被捏住的角 C 在右上 (w,0)。手指把 C 拖到了 D。
- * 那么纸一定沿着 **CD 的垂直平分线** 折起来——因为折过去之后 C 正好落在 D 上，
- * 折痕上的每个点到 C 和到 D 的距离必然相等。这条线就是折痕，别的点全从它推出来：
+ * 纸是**不可伸长**的，所以每一段的投影都是刚性的：
+ *   卷      p ↦ p + (R·sin(t/R) − t)·a          圆柱面绕到俯视图上是一条正弦
+ *   平铺    p ↦ p − (2t − πR)·a                  正好等于关于直线 t = πR/2 做镜像
+ * 圆柱半径 R 固定——纸是有硬度的，刚开始拉的时候纸角只是沿着这个大弧爬上去
+ * （θ < π，θ − sin θ = L/R），爬过顶点之后才有翻平的那片。
+ * 从上面看：t < πR/2 的那段是正面在抬起来（字还在，只是被压扁、渐渐背光），
+ * t > πR/2 的那段露出纸背，从轮廓线（最暗）到顶棱（最亮）；翻平的片压在还粘着的纸上面。
+ * 角 C 永远落在 D 上——这是求 M 的方程：
+ *   θ < π：L = θR − R·sin θ，M = C − θR·a
+ *   θ ≥ π：L = 2·dC − πR，   M = C − dC·a
  *
- *        A ────────╮ C(w,0)              A、B ── 折痕与纸边的两个交点
- *       ╱          │                     E、F ── 翘起那片自由边的弯曲控制点
- *      D ·         │                     G   ── 折痕自己的弯曲控制点
- *       ╲          │                     D   ── 唯一的输入
- *        ╰─── B ───┤
- *        │         │
- *        └─────────┘
- *
- * 折痕把纸切成两半：含 C 的那半翻过去（dogEar），另一半留在原地（content）。
- * 「翻过去」在数学上就是**关于折痕做镜像**——C 镜像过去正好是 D，这也是模型自洽的证据。
- *
- * 为什么不给 A~G 各自做动画：它们不是七个独立的量，是 D 的函数。各自插值会散架
- * （折痕不再是垂直平分线，纸就"断"了）。只动 D，剩下的每帧现算，形状永远是自洽的。
+ * 只动 D。θ、M、每一段的形状每帧从 D 现算，永远自洽：不会出现内凹、拉伸或者散架。
  */
 
-/* 判定阈值：拖过纸对角线的这个比例就算撕下来了。0.45 是 Android 那份规格里的数，
-   配上下面这个跨度，一张 216×132 的便利贴大约要拖 63px——和原来那版手感接近 */
+/* 判定阈值：拖过纸对角线的这个比例松手就算撕下来了 */
 export const TEAR_THRESHOLD = 0.45;
 const SPAN = 0.55;
 
-/* 复用的临时点。每帧算一次几何，没必要每次都新建十几个对象 */
-const P = [];
-let pn = 0;
-const pt = (x, y) => {
-  // 按需增长，绝不回绕：回绕会静默覆盖掉这一帧前面算好的点
-  const p = P[pn] || (P[pn] = { x: 0, y: 0 });
-  pn++;
-  p.x = x; p.y = y;
-  return p;
-};
-
-const dot = (a, b) => a.x * b.x + a.y * b.y;
-const ON_LINE = 1e-6;
-/* 两次裁剪各自新建点对象，同一个几何点在 flap 和 keep 里**不是同一个对象**。
-   按对象比会永远 indexOf === -1，路径就少一块——按坐标比 */
-const same = (a, b) => Math.abs(a.x - b.x) < 0.01 && Math.abs(a.y - b.y) < 0.01;
-const indexOfPoint = (arr, p) => arr.findIndex((q) => same(q, p));
+/* 卷的半径：约是短边的三成。真便利贴有硬度，撕起来是个大弧，不是紧紧的一卷 */
+export function rollRadius(w, h) {
+  return Math.max(22, Math.min(46, Math.min(w, h) * 0.3));
+}
 
 /**
- * 用一条直线切多边形，只留下指定一侧（Sutherland–Hodgman）。
- * 不写分情况讨论的原因：折痕可能从「上边 + 右边」出去（切掉一个角），
- * 也可能从「上边 + 下边」出去（切掉右边一条）。用通用裁剪，两种都自然落进来。
- * @param side +1 保留法线正侧，-1 保留负侧
+ * 把手指的位移压回「往纸里拉」的象限。
+ * 往右上拉是把纸拽离页面，不是剥——那种方向只算它落在左 / 下的分量，
+ * 剥离线因此永远从角落切进纸里，鼠标往上一抖不会让整张纸乱翻。
  */
-function clipHalf(poly, m, u, side) {
+export function clampPull(w, h, v) {
+  // 上限要够 dForGone 把整张纸剥光，只是防止数值飞出去
+  const cap = (w + h) * 2.5;
+  let x = Math.min(0, v.x);
+  let y = Math.max(0, v.y);
+  const L = Math.hypot(x, y);
+  if (L > cap) { x *= cap / L; y *= cap / L; }
+  return { x, y };
+}
+
+/** 解 θ − sin θ = k（0 ≤ k ≤ π）。小角度时 ≈ θ³/6，拿它起步，牛顿法几步就收敛 */
+function solveTheta(k) {
+  let th = Math.cbrt(6 * k);
+  for (let i = 0; i < 8; i++) {
+    const f = th - Math.sin(th) - k;
+    const df = 1 - Math.cos(th);
+    if (df < 1e-6) break;
+    th -= f / df;
+  }
+  return Math.max(0, Math.min(Math.PI, th));
+}
+
+const ON_LINE = 1e-6;
+const fmt = (n) => Math.round(n * 100) / 100;
+const pathOf = (pts) => (pts.length ? `M${pts.map((p) => `${fmt(p.x)} ${fmt(p.y)}`).join('L')}Z` : '');
+
+/** 用有符号距离函数切多边形，只留 f(p) ≥ 0 的那部分（Sutherland–Hodgman） */
+function clipBy(poly, f) {
   const out = [];
-  const dist = (p) => side * ((p.x - m.x) * u.x + (p.y - m.y) * u.y);
   for (let i = 0; i < poly.length; i++) {
-    const a = poly[i];
-    const b = poly[(i + 1) % poly.length];
-    const da = dist(a);
-    const db = dist(b);
-    if (da >= -ON_LINE) out.push(a);
-    if ((da > ON_LINE && db < -ON_LINE) || (da < -ON_LINE && db > ON_LINE)) {
-      const t = da / (da - db);
-      out.push(pt(a.x + (b.x - a.x) * t, a.y + (b.y - a.y) * t));
+    const p = poly[i];
+    const q = poly[(i + 1) % poly.length];
+    const dp = f(p);
+    const dq = f(q);
+    if (dp >= -ON_LINE) out.push(p);
+    if ((dp > ON_LINE && dq < -ON_LINE) || (dp < -ON_LINE && dq > ON_LINE)) {
+      const k = dp / (dp - dq);
+      out.push({ x: p.x + (q.x - p.x) * k, y: p.y + (q.y - p.y) * k });
     }
   }
   return out;
 }
 
-/** 二次 Bézier 的控制点：从弦的中点朝「背离折痕」的方向鼓出去 */
-function bow(a, b, u, k = 0.17, cap = 26) {
-  const dx = b.x - a.x;
-  const dy = b.y - a.y;
-  const len = Math.hypot(dx, dy) || 1;
-  let nx = -dy / len;
-  let ny = dx / len;
-  // 两个法线方向选背离折痕的那个：翻过去的纸片鼓向 D 那一侧
-  if (nx * u.x + ny * u.y < 0) { nx = -nx; ny = -ny; }
-  const d = Math.min(len * k, cap);
-  return pt((a.x + b.x) / 2 + nx * d, (a.y + b.y) / 2 + ny * d);
+/**
+ * 把多边形逐点映射过去。映射沿 a 方向是非线性的（正弦），
+ * 所以斜着穿过卷的直边要按 t 细分成折线，否则圆柱的轮廓会被拉成直线。
+ * 只有 t > 0 的那段真的会弯：一条边若跨过剥离线，先在 t = 0 处切开，只细分抬起的那一半。
+ */
+function mapPoly(poly, t, map, step) {
+  const out = [];
+  const walk = (p, q, tp, tq) => {
+    const n = Math.min(16, Math.max(1, Math.ceil(Math.abs(tq - tp) / step)));
+    for (let k = 0; k < n; k++) {
+      const s = k / n;
+      out.push(map({ x: p.x + (q.x - p.x) * s, y: p.y + (q.y - p.y) * s }));
+    }
+  };
+  for (let i = 0; i < poly.length; i++) {
+    const p = poly[i];
+    const q = poly[(i + 1) % poly.length];
+    const tp = t(p);
+    const tq = t(q);
+    if (tp <= 0 && tq <= 0) { out.push(map(p)); continue; }
+    if (tp > 0 && tq > 0) { walk(p, q, tp, tq); continue; }
+    const k = tp / (tp - tq);
+    const c = { x: p.x + (q.x - p.x) * k, y: p.y + (q.y - p.y) * k };
+    if (tp <= 0) { out.push(map(p)); walk(c, q, 0, tq); }
+    else walk(p, c, tp, 0);
+  }
+  return out;
 }
-
-const fmt = (n) => (Math.round(n * 100) / 100);
-const moveTo = (p) => `M${fmt(p.x)} ${fmt(p.y)}`;
-const lineTo = (p) => `L${fmt(p.x)} ${fmt(p.y)}`;
-const quadTo = (c, p) => `Q${fmt(c.x)} ${fmt(c.y)} ${fmt(p.x)} ${fmt(p.y)}`;
 
 /**
  * D → 全部几何。
  *
  * @param {number} w 纸宽
  * @param {number} h 纸高
- * @param {{x:number,y:number}} d0 被拖到的位置（纸片本地坐标，原点在左上）
+ * @param {{x:number,y:number}} d0 手指所在（纸片本地坐标，原点在左上）
  * @returns {null | {
- *   A, B, C, D, E, F, G,        七个点
- *   content: string,            还留在原地的纸（拿去当 clip-path）
- *   dogEar: string,             翻起来的那片
- *   crease: {x:number,y:number}[],  折痕两端，画高光用
- *   progress: number,           0~1
- *   gone: boolean,              纸已经整张翻完了
+ *   content: string,        没被翻过去盖住、字还看得见的纸：粘着的 + 正在抬起的正面（拿去当 clip-path）
+ *   rise: string,           正在抬起的正面那段（投影后），画背光渐变用
+ *   roll: string,           绕过轮廓线之后露出的纸背
+ *   flap: string,           已经翻平、伸向手指的那片（可能为空）
+ *   contact: string,        卷贴地那条轮廓线，画接触阴影用
+ *   crest: string,          卷的顶棱，画高光用（纸角还没爬过顶点时为空）
+ *   rise0, rise1,           抬起段的渐变：剥离线 → 轮廓线
+ *   roll0, roll1,           纸背的渐变：顶棱 → 轮廓线
+ *   flap0, flap1,           平铺片的渐变：顶棱 → 手指
+ *   a, r,                   剥离方向、卷的半径
+ *   progress: number,       0~1
+ *   gone: boolean,          纸上已经没有粘着的部分了
  * }}
  */
 export function tearGeometry(w, h, d0) {
-  pn = 0;
-  const C = pt(w, 0);
-  const vx = d0.x - C.x;
-  const vy = d0.y - C.y;
-  const L = Math.hypot(vx, vy);
-  if (L < 0.8) return null;                       // 还没动，当没撕
+  const C = { x: w, y: 0 };
+  const v = clampPull(w, h, { x: d0.x - C.x, y: d0.y - C.y });
+  const L = Math.hypot(v.x, v.y);
+  if (L < 0.8) return null;
 
-  // 折痕：CD 的垂直平分线。u 是它的法线（指向 D），n 是它自己的方向
-  const M = pt(C.x + vx / 2, C.y + vy / 2);
-  const u = pt(vx / L, vy / L);
-  const n = pt(-u.y, u.x);
+  const a = { x: -v.x / L, y: -v.y / L };            // D → C
+  const n = { x: -a.y, y: a.x };                     // 沿剥离线
+  const R = rollRadius(w, h);
+  const half = Math.PI * R / 2;
+  const full = Math.PI * R;
 
-  const rect = [pt(0, 0), pt(w, 0), pt(w, h), pt(0, h)];
-  const flap = clipHalf(rect, M, u, -1);          // 含 C 的那半：要翻过去
-  const keep = clipHalf(rect, M, u, +1);          // 另一半：留在原地
-  if (flap.length < 3) return null;
+  // 纸角绕到哪儿了：没过顶点时按 θ − sin θ = L/R 解；过了顶点多出来的纸平铺，dC 线性
+  const onArc = L < full;
+  const theta = onArc ? solveTheta(L / R) : Math.PI;
+  const dC = onArc ? theta * R : (L + full) / 2;
+  const M = { x: C.x - dC * a.x, y: C.y - dC * a.y };
+  const t = (p) => (p.x - M.x) * a.x + (p.y - M.y) * a.y;
 
-  /* 关于折痕做镜像。C 会精确落在 D 上——这正是「垂直平分线」的定义 */
-  const mirror = (p) => {
-    const ax = p.x - M.x;
-    const ay = p.y - M.y;
-    const along = ax * n.x + ay * n.y;
-    return pt(M.x + 2 * along * n.x - ax, M.y + 2 * along * n.y - ay);
+  const rect = [{ x: 0, y: 0 }, { x: w, y: 0 }, { x: w, y: h }, { x: 0, y: h }];
+  const wrap = (p) => {
+    const k = R * Math.sin(t(p) / R) - t(p);
+    return { x: p.x + k * a.x, y: p.y + k * a.y };
+  };
+  const flatten = (p) => {
+    const k = -(2 * t(p) - full);
+    return { x: p.x + k * a.x, y: p.y + k * a.y };
   };
 
-  // A、B：折痕与纸边的两个交点，在两半里都是同样这两个点
-  const onLine = (p) => Math.abs((p.x - M.x) * u.x + (p.y - M.y) * u.y) < 1e-3;
-  const ends = flap.filter(onLine);
+  const keep = clipBy(rect, (p) => -t(p));
+  const riseEnd = Math.min(dC, half);                       // 抬起段在纸上的终点
+  const onRise = clipBy(clipBy(rect, (p) => t(p)), (p) => riseEnd - t(p));
+  const onRoll = dC > half ? clipBy(clipBy(rect, (p) => t(p) - half), (p) => Math.min(dC, full) - t(p)) : [];
+  const onFlap = dC > full ? clipBy(rect, (p) => t(p) - full) : [];
 
-  /* 折痕已经整个跑到纸外：没有交点了，整张纸都翻了过去。
-     收尾动画会走到这一档，这里得给出「只剩翻起那片」的形状，不能返回 null——
-     否则纸会在最后一瞬间凭空消失，而不是卷着飞走 */
-  if (ends.length < 2) {
-    const m = flap.map(mirror);
-    let d = moveTo(m[0]);
-    for (let i = 1; i < m.length; i++) d += quadTo(bow(m[i - 1], m[i], u, 0.08, 18), m[i]);
-    d += `${quadTo(bow(m[m.length - 1], m[0], u, 0.08, 18), m[0])}Z`;
-    return {
-      A: m[0], B: m[m.length - 1], C, D: pt(d0.x, d0.y),
-      E: m[0], F: m[m.length - 1], G: m[0],
-      content: '', dogEar: d, crease: [m[0], m[m.length - 1]],
-      tip: m[Math.floor(m.length / 2)],
-      progress: 1, gone: true,
-    };
-  }
+  /* 字还看得见的部分：粘着的 + 抬起段**投影之后**的形状。抬起那段正面朝上只是被压扁了一点，
+     字照原位留着比突然消失自然得多；压扁本身交给上面那层背光渐变去暗示。
+     必须按投影后的轮廓裁：纸边一抬起来就往剥离线缩，原来那一小条位置露出的是底下的页面，
+     还按矩形裁会在角上留下一片「纸还在但没被抬起」的假象 */
+  const lift = (p) => (t(p) > 0 ? wrap(p) : p);
+  const visible = mapPoly(clipBy(rect, (p) => riseEnd - t(p)), t, lift, R * 0.18);
+  const risePts = onRise.length >= 3 ? mapPoly(onRise, t, wrap, R * 0.18) : [];
+  const rollPts = onRoll.length >= 3 ? mapPoly(onRoll, t, wrap, R * 0.18) : [];
+  const flapPts = onFlap.length >= 3 ? onFlap.map(flatten) : [];
 
-  const A = ends[0];
-  const B = ends[ends.length - 1];
-
-  // 翻过去那片的自由边：从 A 出发，经过镜像后的内部顶点，到 B
-  const iA = indexOfPoint(flap, A);
-  const free = [];
-  for (let k = 1; k < flap.length; k++) {
-    const p = flap[(iA + k) % flap.length];
-    if (same(p, B)) break;
-    free.push(mirror(p));
-  }
-  // G：折痕自己也鼓一点。纸卷起来的时候折痕不会是一条尺子画的直线
-  const G = bow(A, B, u, 0.05, 9);
-
-  /* content：留下的纸。除了 A→B 这条边走 G 的曲线，其余照多边形走 */
-  let content = '';
-  if (keep.length >= 3) {
-    /* 沿多边形走一圈，**按边判断**哪条是折痕（连接 A 和 B 的那条），只有它走曲线。
-       按「走回起点的最后一条边」判断是错的：起点在多边形里的位置不固定，
-       折痕可能是第一条边也可能是最后一条，判错了曲线就画到纸的直边上去 */
-    content = moveTo(keep[0]);
-    for (let k = 1; k <= keep.length; k++) {
-      const prev = keep[(k - 1) % keep.length];
-      const p = keep[k % keep.length];
-      const isCrease = (same(prev, A) && same(p, B)) || (same(prev, B) && same(p, A));
-      content += isCrease ? quadTo(G, p) : lineTo(p);
+  /* 轮廓线和顶棱各自只画纸真正到达的那一段：
+     从卷那块多边形里挑出落在 t = πR/2（轮廓线）和 t = πR（顶棱）上的顶点，投影后取两端 */
+  const extent = (poly, at) => {
+    let lo = Infinity;
+    let hi = -Infinity;
+    let base = null;
+    for (const p of poly) {
+      if (Math.abs(t(p) - at) > 1e-3) continue;
+      const q = wrap(p);
+      base = base || q;
+      const sAlong = (q.x - M.x) * n.x + (q.y - M.y) * n.y;
+      if (sAlong < lo) lo = sAlong;
+      if (sAlong > hi) hi = sAlong;
     }
-    content += 'Z';
-  }
+    if (!(hi > lo + 0.5)) return '';
+    const off = (base.x - M.x) * a.x + (base.y - M.y) * a.y;
+    const p0 = { x: M.x + a.x * off + n.x * lo, y: M.y + a.y * off + n.y * lo };
+    const p1 = { x: M.x + a.x * off + n.x * hi, y: M.y + a.y * off + n.y * hi };
+    return `M${fmt(p0.x)} ${fmt(p0.y)}L${fmt(p1.x)} ${fmt(p1.y)}`;
+  };
+  const rim = { x: M.x + a.x * R, y: M.y + a.y * R };
 
-  /* dogEar：A →(E)→ D →…→(F)→ B，再沿折痕(G)回到 A。
-     不需要布尔运算：镜像出来的这片天然就在折痕另一侧，和 content 只共一条边 */
-  const chain = [A, ...free, B];
-  let E = null;
-  let F = null;
-  let dogEar = moveTo(A);
-  for (let i = 1; i < chain.length; i++) {
-    const c = bow(chain[i - 1], chain[i], u);
-    if (i === 1) E = c;
-    if (i === chain.length - 1) F = c;
-    dogEar += quadTo(c, chain[i]);
-  }
-  dogEar += `${quadTo(G, A)}Z`;
-
+  const flapLen = Math.max(0, dC - full);
   const span = Math.hypot(w, h) * SPAN;
   return {
-    A, B, C, D: pt(d0.x, d0.y), E, F, G,
-    content, dogEar,
-    crease: [A, B],
-    tip: free.length ? free[Math.floor((free.length - 1) / 2)] : pt(d0.x, d0.y),
+    content: visible.length >= 3 ? pathOf(visible) : '',
+    rise: pathOf(risePts),
+    roll: pathOf(rollPts),
+    flap: pathOf(flapPts),
+    contact: extent(onRoll, half),
+    crest: extent(onRoll, full),
+    rise0: M,
+    rise1: rim,
+    roll0: M,
+    roll1: rim,
+    flap0: M,
+    flap1: { x: M.x - a.x * Math.max(flapLen, 1), y: M.y - a.y * Math.max(flapLen, 1) },
+    a, r: R,
     progress: Math.min(1, L / span),
     gone: keep.length < 3,
   };
 }
 
 /**
- * 要把整张纸翻完，D 至少得拖多远。
+ * 要把整张纸剥光，D 至少得拖多远。
  *
- * 折痕过 M = C + (L/2)·û。纸上所有角都落到翻起的那一侧时才算翻完，
- * 也就是对每个角都有 dot(角 − M, û) < 0，即 L > 2·max(dot(角 − C, û))。
- * 撕到底的收尾动画照这个距离走，纸就会一路卷到消失，而不是卡在中途突然不见。
+ * 纸上离剥离线最远的角也在剥离线的 +a 侧时就没有粘着的部分了：
+ * dC > max(C − p)·a，代回 L = 2·dC − πR 再多给一小截，收尾动画一路卷到消失。
  */
 export function dForGone(w, h, dir) {
-  const len = Math.hypot(dir.x, dir.y) || 1;
-  const ux = dir.x / len;
-  const uy = dir.y / len;
+  const v = clampPull(w, h, dir);
+  const len = Math.hypot(v.x, v.y) || 1;
+  const ux = v.x / len;
+  const uy = v.y / len;
   let far = 0;
   for (const [cx, cy] of [[0, 0], [w, 0], [w, h], [0, h]]) {
-    far = Math.max(far, (cx - w) * ux + (cy - 0) * uy);
+    far = Math.max(far, (w - cx) * -ux + (0 - cy) * -uy);
   }
-  const L = far * 2 + Math.max(w, h) * 0.25;
+  const full = Math.PI * rollRadius(w, h);
+  const L = Math.max(full, 2 * far - full) + Math.max(w, h) * 0.3;
   return { x: w + ux * L, y: uy * L };
-}
-
-/** 反过来：给一个进度，求 D 在哪儿（动画和 setTearProgress 用） */
-export function dForProgress(w, h, progress, dir) {
-  const span = Math.hypot(w, h) * SPAN;
-  const L = Math.max(0, progress) * span;
-  const len = Math.hypot(dir.x, dir.y) || 1;
-  return { x: w + (dir.x / len) * L, y: (dir.y / len) * L };
 }

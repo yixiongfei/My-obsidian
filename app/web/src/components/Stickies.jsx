@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { api, vaultUrl } from '../api.js';
 import { renderSticky, SN_PLACEHOLDER } from '../sticky-text.js';
 import { anchorAt, pointOf, blockAnchorAt, blockPoint } from '../sticky-anchor.js';
-import { tearGeometry, dForGone, TEAR_THRESHOLD } from '../sticky-tear.js';
+import { tearGeometry, dForGone, clampPull, TEAR_THRESHOLD } from '../sticky-tear.js';
 
 /* ================================================================== *
  * 便利贴 —— 复习时贴在笔记旁边的纸片
@@ -118,32 +118,74 @@ function tween(from, to, ms, ease, onFrame, onDone) {
 }
 const easeOut = (p) => 1 - (1 - p) ** 3;
 const easeIn = (p) => p * p;
+/* 剥离的手感：纸角跟着手指走，但隔着一层胶——
+   刚开始胶还粘得牢，弹簧很软；拉开一段之后胶松了，弹簧变硬；阻尼留一点余量，松手时会微微回弹 */
+const TEAR_K_HOLD = 0.035;
+const TEAR_K_FREE = 0.16;
+const TEAR_GLUE_PX = 46;
+const TEAR_DAMP = 0.66;
+const RELEASE_DURATION = 420;
+const RETURN_DURATION = 460;
 
 /**
- * 翻起来那片纸。
+ * 剥起来的那部分纸。
  *
- * 它必须是 .sn 的**兄弟**而不是孩子——.sn 被 contentPath 裁着，
- * 而这片纸按定义就在裁剪区之外，放进去会被一起裁掉。
+ * 必须是 .sn 的**兄弟**而不是孩子——.sn 被 content 裁成「还粘着的那半」，
+ * 剥起来的部分按定义在裁剪区之外，放进去会被一起裁掉。
+ * 两块：绕在圆柱上的「卷」露出纸背的上半圈，渐变从顶棱的亮到轮廓线的暗，凸面感全靠它；
+ * 翻平的「片」是平的，颜色几乎均匀，只在离卷远的一头略暗。
  */
 function DogEar({ id, s, geo, fade }) {
   if (!geo) return null;
-  const gid = `sn-dogear-${id}`;
-  const mid = { x: (geo.crease[0].x + geo.crease[1].x) / 2, y: (geo.crease[0].y + geo.crease[1].y) / 2 };
+  const uid = `sn-peel-${id}`;
+  const edge = 'rgba(40, 30, 6, 0.28)';
   return (
     <svg
       className={`sn-dogear c-${s.color}`} aria-hidden="true"
       style={{ left: s.x, top: s.y, width: s.w, height: s.h, opacity: fade }}
     >
       <defs>
-        {/* 折痕处迎光最亮，越往纸尖越暗——立体感全在这一条渐变上 */}
-        <linearGradient id={gid} gradientUnits="userSpaceOnUse"
-                        x1={mid.x} y1={mid.y} x2={geo.tip.x} y2={geo.tip.y}>
-          <stop offset="0" stopColor="var(--sn-back-lit)" />
-          <stop offset="0.55" stopColor="var(--sn-back)" />
-          <stop offset="1" stopColor="var(--sn-back-deep)" />
+        {/* 正在抬起的正面：离页面越远越背光，压到轮廓线那儿最暗 */}
+        <linearGradient id={`${uid}-rise`} gradientUnits="userSpaceOnUse"
+                        x1={geo.rise0.x} y1={geo.rise0.y} x2={geo.rise1.x} y2={geo.rise1.y}>
+          <stop offset="0" stopColor="#1a1408" stopOpacity="0" />
+          <stop offset="0.55" stopColor="#1a1408" stopOpacity="0.16" />
+          <stop offset="1" stopColor="#1a1408" stopOpacity="0.36" />
         </linearGradient>
+        {/* 纸背：顶棱迎光最亮，绕到轮廓线那儿最暗——凸面感全靠这一条 */}
+        <linearGradient id={`${uid}-roll`} gradientUnits="userSpaceOnUse"
+                        x1={geo.roll0.x} y1={geo.roll0.y} x2={geo.roll1.x} y2={geo.roll1.y}>
+          <stop offset="0" style={{ stopColor: 'var(--sn-back-lit)' }} />
+          <stop offset="0.5" style={{ stopColor: 'var(--sn-back)' }} />
+          <stop offset="1" style={{ stopColor: 'var(--sn-back-deep)' }} />
+        </linearGradient>
+        <linearGradient id={`${uid}-flap`} gradientUnits="userSpaceOnUse"
+                        x1={geo.flap0.x} y1={geo.flap0.y} x2={geo.flap1.x} y2={geo.flap1.y}>
+          <stop offset="0" style={{ stopColor: 'var(--sn-back-lit)' }} />
+          <stop offset="1" style={{ stopColor: 'var(--sn-back)' }} />
+        </linearGradient>
+        <filter id={`${uid}-blur`} x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation={Math.max(2, geo.r * 0.22)} />
+        </filter>
       </defs>
-      <path d={geo.dogEar} fill={`url(#${gid})`} />
+      {/* 正在抬起的正面：半透明的背光，不能带投影——它不是一块纸，是纸上的光 */}
+      {geo.rise && <path d={geo.rise} fill={`url(#${uid}-rise)`} />}
+      {/* 接触阴影：卷贴着页面的那条轮廓线下面最暗，往外散开 */}
+      {geo.contact && (
+        <path
+          d={geo.contact} fill="none"
+          stroke="rgba(10, 14, 22, 0.34)" strokeWidth={Math.max(3, geo.r * 0.55)} strokeLinecap="round"
+          transform={`translate(${geo.a.x * geo.r * 0.28} ${geo.a.y * geo.r * 0.28})`}
+          filter={`url(#${uid}-blur)`}
+        />
+      )}
+      {/* 真正悬起来的纸：翻平的片和露出的纸背，只有它们投影子 */}
+      <g className="sn-lift">
+        {geo.flap && <path d={geo.flap} fill={`url(#${uid}-flap)`} stroke={edge} strokeWidth="0.8" strokeLinejoin="round" />}
+        {geo.roll && <path d={geo.roll} fill={`url(#${uid}-roll)`} stroke={edge} strokeWidth="0.8" strokeLinejoin="round" />}
+      </g>
+      {/* 顶棱：纸绕过圆柱最高处那条线，迎光最亮 */}
+      {geo.crest && <path d={geo.crest} fill="none" stroke="rgba(255, 255, 255, 0.34)" strokeWidth="1.2" strokeLinecap="round" />}
     </svg>
   );
 }
@@ -171,14 +213,14 @@ function Sticky({ s, editing, onDown, onDoubleClick, onPin, onTear, onResize, on
 
   /* 撕页：整张纸的形状由一个点 D 推出来（见 sticky-tear.js）。
      这里只做两件事——把还留着的那半当 clip-path 扣在自己身上，
-     把翻过去那半交给兄弟节点 DogEar 去画 */
+     把剥起来的卷和片交给兄弟节点 DogEar 去画 */
   const geo = tear ? tearGeometry(s.w, s.h, tear.d) : null;
   const torn = !!geo;
 
   return (
   <>
     <div
-      className={`sn c-${s.color}${s.pinned ? ' pinned' : ''}${editing ? ' editing' : ''}${torn ? ' tearing' : ''}`}
+      className={`sn c-${s.color}${s.media ? ' media' : ''}${s.pinned ? ' pinned' : ''}${editing ? ' editing' : ''}${torn ? ' tearing' : ''}`}
       style={{
         left: s.x, top: s.y, width: s.w, height: s.h,
         ...(torn ? {
@@ -204,7 +246,7 @@ function Sticky({ s, editing, onDown, onDoubleClick, onPin, onTear, onResize, on
 
       {!s.pinned && (
         <button
-          className="sn-tear" title="按住往左拖，把它撕下来"
+          className="sn-tear" title="按住右上角向左下拖，慢慢撕开"
           onPointerDown={(e) => { e.stopPropagation(); onTear(e); }}
           onClick={(e) => e.stopPropagation()}
         />
@@ -230,7 +272,7 @@ function Sticky({ s, editing, onDown, onDoubleClick, onPin, onTear, onResize, on
             e.stopPropagation();
             if (e.key === 'Escape' || (e.key === 'Enter' && (e.metaKey || e.ctrlKey))) { e.preventDefault(); onEditEnd(); }
           }}
-          placeholder={'写点什么…\n- 条目  **粗体**  $x^2$'}
+          placeholder={'写点什么…\n $x^2$'}
         />
       )}
 
@@ -458,17 +500,14 @@ export default function Stickies({ noteId, scrollRef, children, active = true })
           const name = file.name?.replace(/\.pdf$/i, '') || 'pdf';
           const cover = await api.uploadStickyMedia(new File([shot.blob], `${name}-p1.png`, { type: 'image/png' }));
           poster = cover.path;
-          w = clamp(shot.w, MIN_W, 300);
-          h = clamp(Math.round((w * shot.h) / (shot.w || 1)), MIN_H, 460);
+          ({ w, h } = fitSize(shot.w, shot.h, 300, 460));
         } catch (err) {
           // 渲不出来（加密、损坏、字体缺失）就退回 iframe 预览，别让一张 PDF 把贴纸卡死
           console.warn('[便利贴] PDF 首页渲染失败，退回浏览器预览', err);
         }
       } else if (up.kind === 'image') {
         const nat = await natural(vaultUrl(up.path));
-        // 原图比例照搬，只限个上限：贴纸是缩略，点开才是原图
-        w = clamp(nat.w, MIN_W, 360);
-        h = clamp(Math.round((w * nat.h) / (nat.w || 1)), MIN_H, 460);
+        ({ w, h } = fitSize(nat.w, nat.h, 360, 460));
       }
 
       return await add(color, at, { media: up.path, mediaKind: up.kind, poster, w, h });
@@ -614,43 +653,68 @@ export default function Stickies({ noteId, scrollRef, children, active = true })
   /**
    * 撕：按住右上角的翘角**往左拖**。
    *
-   * 手指的位置就是几何模型里的 D——纸沿着 CD 的垂直平分线折起来，折痕、翘角、
-   * 阴影、渐变全是从 D 现算出来的（sticky-tear.js）。拖过 45% 松手才真撕下来，
-   * 没拖够就卷回去。点一下就删太轻了：纸片上写的是自己想明白的过程，误删没处找。
+   * 手指的位置就是几何模型里的 D——胶从剥离线一点点松开，松开的纸绕成一个卷，
+   * 卷、翻平的片、阴影、渐变全是从 D 现算出来的（sticky-tear.js）。拖过 45% 松手才真撕下来，
+   * 没拖够就被胶拉回去贴平。点一下就删太轻了：纸片上写的是自己想明白的过程，误删没处找。
    */
   const startTear = (e, s) => {
     e.preventDefault();
     e.stopPropagation();
     setSelArrow(null);
     stopTear.current?.();
+
     const C = { x: s.w, y: 0 };
-    const cap = Math.hypot(s.w, s.h) * 1.15;
-    let d = { x: C.x, y: C.y };
+    let target = { x: C.x, y: C.y };   // 手指真正在哪
+    let d = { x: C.x, y: C.y };        // 纸角实际在哪：隔着胶和弹簧追手指
+    let vel = { x: 0, y: 0 };
     let progress = 0;
+    let raf = null;
+    let released = false;
+
+    const animate = () => {
+      const dx = target.x - d.x;
+      const dy = target.y - d.y;
+      // 已经剥开多远决定胶还剩多少劲：越往后越跟手
+      const opened = Math.hypot(d.x - C.x, d.y - C.y);
+      const k = TEAR_K_HOLD + (TEAR_K_FREE - TEAR_K_HOLD) * Math.min(1, opened / TEAR_GLUE_PX);
+      vel = { x: (vel.x + dx * k) * TEAR_DAMP, y: (vel.y + dy * k) * TEAR_DAMP };
+      d = { x: d.x + vel.x, y: d.y + vel.y };
+      progress = tearGeometry(s.w, s.h, d)?.progress ?? 0;
+      setTear({ id: s.id, d: { ...d }, fade: 1 });
+      if (!released) raf = requestAnimationFrame(animate);
+    };
+    raf = requestAnimationFrame(animate);
+    stopTear.current = () => {
+      released = true;
+      if (raf) cancelAnimationFrame(raf);
+    };
 
     drag(e, {
       onMove: (mx, my) => {
-        // 只往左撕：方向是教过的，也让手势可预期；上下随手指
-        let vx = Math.min(0, mx);
-        let vy = my;
-        const L = Math.hypot(vx, vy);
-        if (L > cap) { vx *= cap / L; vy *= cap / L; }
-        d = { x: C.x + vx, y: C.y + vy };
-        progress = tearGeometry(s.w, s.h, d)?.progress ?? 0;
-        setTear({ id: s.id, d, fade: 1 });
+        // 只认往纸里拉的分量，几何那边同样这么压——手往上抖一下纸不会乱翻
+        const v = clampPull(s.w, s.h, { x: mx, y: my });
+        target = { x: C.x + v.x, y: C.y + v.y };
       },
       onUp: () => {
+        released = true;
+        if (raf) cancelAnimationFrame(raf);
+
         if (progress >= TEAR_THRESHOLD) {
-          // 撕到底：让 D 一路走到「整张翻完」的位置，纸会自己卷着飞走
+          // 过了临界点：胶「啪」地一下整个松开，纸沿着当前方向一路卷走
           const dir = { x: d.x - C.x, y: d.y - C.y };
           const end = dForGone(s.w, s.h, dir.x || dir.y ? dir : { x: -1, y: 0.3 });
-          stopTear.current = tween(d, end, 340, easeIn,
+          stopTear.current = tween(
+            d, end, RELEASE_DURATION, easeIn,
             (p, k) => setTear({ id: s.id, d: p, fade: k > 0.72 ? 1 - (k - 0.72) / 0.28 : 1 }),
-            () => drop(s.id));
+            () => drop(s.id),
+          );
         } else if (progress > 0) {
-          stopTear.current = tween(d, C, 260, easeOut,
+          // 没撕够：胶把它慢慢拉回去贴平
+          stopTear.current = tween(
+            d, C, RETURN_DURATION, easeOut,
             (p) => setTear({ id: s.id, d: p, fade: 1 }),
-            () => setTear(null));
+            () => setTear(null),
+          );
         } else {
           setTear(null);
         }
@@ -770,7 +834,7 @@ export default function Stickies({ noteId, scrollRef, children, active = true })
               onEditEnd={() => {
                 setEditing(null);
                 // 一张什么都没写的空纸没有存在的理由——和现实里一样，随手扔了
-                if (!s.text.trim() && !s.media && !(s.arrows || []).length) tear(s.id);
+                if (!s.text.trim() && !s.media && !(s.arrows || []).length) drop(s.id);
               }}
               onOver={noteOver}
             />
@@ -895,6 +959,20 @@ function Expanded({ s, onClose, onText, onColor }) {
       </div>
     </div>
   );
+}
+
+/**
+ * 图贴上来时纸片该多大：**严格按原图比例**，图正好铺满整张纸——
+ * 先等比缩到上限以内，太小再等比放大到最小尺寸。分别夹 w、h 会把比例夹坏，图就贴不合了。
+ */
+function fitSize(nw, nh, maxW, maxH) {
+  const down = Math.min(1, maxW / (nw || 1), maxH / (nh || 1));
+  let w = Math.max(1, nw * down);
+  let h = Math.max(1, nh * down);
+  const up = Math.max(1, MIN_W / w, MIN_H / h);
+  w = Math.round(w * up);
+  h = Math.round(h * up);
+  return { w, h };
 }
 
 /** 量一下原图尺寸：纸片按原比例落下来，不要一上来就把图压扁 */

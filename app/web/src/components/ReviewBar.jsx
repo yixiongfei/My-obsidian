@@ -14,7 +14,6 @@ const plusDays = (n) => {
  * 只动 review_count / last_reviewed / next_review 三个字段，正文一个字不改。
  */
 export default function ReviewBar({ note, onDone }) {
-  const [added, setAdded] = useState('');
   const [busy, setBusy] = useState(null);
   const [done, setDone] = useState(null);
   const [error, setError] = useState(null);
@@ -23,9 +22,8 @@ export default function ReviewBar({ note, onDone }) {
     setBusy(result);
     setError(null);
     try {
-      const out = await api.review({ path: note.id, result, addedContent: added });
+      const out = await api.review({ path: note.id, result });
       setDone(out);
-      setAdded('');
       onDone?.(out);
     } catch (e) {
       setError(e.message);
@@ -51,13 +49,6 @@ export default function ReviewBar({ note, onDone }) {
   return (
     <div className="row" style={{ gap: 16, flexWrap: 'wrap' }}>
       <span className="lbl-cn" style={{ flex: 'none' }}>记一次复习</span>
-      <input
-        className="input" style={{ flex: 1, minWidth: 200 }}
-        placeholder="本次新增 / 加深的理解（可留空）"
-        value={added}
-        onChange={(e) => setAdded(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && submit('good')}
-      />
       <button className="btn" onClick={() => submit('again')} disabled={!!busy}>
         需重来　<span style={{ color: 'var(--dim)' }}>1 天</span>
       </button>
