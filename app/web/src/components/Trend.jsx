@@ -1,19 +1,25 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 /**
  * 每日进度：柱子 = 当天做了多少（笔记复习 / 新建 / 背词 / 做题 叠起来），
  * 曲线 = 7 天滑动平均，看趋势用。默认近一周，预设 7 / 14 / 30 / 90，滑杆可以拉到任意天数。
- * 纯 SVG，viewBox 随天数变宽、容器 100% 宽，拉长就是把更多天塞进来。
+ * 纯 SVG。图的**高度是定死的**（SVG_H 像素，和左边热力图一样高），宽度跟着容器走：
+ * 量出容器宽，反推 viewBox 该多宽，柱子正好铺满一行；天数多到塞不下时再按每天 12 单位加宽、整体缩小。
  */
+const SVG_H = 96;
 
 const PRESETS = [7, 14, 30, 90];
 const KEY = 'kb-trend-days';
-const SERIES = [
+export const SERIES = [
   { key: 'reviews', label: '笔记复习', color: 'var(--accent-2)' },
   { key: 'words', label: '背词', color: 'var(--hue-3)' },
   { key: 'exams', label: '做题', color: 'var(--hue-2)' },
   { key: 'created', label: '新建', color: 'var(--hue-4)' },
 ];
+// 背词一天几十个、笔记一天一两篇，硬叠在一起笔记那格看不见：背词按 1/5 折算成"单位量"。
+// 热力图的深浅也用这套折算，两边才是同一个「今天学了多少」
+export const WEIGHT = { reviews: 1, created: 1, exams: 0.5, words: 0.2 };
+export const unitsOf = (r) => SERIES.reduce((a, k) => a + (r[k.key] || 0) * WEIGHT[k.key], 0);
 
 export default function Trend({ daily = [] }) {
   const [days, setDays] = useState(() => {
@@ -22,19 +28,28 @@ export default function Trend({ daily = [] }) {
   });
   useEffect(() => { localStorage.setItem(KEY, String(days)); }, [days]);
 
+  const box = useRef(null);
+  const [cw, setCw] = useState(420);
+  useLayoutEffect(() => {
+    const el = box.current;
+    if (!el) return undefined;
+    const ro = new ResizeObserver(([e]) => setCw(Math.max(200, e.contentRect.width)));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+
   const rows = useMemo(() => daily.slice(-days), [daily, days]);
-  // 背词一天几十个、笔记一天一两篇，硬叠在一起笔记那格看不见：背词按 1/5 折算成"单位量"
-  const weight = { reviews: 1, created: 1, exams: 0.5, words: 0.2 };
-  const totalOf = (r) => SERIES.reduce((s, k) => s + (r[k.key] || 0) * weight[k.key], 0);
+  const weight = WEIGHT;
+  const totalOf = unitsOf;
   const avg = useMemo(() => rows.map((_, i) => {
     const win = daily.slice(Math.max(0, daily.length - days + i - 6), daily.length - days + i + 1);
     return win.reduce((s, r) => s + totalOf(r), 0) / Math.max(1, win.length);
   }), [rows, daily, days]);
 
   const max = Math.max(1, ...rows.map(totalOf), ...avg);
-  // 宽度固定下限 420：7 天时柱子粗一点，天数多了再按每天 12 单位拉宽
-  const W = Math.max(420, rows.length * 12 + 24);
   const H = 120, pad = { t: 8, b: 18, l: 6, r: 6 };
+  // viewBox 的宽按「渲染成 SVG_H 高时正好铺满容器」反推；天数多了再按每天 12 单位拉宽（整体会缩小一点）
+  const W = Math.max(Math.round((cw * H) / SVG_H), rows.length * 12 + 24);
   const ih = H - pad.t - pad.b;
   const bw = (W - pad.l - pad.r) / rows.length;
   const y = (v) => pad.t + ih - (v / max) * ih;
@@ -42,7 +57,7 @@ export default function Trend({ daily = [] }) {
   const tickEvery = days <= 7 ? 1 : days <= 14 ? 2 : days <= 30 ? 5 : 15;
 
   return (
-    <div className="trend">
+    <div className="trend" ref={box}>
       <div className="trend-head">
         <span>每日进度</span>
         <span className="spacer" />
@@ -51,7 +66,7 @@ export default function Trend({ daily = [] }) {
         </div>
         <input type="range" min="7" max="90" value={days} onChange={(e) => setDays(Number(e.target.value))} title={`${days} 天`} />
       </div>
-      <svg viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`近 ${days} 天每日进度`}>
+      <svg viewBox={`0 0 ${W} ${H}`} style={{ height: SVG_H }} preserveAspectRatio="xMinYMid meet" role="img" aria-label={`近 ${days} 天每日进度`}>
         {/* 基线 */}
         <line x1={pad.l} y1={y(0)} x2={W - pad.r} y2={y(0)} stroke="var(--line)" strokeWidth="1" />
         {rows.map((r, i) => {

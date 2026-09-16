@@ -96,8 +96,9 @@ app.get('/api/mindmap', wrap(async (_req, res) => res.json(await mindmap())));
  * ------------------------------------------------------------------ */
 
 app.get('/api/dashboard', (_req, res) => res.json({
-  ...dashboard(schedule.examDate()), points: points.progress(), vocab: vocab.progress(), milestones: milestones(), daily: schedule.activity(90),
-  stages: points.stageSummary(),
+  // daily 给 26 周：学习节奏的热力图和每日进度共用这一份（笔记复习 / 新建 / 背词 / 做题）
+  ...dashboard(schedule.examDate()), points: points.progress(), vocab: vocab.progress(), milestones: milestones(), daily: schedule.activity(26 * 7),
+  stages: points.stageSummary(), wrongBooks: points.wrongBooks(),
 }));
 
 /* 一轮复习的「总结完成」：写进笔记 frontmatter（stage: 总结 / summarized: 日期） */

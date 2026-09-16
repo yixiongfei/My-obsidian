@@ -115,6 +115,24 @@ export function wrongIndex(notes) {
   return map;
 }
 
+/**
+ * 每本错题本里记了几道题，多的排前面——仪表盘「薄弱考点」的第一段。
+ * 一道题一个 kb:q 标记，同一题重复导出只算一次；科目取笔记标签里除「错题」之外的第一个。
+ */
+export function wrongBooks() {
+  const out = [];
+  for (const n of allNotes()) {
+    if (n.kind !== 'wrong' || n.empty) continue;
+    const body = handle().prepare('SELECT body FROM notes WHERE id = ?').get(n.id)?.body || '';
+    const qs = new Set();
+    for (const m of body.matchAll(/<!--\s*kb:q:([a-z0-9]+-\d{4}):[^:]+:(\d+)\s*-->/g)) qs.add(`${m[1]}-${m[2]}`);
+    if (!qs.size) continue;
+    const subject = n.tags.find((t) => t !== '错题' && t !== '考研') || n.folder || '';
+    out.push({ id: n.id, title: n.title, subject, count: qs.size, nextReview: n.nextReview, reviewCount: n.reviewCount });
+  }
+  return out.sort((a, b) => (b.count - a.count) || a.title.localeCompare(b.title, 'zh'));
+}
+
 /** 某考点在错题本里出现的题：{ count, notes: id[] } */
 export function wrongOf(point, index) {
   const notes = new Set();
