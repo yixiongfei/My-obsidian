@@ -103,7 +103,24 @@ function arrowPath(from, to) {
  * 一张纸片
  * ------------------------------------------------------------------ */
 
-function Sticky({ s, editing, onDown, onDoubleClick, onPin, onTear, onResize, onDraw, onText, onEditEnd, onOver, tearing }) {
+/** 撕到这个距离就算撕下来了；没到就弹回去 */
+const TEAR_PULL = 84;
+
+/** 撕口：右边缘拉出一排锯齿，进度越大牙越深。纸是撕开的，不是被裁刀切的 */
+function tornEdge(h, progress) {
+  if (progress <= 0) return undefined;
+  const teeth = Math.max(4, Math.round(h / 16));
+  const depth = 3 + progress * 7;
+  const pts = ['0% 0%'];
+  for (let i = 0; i <= teeth; i++) {
+    const y = (i / teeth) * 100;
+    pts.push(`calc(100% - ${i % 2 ? depth : 0}px) ${y}%`);
+  }
+  pts.push('0% 100%');
+  return `polygon(${pts.join(', ')})`;
+}
+
+function Sticky({ s, editing, onDown, onDoubleClick, onPin, onTear, onResize, onDraw, onText, onEditEnd, onOver, tearing, pull }) {
   const bodyRef = useRef(null);
   const taRef = useRef(null);
   const [over, setOver] = useState(false);
@@ -124,10 +141,22 @@ function Sticky({ s, editing, onDown, onDoubleClick, onPin, onTear, onResize, on
     if (editing) taRef.current?.focus({ preventScroll: true });
   }, [editing]);
 
+  // 撕的过程：以右上角为轴往左掀，越拖越斜、越淡，右边裂口越大
+  const t = Math.min(1, Math.max(0, -(pull ?? 0) / TEAR_PULL));
+  const dragging = pull != null;
+
   return (
     <div
-      className={`sn c-${s.color}${s.pinned ? ' pinned' : ''}${editing ? ' editing' : ''}${tearing ? ' tearing' : ''}`}
-      style={{ left: s.x, top: s.y, width: s.w, height: s.h }}
+      className={`sn c-${s.color}${s.pinned ? ' pinned' : ''}${editing ? ' editing' : ''}`
+        + `${tearing ? ' tearing' : ''}${dragging ? ' tear-drag' : ''}`}
+      style={{
+        left: s.x, top: s.y, width: s.w, height: s.h,
+        ...(dragging ? {
+          transform: `translateX(${pull * 0.55}px) rotate(${-t * 11}deg)`,
+          opacity: 1 - t * 0.35,
+          clipPath: tornEdge(s.h, t),
+        } : null),
+      }}
       onPointerDown={onDown}
       onDoubleClick={onDoubleClick}
     >
@@ -146,9 +175,9 @@ function Sticky({ s, editing, onDown, onDoubleClick, onPin, onTear, onResize, on
 
       {!s.pinned && (
         <button
-          className="sn-tear" title="撕去这张便利贴"
-          onPointerDown={(e) => e.stopPropagation()}
-          onClick={(e) => { e.stopPropagation(); onTear(); }}
+          className="sn-tear" title="按住往左拖，把它撕下来"
+          onPointerDown={(e) => { e.stopPropagation(); onTear(e); }}
+          onClick={(e) => e.stopPropagation()}
         />
       )}
 
@@ -211,6 +240,7 @@ export default function Stickies({ noteId, scrollRef, children, active = true })
   const [expanded, setExpanded] = useState(null);
   const [selArrow, setSelArrow] = useState(null);
   const [tearing, setTearing] = useState(null);
+  const [pull, setPull] = useState(null);      // 正在往左撕的那张：{ id, dx }
   const [dropping, setDropping] = useState(false);
   const [busy, setBusy] = useState(false);
   const [tick, setTick] = useState(0);
@@ -531,12 +561,32 @@ export default function Stickies({ noteId, scrollRef, children, active = true })
   const tear = (id) => {
     const p = pending.current.get(id);
     if (p) { clearTimeout(p.timer); pending.current.delete(id); }
+    setPull(null);
     setTearing(id);
     api.removeSticky(id).catch(() => {});
     setTimeout(() => {
       setItems((l) => l.filter((s) => s.id !== id));
       setTearing(null);
-    }, 240);
+    }, 260);
+  };
+
+  /**
+   * 撕：按住右上角的翘角**往左拖**，拖够 TEAR_PULL 才算撕下来，没拖够就弹回去。
+   * 点一下就删太轻了——便利贴上写的是自己想明白的过程，误删一张没地方找回来。
+   * 拖这个动作本身也在说明这是什么：纸被从右上角掀起、撕口张开、越来越斜。
+   */
+  const startTear = (e, s) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setSelArrow(null);
+    let dx = 0;
+    drag(e, {
+      onMove: (mx) => { dx = Math.min(0, mx); setPull({ id: s.id, dx }); },
+      onUp: () => {
+        if (-dx >= TEAR_PULL) tear(s.id);
+        else setPull(null);            // 弹回原位，靠 CSS 过渡
+      },
+    });
   };
 
   /* ---- 拉箭头 ---- */
@@ -638,10 +688,11 @@ export default function Stickies({ noteId, scrollRef, children, active = true })
               key={s.id} s={s}
               editing={editing === s.id}
               tearing={tearing === s.id}
+              pull={pull && pull.id === s.id ? pull.dx : null}
               onDown={(e) => startMove(e, s)}
               onDoubleClick={() => setEditing(s.id)}
               onPin={() => patch(s.id, { pinned: !s.pinned })}
-              onTear={() => tear(s.id)}
+              onTear={(e) => startTear(e, s)}
               onResize={(e) => startResize(e, s)}
               onDraw={(e, side) => startDraw(e, s, side)}
               onText={(v) => patch(s.id, { text: v }, 600)}

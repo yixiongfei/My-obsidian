@@ -87,7 +87,15 @@
 .sn:active { cursor: grabbing; }
 .sn.pinned { cursor: default; }
 .sn.editing { z-index: 6; box-shadow: var(--sn-shadow-up); }
-.sn.tearing { transform: translateY(18px) rotate(-5deg); opacity: 0; pointer-events: none; }
+/* 撕：以右上角为轴往左掀。拖的过程 transform 由 JS 逐帧给，这里只负责「松手弹回」的过渡，
+   以及撕到底之后那一下飞走 */
+.sn.tear-drag { transform-origin: 100% 0; transition: none; z-index: 7; cursor: grabbing; }
+.sn.tearing {
+  transform-origin: 100% 0;
+  transform: translateX(-96px) rotate(-19deg); opacity: 0;
+  pointer-events: none;
+  transition: transform 260ms var(--ease), opacity 260ms var(--ease);
+}
 
 .sn-body {
   position: absolute; inset: 0;
@@ -177,6 +185,9 @@
 .sn:hover .sn-tear { opacity: 0.8; }
 .sn-tear:hover { opacity: 1; }
 .sn-tear:hover::before { background: color-mix(in srgb, var(--sn-fold) 78%, var(--sn-ink)); }
+/* 鼠标压上去就提示这是个「拖」的把手，不是个删除按钮 */
+.sn-tear { cursor: grab; }
+.sn-tear:active { cursor: grabbing; }
 
 /* ── 放缩把手 ─────────────────────────────────────── */
 

@@ -6,6 +6,7 @@ import { handle, getMeta, setMeta } from './db.js';
 import { getExam, attemptsOf } from './exams.js';
 import { attemptOf as drillAttemptOf } from './drill.js';
 import { todayStr } from './review.js';
+import { reclaimTex } from './katex-tex.js';
 
 /**
  * 真题上的两种「留痕」：
@@ -161,8 +162,12 @@ const katexHtml = (node) => node.outerHTML.replace(/\s*\n\s*/g, ' ');
 
 /**
  * 尽力而为的 HTML → Markdown。
- * 公式没有 TeX 源（题源只给了 KaTeX 渲染后的 HTML），所以把 KaTeX 的 HTML 原样嵌进 Markdown：
- * 笔记渲染器开了 html，且页面本来就带 KaTeX 样式，错题本里的公式就和卷面 / 解析一模一样。
+ *
+ * 公式：题源只给了 KaTeX 渲染后的 HTML，没有 TeX 源。原样嵌 HTML 在本站没问题
+ * （页面自带 KaTeX 样式），但在 Obsidian 里那堆 span 没有样式，上下标靠绝对定位摞成一团。
+ * 所以先试着把 TeX 倒推回来写成 `$…$`——两边都是原生支持，还能直接改。
+ * 倒推必须经过校验（见 katex-tex.js），验不过就退回嵌 HTML，宁可难看也不能写错一个公式。
+ *
  * 只有英语完形的下划线空格另写成 ___7___。
  */
 function toMd(html, { examId, q } = {}) {
@@ -174,11 +179,16 @@ function toMd(html, { examId, q } = {}) {
     if (node.nodeType !== 1) return '';
     const tag = node.tagName.toLowerCase();
     const cls = node.classList;
-    if (cls?.contains('katex-display')) return `\n\n${katexHtml(node)}\n\n`;
+    if (cls?.contains('katex-display')) {
+      const got = reclaimTex(node.outerHTML, true);
+      return got ? `\n\n$$\n${got.tex}\n$$\n\n` : `\n\n${katexHtml(node)}\n\n`;
+    }
     if (cls?.contains('katex')) {
       const t = texText(node);
       // 英语题干里的空是 \underline{\quad}，渲染文本为空 → 写成下划线
       if (!t || node.querySelector('.mord.underline')) return t ? ` ___${t}___ ` : ' ______ ';
+      const got = reclaimTex(node.outerHTML, false);
+      if (got) return got.display ? `\n\n$$\n${got.tex}\n$$\n\n` : `$${got.tex}$`;
       return katexHtml(node);
     }
     if (cls?.contains('blank')) return ` ___${node.text.trim()}___ `;
