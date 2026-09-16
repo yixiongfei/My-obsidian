@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { api, vaultUrl } from '../api.js';
 import { renderSticky, SN_PLACEHOLDER } from '../sticky-text.js';
 import { anchorAt, pointOf, blockAnchorAt, blockPoint } from '../sticky-anchor.js';
+import { tearGeometry, dForGone, TEAR_THRESHOLD } from '../sticky-tear.js';
 
 /* ================================================================== *
  * 便利贴 —— 复习时贴在笔记旁边的纸片
@@ -103,24 +104,51 @@ function arrowPath(from, to) {
  * 一张纸片
  * ------------------------------------------------------------------ */
 
-/** 撕到这个距离就算撕下来了；没到就弹回去 */
-const TEAR_PULL = 84;
+/** 一小段 rAF 补间。撕页的形状每帧都要现算，CSS 过渡插不了这种非线性的量 */
+function tween(from, to, ms, ease, onFrame, onDone) {
+  const t0 = performance.now();
+  let raf = requestAnimationFrame(function step(now) {
+    const p = Math.min(1, (now - t0) / ms);
+    const e = ease(p);
+    onFrame({ x: from.x + (to.x - from.x) * e, y: from.y + (to.y - from.y) * e }, p);
+    if (p < 1) raf = requestAnimationFrame(step);
+    else onDone?.();
+  });
+  return () => cancelAnimationFrame(raf);
+}
+const easeOut = (p) => 1 - (1 - p) ** 3;
+const easeIn = (p) => p * p;
 
-/** 撕口：右边缘拉出一排锯齿，进度越大牙越深。纸是撕开的，不是被裁刀切的 */
-function tornEdge(h, progress) {
-  if (progress <= 0) return undefined;
-  const teeth = Math.max(4, Math.round(h / 16));
-  const depth = 3 + progress * 7;
-  const pts = ['0% 0%'];
-  for (let i = 0; i <= teeth; i++) {
-    const y = (i / teeth) * 100;
-    pts.push(`calc(100% - ${i % 2 ? depth : 0}px) ${y}%`);
-  }
-  pts.push('0% 100%');
-  return `polygon(${pts.join(', ')})`;
+/**
+ * 翻起来那片纸。
+ *
+ * 它必须是 .sn 的**兄弟**而不是孩子——.sn 被 contentPath 裁着，
+ * 而这片纸按定义就在裁剪区之外，放进去会被一起裁掉。
+ */
+function DogEar({ id, s, geo, fade }) {
+  if (!geo) return null;
+  const gid = `sn-dogear-${id}`;
+  const mid = { x: (geo.crease[0].x + geo.crease[1].x) / 2, y: (geo.crease[0].y + geo.crease[1].y) / 2 };
+  return (
+    <svg
+      className={`sn-dogear c-${s.color}`} aria-hidden="true"
+      style={{ left: s.x, top: s.y, width: s.w, height: s.h, opacity: fade }}
+    >
+      <defs>
+        {/* 折痕处迎光最亮，越往纸尖越暗——立体感全在这一条渐变上 */}
+        <linearGradient id={gid} gradientUnits="userSpaceOnUse"
+                        x1={mid.x} y1={mid.y} x2={geo.tip.x} y2={geo.tip.y}>
+          <stop offset="0" stopColor="var(--sn-back-lit)" />
+          <stop offset="0.55" stopColor="var(--sn-back)" />
+          <stop offset="1" stopColor="var(--sn-back-deep)" />
+        </linearGradient>
+      </defs>
+      <path d={geo.dogEar} fill={`url(#${gid})`} />
+    </svg>
+  );
 }
 
-function Sticky({ s, editing, onDown, onDoubleClick, onPin, onTear, onResize, onDraw, onText, onEditEnd, onOver, tearing, pull }) {
+function Sticky({ s, editing, onDown, onDoubleClick, onPin, onTear, onResize, onDraw, onText, onEditEnd, onOver, tear }) {
   const bodyRef = useRef(null);
   const taRef = useRef(null);
   const [over, setOver] = useState(false);
@@ -141,20 +169,21 @@ function Sticky({ s, editing, onDown, onDoubleClick, onPin, onTear, onResize, on
     if (editing) taRef.current?.focus({ preventScroll: true });
   }, [editing]);
 
-  // 撕的过程：以右上角为轴往左掀，越拖越斜、越淡，右边裂口越大
-  const t = Math.min(1, Math.max(0, -(pull ?? 0) / TEAR_PULL));
-  const dragging = pull != null;
+  /* 撕页：整张纸的形状由一个点 D 推出来（见 sticky-tear.js）。
+     这里只做两件事——把还留着的那半当 clip-path 扣在自己身上，
+     把翻过去那半交给兄弟节点 DogEar 去画 */
+  const geo = tear ? tearGeometry(s.w, s.h, tear.d) : null;
+  const torn = !!geo;
 
   return (
+  <>
     <div
-      className={`sn c-${s.color}${s.pinned ? ' pinned' : ''}${editing ? ' editing' : ''}`
-        + `${tearing ? ' tearing' : ''}${dragging ? ' tear-drag' : ''}`}
+      className={`sn c-${s.color}${s.pinned ? ' pinned' : ''}${editing ? ' editing' : ''}${torn ? ' tearing' : ''}`}
       style={{
         left: s.x, top: s.y, width: s.w, height: s.h,
-        ...(dragging ? {
-          transform: `translateX(${pull * 0.55}px) rotate(${-t * 11}deg)`,
-          opacity: 1 - t * 0.35,
-          clipPath: tornEdge(s.h, t),
+        ...(torn ? {
+          clipPath: geo.content ? `path('${geo.content}')` : 'path(\'M0 0Z\')',
+          opacity: tear.fade,
         } : null),
       }}
       onPointerDown={onDown}
@@ -219,6 +248,8 @@ function Sticky({ s, editing, onDown, onDoubleClick, onPin, onTear, onResize, on
         />
       ))}
     </div>
+    <DogEar id={s.id} s={s} geo={geo} fade={tear ? tear.fade : 1} />
+  </>
   );
 }
 
@@ -239,8 +270,8 @@ export default function Stickies({ noteId, scrollRef, children, active = true })
   const [editing, setEditing] = useState(null);
   const [expanded, setExpanded] = useState(null);
   const [selArrow, setSelArrow] = useState(null);
-  const [tearing, setTearing] = useState(null);
-  const [pull, setPull] = useState(null);      // 正在往左撕的那张：{ id, dx }
+  const [tear, setTear] = useState(null);      // 正在撕的那张：{ id, d:{x,y}, fade }
+  const stopTear = useRef(null);               // 取消正在跑的补间
   const [dropping, setDropping] = useState(false);
   const [busy, setBusy] = useState(false);
   const [tick, setTick] = useState(0);
@@ -289,22 +320,27 @@ export default function Stickies({ noteId, scrollRef, children, active = true })
   useLayoutEffect(() => {
     const host = hostRef.current;
     if (!host) return undefined;
-    /* 正文栏封在 900px 里，但它所在的那一格往往宽得多（1600px 窗口下有三百多像素富余）。
-       把这段留白量出来借给纸片场，便利贴就能贴在正文**旁边**，而不是只能压在字上。
-       量的是 grid 解析后的真实列宽，比自己按 padding、gap 推算靠得住。 */
+    /* 纸片场能有多宽。
+       正文栏封在 900px 里，但页面给它的地方宽得多：左边是正文栏自己的留白，
+       右边还整整一栏目录——那栏除了顶上几行链接，底下全是空的。两边分开量，
+       量到容器**内容区**的边缘为止（不含 padding），所以永远不会撑出横向滚动条。 */
     const fit = () => {
-      let out = 0;
+      let l = 0;
+      let r = 0;
+      const box = host.getBoundingClientRect();
       const inner = host.closest('.reader-inner');
       const paper = host.closest('.readmode-paper');
-      if (inner) {
-        const col = parseFloat(getComputedStyle(inner).gridTemplateColumns.split(' ')[0]);
-        if (Number.isFinite(col)) out = Math.max(0, Math.floor((col - host.clientWidth) / 2));
-      } else if (paper) {
-        // 阅读模式：那张素白纸左右各有近百像素的天地，纸片正好贴在页边空白上
-        const pad = parseFloat(getComputedStyle(paper).paddingRight);
-        if (Number.isFinite(pad)) out = Math.max(0, Math.floor(pad) - 12);
+      const field = inner || paper;
+      if (field) {
+        const cs = getComputedStyle(field);
+        const fb = field.getBoundingClientRect();
+        // 阅读模式那张素白纸留 12px 不占，免得纸片压在纸的边线上
+        const keep = paper ? 12 : 0;
+        l = Math.max(0, Math.floor(box.left - (fb.left + parseFloat(cs.paddingLeft) + keep)));
+        r = Math.max(0, Math.floor((fb.right - parseFloat(cs.paddingRight) - keep) - box.right));
       }
-      host.style.setProperty('--sn-out', `${out}px`);
+      host.style.setProperty('--sn-out-l', `${l}px`);
+      host.style.setProperty('--sn-out-r', `${r}px`);
     };
     const bump = () => { fit(); setTick((t) => t + 1); };
     fit();
@@ -369,6 +405,14 @@ export default function Stickies({ noteId, scrollRef, children, active = true })
     const top = sc ? Math.max(0, sc.top - rect.top) : 0;
     let x = Math.max(0, rect.width - w - 8);
     let y = top + 72;
+    /* 右边那片空白的上半截是目录。默认别一上来就压住它——那是导航，
+       盖住了得先拖开才能用。目录下面的一整片才是真正没人要的地方 */
+    const toc = hostRef.current?.closest('.reader-inner')?.querySelector('.toc');
+    if (toc) {
+      const t = toc.getBoundingClientRect();
+      const tx = t.left - rect.left;
+      if (x + w > tx && y < t.bottom - rect.top) y = Math.max(y, t.bottom - rect.top + 16);
+    }
     for (let i = 0; i < 60; i++) {
       const hit = placed.some((s) => Math.abs(s.x - x) < w * 0.5 && Math.abs(s.y - y) < h * 0.5);
       if (!hit) break;
@@ -558,36 +602,64 @@ export default function Stickies({ noteId, scrollRef, children, active = true })
     });
   };
 
-  const tear = (id) => {
+  /** 真的把它拿掉（撕页动画放完之后才调） */
+  const drop = (id) => {
     const p = pending.current.get(id);
     if (p) { clearTimeout(p.timer); pending.current.delete(id); }
-    setPull(null);
-    setTearing(id);
+    setTear(null);
+    setItems((l) => l.filter((s) => s.id !== id));
     api.removeSticky(id).catch(() => {});
-    setTimeout(() => {
-      setItems((l) => l.filter((s) => s.id !== id));
-      setTearing(null);
-    }, 260);
   };
 
   /**
-   * 撕：按住右上角的翘角**往左拖**，拖够 TEAR_PULL 才算撕下来，没拖够就弹回去。
-   * 点一下就删太轻了——便利贴上写的是自己想明白的过程，误删一张没地方找回来。
-   * 拖这个动作本身也在说明这是什么：纸被从右上角掀起、撕口张开、越来越斜。
+   * 撕：按住右上角的翘角**往左拖**。
+   *
+   * 手指的位置就是几何模型里的 D——纸沿着 CD 的垂直平分线折起来，折痕、翘角、
+   * 阴影、渐变全是从 D 现算出来的（sticky-tear.js）。拖过 45% 松手才真撕下来，
+   * 没拖够就卷回去。点一下就删太轻了：纸片上写的是自己想明白的过程，误删没处找。
    */
   const startTear = (e, s) => {
     e.preventDefault();
     e.stopPropagation();
     setSelArrow(null);
-    let dx = 0;
+    stopTear.current?.();
+    const C = { x: s.w, y: 0 };
+    const cap = Math.hypot(s.w, s.h) * 1.15;
+    let d = { x: C.x, y: C.y };
+    let progress = 0;
+
     drag(e, {
-      onMove: (mx) => { dx = Math.min(0, mx); setPull({ id: s.id, dx }); },
+      onMove: (mx, my) => {
+        // 只往左撕：方向是教过的，也让手势可预期；上下随手指
+        let vx = Math.min(0, mx);
+        let vy = my;
+        const L = Math.hypot(vx, vy);
+        if (L > cap) { vx *= cap / L; vy *= cap / L; }
+        d = { x: C.x + vx, y: C.y + vy };
+        progress = tearGeometry(s.w, s.h, d)?.progress ?? 0;
+        setTear({ id: s.id, d, fade: 1 });
+      },
       onUp: () => {
-        if (-dx >= TEAR_PULL) tear(s.id);
-        else setPull(null);            // 弹回原位，靠 CSS 过渡
+        if (progress >= TEAR_THRESHOLD) {
+          // 撕到底：让 D 一路走到「整张翻完」的位置，纸会自己卷着飞走
+          const dir = { x: d.x - C.x, y: d.y - C.y };
+          const end = dForGone(s.w, s.h, dir.x || dir.y ? dir : { x: -1, y: 0.3 });
+          stopTear.current = tween(d, end, 340, easeIn,
+            (p, k) => setTear({ id: s.id, d: p, fade: k > 0.72 ? 1 - (k - 0.72) / 0.28 : 1 }),
+            () => drop(s.id));
+        } else if (progress > 0) {
+          stopTear.current = tween(d, C, 260, easeOut,
+            (p) => setTear({ id: s.id, d: p, fade: 1 }),
+            () => setTear(null));
+        } else {
+          setTear(null);
+        }
       },
     });
   };
+
+  // 换笔记 / 卸载时别留下跑着的补间
+  useEffect(() => () => stopTear.current?.(), [noteId]);
 
   /* ---- 拉箭头 ---- */
   const startDraw = (e, s, side) => {
@@ -687,8 +759,7 @@ export default function Stickies({ noteId, scrollRef, children, active = true })
             <Sticky
               key={s.id} s={s}
               editing={editing === s.id}
-              tearing={tearing === s.id}
-              pull={pull && pull.id === s.id ? pull.dx : null}
+              tear={tear && tear.id === s.id ? tear : null}
               onDown={(e) => startMove(e, s)}
               onDoubleClick={() => setEditing(s.id)}
               onPin={() => patch(s.id, { pinned: !s.pinned })}

@@ -17,6 +17,13 @@
   --sn-r-bg: #F2B2AC; --sn-r-ink: #3B1511; --sn-r-line: #BC4C3C; --sn-r-fold: #DE9C95;
   --sn-shadow: 0 2px 10px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 0, 0, 0.3);
   --sn-shadow-up: 0 8px 24px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 0, 0, 0.35);
+
+  /* 纸的**背面**：翻起来那片露出的是它。三档——折痕处迎光最亮，中段本色，纸尖背光最暗。
+     立体感就来自这一条渐变，不是来自阴影 */
+  --sn-y-lit: #E9CD78; --sn-y-back: #D6B85F; --sn-y-deep: #B0913F;
+  --sn-b-lit: #B3CFEC; --sn-b-back: #9FBEDC; --sn-b-deep: #7E9DBD;
+  --sn-g-lit: #A1D5AE; --sn-g-back: #8FC49C; --sn-g-deep: #6FA37D;
+  --sn-r-lit: #E7A7A1; --sn-r-back: #D6968F; --sn-r-deep: #B2736C;
 }
 
 :root[data-theme='light'] {
@@ -26,12 +33,17 @@
   --sn-r-bg: #F6C0BA; --sn-r-ink: #3E1713; --sn-r-line: #B34637; --sn-r-fold: #E5A9A2;
   --sn-shadow: 0 1px 6px rgba(16, 20, 28, 0.16), 0 0 0 1px rgba(16, 20, 28, 0.06);
   --sn-shadow-up: 0 6px 18px rgba(16, 20, 28, 0.22), 0 0 0 1px rgba(16, 20, 28, 0.08);
+
+  --sn-y-lit: #F0D27E; --sn-y-back: #DEBE66; --sn-y-deep: #B99945;
+  --sn-b-lit: #BCD5EF; --sn-b-back: #A8C5E0; --sn-b-deep: #88A5C2;
+  --sn-g-lit: #ABDCB8; --sn-g-back: #99CBA6; --sn-g-deep: #79AA86;
+  --sn-r-lit: #EFB3AD; --sn-r-back: #DEA29B; --sn-r-deep: #BA7F78;
 }
 
-.sn.c-y, .sn-full.c-y, .sn-chip.c-y, .sn-swatch.c-y, .sn-ghost.c-y { --sn-bg: var(--sn-y-bg); --sn-ink: var(--sn-y-ink); --sn-line: var(--sn-y-line); --sn-fold: var(--sn-y-fold); }
-.sn.c-b, .sn-full.c-b, .sn-chip.c-b, .sn-swatch.c-b, .sn-ghost.c-b { --sn-bg: var(--sn-b-bg); --sn-ink: var(--sn-b-ink); --sn-line: var(--sn-b-line); --sn-fold: var(--sn-b-fold); }
-.sn.c-g, .sn-full.c-g, .sn-chip.c-g, .sn-swatch.c-g, .sn-ghost.c-g { --sn-bg: var(--sn-g-bg); --sn-ink: var(--sn-g-ink); --sn-line: var(--sn-g-line); --sn-fold: var(--sn-g-fold); }
-.sn.c-r, .sn-full.c-r, .sn-chip.c-r, .sn-swatch.c-r, .sn-ghost.c-r { --sn-bg: var(--sn-r-bg); --sn-ink: var(--sn-r-ink); --sn-line: var(--sn-r-line); --sn-fold: var(--sn-r-fold); }
+.sn.c-y, .sn-full.c-y, .sn-chip.c-y, .sn-swatch.c-y, .sn-ghost.c-y, .sn-dogear.c-y { --sn-bg: var(--sn-y-bg); --sn-ink: var(--sn-y-ink); --sn-line: var(--sn-y-line); --sn-fold: var(--sn-y-fold); --sn-back-lit: var(--sn-y-lit); --sn-back: var(--sn-y-back); --sn-back-deep: var(--sn-y-deep); }
+.sn.c-b, .sn-full.c-b, .sn-chip.c-b, .sn-swatch.c-b, .sn-ghost.c-b, .sn-dogear.c-b { --sn-bg: var(--sn-b-bg); --sn-ink: var(--sn-b-ink); --sn-line: var(--sn-b-line); --sn-fold: var(--sn-b-fold); --sn-back-lit: var(--sn-b-lit); --sn-back: var(--sn-b-back); --sn-back-deep: var(--sn-b-deep); }
+.sn.c-g, .sn-full.c-g, .sn-chip.c-g, .sn-swatch.c-g, .sn-ghost.c-g, .sn-dogear.c-g { --sn-bg: var(--sn-g-bg); --sn-ink: var(--sn-g-ink); --sn-line: var(--sn-g-line); --sn-fold: var(--sn-g-fold); --sn-back-lit: var(--sn-g-lit); --sn-back: var(--sn-g-back); --sn-back-deep: var(--sn-g-deep); }
+.sn.c-r, .sn-full.c-r, .sn-chip.c-r, .sn-swatch.c-r, .sn-ghost.c-r, .sn-dogear.c-r { --sn-bg: var(--sn-r-bg); --sn-ink: var(--sn-r-ink); --sn-line: var(--sn-r-line); --sn-fold: var(--sn-r-fold); --sn-back-lit: var(--sn-r-lit); --sn-back: var(--sn-r-back); --sn-back-deep: var(--sn-r-deep); }
 
 /* ── 图层 ─────────────────────────────────────────── */
 
@@ -46,12 +58,15 @@
   pointer-events: none;
 }
 
-/* 纸片场比正文栏宽：--sn-out 是图层从两侧留白里借到的宽度，由 JS 按真实列宽算出来 */
+/* 纸片场比正文栏宽。左右分开算：右边还有目录那一整栏的空白可以用，
+   左右两个量由 JS 按容器的真实内容区算出来（见 Stickies.jsx 的 fit） */
 .sn-layer {
   position: absolute; top: 0; bottom: 0;
-  left: calc(-1 * var(--sn-out, 0px)); right: calc(-1 * var(--sn-out, 0px));
+  left: calc(-1 * var(--sn-out-l, 0px)); right: calc(-1 * var(--sn-out-r, 0px));
   z-index: 5; pointer-events: none;
 }
+/* 纸片盖到目录栏上时，就是盖住——和它盖住正文是一个道理，纸本来就是覆盖物。
+   反过来让目录浮在纸面上，字会透出来，连纸角都点不着 */
 /* 拉箭头时纸片让开鼠标，否则 elementFromPoint 摸到的永远是纸片自己 */
 .sn-layer.drawing .sn { pointer-events: none; }
 
@@ -87,15 +102,26 @@
 .sn:active { cursor: grabbing; }
 .sn.pinned { cursor: default; }
 .sn.editing { z-index: 6; box-shadow: var(--sn-shadow-up); }
-/* 撕：以右上角为轴往左掀。拖的过程 transform 由 JS 逐帧给，这里只负责「松手弹回」的过渡，
-   以及撕到底之后那一下飞走 */
-.sn.tear-drag { transform-origin: 100% 0; transition: none; z-index: 7; cursor: grabbing; }
+/* 撕页中：形状每帧由 JS 现算成 clip-path，过渡会跟它打架，关掉。
+   阴影也一并去掉——纸已经被裁成不规则形状，矩形投影会露馅，
+   立体感改由翻起那片自己的投影来给 */
 .sn.tearing {
-  transform-origin: 100% 0;
-  transform: translateX(-96px) rotate(-19deg); opacity: 0;
+  transition: none;
+  box-shadow: none;
+  z-index: 7;
   pointer-events: none;
-  transition: transform 260ms var(--ease), opacity 260ms var(--ease);
 }
+
+/* 翻起来的那片纸。必须是 .sn 的兄弟：.sn 被 contentPath 裁着，这片按定义在裁剪区之外 */
+.sn-dogear {
+  position: absolute;
+  z-index: 8;
+  overflow: visible;           /* 纸尖会甩出纸片原来的框 */
+  pointer-events: none;
+  /* 投在下面正文上的影子。跟着路径走，所以折痕处贴得紧、纸尖处飘起来 */
+  filter: drop-shadow(-2px 3px 5px rgba(0, 0, 0, 0.32));
+}
+:root[data-theme='light'] .sn-dogear { filter: drop-shadow(-2px 3px 5px rgba(16, 20, 28, 0.24)); }
 
 .sn-body {
   position: absolute; inset: 0;
