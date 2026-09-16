@@ -58,6 +58,16 @@ export const api = {
   drill: (group, tag) => j(`/api/exams/drill/${encodeURIComponent(group)}?tag=${encodeURIComponent(tag)}`),
   drillAnswer: (exam, section, n, answer) => j('/api/exams/drill/answer', body('POST', { exam, section, n, answer })),
   drillReset: (exam, section, n) => j('/api/exams/drill/reset', body('POST', { exam, section, n })),
+  // 便利贴：贴在笔记正文上的纸片
+  stickies: (path) => j(`/api/stickies?path=${encodeURIComponent(path)}`),
+  addSticky: (payload) => j('/api/stickies', body('POST', payload)),
+  patchSticky: (id, patch) => j(`/api/stickies/${id}`, body('PATCH', patch)),
+  removeSticky: (id) => j(`/api/stickies/${id}`, { method: 'DELETE' }),
+  // 贴图走裸流，别让 JSON 体积限制和 base64 编码挡在截图和纸片之间
+  uploadStickyMedia: (file) =>
+    j(`/api/stickies/media?name=${encodeURIComponent(file.name || 'paste.png')}&mime=${encodeURIComponent(file.type || '')}`,
+      { method: 'POST', headers: { 'Content-Type': 'application/octet-stream' }, body: file }),
+
   year: (y) => j(`/api/schedule/year/${y}`),
   month: (m) => j(`/api/schedule/month/${m}`),
   day: (d) => j(`/api/schedule/day/${d}`),

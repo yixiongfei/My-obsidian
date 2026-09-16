@@ -20,6 +20,7 @@ import * as exams from './lib/exams.js';
 import * as marks from './lib/vocab-marks.js';
 import * as drill from './lib/drill.js';
 import * as examMarks from './lib/exam-marks.js';
+import * as stickies from './lib/stickies.js';
 import * as tts from './lib/tts.js';
 
 const app = express();
@@ -337,6 +338,24 @@ app.delete('/api/schedule/event/:id', wrap(async (req, res) => {
   broadcast({ type: 'schedule' });
   res.json(out);
 }));
+
+/* ------------------------------------------------------------------ *
+ * 便利贴：贴在笔记正文上的纸片
+ * ------------------------------------------------------------------ */
+
+app.get('/api/stickies', (req, res) => res.json(stickies.list(String(req.query.path || ''))));
+app.post('/api/stickies', (req, res) => res.json(stickies.create(String(req.body?.path || ''), req.body || {})));
+app.patch('/api/stickies/:id', (req, res) => res.json(stickies.update(Number(req.params.id), req.body || {})));
+app.delete('/api/stickies/:id', (req, res) => res.json(stickies.remove(Number(req.params.id))));
+
+/* 贴图：截图、拖进来的图片、PDF。
+   走 application/octet-stream 裸流而不是 base64——全局那个 express.json 只有 256kb，
+   而 base64 还要再胖三分之一，一张 4K 截图光编码就白烧几十毫秒。文件名和类型走查询串。 */
+app.post('/api/stickies/media',
+  express.raw({ type: () => true, limit: '24mb' }),
+  wrap(async (req, res) => {
+    res.json(await stickies.saveMedia(req.body, String(req.query.name || ''), String(req.query.mime || req.headers['content-type'] || '')));
+  }));
 
 /* ------------------------------------------------------------------ *
  * 仓库内的静态资源（图片）

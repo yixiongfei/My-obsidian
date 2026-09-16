@@ -1,0 +1,308 @@
+/* ==================================================================
+ * 便利贴
+ *
+ * 整站的质感规矩是「无渐变、无阴影，层级只靠亮度与线重」。便利贴是这条规矩里
+ * 唯一的例外，而且只破一条：投影。原因不是好看——纸片压在正文上，没有那一层
+ * 2px 的暗边就分不清「纸」和「被纸盖住的字」，投影在这里是**功能**。
+ * 渐变、纹理一概没有：纸片是一块实色。
+ *
+ * 颜色即语义：黄 疑问 / 蓝 推导 / 绿 结论 / 红 易错。四种纸都用深墨写字，
+ * 对比度都在 10:1 以上——纸片常常压在正文上，读不动就白贴。
+ * ================================================================== */
+
+:root[data-theme='dark'] {
+  --sn-y-bg: #F0D67A; --sn-y-ink: #2C2206; --sn-y-line: #A8811A; --sn-y-fold: #D7BC62;
+  --sn-b-bg: #BAD8F6; --sn-b-ink: #13243C; --sn-b-line: #3A72B8; --sn-b-fold: #A2C3E6;
+  --sn-g-bg: #A9DEB6; --sn-g-ink: #102A19; --sn-g-line: #2C8650; --sn-g-fold: #92CB9F;
+  --sn-r-bg: #F2B2AC; --sn-r-ink: #3B1511; --sn-r-line: #BC4C3C; --sn-r-fold: #DE9C95;
+  --sn-shadow: 0 2px 10px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(0, 0, 0, 0.3);
+  --sn-shadow-up: 0 8px 24px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(0, 0, 0, 0.35);
+}
+
+:root[data-theme='light'] {
+  --sn-y-bg: #F7DE8B; --sn-y-ink: #33280A; --sn-y-line: #9C7714; --sn-y-fold: #E4C86E;
+  --sn-b-bg: #C8DFF8; --sn-b-ink: #14263E; --sn-b-line: #3568AC; --sn-b-fold: #AEC9E8;
+  --sn-g-bg: #BBE5C5; --sn-g-ink: #123019; --sn-g-line: #297B49; --sn-g-fold: #A2D2AE;
+  --sn-r-bg: #F6C0BA; --sn-r-ink: #3E1713; --sn-r-line: #B34637; --sn-r-fold: #E5A9A2;
+  --sn-shadow: 0 1px 6px rgba(16, 20, 28, 0.16), 0 0 0 1px rgba(16, 20, 28, 0.06);
+  --sn-shadow-up: 0 6px 18px rgba(16, 20, 28, 0.22), 0 0 0 1px rgba(16, 20, 28, 0.08);
+}
+
+.sn.c-y, .sn-full.c-y, .sn-chip.c-y, .sn-swatch.c-y, .sn-ghost.c-y { --sn-bg: var(--sn-y-bg); --sn-ink: var(--sn-y-ink); --sn-line: var(--sn-y-line); --sn-fold: var(--sn-y-fold); }
+.sn.c-b, .sn-full.c-b, .sn-chip.c-b, .sn-swatch.c-b, .sn-ghost.c-b { --sn-bg: var(--sn-b-bg); --sn-ink: var(--sn-b-ink); --sn-line: var(--sn-b-line); --sn-fold: var(--sn-b-fold); }
+.sn.c-g, .sn-full.c-g, .sn-chip.c-g, .sn-swatch.c-g, .sn-ghost.c-g { --sn-bg: var(--sn-g-bg); --sn-ink: var(--sn-g-ink); --sn-line: var(--sn-g-line); --sn-fold: var(--sn-g-fold); }
+.sn.c-r, .sn-full.c-r, .sn-chip.c-r, .sn-swatch.c-r, .sn-ghost.c-r { --sn-bg: var(--sn-r-bg); --sn-ink: var(--sn-r-ink); --sn-line: var(--sn-r-line); --sn-fold: var(--sn-r-fold); }
+
+/* ── 图层 ─────────────────────────────────────────── */
+
+.sn-host { position: relative; }
+.sn-host.dropping::after {
+  content: '松手，做成便利贴';
+  position: absolute; inset: -8px; z-index: 8;
+  display: grid; place-items: center;
+  border: 1px dashed var(--accent); border-radius: var(--radius);
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  color: var(--accent); font-size: 12px; letter-spacing: 0.14em;
+  pointer-events: none;
+}
+
+/* 纸片场比正文栏宽：--sn-out 是图层从两侧留白里借到的宽度，由 JS 按真实列宽算出来 */
+.sn-layer {
+  position: absolute; top: 0; bottom: 0;
+  left: calc(-1 * var(--sn-out, 0px)); right: calc(-1 * var(--sn-out, 0px));
+  z-index: 5; pointer-events: none;
+}
+/* 拉箭头时纸片让开鼠标，否则 elementFromPoint 摸到的永远是纸片自己 */
+.sn-layer.drawing .sn { pointer-events: none; }
+
+.sn-wires { position: absolute; left: 0; top: 0; overflow: visible; }
+.sn-wire .line, .sn-wire .head {
+  fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+  stroke: var(--sn-line);
+}
+.sn-wire.c-y { --sn-line: var(--sn-y-line); }
+.sn-wire.c-b { --sn-line: var(--sn-b-line); }
+.sn-wire.c-g { --sn-line: var(--sn-g-line); }
+.sn-wire.c-r { --sn-line: var(--sn-r-line); }
+.sn-wire .hit { fill: none; stroke: transparent; stroke-width: 14; pointer-events: stroke; cursor: pointer; }
+.sn-wire:hover .line, .sn-wire:hover .head { stroke-width: 2.1; }
+.sn-wire.on .line, .sn-wire.on .head { stroke-width: 2.4; }
+.sn-wire.ghost .line, .sn-wire.ghost .head { stroke-dasharray: 5 4; opacity: 0.75; }
+.sn-wire-x { pointer-events: auto; cursor: pointer; }
+.sn-wire-x circle { fill: var(--bg-1); stroke: var(--sn-line); stroke-width: 1.2; }
+.sn-wire-x path { stroke: var(--sn-line); stroke-width: 1.4; stroke-linecap: round; fill: none; }
+
+/* ── 纸片本体 ─────────────────────────────────────── */
+
+.sn {
+  position: absolute; z-index: 2;
+  pointer-events: auto;
+  background: var(--sn-bg); color: var(--sn-ink);
+  border-radius: 2px;
+  box-shadow: var(--sn-shadow);
+  cursor: grab;
+  transition: box-shadow var(--dur-1) var(--ease), transform var(--dur-2) var(--ease), opacity var(--dur-2) var(--ease);
+}
+.sn:hover { box-shadow: var(--sn-shadow-up); z-index: 4; }
+.sn:active { cursor: grabbing; }
+.sn.pinned { cursor: default; }
+.sn.editing { z-index: 6; box-shadow: var(--sn-shadow-up); }
+.sn.tearing { transform: translateY(18px) rotate(-5deg); opacity: 0; pointer-events: none; }
+
+.sn-body {
+  position: absolute; inset: 0;
+  padding: 19px 12px 11px 12px;
+  overflow: hidden;
+}
+
+.sn-rich { font-family: var(--font); font-size: 12.5px; line-height: 1.66; }
+.sn-rich p { margin: 0 0 5px; }
+.sn-rich p:last-child { margin-bottom: 0; }
+.sn-rich b { font-weight: 700; }
+.sn-rich ul { margin: 0; padding-left: 14px; list-style: none; }
+.sn-rich li { margin: 0 0 4px; position: relative; }
+.sn-rich li::before {
+  content: ''; position: absolute; left: -10px; top: 0.62em;
+  width: 3px; height: 3px; border-radius: 3px; background: currentColor; opacity: 0.55;
+}
+.sn-rich .sn-h {
+  font-weight: 700; letter-spacing: 0.02em; margin: 0 0 6px;
+  padding-bottom: 4px; border-bottom: 1px solid color-mix(in srgb, var(--sn-ink) 22%, transparent);
+}
+.sn-rich .katex { font-size: 1em; color: inherit; }
+.sn-rich .katex-display { margin: 6px 0; }
+.sn-empty { opacity: 0.42; font-style: normal; }
+
+.sn-img { display: block; width: 100%; height: 100%; object-fit: contain; }
+/* 正文里的图夜里会被反相以融进暗底；贴上来的截图是证据，一个像素都不许改 */
+:root[data-theme='dark'] .sn-img, :root[data-theme='light'] .sn-img,
+:root[data-theme='dark'] .sn-full-img, :root[data-theme='light'] .sn-full-img {
+  filter: none; mix-blend-mode: normal; background: transparent;
+}
+.sn-pdf { display: block; width: 100%; height: 100%; border: none; background: #fff; border-radius: 1px; }
+
+/* 改字：盖在正文上，字号行距跟渲染态一模一样，切换时不跳 */
+.sn-edit {
+  position: absolute; inset: 0;
+  padding: 19px 12px 11px 12px;
+  border: none; outline: none; resize: none;
+  background: var(--sn-bg); color: var(--sn-ink);
+  font-family: var(--font); font-size: 12.5px; line-height: 1.66;
+  border-radius: 2px;
+}
+.sn-edit::placeholder { color: color-mix(in srgb, var(--sn-ink) 38%, transparent); }
+
+/* ── 图钉 ─────────────────────────────────────────── */
+
+.sn-pin {
+  position: absolute; left: 4px; top: 3px; z-index: 3;
+  width: 17px; height: 17px; display: grid; place-items: center;
+  color: var(--sn-line);
+  opacity: 0.3; transform: rotate(-26deg);
+  transition: opacity var(--dur-1) var(--ease), transform var(--dur-2) var(--ease);
+}
+.sn:hover .sn-pin { opacity: 0.6; }
+.sn-pin:hover { opacity: 0.95; }
+.sn-pin .pin-head { fill: currentColor; }
+.sn-pin .pin-needle { stroke: currentColor; stroke-width: 1.3; stroke-linecap: round; }
+.sn-pin .pin-spark { fill: #fff; opacity: 0.5; }
+/* 按下去了：针直了、亮了。整张纸再收一道极淡的内描边——「这张钉死了」
+   要一眼认出来，但不该比纸上的字更抢眼，所以是描边而不是角标 */
+.sn.pinned .sn-pin { opacity: 1; transform: none; }
+.sn.pinned {
+  outline: 1px solid color-mix(in srgb, var(--sn-ink) 15%, transparent);
+  outline-offset: -1px;
+}
+
+/* ── 撕角：拔了图钉才露出来 ───────────────────────── */
+
+.sn-tear {
+  position: absolute; right: 0; top: 0; z-index: 3;
+  width: 20px; height: 20px;
+  opacity: 0; transition: opacity var(--dur-1) var(--ease);
+  cursor: pointer;
+}
+.sn-tear::before {
+  content: ''; position: absolute; inset: 0;
+  background: var(--sn-fold);
+  clip-path: polygon(100% 0, 0 0, 100% 100%);
+  border-top-right-radius: 2px;
+}
+/* 斜边上的那道折痕，让它看着像「掀起来的一角」而不是一块色斑 */
+.sn-tear::after {
+  content: ''; position: absolute; left: 0; top: 0;
+  width: 28px; height: 1px; background: var(--sn-ink); opacity: 0.38;
+  transform: rotate(45deg); transform-origin: left top;
+}
+.sn:hover .sn-tear { opacity: 0.8; }
+.sn-tear:hover { opacity: 1; }
+.sn-tear:hover::before { background: color-mix(in srgb, var(--sn-fold) 78%, var(--sn-ink)); }
+
+/* ── 放缩把手 ─────────────────────────────────────── */
+
+.sn-grip {
+  position: absolute; right: 0; bottom: 0; z-index: 3;
+  width: 14px; height: 14px; cursor: nwse-resize;
+  opacity: 0; transition: opacity var(--dur-1) var(--ease);
+}
+.sn-grip::before, .sn-grip::after {
+  content: ''; position: absolute; right: 2px;
+  height: 1px; background: var(--sn-ink); opacity: 0.45;
+  transform: rotate(-45deg); transform-origin: right center;
+}
+.sn-grip::before { bottom: 4px; width: 8px; }
+.sn-grip::after  { bottom: 8px; width: 4px; }
+.sn:hover .sn-grip { opacity: 0.8; }
+
+/* ── 边中点：从这儿拉箭头 ─────────────────────────── */
+
+.sn-hand {
+  position: absolute; z-index: 3;
+  width: 9px; height: 9px; border-radius: 50%;
+  background: var(--sn-bg); border: 1.5px solid var(--sn-line);
+  opacity: 0; cursor: crosshair;
+  transition: opacity var(--dur-1) var(--ease), transform var(--dur-1) var(--ease);
+}
+.sn:hover .sn-hand { opacity: 0.9; }
+.sn-hand:hover { opacity: 1; transform: scale(1.35); }
+.h-t { left: 50%; top: -5px;    margin-left: -4.5px; }
+.h-b { left: 50%; bottom: -5px; margin-left: -4.5px; }
+.h-l { top: 50%; left: -5px;    margin-top: -4.5px; }
+.h-r { top: 50%; right: -5px;   margin-top: -4.5px; }
+
+.sn-more {
+  position: absolute; right: 4px; bottom: 2px;
+  font-size: 10px; opacity: 0.4; pointer-events: none;
+}
+.sn:hover .sn-more { opacity: 0.75; }
+
+/* ── 取纸台 ───────────────────────────────────────── */
+
+.sn-dock {
+  position: fixed; right: 16px; bottom: 16px; z-index: 60;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 5px;
+  padding: 8px 8px 9px; border-radius: var(--radius);
+  border: var(--hair) solid var(--line);
+  background: color-mix(in srgb, var(--bg-1) 88%, transparent);
+  backdrop-filter: blur(6px);
+  opacity: 0.55; transition: opacity var(--dur-2) var(--ease);
+}
+.sn-dock:hover { opacity: 1; }
+.sn-dock-lbl { font-size: 9px; letter-spacing: 0.18em; color: var(--dim); margin-bottom: 2px; }
+.sn-chip {
+  width: 38px; height: 25px; border-radius: 2px;
+  background: var(--sn-bg); color: var(--sn-ink);
+  border: var(--hair) solid color-mix(in srgb, var(--sn-line) 55%, transparent);
+  font-size: 10px; letter-spacing: 0.04em;
+  display: grid; place-items: center; cursor: grab;
+  transition: transform var(--dur-1) var(--ease);
+}
+.sn-chip:hover { transform: translateY(-1px); }
+.sn-chip:active { cursor: grabbing; }
+.sn-file {
+  background: transparent; color: var(--text-2);
+  border-color: var(--line-2); border-style: dashed; cursor: pointer;
+}
+.sn-file:hover { color: var(--accent); border-color: var(--accent); }
+
+.sn-ghost {
+  position: fixed; z-index: 300; pointer-events: none;
+  width: 80px; height: 44px; border-radius: 2px;
+  background: var(--sn-bg); box-shadow: var(--sn-shadow-up);
+  opacity: 0.85; transform: rotate(-3deg);
+}
+
+/* ── 展开 ─────────────────────────────────────────── */
+
+.sn-modal {
+  position: fixed; inset: 0; z-index: 210;
+  display: grid; place-items: center; padding: 48px;
+  background: color-mix(in srgb, var(--bg) 86%, #000);
+  animation: sn-in var(--dur-2) var(--ease);
+}
+@keyframes sn-in { from { opacity: 0; } to { opacity: 1; } }
+
+.sn-full {
+  background: var(--sn-bg); color: var(--sn-ink);
+  border-radius: 2px; box-shadow: var(--sn-shadow-up);
+  width: min(680px, 100%); max-height: 100%;
+  display: flex; flex-direction: column; overflow: hidden;
+}
+.sn-full-bar {
+  display: flex; align-items: center; gap: 7px;
+  padding: 9px 12px;
+  border-bottom: 1px solid color-mix(in srgb, var(--sn-ink) 16%, transparent);
+}
+.sn-swatch {
+  width: 15px; height: 15px; border-radius: 2px;
+  background: var(--sn-bg); border: 1px solid color-mix(in srgb, var(--sn-line) 70%, transparent);
+  transition: transform var(--dur-1) var(--ease);
+}
+.sn-swatch:hover { transform: scale(1.12); }
+.sn-swatch.on { outline: 1.5px solid var(--sn-ink); outline-offset: 1.5px; }
+.sn-full-hint { margin-left: auto; font-size: 10px; opacity: 0.55; }
+.sn-full-hint code { font: inherit; opacity: 0.8; }
+.sn-full-btn {
+  font-size: 11px; padding: 3px 9px; border-radius: 2px;
+  border: 1px solid color-mix(in srgb, var(--sn-ink) 26%, transparent);
+  color: var(--sn-ink);
+  transition: background var(--dur-1) var(--ease);
+}
+.sn-full-btn:hover { background: color-mix(in srgb, var(--sn-ink) 10%, transparent); }
+.sn-full-body { padding: 18px 20px 20px; overflow: auto; }
+.sn-full-body .sn-rich { font-size: 15px; line-height: 1.85; }
+.sn-full-img { display: block; max-width: 100%; margin: 0 auto; }
+.sn-full-pdf { display: block; width: 100%; height: 72vh; border: none; background: #fff; }
+.sn-full-edit {
+  display: block; width: 100%; min-height: 220px; resize: vertical;
+  border: none; outline: none; background: transparent; color: var(--sn-ink);
+  font-family: var(--font); font-size: 15px; line-height: 1.85;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sn, .sn-chip, .sn-swatch, .sn-pin, .sn-modal { transition: none; animation: none; }
+}
+
+@media (max-width: 1080px) {
+  .sn-dock { right: 10px; bottom: 10px; }
+}

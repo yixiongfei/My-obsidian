@@ -7,6 +7,7 @@ import MindMap from '../components/MindMap.jsx';
 import ReviewBar from '../components/ReviewBar.jsx';
 import ReadMode from '../components/ReadMode.jsx';
 import FolderTree from '../components/FolderTree.jsx';
+import Stickies from '../components/Stickies.jsx';
 import { Loading, ErrorBox, Empty } from '../components/bits.jsx';
 
 /* ------------------------------------------------------------------ *
@@ -90,9 +91,12 @@ function Reader({ id, version, onReviewed }) {
             </div>
           </header>
 
-          {note.words === 0
-            ? <Empty>这篇笔记还是空的，去 Obsidian 里补充内容吧</Empty>
-            : <Prose html={note.html} kind={note.kind} />}
+          {/* 正文外面套一层便利贴图层：纸片、箭头都贴在这一层上，坐标相对正文栏左上角 */}
+          <Stickies noteId={note.id} scrollRef={scrollRef}>
+            {note.words === 0
+              ? <Empty>这篇笔记还是空的，去 Obsidian 里补充内容吧</Empty>
+              : <Prose html={note.html} kind={note.kind} />}
+          </Stickies>
 
           <section className="note-review" ref={reviewRef}>
             <div className="band">

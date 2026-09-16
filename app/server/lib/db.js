@@ -119,6 +119,26 @@ CREATE TABLE IF NOT EXISTS exam_marks (
 );
 CREATE INDEX IF NOT EXISTS idx_exam_marks_exam ON exam_marks(exam_id);
 
+-- 便利贴：贴在笔记正文上的纸片。坐标相对正文栏左上角，箭头锚点存 JSON。
+-- 批注不是笔记内容，不写回 .md——否则拖一下纸片就触发重新索引，脚下的正文会跟着重渲染
+CREATE TABLE IF NOT EXISTS stickies (
+  id         INTEGER PRIMARY KEY AUTOINCREMENT,
+  note_id    TEXT NOT NULL,
+  color      TEXT NOT NULL DEFAULT 'y',   -- y 疑问 b 推导 g 结论 r 易错
+  x          REAL NOT NULL DEFAULT 0,
+  y          REAL NOT NULL DEFAULT 0,
+  w          REAL NOT NULL DEFAULT 216,
+  h          REAL NOT NULL DEFAULT 132,
+  text       TEXT NOT NULL DEFAULT '',
+  media      TEXT NOT NULL DEFAULT '',    -- 相对 vault 的图片 / PDF 路径
+  media_kind TEXT NOT NULL DEFAULT '',    -- '' | image | pdf
+  pinned     INTEGER NOT NULL DEFAULT 0,  -- 按下图钉：不能移动、放缩、撕去
+  arrows     TEXT NOT NULL DEFAULT '[]',  -- JSON：指向正文具体位置的箭头
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_stickies_note ON stickies(note_id);
+
 CREATE TABLE IF NOT EXISTS meta (k TEXT PRIMARY KEY, v TEXT NOT NULL);
 `;
 
