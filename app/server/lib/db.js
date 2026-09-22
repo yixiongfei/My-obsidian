@@ -214,6 +214,10 @@ export function open() {
   try { db.exec("ALTER TABLE exam_marks ADD COLUMN color TEXT NOT NULL DEFAULT 'y'"); } catch { /* 已经有了 */ }
   try { db.exec("ALTER TABLE stickies ADD COLUMN poster TEXT NOT NULL DEFAULT ''"); } catch { /* 已经有了 */ }
   try { db.exec("ALTER TABLE stickies ADD COLUMN anchor TEXT NOT NULL DEFAULT '{}'"); } catch { /* 已经有了 */ }
+  // 阅读卡片：sentence 是自己划的句子，passage 是助手用没掌握的词写的短文
+  try { db.exec("ALTER TABLE sentence_cards ADD COLUMN kind TEXT NOT NULL DEFAULT 'sentence'"); } catch { /* 已经有了 */ }
+  try { db.exec("ALTER TABLE sentence_cards ADD COLUMN title TEXT NOT NULL DEFAULT ''"); } catch { /* 已经有了 */ }
+  try { db.exec("ALTER TABLE sentence_cards ADD COLUMN words TEXT NOT NULL DEFAULT '[]'"); } catch { /* 已经有了 */ }
   try {
     db.exec(FTS_SCHEMA);
     db.prepare('SELECT rowid FROM notes_fts LIMIT 1').get();

@@ -29,7 +29,8 @@ export const api = {
 
   // 英语词汇 Anki
   cards: () => j('/api/review/cards'),
-  // 长难句卡片
+  assistantStatus: () => j('/api/assistant/status'),
+  // 阅读卡片（句子 + 生词短文）
   sentences: () => j('/api/sentences'),
   allSentences: () => j('/api/sentences/all'),
   addSentence: (payload) => j('/api/sentences', body('POST', payload)),

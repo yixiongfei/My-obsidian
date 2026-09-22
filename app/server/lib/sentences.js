@@ -3,7 +3,7 @@ import { getExam } from './exams.js';
 import { todayStr, addDays } from './review.js';
 
 /**
- * 长难句卡片。
+ * 阅读卡片（原「长难句」）：自己在真题里划的句子，和助手用没掌握的词写的短文（kind = passage）。
  *
  * 复习练的是「拆得开」：正面只有原句，逐层揭示主干 → 结构 → 译文，再三档评分。
  * 结构标注在第一次复习时自己做，所以新卡 annotated = 0，前端先进解析模式。
@@ -12,7 +12,7 @@ import { todayStr, addDays } from './review.js';
 
 const ROUND = 15;
 const RATINGS = new Set(['again', 'hard', 'good']);
-const ROLES = new Set(['main', 'clause', 'phrase', 'insert']);
+const ROLES = new Set(['main', 'clause', 'phrase', 'insert', 'word']);
 const KIND_NAME = { english1: '英语一', english2: '英语二' };
 
 const bad = (msg, status = 400) => Object.assign(new Error(msg), { status });
@@ -27,11 +27,15 @@ function sourceOf(r) {
   return [`${exam.year} ${KIND_NAME[exam.kind] || exam.kindLabel}`, sec?.label, r.q ? `第 ${r.q} 题` : ''].filter(Boolean).join(' · ');
 }
 
+const parse = (s, d) => { try { return JSON.parse(s); } catch { return d; } };
+
 const out = (r) => {
-  let spans = [];
-  try { spans = JSON.parse(r.spans || '[]'); } catch { /* 坏数据当没标 */ }
+  const spans = parse(r.spans || '[]', []);
   return {
     id: r.id,
+    kind: r.kind || 'sentence',
+    title: r.title || '',
+    words: parse(r.words || '[]', []),
     text: r.text,
     examId: r.exam_id,
     sectionId: r.section_id,
@@ -67,6 +71,58 @@ export function add({ text, examId = null, sectionId = null, q = null, source = 
              VALUES (?, ?, ?, ?, ?, ?, ?)`)
     .run(t, examId || null, sectionId || null, Number.isInteger(q) ? q : null, String(source || '').slice(0, 120), today, today);
   return { card: out(d.prepare('SELECT * FROM sentence_cards WHERE text = ?').get(t)), added: true };
+}
+
+/* 目标词在短文里的位置：先认原形 / 文中的写法，认不到再宽松匹配词干（abandon → abandoned） */
+const bare = (t) => t.toLowerCase().replace(/^[^a-z]+|[^a-z]+$/g, '');
+
+function locateWords(tokens, words) {
+  const norm = tokens.map(bare);
+  const spans = [];
+  const used = new Set();
+  const found = words.map((w) => {
+    const forms = [w.form, w.term].filter(Boolean).map((f) => f.toLowerCase());
+    let at = norm.findIndex((t, i) => !used.has(i) && forms.includes(t));
+    if (at < 0) {
+      const stem = w.term.toLowerCase().replace(/e$/, '');
+      at = norm.findIndex((t, i) => !used.has(i) && stem.length >= 3 && t.startsWith(stem) && t.length <= stem.length + 4);
+    }
+    if (at >= 0) { used.add(at); spans.push({ s: at, e: at, role: 'word', label: w.gloss }); }
+    return { ...w, found: at >= 0 };
+  });
+  return { spans, found };
+}
+
+/**
+ * 短文卡：助手用一周没掌握的词写的一小篇阅读。生词释义当成「成分标签」浮在词上。
+ * words 是助手点名的生词（按文中意思给释义）；extra 是候选词（最近没掌握的词），
+ * 只有在文中真的出现了才收进来——助手漏报生词表时，卡片照样标得出来。
+ */
+export function addPassage({ title, text, translation = '', words = [], extra = [] }) {
+  const t = normText(text);
+  if (t.split(' ').length < 40) throw bad('短文太短了，至少 40 个词');
+  if (t.length > 4000) throw bad('短文太长了，控制在 4000 字符以内');
+  const clean = (arr) => (Array.isArray(arr) ? arr : []).map((w) => ({
+    term: normText(w?.term).slice(0, 40),
+    form: normText(w?.form || '').slice(0, 40),
+    gloss: normText(w?.gloss).slice(0, 12),
+  })).filter((w) => w.term && w.gloss);
+  const named = clean(words).slice(0, 40);
+  const seen = new Set(named.map((w) => w.term.toLowerCase()));
+  const candidates = clean(extra).filter((w) => !seen.has(w.term.toLowerCase()));
+  const tokens = t.split(' ');
+  const { spans, found } = locateWords(tokens, [...named, ...candidates]);
+  const keep = found.filter((w, i) => i < named.length || w.found);
+  // 只有找到的词才有 span，所以 spans 天然只属于留下的词
+  if (!spans.length) throw bad('短文里一个生词都没找到：检查一下是不是用了生词表里的词');
+  const d = handle();
+  if (d.prepare('SELECT 1 FROM sentence_cards WHERE text = ?').get(t)) throw bad('这篇短文已经存在');
+  const today = todayStr();
+  d.prepare(`INSERT INTO sentence_cards (text, kind, title, words, spans, translation, annotated, source, due, created_at)
+             VALUES (?, 'passage', ?, ?, ?, ?, 1, ?, ?, ?)`)
+    .run(t, normText(title).slice(0, 60) || '生词阅读', JSON.stringify(keep), JSON.stringify(spans),
+      String(translation).slice(0, 4000), `助手 · ${today}`, today, today);
+  return out(d.prepare('SELECT * FROM sentence_cards WHERE text = ?').get(t));
 }
 
 export function annotate(id, { spans, translation = '', note = '' }) {
@@ -118,7 +174,8 @@ export function queue() {
   const cards = d.prepare('SELECT * FROM sentence_cards WHERE due <= ? ORDER BY due, id LIMIT ?').all(today, ROUND).map(out);
   const c = d.prepare(`SELECT COUNT(*) total, IFNULL(SUM(due <= ?), 0) due, IFNULL(SUM(annotated = 0), 0) fresh FROM sentence_cards`).get(today);
   const reviewedToday = d.prepare('SELECT COUNT(DISTINCT card_id) c FROM sentence_reviews WHERE date = ?').get(today).c;
-  return { today, round: ROUND, cards, counts: { total: c.total, due: c.due, fresh: c.fresh, reviewedToday } };
+  const lastPassage = d.prepare("SELECT MAX(created_at) d FROM sentence_cards WHERE kind = 'passage'").get().d || null;
+  return { today, round: ROUND, cards, counts: { total: c.total, due: c.due, fresh: c.fresh, reviewedToday, lastPassage } };
 }
 
 /** 全部卡片，新加的在前：句子列表拿来平时翻着回顾 */

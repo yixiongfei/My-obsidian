@@ -14,13 +14,13 @@ export const SERIES = [
   { key: 'reviews', label: '笔记复习', color: 'var(--accent-2)' },
   { key: 'words', label: '背词', color: 'var(--hue-3)' },
   { key: 'exams', label: '做题', color: 'var(--hue-2)' },
-  { key: 'sentences', label: '长难句', color: 'var(--hue-5)' },
+  { key: 'sentences', label: '阅读', color: 'var(--hue-5)' },
   { key: 'created', label: '新建', color: 'var(--hue-4)' },
 ];
 // 背词一天几十个、笔记一天一两篇，硬叠在一起笔记那格看不见：背词按 1/5 折算成"单位量"。
 // 热力图的深浅也用这套折算，两边才是同一个「今天学了多少」
 export const WEIGHT = { reviews: 1, created: 1, exams: 0.5, sentences: 0.5, words: 0.2 };
-export const tipOf = (r) => `${r.date}　笔记复习 ${r.reviews} · 新建 ${r.created} · 背词 ${r.words} · 做题 ${r.exams} · 长难句 ${r.sentences || 0}${r.points ? ` · 考点推进 ${r.points}` : ''}`;
+export const tipOf = (r) => `${r.date}　笔记复习 ${r.reviews} · 新建 ${r.created} · 背词 ${r.words} · 做题 ${r.exams} · 阅读 ${r.sentences || 0}${r.points ? ` · 考点推进 ${r.points}` : ''}`;
 export const unitsOf = (r) => SERIES.reduce((a, k) => a + (r[k.key] || 0) * WEIGHT[k.key], 0);
 
 export default function Trend({ daily = [] }) {

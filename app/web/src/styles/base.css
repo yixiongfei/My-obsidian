@@ -284,7 +284,7 @@ button { cursor: pointer; background: none; border: none; padding: 0; }
 
 .topnav { display: flex; gap: 4px; margin: 0 auto; }
 .topnav a {
-  padding: 9px 17px;
+  padding: 9px 17px; white-space: nowrap;
   border-radius: var(--radius-s);
   border: 1px solid transparent;
   color: var(--text-2); font-size: 13.5px;

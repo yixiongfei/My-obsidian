@@ -60,7 +60,7 @@ export default function Exam() {
     } catch (err) { notify(err.message, 'err'); }
   }, [id, notify]);
 
-  // 右键「加入长难句」：选中的一句，或点中的那条荧光笔
+  // 右键「加入阅读」：选中的一句，或点中的那条荧光笔
   const addSentence = useCallback(async () => {
     const m = hl.menu;
     hl.closeMenu();
@@ -70,7 +70,7 @@ export default function Exam() {
     try {
       const out = await api.addSentence({ text: src.text, examId: id, sectionId: src.sectionId, q: src.q ?? null });
       window.getSelection?.()?.removeAllRanges();
-      notify(out.added ? '已加入长难句——到「复习 · 长难句」里拆解它' : '这句已经在长难句卡片里了', 'hl');
+      notify(out.added ? '已加入阅读——到「复习 · 阅读」里拆解它' : '这句已经在阅读卡片里了', 'hl');
     } catch (err) { notify(err.message, 'err'); }
   }, [hl, id, notify]);
 
@@ -295,12 +295,12 @@ function CtxMenu({ menu, color, onClose, onHighlight, onRecolor, onUnhighlight, 
       {menu.existing
         ? <>
             <div className="ctx-row"><span>换颜色</span>{swatches(onRecolor, null)}</div>
-            <button onClick={onSentence}>加入长难句</button>
+            <button onClick={onSentence}>加入阅读</button>
             <button onClick={onUnhighlight}>取消标记</button>
           </>
         : <>
             <div className="ctx-row"><span>标记句子</span>{swatches(onHighlight, color)}</div>
-            <button onClick={onSentence}>加入长难句</button>
+            <button onClick={onSentence}>加入阅读</button>
             <button onClick={onCopy}>复制</button>
           </>}
     </div>

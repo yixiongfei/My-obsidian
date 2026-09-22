@@ -9,6 +9,7 @@ const NAV = [
   { to: '/review',    label: '复习' },
   { to: '/schedule',  label: '日历' },
   { to: '/resources', label: '资源' },
+  { to: '/assistant', label: '助手' },
 ];
 
 const Sparkle = (p) => (

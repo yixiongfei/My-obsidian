@@ -23,6 +23,7 @@ import * as examMarks from './lib/exam-marks.js';
 import * as readingAnnotations from './lib/reading-annotations.js';
 import * as stickies from './lib/stickies.js';
 import * as sentences from './lib/sentences.js';
+import * as assistant from './lib/assistant.js';
 import * as tts from './lib/tts.js';
 
 const app = express();
@@ -286,7 +287,16 @@ app.post('/api/exams/marks/sync', (_req, res) => {
   res.status(202).json({ ok: true });
 });
 
-/* 长难句卡片 */
+/* 学习助手：本机 Claude Code 经 Agent SDK 驱动，结果走 SSE 流回前端 */
+app.get('/api/assistant/status', (_req, res) => res.json(assistant.status()));
+app.post('/api/assistant/chat', wrap((req, res) => assistant.chat(req, res, { onChange: () => broadcast({ type: 'readings' }) })));
+app.post('/api/assistant/permission', (req, res) => {
+  const { runId, id, allow, always } = req.body || {};
+  res.json(assistant.answerPermission(String(runId || ''), String(id || ''), !!allow, !!always));
+});
+app.post('/api/assistant/stop', wrap(async (req, res) => res.json(await assistant.stop(String(req.body?.runId || '')))));
+
+/* 阅读卡片（句子 + 生词短文） */
 app.get('/api/sentences', (_req, res) => res.json(sentences.queue()));
 app.get('/api/sentences/all', (_req, res) => res.json(sentences.all()));
 app.post('/api/sentences', (req, res) => {

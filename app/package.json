@@ -17,7 +17,10 @@
     "ship": "node scripts/ship.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/claude-agent-sdk": "^0.3.280",
+    "@anthropic-ai/sdk": "^0.128.0",
     "@fontsource-variable/archivo": "^5.3.0",
+    "@modelcontextprotocol/sdk": "^1.30.0",
     "@vscode/markdown-it-katex": "^1.1.1",
     "chokidar": "^3.6.0",
     "cors": "^2.8.5",
@@ -27,7 +30,8 @@
     "katex": "^0.16.11",
     "markdown-it": "^14.1.0",
     "node-html-parser": "^9.0.4",
-    "three": "^0.186.0"
+    "three": "^0.186.0",
+    "zod": "^4.6.5"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.4",
@@ -55,7 +59,8 @@
       "server/**",
       "dist-web/**",
       "build/icon.png",
-      "package.json"
+      "package.json",
+      "!**/node_modules/@anthropic-ai/claude-agent-sdk-*/**"
     ],
     "win": {
       "target": [

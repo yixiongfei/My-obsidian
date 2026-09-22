@@ -221,7 +221,7 @@ export default function Dashboard({ version }) {
 
           <div style={{ marginTop: 48 }}>
             {/* 学习节奏：左边热力图看坚持，右边柱线图看每天做了多少；两边同一份 daily */}
-            <Band title="学习节奏" meta="笔记复习 · 背词 · 做题 · 长难句 · 新建">
+            <Band title="学习节奏" meta="笔记复习 · 背词 · 做题 · 阅读 · 新建">
               <div className="rhythm">
                 <Heat daily={daily} today={today} />
                 <Trend daily={daily} />
