@@ -399,16 +399,19 @@ export default function Stickies({ noteId, scrollRef, children, active = true })
       let l = 0;
       let r = 0;
       const box = host.getBoundingClientRect();
+      /* 全屏阅读：纸片不受那张纸的边框约束，纸外左右两侧的整屏都能贴——
+         量到整页滚动容器的内容区为止，正文和纸的样子一点不动 */
       const inner = host.closest('.reader-inner');
-      const paper = host.closest('.readmode-paper');
-      const field = inner || paper;
+      const page = host.closest('.readmode-page');
+      const field = inner || page;
       if (field) {
         const cs = getComputedStyle(field);
         const fb = field.getBoundingClientRect();
-        // 阅读模式那张素白纸留 12px 不占，免得纸片压在纸的边线上
-        const keep = paper ? 12 : 0;
-        l = Math.max(0, Math.floor(box.left - (fb.left + parseFloat(cs.paddingLeft) + keep)));
-        r = Math.max(0, Math.floor((fb.right - parseFloat(cs.paddingRight) - keep) - box.right));
+        // clientWidth 不含滚动条，纸片不会钻到滚动条底下、撑出横向滚动
+        const left = fb.left + field.clientLeft + parseFloat(cs.paddingLeft);
+        const right = fb.left + field.clientLeft + field.clientWidth - parseFloat(cs.paddingRight);
+        l = Math.max(0, Math.floor(box.left - left));
+        r = Math.max(0, Math.floor(right - box.right));
       }
       host.style.setProperty('--sn-out-l', `${l}px`);
       host.style.setProperty('--sn-out-r', `${r}px`);

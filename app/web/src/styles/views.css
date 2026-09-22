@@ -386,10 +386,9 @@ kbd {
 @keyframes readmode-in { from { opacity: 0; } to { opacity: 1; } }
 body.readmode-open { overflow: hidden; }
 .readmode-page { flex: 1; min-height: 0; overflow-y: auto; outline: none; padding: 56px 24px 64px; }
-/* 纸放宽到 1440px，但正文栏和阅读页一样限在 900px、靠左：右边整整一栏是页边，专门给便利贴。
-   纸片的横坐标记的是「离正文栏左边多远」，两边正文栏同宽，阅读页里贴在页边的纸，到这儿也落在页边 */
+/* 27 寸屏上 800px 太窄，纸放到 1120px；正文行长靠字号撑，不另限宽 */
 .readmode-paper {
-  max-width: 1440px; margin: 0 auto; padding: 64px 96px 88px;
+  max-width: 1120px; margin: 0 auto; padding: 64px 96px 88px;
   background-color: var(--paper);
   background-image:
     linear-gradient(var(--grid) 1px, transparent 1px),
@@ -433,7 +432,6 @@ body.readmode-open { overflow: hidden; }
   margin: 0 0 32px; font-size: 30px; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; color: var(--ink);
   padding-bottom: 14px; border-bottom: 1px solid rgba(70, 80, 105, 0.18);
 }
-.readmode-title, .readmode .sn-host { max-width: 900px; }
 .readmode .prose { font-size: 17px; line-height: 2; color: var(--ink-2); }
 .readmode .prose h1, .readmode .prose h2, .readmode .prose h3, .readmode .prose h4 { color: var(--ink); }
 .readmode .prose a { color: #2B4FD4; }
