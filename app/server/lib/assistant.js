@@ -10,6 +10,7 @@ import * as points from './points.js';
 import * as sentences from './sentences.js';
 import { search, dashboard } from './query.js';
 import { todayStr, addDays, daysBetween } from './review.js';
+import { handle } from './db.js';
 
 /**
  * 学习助手：跑的是本机的 Claude Code（和 Obsidian 里的 Claudian 同一个登录、同一份额度），
@@ -157,11 +158,28 @@ function buildTools(tool, onChange) {
 const KB_TOOLS = ['study_overview', 'weak_words', 'weak_points', 'search_notes', 'list_readings', 'create_reading']
   .map((n) => `mcp__kb__${n}`);
 
+/** 用户亲手写 / 认可的记忆：每次对话整篇读进来。在 Obsidian 里改，下一句话就生效 */
+export const MEMORY_REL = '个人/memory.md';
+function memory() {
+  try {
+    const raw = fs.readFileSync(path.join(ROOT, MEMORY_REL), 'utf8').replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/, '').trim();
+    return raw.slice(0, 12000);
+  } catch { return ''; }
+}
+
 function systemPrompt() {
   const today = todayStr();
   const exam = schedule.examDate();
+  const now = new Date();
+  const hhmm = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  const mem = memory();
   return [
-    `你是「星图知识库」里的学习助手，陪用户备考考研初试（英语二、数学、408）。今天是 ${today}，初试 ${exam}，还有 ${daysBetween(today, exam)} 天。`,
+    `你是「星图知识库」里用户的私人老师，陪用户备考考研初试（英语二、数学、408）。今天是 ${today}，现在 ${hhmm}；初试 ${exam}，还有 ${daysBetween(today, exam)} 天。`,
+    '',
+    '像一个了解用户的私人老师那样教，而不是像百科或客服：先弄清卡在哪，按用户自己的学习方式带着推出来，而不是直接把答案倒出来。怎么教，以下面的记忆为准（记忆是用户用第一人称写的，「我」指用户）。',
+    '',
+    ...(mem ? [`<memory path="${MEMORY_REL}">`, mem, '</memory>', ''] : []),
+    `记忆的维护：对话里发现值得长期记住的新东西（新的薄弱点、偏好、状态变化、定下的计划），用 Edit 往 ${MEMORY_REL} 的「近况」一节追加一行，开头写日期；这会弹给用户确认。琐事不记，已有的不重复。`,
     '',
     '你能用的：',
     '- 知识库工具（mcp__kb__*）：学习概况、没掌握的单词、薄弱考点与错题本、搜索笔记、阅读卡片、生成阅读。问到学习数据先调工具，不要凭空估计。',
@@ -329,4 +347,40 @@ export async function stop(runId) {
 
 export function status() {
   return { claude: claudeExecutable() || null, vault: ROOT };
+}
+
+/* ------------------------------------------------------------------ *
+ * 对话记录（SQLite）
+ * ------------------------------------------------------------------ */
+
+const bad = (msg, status = 400) => Object.assign(new Error(msg), { status });
+
+export const listConversations = () => handle().prepare(
+  'SELECT id, title, updated_at AS updatedAt FROM assistant_conversations ORDER BY updated_at DESC LIMIT 200',
+).all();
+
+export function getConversation(id) {
+  const r = handle().prepare('SELECT * FROM assistant_conversations WHERE id = ?').get(id);
+  if (!r) throw bad('对话不存在', 404);
+  let messages = [];
+  try { messages = JSON.parse(r.messages); } catch { /* 坏数据当空 */ }
+  return { id: r.id, title: r.title, sessionId: r.session_id, model: r.model, messages, updatedAt: r.updated_at };
+}
+
+export function saveConversation(id, { title = '', sessionId = null, model = '', messages = [] }) {
+  if (!/^[\w-]{8,64}$/.test(String(id))) throw bad('对话 id 不合法');
+  const body = JSON.stringify(Array.isArray(messages) ? messages : []);
+  if (body.length > 900_000) throw bad('这段对话太长了，开个新对话吧');
+  const now = new Date().toISOString();
+  handle().prepare(`
+    INSERT INTO assistant_conversations (id, title, session_id, model, messages, created_at, updated_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
+    ON CONFLICT(id) DO UPDATE SET title = excluded.title, session_id = excluded.session_id,
+      model = excluded.model, messages = excluded.messages, updated_at = excluded.updated_at`)
+    .run(id, String(title).slice(0, 80), sessionId || null, String(model || ''), body, now, now);
+  return { ok: true, updatedAt: now };
+}
+
+export function removeConversation(id) {
+  return { ok: handle().prepare('DELETE FROM assistant_conversations WHERE id = ?').run(id).changes > 0 };
 }

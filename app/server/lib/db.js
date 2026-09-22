@@ -184,6 +184,19 @@ CREATE TABLE IF NOT EXISTS sentence_reviews (
 );
 CREATE INDEX IF NOT EXISTS idx_sr_date ON sentence_reviews(date);
 
+-- 学习助手的对话：一段对话一行，消息整段存 JSON（前端就是这么渲染的）；
+-- session_id 是 Claude Code 的会话，续聊时靠它接上上下文
+CREATE TABLE IF NOT EXISTS assistant_conversations (
+  id         TEXT PRIMARY KEY,
+  title      TEXT NOT NULL DEFAULT '',
+  session_id TEXT,
+  model      TEXT NOT NULL DEFAULT '',
+  messages   TEXT NOT NULL DEFAULT '[]',
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_ac_updated ON assistant_conversations(updated_at);
+
 CREATE TABLE IF NOT EXISTS meta (k TEXT PRIMARY KEY, v TEXT NOT NULL);
 `;
 

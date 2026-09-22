@@ -111,11 +111,15 @@ export default function Assistant() {
   const logRef = useRef(null);
   const stick = useRef(true);
 
-  // ?ask=weekly：从阅读页 / 仪表盘点「生成生词阅读」过来，自动发出去
+  // ?ask=weekly：从阅读页点「生成生词阅读」过来——开一段新对话，自动发出去
   useEffect(() => {
-    if (params.get('ask') !== 'weekly') return;
-    setParams({}, { replace: true });
-    if (!assistant.get().running) assistant.send(WEEKLY_PROMPT);
+    const ask = params.get('ask') === 'weekly';
+    if (ask) setParams({}, { replace: true });
+    assistant.init().then(() => {
+      if (!ask || assistant.get().running) return;
+      assistant.newChat();
+      assistant.send(WEEKLY_PROMPT);
+    });
   }, [params, setParams]);
 
   // 新内容进来时贴底；用户往上翻了就不打扰
@@ -135,17 +139,31 @@ export default function Assistant() {
   const noClaude = status && !status.claude;
 
   return (
+    <div className="as-wrap">
+      <aside className="as-side">
+        <button className="as-new" disabled={s.running} onClick={assistant.newChat}>＋ 新对话</button>
+        <div className="as-convs">
+          {s.list.map((c) => (
+            <div key={c.id} className={`as-conv${c.id === s.convId ? ' on' : ''}`}>
+              <button className="as-conv-t" disabled={s.running} onClick={() => assistant.open(c.id)} title={c.title}>
+                {c.title || '新对话'}
+                <span className="as-conv-d">{when(c.updatedAt)}</span>
+              </button>
+              <button className="as-conv-x" aria-label="删除这段对话" title="删除"
+                      disabled={s.running && c.id === s.convId}
+                      onClick={() => { if (window.confirm(`删除「${c.title || '新对话'}」？`)) assistant.remove(c.id); }}>×</button>
+            </div>
+          ))}
+        </div>
+      </aside>
+
     <div className="as-page">
       <div className="as-head">
-        <div>
-          <div className="as-title">学习助手</div>
-          <div className="as-sub">本机 Claude Code · 读你的笔记和学习数据，改笔记前先问你</div>
-        </div>
+        <div className="as-title">{s.title || '学习助手'}</div>
         <span className="spacer" />
         <select className="as-model" value={s.model} onChange={(e) => assistant.setModel(e.target.value)} disabled={s.running}>
           {MODELS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
         </select>
-        <button className="btn" disabled={s.running || !s.messages.length} onClick={assistant.reset}>新对话</button>
       </div>
 
       <div className="as-log" ref={logRef}
@@ -188,7 +206,7 @@ export default function Assistant() {
       </div>
 
       <div className="as-compose">
-        <textarea rows={2} value={draft} placeholder="问点什么…（Enter 发送，Shift+Enter 换行）"
+        <textarea rows={2} value={draft}
                   onChange={(e) => setDraft(e.target.value)}
                   onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); submit(); } }} />
         {s.running
@@ -196,5 +214,16 @@ export default function Assistant() {
           : <button className="btn primary as-send" disabled={!draft.trim()} onClick={submit}>发送</button>}
       </div>
     </div>
+    </div>
   );
+}
+
+/** 侧栏里的时间：今天显示时刻，今年显示月日，再早显示年 */
+function when(iso) {
+  const d = new Date(iso);
+  const now = new Date();
+  const pad = (n) => String(n).padStart(2, '0');
+  if (d.toDateString() === now.toDateString()) return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  if (d.getFullYear() === now.getFullYear()) return `${d.getMonth() + 1}/${d.getDate()}`;
+  return String(d.getFullYear());
 }

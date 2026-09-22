@@ -295,6 +295,10 @@ app.post('/api/assistant/permission', (req, res) => {
   res.json(assistant.answerPermission(String(runId || ''), String(id || ''), !!allow, !!always));
 });
 app.post('/api/assistant/stop', wrap(async (req, res) => res.json(await assistant.stop(String(req.body?.runId || '')))));
+app.get('/api/assistant/conversations', (_req, res) => res.json(assistant.listConversations()));
+app.get('/api/assistant/conversations/:cid', (req, res) => res.json(assistant.getConversation(req.params.cid)));
+app.put('/api/assistant/conversations/:cid', (req, res) => res.json(assistant.saveConversation(req.params.cid, req.body || {})));
+app.delete('/api/assistant/conversations/:cid', (req, res) => res.json(assistant.removeConversation(req.params.cid)));
 
 /* 阅读卡片（句子 + 生词短文） */
 app.get('/api/sentences', (_req, res) => res.json(sentences.queue()));

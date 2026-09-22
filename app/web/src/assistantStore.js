@@ -1,6 +1,8 @@
 /**
- * 学习助手的对话状态放在模块里而不是组件里：切到别的页面，回答照样在后台流，
- * 回来还是完整的。对话记录落本机（localStorage），会话 id 交给 Claude Code 续上下文。
+ * 学习助手的对话状态放在模块里而不是组件里：切到别的页面，回答照样在后台流，回来还是完整的。
+ *
+ * 对话存在 SQLite（/api/assistant/conversations），本机只记「当前开着哪段」和选的模型。
+ * 新对话不删旧的——旧的都在侧栏里，点一下就接着聊（Claude Code 的会话 id 一起存着，上下文接得上）。
  *
  * messages:
  *   { role: 'user', text }
@@ -9,32 +11,85 @@
  */
 
 const KEY = 'kb-assistant';
-const empty = () => ({ sessionId: null, model: '', messages: [], running: false, runId: null });
+const blank = () => ({ convId: null, title: '', sessionId: null, messages: [] });
 
-function load() {
-  try {
-    const s = { ...empty(), ...JSON.parse(localStorage.getItem(KEY) || '{}') };
-    // 刷新前没跑完的一轮已经断了：把悬着的确认标成失效，别让按钮一直亮着
-    if (s.running) {
-      s.running = false;
-      s.runId = null;
-      const last = s.messages.at(-1);
-      if (last?.role === 'assistant') {
-        last.parts = last.parts.map((p) => (p.type === 'permission' && p.decided == null ? { ...p, decided: 'expired' } : p));
-        last.error ||= '页面刷新，这一轮中断了';
-      }
-    }
-    return s;
-  } catch { return empty(); }
-}
-
-let state = load();
+let state = { ...blank(), model: '', running: false, runId: null, list: [], loaded: false };
 const subs = new Set();
 
 function set(fn) {
   state = fn(state);
-  try { localStorage.setItem(KEY, JSON.stringify(state)); } catch { /* 满了就不存 */ }
+  try { localStorage.setItem(KEY, JSON.stringify({ convId: state.convId, model: state.model })); } catch { /* 无痕 */ }
   subs.forEach((f) => f());
+}
+
+const json = async (url, opts) => {
+  const res = await fetch(url, opts);
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) throw new Error(data.error || `请求失败 ${res.status}`);
+  return data;
+};
+const put = (id, body) => json(`/api/assistant/conversations/${id}`, {
+  method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
+});
+
+async function refreshList() {
+  try { const list = await json('/api/assistant/conversations'); set((s) => ({ ...s, list })); } catch { /* 服务没起 */ }
+}
+
+/** 当前这段存回库里（整段覆盖） */
+async function persist() {
+  const s = state;
+  if (!s.convId || !s.messages.length) return;
+  try {
+    await put(s.convId, { title: s.title, sessionId: s.sessionId, model: s.model, messages: s.messages });
+    refreshList();
+  } catch { /* 下一轮再存 */ }
+}
+
+/** 断在半路的一轮（刷新 / 关窗）：悬着的确认标成失效 */
+const settle = (messages) => messages.map((m, i) => {
+  if (m.role !== 'assistant' || i !== messages.length - 1) return m;
+  const hanging = m.parts.some((p) => p.type === 'permission' && p.decided == null);
+  if (!hanging && m.cost != null) return m;
+  return {
+    ...m,
+    parts: m.parts.map((p) => (p.type === 'permission' && p.decided == null ? { ...p, decided: 'expired' } : p)),
+    error: m.error || (m.cost == null && !m.parts.length ? '这一轮中断了' : m.error),
+  };
+});
+
+async function init() {
+  if (state.loaded) return;
+  let saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch { /* 坏了就当空 */ }
+  set((s) => ({ ...s, loaded: true, model: saved.model || '' }));
+
+  // 上一版把整段对话放在 localStorage 里：搬进库，别丢
+  if (Array.isArray(saved.messages) && saved.messages.length && !saved.convId) {
+    const id = crypto.randomUUID();
+    const first = saved.messages.find((m) => m.role === 'user');
+    await put(id, { title: (first?.text || '对话').slice(0, 30), sessionId: saved.sessionId, model: saved.model || '', messages: settle(saved.messages) }).catch(() => {});
+    saved.convId = id;
+  }
+  await refreshList();
+  if (saved.convId) await open(saved.convId);
+}
+
+async function open(id) {
+  if (state.running) return;
+  try {
+    const c = await json(`/api/assistant/conversations/${id}`);
+    set((s) => ({ ...s, convId: c.id, title: c.title, sessionId: c.sessionId, messages: settle(c.messages) }));
+  } catch {
+    set((s) => ({ ...s, ...blank() }));
+  }
+}
+
+async function remove(id) {
+  if (state.running && state.convId === id) return;
+  await json(`/api/assistant/conversations/${id}`, { method: 'DELETE' }).catch(() => {});
+  if (state.convId === id) set((s) => ({ ...s, ...blank() }));
+  refreshList();
 }
 
 /** 只改最后一条助手消息 */
@@ -80,12 +135,17 @@ function apply(ev) {
 async function send(prompt) {
   const text = String(prompt || '').trim();
   if (!text || state.running) return;
+  const fresh = !state.convId;
   set((s) => ({
     ...s,
+    convId: s.convId || crypto.randomUUID(),
+    title: s.title || text.replace(/\s+/g, ' ').slice(0, 30),
     running: true,
     runId: null,
     messages: [...s.messages, { role: 'user', text }, { role: 'assistant', parts: [] }],
   }));
+  if (fresh) persist(); // 新对话马上进侧栏
+
   try {
     const res = await fetch('/api/assistant/chat', {
       method: 'POST',
@@ -115,6 +175,7 @@ async function send(prompt) {
     patchLast((m) => ({ ...m, error: err.message || '连接断了' }));
   }
   set((s) => ({ ...s, running: false, runId: null }));
+  persist();
 }
 
 async function answer(id, allow, always = false) {
@@ -139,9 +200,13 @@ async function stop() {
 export const assistant = {
   get: () => state,
   subscribe: (f) => { subs.add(f); return () => subs.delete(f); },
+  init,
   send,
   answer,
   stop,
+  open,
+  remove,
   setModel: (model) => set((s) => ({ ...s, model })),
-  reset: () => { if (!state.running) set(() => ({ ...empty(), model: state.model })); },
+  /** 新对话：只是换一张白纸，旧的留在侧栏 */
+  newChat: () => { if (!state.running) set((s) => ({ ...s, ...blank() })); },
 };
