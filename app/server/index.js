@@ -22,6 +22,7 @@ import * as drill from './lib/drill.js';
 import * as examMarks from './lib/exam-marks.js';
 import * as readingAnnotations from './lib/reading-annotations.js';
 import * as stickies from './lib/stickies.js';
+import * as sentences from './lib/sentences.js';
 import * as tts from './lib/tts.js';
 
 const app = express();
@@ -99,6 +100,8 @@ app.get('/api/dashboard', (_req, res) => res.json({
   // daily 给 26 周：学习节奏的热力图和每日进度共用这一份（笔记复习 / 新建 / 背词 / 做题）
   ...dashboard(schedule.examDate()), points: points.progress(), vocab: vocab.progress(), milestones: milestones(), daily: schedule.activity(26 * 7),
   stages: points.stageSummary(), wrongBooks: points.wrongBooks(),
+  // 连续天数按「这天学没学」算，笔记复习只是其中一种，覆盖 dashboard() 里那份只看笔记复习的
+  streak: schedule.streak(),
 }));
 
 /* 一轮复习的「总结完成」：写进笔记 frontmatter（stage: 总结 / summarized: 日期） */
@@ -283,6 +286,17 @@ app.post('/api/exams/marks/sync', (_req, res) => {
   res.status(202).json({ ok: true });
 });
 
+/* 长难句卡片 */
+app.get('/api/sentences', (_req, res) => res.json(sentences.queue()));
+app.get('/api/sentences/all', (_req, res) => res.json(sentences.all()));
+app.post('/api/sentences', (req, res) => {
+  const { text, examId, sectionId, q, source } = req.body || {};
+  res.json(sentences.add({ text, examId, sectionId, q: Number.isInteger(q) ? q : null, source }));
+});
+app.put('/api/sentences/:sid/annotation', (req, res) => res.json(sentences.annotate(Number(req.params.sid), req.body || {})));
+app.post('/api/sentences/:sid/review', (req, res) => res.json(sentences.rate(Number(req.params.sid), String(req.body?.rating || ''))));
+app.delete('/api/sentences/:sid', (req, res) => res.json(sentences.remove(Number(req.params.sid))));
+
 /* 阅读批注：只属于阅读模式，不写 Markdown，也不混入普通卷面的句子荧光笔。 */
 app.get('/api/exams/:id/:section/reading-annotations', (req, res) => {
   res.json(readingAnnotations.read(req.params.id, req.params.section));
@@ -365,6 +379,12 @@ app.post('/api/stickies/media',
   express.raw({ type: () => true, limit: '24mb' }),
   wrap(async (req, res) => {
     res.json(await stickies.saveMedia(req.body, String(req.query.name || ''), String(req.query.mime || req.headers['content-type'] || '')));
+  }));
+/* 解答题作答区贴的手写图（平板写完截图粘进来） */
+app.post('/api/answers/media',
+  express.raw({ type: () => true, limit: '24mb' }),
+  wrap(async (req, res) => {
+    res.json(await stickies.saveMedia(req.body, String(req.query.name || ''), String(req.query.mime || req.headers['content-type'] || ''), { answer: true }));
   }));
 
 /* ------------------------------------------------------------------ *

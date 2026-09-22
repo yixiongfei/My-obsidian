@@ -151,6 +151,39 @@ CREATE TABLE IF NOT EXISTS stickies (
 );
 CREATE INDEX IF NOT EXISTS idx_stickies_note ON stickies(note_id);
 
+-- 长难句卡片：真题里划的句子或手动粘贴的。结构标注（spans，按空格切词的词序号闭区间）
+-- 不在加卡时做，留到第一次复习——自己拆一遍句子本身就是最有效的那次复习
+CREATE TABLE IF NOT EXISTS sentence_cards (
+  id          INTEGER PRIMARY KEY AUTOINCREMENT,
+  text        TEXT NOT NULL UNIQUE,
+  exam_id     TEXT,
+  section_id  TEXT,
+  q           INTEGER,
+  source      TEXT NOT NULL DEFAULT '',
+  spans       TEXT NOT NULL DEFAULT '[]',
+  translation TEXT NOT NULL DEFAULT '',
+  note        TEXT NOT NULL DEFAULT '',
+  annotated   INTEGER NOT NULL DEFAULT 0,
+  due         TEXT NOT NULL,
+  interval    INTEGER NOT NULL DEFAULT 0,
+  ease        REAL NOT NULL DEFAULT 2.5,
+  reps        INTEGER NOT NULL DEFAULT 0,
+  lapses      INTEGER NOT NULL DEFAULT 0,
+  created_at  TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_sc_due ON sentence_cards(due);
+
+-- 评分历史只追加；删卡不删历史，那天复习过就是复习过
+CREATE TABLE IF NOT EXISTS sentence_reviews (
+  id             INTEGER PRIMARY KEY AUTOINCREMENT,
+  card_id        INTEGER NOT NULL,
+  date           TEXT NOT NULL,
+  at             TEXT NOT NULL,
+  rating         TEXT NOT NULL,
+  interval_after INTEGER NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_sr_date ON sentence_reviews(date);
+
 CREATE TABLE IF NOT EXISTS meta (k TEXT PRIMARY KEY, v TEXT NOT NULL);
 `;
 

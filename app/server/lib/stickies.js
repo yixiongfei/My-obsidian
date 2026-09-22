@@ -188,7 +188,11 @@ function trashMedia(rel, col = 'media') {
  * 存一张贴图。按内容哈希命名：同一张截图粘两次只占一份磁盘，
  * 也顺带保证文件名里不会混进用户剪贴板里的奇怪字符。
  */
-export async function saveMedia(buf, name = '', mime = '') {
+/* 作答区贴的手写图放 图像/作答/，和便利贴分开——便利贴的回收逻辑只认 图像/便利贴/ */
+const ANSWER_DIR = path.join(VAULT_ROOT, '图像', '作答');
+const ANSWER_REL = '图像/作答';
+
+export async function saveMedia(buf, name = '', mime = '', { answer = false } = {}) {
   if (!buf?.length) throw bad('空文件');
   if (buf.length > 24 * 1024 * 1024) throw bad('单张最多 24MB');
 
@@ -196,13 +200,15 @@ export async function saveMedia(buf, name = '', mime = '') {
   const byName = path.extname(String(name)).toLowerCase();
   const ext = byMime || (OK_EXT.has(byName) ? byName : '');
   if (!ext) throw bad('只收图片和 PDF');
+  if (answer && ext === '.pdf') throw bad('作答区只收图片');
 
+  const dir = answer ? ANSWER_DIR : MEDIA_DIR;
   const hash = crypto.createHash('sha1').update(buf).digest('hex').slice(0, 10);
   const day = new Date().toISOString().slice(0, 10).replaceAll('-', '');
   const file = `${day}-${hash}${ext === '.jpeg' ? '.jpg' : ext}`;
-  const abs = path.join(MEDIA_DIR, file);
-  await fsp.mkdir(MEDIA_DIR, { recursive: true });
+  const abs = path.join(dir, file);
+  await fsp.mkdir(dir, { recursive: true });
   if (!fs.existsSync(abs)) await fsp.writeFile(abs, buf);
 
-  return { path: `${MEDIA_REL}/${file}`, kind: ext === '.pdf' ? 'pdf' : 'image', name: String(name).slice(0, 120) };
+  return { path: `${answer ? ANSWER_REL : MEDIA_REL}/${file}`, kind: ext === '.pdf' ? 'pdf' : 'image', name: String(name).slice(0, 120) };
 }

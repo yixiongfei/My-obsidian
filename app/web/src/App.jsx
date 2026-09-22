@@ -10,6 +10,7 @@ import Home from './views/Home.jsx';
 import Dashboard from './views/Dashboard.jsx';
 import Notes from './views/Notes.jsx';
 import Review from './views/Review.jsx';
+import Sentences, { SentenceList } from './views/Sentences.jsx';
 import Schedule from './views/Schedule.jsx';
 import Resources from './views/Resources.jsx';
 import Exam from './views/Exam.jsx';
@@ -75,6 +76,8 @@ export default function App() {
               <Route path="/note/:id" element={<Notes version={version} onReviewed={reloadDash} />} />
               <Route path="/review" element={<Review version={version} onReviewed={reloadDash} />} />
               <Route path="/review/words" element={<Words />} />
+              <Route path="/review/sentences" element={<Sentences onReviewed={reloadDash} />} />
+              <Route path="/review/sentences/list" element={<SentenceList />} />
               {/* 旧链接兼容：/review/:id 曾经是"按篇复习某条笔记"，
                   现在 /review 是英语词汇 Anki，带 id 的一律送回笔记原文 */}
               <Route path="/review/:id" element={<LegacyReviewRedirect />} />

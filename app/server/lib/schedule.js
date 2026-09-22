@@ -7,8 +7,9 @@ import { allNotes } from './query.js';
 import { todayStr, daysBetween, addDays } from './review.js';
 import { holidaysInMonth, holidayOn } from './holidays.js';
 import { dailyCount, dailyBetween } from './vocabulary.js';
-import { statsBetween } from './exams.js';
+import { statsBetween, drillStatsBetween } from './exams.js';
 import { eventsBetween, STAGE_NAMES } from './points.js';
+import { dailyBetween as sentenceDaily } from './sentences.js';
 
 const pad = (n) => String(n).padStart(2, '0');
 
@@ -133,21 +134,62 @@ const countsByDay = (from, to) => {
   return map;
 };
 
-/** 近 days 天每日活动（含今天）：笔记复习 / 新建 / 背词 / 做题，仪表盘的节奏图用 */
+/**
+ * 「这天学了没有」只有这一个口径：日历格子亮不亮、热力图、连续天数都用它。
+ * 算数的是日历上的学习标记——笔记复习、新建笔记、背词、做题（整卷 + 专题训练）、长难句、考点推进；
+ * 待复习、日程、祝日只是提醒，不算学过。
+ */
+const isActive = (r) => r.reviews > 0 || r.created > 0 || r.words > 0 || r.exams > 0 || r.sentences > 0 || r.points > 0;
+
+/** [from, to] 每天的学习量，Map<日期, { reviews, created, words, exams, sentences, points }> */
+function studyByDay(from, to) {
+  const counts = countsByDay(from, to);
+  const exams = examsSafe(from, to);
+  let words = new Map();
+  try { words = dailyBetween(from, to); } catch { /* 词库不可用 */ }
+  let sents = new Map();
+  try { sents = sentenceDaily(from, to); } catch { /* 表还没有 */ }
+  let adv = new Map();
+  try { adv = eventsBetween(from, to); } catch { /* 标签清单没抓 */ }
+  const out = new Map();
+  for (let date = from; date <= to; date = addDays(date, 1)) {
+    const c = counts.get(date);
+    out.set(date, {
+      reviews: c?.reviewed || 0,
+      created: c?.created || 0,
+      words: words.get(date) || 0,
+      exams: exams.byDate?.[date] || 0,
+      sentences: sents.get(date) || 0,
+      points: adv.get(date)?.length || 0,
+    });
+  }
+  return out;
+}
+
+/** 近 days 天每日活动（含今天），仪表盘的节奏图用 */
 export function activity(days = 90) {
   const today = todayStr();
   const from = addDays(today, -(days - 1));
-  const counts = countsByDay(from, today);
-  const exams = examsSafe(from, today);
-  let words = new Map();
-  try { words = dailyBetween(from, today); } catch { /* 词库不可用 */ }
-  const out = [];
-  for (let i = 0; i < days; i += 1) {
-    const date = addDays(from, i);
-    const c = counts.get(date) || { reviewed: 0, created: 0 };
-    out.push({ date, reviews: c.reviewed || 0, created: c.created || 0, words: words.get(date) || 0, exams: exams.byDate?.[date] || 0 });
+  return [...studyByDay(from, today)].map(([date, r]) => ({ date, ...r }));
+}
+
+/** 连续学习天数：今天还没学不算断 */
+export function streak() {
+  const today = todayStr();
+  // 一年一年往回看，直到遇到断点；一般第一段就够了
+  let n = 0;
+  let to = today;
+  for (;;) {
+    const from = addDays(to, -364);
+    const days = studyByDay(from, to);
+    for (let date = to; date >= from; date = addDays(date, -1)) {
+      if (isActive(days.get(date))) { n += 1; continue; }
+      if (date === today) continue;
+      return n;
+    }
+    to = addDays(from, -1);
+    if (to < '2000-01-01') return n;
   }
-  return out;
 }
 
 /** 年表：12 张月卡片 */
@@ -208,10 +250,7 @@ export async function monthView(monthKey) {
   const from = `${monthKey}-01`, to = `${monthKey}-${pad(daysInMonth)}`;
   const counts = countsByDay(from, to);
   const exams = examsSafe(from, to);
-  let words = new Map();
-  try { words = dailyBetween(from, to); } catch { /* 词库不可用就当没背 */ }
-  let advances = new Map();
-  try { advances = eventsBetween(from, to); } catch { /* 标签清单没抓 */ }
+  const study = studyByDay(from, to);
 
   const jp = holidaysInMonth(y, m);
   const days = [];
@@ -219,18 +258,16 @@ export async function monthView(monthKey) {
     const date = `${y}-${pad(m)}-${pad(d)}`;
     const c = counts.get(date) || { due: 0, reviewed: 0, created: 0, events: 0, overdue: 0 };
     const weekday = new Date(y, m - 1, d).getDay();
-    const wordsDone = words.get(date) || 0;
-    const examsDone = exams.byDate?.[date] || 0;
-    const adv = advances.get(date) || [];
+    const s = study.get(date);
     days.push({
       date, day: d, weekday,
       ...c,
-      words: wordsDone,
-      exams: examsDone,
+      words: s.words,
+      exams: s.exams,
+      sentences: s.sentences,
       // 考点推进：这天有几个考点进到了新阶段
-      points: adv.length,
-      // 这一天有没有"学过"：复习了笔记、新建了笔记、背了词、做了题，任一即算
-      active: c.reviewed > 0 || c.created > 0 || wordsDone > 0 || examsDone > 0,
+      points: s.points,
+      active: isActive(s),
       holiday: jp.get(d) || null,
       isWeekend: weekday === 0 || weekday === 6,
       isToday: date === today,
@@ -252,9 +289,16 @@ export async function monthView(monthKey) {
   };
 }
 
-/** 真题数据没抓、或 JSON 坏了都不该让日历报错 */
+/** 真题数据没抓、或 JSON 坏了都不该让日历报错。整卷 + 专题训练合并成一份「做题」 */
 function examsSafe(from, to) {
-  try { return statsBetween(from, to); } catch { return { total: 0, bySubject: {}, byDate: {} }; }
+  let full = { total: 0, bySubject: {}, byDate: {} };
+  let drill = { total: 0, bySubject: {}, byDate: {} };
+  try { full = statsBetween(from, to); } catch { /* 真题没抓 */ }
+  try { drill = drillStatsBetween(from, to); } catch { /* 专题训练没数据 */ }
+  const out = { total: full.total + drill.total, bySubject: { ...full.bySubject }, byDate: { ...full.byDate } };
+  for (const [k, v] of Object.entries(drill.bySubject)) out.bySubject[k] = (out.bySubject[k] || 0) + v;
+  for (const [k, v] of Object.entries(drill.byDate)) out.byDate[k] = (out.byDate[k] || 0) + v;
+  return out;
 }
 
 /** 日表：当天全部安排 */

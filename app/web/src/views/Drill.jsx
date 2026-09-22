@@ -3,6 +3,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import { Loading, ErrorBox } from '../components/bits.jsx';
+import AnswerSheet, { splitAnswer } from '../components/AnswerSheet.jsx';
 
 /**
  * 专题训练：一个知识点（真题标签）名下历年出现过的题，按年份从新到旧排成一列。
@@ -279,11 +280,10 @@ function DrillQuestion({ item, index, onAnswer, onReset, onExport, onOpenPaper }
       <div className="paper-answer">
         <div className="paper-answer-h">
           <span className="lbl">ANSWER SHEET</span>
-          <span className="dim" style={{ fontSize: 11 }}>{mine.length} 字</span>
+          <span className="dim" style={{ fontSize: 11 }}>{splitAnswer(mine).text.length} 字</span>
         </div>
-        <textarea className="paper-input" rows={8} value={mine} readOnly={locked}
-                  placeholder="在这里作答（解题过程也可以写在纸上，这里只记要点）…"
-                  onChange={(e) => setMine(e.target.value)} />
+        <AnswerSheet value={mine} locked={locked} onChange={setMine}
+                     placeholder="在这里作答，或把平板上手写的过程截图粘贴进来…" />
       </div>
       {foot()}
       {key && (

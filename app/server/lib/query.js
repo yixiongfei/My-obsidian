@@ -155,16 +155,6 @@ export function dashboard(examDate) {
     cursor.setDate(cursor.getDate() + 1);
   }
 
-  // 连续复习天数：今天还没复习不算断
-  let streak = 0;
-  const back = new Date();
-  for (;;) {
-    const d = todayStr(back);
-    if (perDay.get(d)) { streak++; back.setDate(back.getDate() - 1); continue; }
-    if (d === today) { back.setDate(back.getDate() - 1); continue; }
-    break;
-  }
-
   const subjects = db.prepare(`
     SELECT t.tag                                                             AS tag,
            COUNT(*)                                                          AS notes,
@@ -197,7 +187,6 @@ export function dashboard(examDate) {
       unscheduled: buckets.unscheduled.length,
       todayDone: perDay.get(today) || 0,
     },
-    streak,
     due: buckets.due.slice(0, 50),
     upcoming: buckets.upcoming.slice(0, 20),
     unscheduled: buckets.unscheduled.slice(0, 20),

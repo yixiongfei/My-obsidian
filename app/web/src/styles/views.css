@@ -593,6 +593,140 @@ body.readmode-open { overflow: hidden; }
   .vocab-actions { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* ── 复习页：单词 / 长难句 切换 ── */
+.rv-head { flex: none; display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+.rv-tabs a { display: inline-block; padding: 5px 16px; font-size: 12.5px; color: var(--text-2); border-radius: calc(var(--radius-s) - 2px); transition: color var(--dur-1), background var(--dur-1); }
+.rv-tabs a:hover { color: var(--text); }
+.rv-tabs a.on { color: var(--text); background: var(--bg-1); box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12); }
+.vocab-actions.three { grid-template-columns: repeat(3, 1fr); }
+.vocab-btn.v-good:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.vocab-link.dim-link { color: var(--dim); }
+.vocab-link.dim-link:hover { color: var(--due); }
+
+/* ── 长难句卡片 ──
+   句子是主角：衬线、宽行距。行距留出来的空白正好放成分标签——标签浮在词的上方，句子本身一个字都不打断 */
+.sx-card {
+  flex: 1 1 0; min-height: 320px;
+  display: flex; flex-direction: column;
+  background: var(--bg-1); border: var(--hair) solid var(--line); border-radius: var(--radius);
+  overflow-y: auto;
+  transition: border-color var(--dur-2) var(--ease);
+}
+.sx-card.tappable { cursor: pointer; }
+.sx-card.tappable:hover { border-color: var(--line-2); }
+.sx-card.annot { cursor: default; }
+.sx-stage { margin: auto 0; padding: 40px 56px 32px; }
+
+.sx {
+  --sx-font: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, 'Times New Roman', serif;
+  max-width: 780px; margin: 0 auto;
+  font-family: var(--sx-font); font-size: clamp(19px, 1.9vw, 23px); line-height: 2.7;
+  color: var(--text); letter-spacing: 0.005em;
+  text-wrap: pretty;
+}
+.sx .tk { transition: opacity var(--dur-3) var(--ease), color var(--dur-2); }
+.sx.lv-1 .t-rest { opacity: 0.22; }
+/* 划在主干那一段上而不是逐词划：词间空格也带线，一整条不断 */
+.sx:is(.lv-1, .lv-2, .lv-3, .edit) .ss-main {
+  text-decoration: underline; text-decoration-color: var(--accent);
+  text-decoration-thickness: 1.5px; text-underline-offset: 7px;
+}
+
+.sx .ss { position: relative; transition: background-color var(--dur-3) var(--ease), color var(--dur-2); }
+.sx .ss-lbl {
+  position: absolute; left: 1px; bottom: calc(100% - 0.2em + var(--lift, 0) * 15px);
+  font-family: var(--font); font-size: 10.5px; font-weight: 500; font-style: normal; line-height: 1;
+  letter-spacing: 0.06em; white-space: nowrap; pointer-events: none;
+  opacity: 0; transform: translateY(3px);
+  transition: opacity var(--dur-3) var(--ease), transform var(--dur-3) var(--ease);
+}
+.sx:is(.lv-2, .lv-3, .edit) .ss-lbl { opacity: 1; transform: none; }
+.sx .ss-main > .ss-lbl { color: var(--accent); }
+
+.sx:is(.lv-2, .lv-3, .edit) .ss-clause {
+  border-radius: 5px; padding: 3px 2px;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.sx:is(.lv-2, .lv-3, .edit) .ss-clause.cd-0 { background: color-mix(in srgb, var(--hue-3) 17%, transparent); }
+.sx:is(.lv-2, .lv-3, .edit) .ss-clause.cd-1 { background: color-mix(in srgb, var(--hue-5) 24%, transparent); }
+/* 从句有底色带，标签抬到色带上沿之外，不压在色块上 */
+.sx .ss-clause > .ss-lbl { left: 3px; bottom: calc(100% + 2px + var(--lift, 0) * 15px); }
+.sx .ss-clause.cd-0 > .ss-lbl { color: var(--hue-3); }
+.sx .ss-clause.cd-1 > .ss-lbl { color: var(--hue-5); }
+.sx:is(.lv-2, .lv-3, .edit) .ss-phrase { border-bottom: 1.5px dotted var(--hue-6); }
+.sx .ss-phrase > .ss-lbl { color: var(--hue-6); }
+.sx:is(.lv-2, .lv-3, .edit) .ss-insert { color: var(--dim); font-style: italic; }
+.sx .ss-insert > .ss-lbl { color: var(--dim); }
+
+/* 解析模式：可拖选 */
+.sx.edit { user-select: none; }
+.sx.edit .tk { cursor: text; border-radius: 3px; }
+.sx.edit .tk:hover { background: var(--accent-soft); }
+.sx.edit .tk.sel { background: color-mix(in srgb, var(--accent) 28%, transparent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 28%, transparent); }
+
+.sx-reveal { max-width: 780px; margin: 26px auto 0; padding-top: 18px; border-top: var(--hair) solid var(--line); animation: rise var(--dur-3) var(--ease) both; }
+.sx-reveal p { margin: 0 0 10px; display: flex; gap: 16px; align-items: baseline; font-size: 15px; line-height: 1.8; color: var(--text); }
+.sx-reveal .lbl { flex: none; width: 34px; }
+.sx-reveal .sx-main { font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif; color: var(--text-2); }
+.sx-reveal .sx-note { font-size: 13.5px; color: var(--text-2); }
+
+.sx-steps { flex: none; display: flex; align-items: center; gap: 14px; margin-top: 18px; min-height: 52px; }
+.sx-dots { display: flex; gap: 6px; }
+.sx-dots i { width: 6px; height: 6px; border-radius: 50%; background: var(--line-2); transition: background var(--dur-2); }
+.sx-dots i.on { background: var(--accent); }
+.sx-hint { font-size: 13px; color: var(--text-2); }
+.sx-steps .btn { display: inline-flex; align-items: center; gap: 10px; }
+.kbd { font-size: 10px; letter-spacing: 0.08em; color: var(--dim); }
+
+.sx-annot { padding: 28px 40px 24px; display: flex; flex-direction: column; gap: 18px; }
+.sx-annot-head { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+.sx-annot-tip { font-size: 12.5px; color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 100%; }
+.sx-stage.edit-stage { margin: 0; padding: 10px 0 4px; }
+
+.sx-tools { display: flex; flex-wrap: wrap; gap: 10px 22px; padding: 14px 0; border-top: var(--hair) solid var(--line); border-bottom: var(--hair) solid var(--line); }
+.sx-tool-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.sx-tool-cap { font-size: 10.5px; letter-spacing: 0.12em; color: var(--dim); margin-right: 2px; }
+.sx-chip {
+  padding: 4px 10px; font-size: 12px; border-radius: 99px;
+  border: var(--hair) solid var(--line-2); color: var(--text-2);
+  transition: color var(--dur-1), border-color var(--dur-1), background var(--dur-1);
+}
+.sx-chip:hover { color: var(--text); }
+.sx-chip.r-main:hover { border-color: var(--accent); color: var(--accent); }
+.sx-chip.r-clause:hover { border-color: var(--hue-3); color: var(--hue-3); }
+.sx-chip.r-phrase:hover { border-color: var(--hue-6); color: var(--hue-6); }
+.sx-chip.r-insert:hover { border-color: var(--text-2); }
+
+.sx-marks { display: flex; flex-direction: column; gap: 4px; }
+.sx-mark { display: flex; align-items: baseline; gap: 12px; font-size: 12.5px; padding: 3px 0; }
+.sx-mark b { flex: none; min-width: 64px; font-weight: 500; }
+.sx-mark.r-main b { color: var(--accent); }
+.sx-mark.r-clause b { color: var(--hue-3); }
+.sx-mark.r-phrase b { color: var(--hue-6); }
+.sx-mark.r-insert b { color: var(--dim); }
+.sx-mark-t { flex: 1; min-width: 0; color: var(--text-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sx-mark button { color: var(--dim); font-size: 15px; line-height: 1; padding: 0 4px; }
+.sx-mark button:hover { color: var(--due); }
+
+.sx-field { display: flex; flex-direction: column; gap: 8px; }
+.sx-field textarea, .sx-field input, .sx-add textarea, .sx-add input {
+  width: 100%; padding: 10px 12px; font: inherit; font-size: 14px; line-height: 1.7; color: var(--text);
+  background: var(--bg-2); border: var(--hair) solid var(--line); border-radius: var(--radius-s); resize: vertical;
+}
+.sx-field textarea:focus, .sx-field input:focus, .sx-add textarea:focus, .sx-add input:focus { outline: none; border-color: var(--accent); }
+.sx-annot-foot { display: flex; align-items: center; gap: 10px; }
+
+.sx-add { flex: none; margin-bottom: 18px; padding: 16px; background: var(--bg-1); border: var(--hair) solid var(--line); border-radius: var(--radius); display: flex; flex-direction: column; gap: 10px; }
+.sx-add textarea { font-family: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif; font-size: 16px; }
+.sx-add-row { display: flex; gap: 10px; align-items: center; }
+.sx-add-row input { flex: 1; }
+.sx-empty-t { font-size: 18px; color: var(--text); margin: 18px 0 0; }
+
+@media (max-width: 720px) {
+  .sx-stage { padding: 28px 20px 24px; }
+  .sx-annot { padding: 20px; }
+}
+
 /* ==================================================================
  * 学习资源 · 历年真题
  * ================================================================== */
@@ -1398,6 +1532,8 @@ mark.hl.hl-flash { animation: hl-flash 2.4s var(--ease) both; }
 .day-cell .dc-dots i.pt, .cal-legend .lg-pt { width: 7px; height: 7px; border-radius: 1px; background: var(--accent); transform: rotate(45deg) scale(0.85); }
 
 .day-cell .dc-dots i.hol { background: var(--rest); }
+/* 长难句：一小段横线，像一行句子；和圆点、菱形、方块都分得开 */
+.day-cell .dc-dots i.sent, .cal-legend .lg-sent { width: 10px; height: 3px; border-radius: 2px; background: var(--hue-5); align-self: center; }
 /* 日程安排：空心小方块，和实心圆点区分开 */
 .day-cell .dc-dots i.plan { width: 7px; height: 7px; border-radius: 2px; background: none; border: 1.5px solid var(--accent-2); box-sizing: border-box; }
 .cal-legend .lg-plan { width: 8px; height: 8px; border-radius: 2px; border: 1.5px solid var(--accent-2); box-sizing: border-box; }
@@ -1480,3 +1616,63 @@ mark.hl.hl-flash { animation: hl-flash 2.4s var(--ease) both; }
   position: absolute; font-size: 10px; letter-spacing: 0.14em;
   color: var(--dim); white-space: nowrap; pointer-events: none;
 }
+
+/* ── 主观题作答区：文字 + 手写图 ──
+   放在文件末尾，压过上面 .paper img 的通用反相（那套 0.9 反相会留一块灰框）。
+   夜间：完全反相，白底 → 纯黑，再用「变亮」叠在页面上，纯黑就等于页面底色，字迹变成浅色；
+   日间：正片叠底，白底直接透出纸色。 */
+.ans { position: relative; }
+.ans.drag .paper-input { border-color: var(--accent); border-style: dashed; }
+.ans-img {
+  position: relative; margin: 10px 0 0; padding: 10px 12px;
+  border: var(--hair) solid var(--line); border-radius: var(--radius);
+  background: transparent;
+}
+.ans-img img { display: block; max-width: 100%; margin: 0 auto; cursor: zoom-in; border-radius: 0; }
+:root[data-theme='dark'] .ans-img img, :root[data-theme='dark'] .ans-zoom img {
+  filter: invert(1) hue-rotate(180deg) brightness(0.9); mix-blend-mode: lighten; background: transparent;
+}
+:root[data-theme='light'] .ans-img img, :root[data-theme='light'] .ans-zoom img { filter: none; mix-blend-mode: multiply; background: transparent; }
+.ans-x {
+  position: absolute; top: 6px; right: 8px; width: 24px; height: 24px; border-radius: 50%;
+  color: var(--dim); font-size: 16px; line-height: 1; opacity: 0; transition: opacity 0.15s, color 0.15s, background 0.15s;
+}
+.ans-img:hover .ans-x { opacity: 1; }
+.ans-x:hover { color: var(--due); background: var(--bg-2); }
+.ans-bar { display: flex; align-items: center; gap: 12px; margin-top: 8px; font-size: 11px; letter-spacing: 0.04em; color: var(--dim); }
+.ans-pick { font-size: 11.5px; color: var(--accent); }
+.ans-pick:hover { text-decoration: underline; }
+.ans-err { margin-top: 6px; font-size: 12px; color: var(--due); }
+.ans-zoom {
+  position: fixed; inset: 0; z-index: 90; padding: 48px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg); cursor: zoom-out; animation: rise var(--dur-2) var(--ease) both;
+}
+.ans-zoom img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+/* ── 长难句列表：平时翻着回顾 ── */
+.sx-list { max-width: 920px; }
+.sx-list .rv-head { margin-top: 6px; }
+.sx-list-bar { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding-bottom: 16px; border-bottom: var(--hair) solid var(--rule-hard); }
+.sx-list-bar .seg button { padding: 4px 12px; font-size: 12px; }
+.sx-list-q {
+  width: 220px; padding: 6px 12px; font-size: 13px; color: var(--text);
+  background: var(--bg-2); border: var(--hair) solid var(--line); border-radius: var(--radius-s); outline: none;
+}
+.sx-list-q:focus { border-color: var(--accent); }
+.sx-switch { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-2); cursor: pointer; user-select: none; }
+.sx-switch input { accent-color: var(--accent); }
+.sx-list-empty { padding: 60px 0; text-align: center; font-size: 13px; color: var(--dim); }
+
+.sx-item { padding: 26px 0 22px; border-bottom: var(--hair) solid var(--line); }
+/* 句子第一行上方要留出成分标签的位置 */
+.sx-item-meta { display: flex; align-items: center; gap: 14px; font-size: 11px; letter-spacing: 0.06em; color: var(--dim); margin-bottom: 14px; }
+.sx-item-n { font-size: 12px; color: var(--text-2); }
+.sx-tag { padding: 1px 8px; border-radius: 99px; font-size: 10.5px; color: var(--due); background: var(--due-soft); }
+.sx-item .sx { max-width: none; margin: 0; font-size: 19px; line-height: 2.55; }
+.sx-item-tr { margin: 6px 0 0; font-size: 14px; line-height: 1.85; color: var(--text-2); cursor: default; animation: rise var(--dur-2) var(--ease) both; }
+.sx-item-note { margin: 4px 0 0; font-size: 12.5px; color: var(--dim); }
+.sx-item-peek { margin-top: 4px; font-size: 12px; color: var(--dim); letter-spacing: 0.04em; }
+.sx-item-peek:hover { color: var(--accent); }
+.sx-item .sx-annot { padding: 14px 0 0; }
+@media (max-width: 720px) { .sx-list-q { width: 100%; } }

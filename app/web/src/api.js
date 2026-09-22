@@ -29,6 +29,13 @@ export const api = {
 
   // 英语词汇 Anki
   cards: () => j('/api/review/cards'),
+  // 长难句卡片
+  sentences: () => j('/api/sentences'),
+  allSentences: () => j('/api/sentences/all'),
+  addSentence: (payload) => j('/api/sentences', body('POST', payload)),
+  annotateSentence: (id, payload) => j(`/api/sentences/${id}/annotation`, body('PUT', payload)),
+  rateSentence: (id, rating) => j(`/api/sentences/${id}/review`, body('POST', { rating })),
+  removeSentence: (id) => j(`/api/sentences/${id}`, { method: 'DELETE' }),
   rateWord: (id, rating) => j('/api/vocabulary/review', body('POST', { id, rating })),
   // 发完就走，不等磁盘：失败也不该挡住用户翻下一张卡
   syncVocabMarkdown: () => fetch('/api/vocabulary/sync-markdown', body('POST', {})).catch(() => {}),
@@ -70,6 +77,9 @@ export const api = {
   // 贴图走裸流，别让 JSON 体积限制和 base64 编码挡在截图和纸片之间
   uploadStickyMedia: (file) =>
     j(`/api/stickies/media?name=${encodeURIComponent(file.name || 'paste.png')}&mime=${encodeURIComponent(file.type || '')}`,
+      { method: 'POST', headers: { 'Content-Type': 'application/octet-stream' }, body: file }),
+  uploadAnswerImage: (file) =>
+    j(`/api/answers/media?name=${encodeURIComponent(file.name || 'paste.png')}&mime=${encodeURIComponent(file.type || '')}`,
       { method: 'POST', headers: { 'Content-Type': 'application/octet-stream' }, body: file }),
 
   year: (y) => j(`/api/schedule/year/${y}`),

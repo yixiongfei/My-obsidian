@@ -5,6 +5,7 @@ import { useApi } from '../hooks.js';
 import { Loading, ErrorBox } from '../components/bits.jsx';
 import { speak, canSpeak } from '../tts.js';
 import { TierTag } from './Words.jsx';
+import { ReviewTabs } from './Sentences.jsx';
 
 /**
  * 英语词汇 Anki。
@@ -193,6 +194,7 @@ export default function Review({ version, onReviewed }) {
   if (!card) {
     return (
       <div className="scroll"><div className="vocab-stage">
+        <div className="rv-head"><ReviewTabs /></div>
         <div className="vocab-done">
           <div className="lbl">ROUND COMPLETE</div>
           <div className="vocab-done-n fig">{doneCount}</div>
@@ -225,6 +227,7 @@ export default function Review({ version, onReviewed }) {
 
   return (
     <div className="scroll"><div className="vocab-stage">
+      <div className="rv-head"><ReviewTabs /></div>
       <div className="vocab-top">
         <div className="vocab-bar">
           <i style={{ width: `${total ? (doneCount / total) * 100 : 0}%` }} />

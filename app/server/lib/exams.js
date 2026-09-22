@@ -370,3 +370,29 @@ export function statsBetween(from, to) {
   }
   return out;
 }
+
+/**
+ * [from, to] 闭区间内专题训练（exam_drill）答的题数，形状同 statsBetween。
+ * 专题训练一题一交，不交整卷，所以不在 exam_attempts 里，得单独统计——
+ * 否则「做题」的节奏图和连续天数只看得见整卷，看不见平时刷的单题。
+ */
+export function drillStatsBetween(from, to) {
+  let rows;
+  try { rows = handle().prepare('SELECT exam_id, section_id, answered_at FROM exam_drill').all(); }
+  catch { return { total: 0, bySubject: {}, byDate: {} }; } // 表还没建（从没做过专题训练）
+  const out = { total: 0, bySubject: {}, byDate: {} };
+  const examCache = new Map();
+  for (const r of rows) {
+    const date = localDate(r.answered_at);
+    if (date < from || date > to) continue;
+    if (!examCache.has(r.exam_id)) examCache.set(r.exam_id, getExam(r.exam_id));
+    const exam = examCache.get(r.exam_id);
+    if (!exam) continue;
+    const section = exam.sections.find((s) => s.id === r.section_id);
+    const subject = SUBJECT_OF_GROUP[exam.group] || section?.subject || exam.kindLabel;
+    out.total += 1;
+    out.bySubject[subject] = (out.bySubject[subject] || 0) + 1;
+    out.byDate[date] = (out.byDate[date] || 0) + 1;
+  }
+  return out;
+}

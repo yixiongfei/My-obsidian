@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import { Band, Loading, ErrorBox, Empty, Item } from '../components/bits.jsx';
-import Trend, { SERIES, unitsOf } from '../components/Trend.jsx';
+import Trend, { SERIES, unitsOf, tipOf } from '../components/Trend.jsx';
 
 /**
  * 仪表盘按学习过程来摆，只留每天要看的：
@@ -34,14 +34,13 @@ function Heat({ daily, today }) {
   for (let i = 0; i < WEEKS * 7; i++) {
     const date = iso(cursor);
     const r = byDate.get(date);
-    cells.push({ date, r, units: r ? unitsOf(r) : 0, future: date > today });
+    // 考点推进不进柱子，但那天也算学过（和日历、连续天数同一口径）
+    cells.push({ date, r, units: r ? unitsOf(r) + (r.points || 0) : 0, future: date > today });
     cursor.setDate(cursor.getDate() + 1);
   }
   const totals = SERIES.map((s) => ({ ...s, n: daily.reduce((a, r) => a + (r[s.key] || 0), 0) }));
   const activeDays = cells.filter((c) => c.units > 0).length;
-  const tip = (c) => (c.r
-    ? `${c.date}　笔记复习 ${c.r.reviews} · 新建 ${c.r.created} · 背词 ${c.r.words} · 做题 ${c.r.exams}`
-    : `${c.date}　—`);
+  const tip = (c) => (c.r ? tipOf(c.r) : `${c.date}　—`);
   return (
     <div className="heat-wrap">
       <div className="trend-head">
@@ -127,7 +126,15 @@ export default function Dashboard({ version }) {
     });
   }
   if (counts.todayDone === 0 && counts.due > 0) {
-    tips.push({ key: 'streak', text: `今天还没复习笔记，${counts.due} 篇在等——复习一篇就不断连续（已 ${streak} 天）` });
+    // 连续天数不只看笔记复习，背词 / 做题也算——今天已经学过了，就别再拿「断连续」吓人
+    const todayRow = daily.find((d) => d.date === today);
+    const todayActive = todayRow ? unitsOf(todayRow) + (todayRow.points || 0) > 0 : false;
+    tips.push({
+      key: 'streak',
+      text: todayActive
+        ? `今天还没复习笔记，${counts.due} 篇在等——顺手复习一篇`
+        : `今天还没复习笔记，${counts.due} 篇在等——复习一篇就不断连续（已 ${streak} 天）`,
+    });
   }
   if (pt.week === 0 && pt.unlearned > 0 && points?.next?.[0]) {
     const n = points.next[0];
@@ -214,7 +221,7 @@ export default function Dashboard({ version }) {
 
           <div style={{ marginTop: 48 }}>
             {/* 学习节奏：左边热力图看坚持，右边柱线图看每天做了多少；两边同一份 daily */}
-            <Band title="学习节奏" meta="笔记复习 · 背词 · 做题 · 新建">
+            <Band title="学习节奏" meta="笔记复习 · 背词 · 做题 · 长难句 · 新建">
               <div className="rhythm">
                 <Heat daily={daily} today={today} />
                 <Trend daily={daily} />

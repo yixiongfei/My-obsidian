@@ -4,6 +4,7 @@ import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import { Loading, ErrorBox } from '../components/bits.jsx';
 import ExamReadingMode from '../components/ExamReadingMode.jsx';
+import AnswerSheet, { splitAnswer } from '../components/AnswerSheet.jsx';
 import { useWordMarks, useHighlights, HL_COLORS } from '../wordmarks.js';
 
 /**
@@ -58,6 +59,20 @@ export default function Exam() {
       notify(out.added ? `已加入 ${out.file}${out.submitted ? '' : '（未交卷，未附答案）'}` : `已经在 ${out.file} 里了`, 'md');
     } catch (err) { notify(err.message, 'err'); }
   }, [id, notify]);
+
+  // 右键「加入长难句」：选中的一句，或点中的那条荧光笔
+  const addSentence = useCallback(async () => {
+    const m = hl.menu;
+    hl.closeMenu();
+    const mark = m?.existing ? hl.marks.find((x) => x.id === m.existing) : null;
+    const src = m?.target || mark;
+    if (!src) return;
+    try {
+      const out = await api.addSentence({ text: src.text, examId: id, sectionId: src.sectionId, q: src.q ?? null });
+      window.getSelection?.()?.removeAllRanges();
+      notify(out.added ? '已加入长难句——到「复习 · 长难句」里拆解它' : '这句已经在长难句卡片里了', 'hl');
+    } catch (err) { notify(err.message, 'err'); }
+  }, [hl, id, notify]);
 
   // 换卷子时 useApi 会先保留上一份数据再去取新的，别把旧卷子当新卷子渲染（?q= 跳转也会跳错）
   useEffect(() => { setSections(data && data.id === id ? data.sections : null); }, [data, id]);
@@ -159,7 +174,7 @@ export default function Exam() {
         {toast && <div className={`mark-toast ${toast.kind}`}>{toast.text}</div>}
         {hl.menu && (
           <CtxMenu menu={hl.menu} color={hl.color} onClose={hl.closeMenu} onHighlight={hl.highlight}
-                   onRecolor={hl.recolor} onUnhighlight={hl.unhighlight} onCopy={hl.copySelection} />
+                   onRecolor={hl.recolor} onUnhighlight={hl.unhighlight} onCopy={hl.copySelection} onSentence={addSentence} />
         )}
 
         <nav className="toc paper-rail">
@@ -258,7 +273,7 @@ function UnitHead({ section, right }) {
 }
 
 /** 选中文字后的右键菜单：选一支颜色划荧光笔 / 复制；点在已有荧光笔上则是换色 / 取消 */
-function CtxMenu({ menu, color, onClose, onHighlight, onRecolor, onUnhighlight, onCopy }) {
+function CtxMenu({ menu, color, onClose, onHighlight, onRecolor, onUnhighlight, onCopy, onSentence }) {
   useEffect(() => {
     const off = (e) => { if (!e.target.closest?.('.ctx-menu')) onClose(); };
     const key = (e) => { if (e.key === 'Escape') onClose(); };
@@ -267,7 +282,7 @@ function CtxMenu({ menu, color, onClose, onHighlight, onRecolor, onUnhighlight, 
     return () => { window.removeEventListener('mousedown', off, true); window.removeEventListener('keydown', key); };
   }, [onClose]);
   const x = Math.min(menu.x, window.innerWidth - 180);
-  const y = Math.min(menu.y, window.innerHeight - 100);
+  const y = Math.min(menu.y, window.innerHeight - 140);
   const swatches = (onPick, current) => (
     <div className="ctx-swatches">
       {HL_COLORS.map((c) => (
@@ -280,10 +295,12 @@ function CtxMenu({ menu, color, onClose, onHighlight, onRecolor, onUnhighlight, 
       {menu.existing
         ? <>
             <div className="ctx-row"><span>换颜色</span>{swatches(onRecolor, null)}</div>
+            <button onClick={onSentence}>加入长难句</button>
             <button onClick={onUnhighlight}>取消标记</button>
           </>
         : <>
             <div className="ctx-row"><span>标记句子</span>{swatches(onHighlight, color)}</div>
+            <button onClick={onSentence}>加入长难句</button>
             <button onClick={onCopy}>复制</button>
           </>}
     </div>
@@ -608,7 +625,7 @@ function FreeUnit({ section, examId, onSubmit, onReset, onExport }) {
   const [submit, busy] = useSubmit(section, answers, flush, onSubmit);
   const key = section.key;
   const text = answers.text || '';
-  const { cjk, latin } = countWords(text);
+  const { cjk, latin } = countWords(splitAnswer(text).text);
   const english = section.id === 'writing-a' || section.id === 'writing-b';
   const rows = section.id.startsWith('writing') ? 12 : 8;
   const n = section.numbers?.[0];
@@ -624,9 +641,8 @@ function FreeUnit({ section, examId, onSubmit, onReset, onExport }) {
           <span className="lbl">ANSWER SHEET</span>
           <span className="dim" style={{ fontSize: 11 }}>{english ? `${latin} words` : `${cjk + latin} 字`}</span>
         </div>
-        <textarea className="paper-input" rows={rows} value={text} readOnly={locked}
-                  placeholder={english ? 'Write your answer here…' : '在这里作答（解题过程也可以写在纸上，这里只记要点）…'}
-                  onChange={(e) => update({ text: e.target.value })} />
+        <AnswerSheet value={text} rows={rows} locked={locked} onChange={(v) => update({ text: v })}
+                     placeholder={english ? 'Write your answer here…' : '在这里作答，或把平板上手写的过程截图粘贴进来…'} />
       </div>
 
       <UnitFoot section={section} unanswered={text.trim() ? 0 : 1} count={0} free
