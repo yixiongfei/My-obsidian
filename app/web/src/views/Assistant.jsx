@@ -2,6 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState, useSyncExternalS
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import MarkdownIt from 'markdown-it';
 import katexPlugin from '@vscode/markdown-it-katex';
+import katex from 'katex';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import { assistant } from '../assistantStore.js';
@@ -11,9 +12,33 @@ import { assistant } from '../assistantStore.js';
  * 对话状态在 assistantStore 里，切走页面回答照样继续。
  */
 
+// 解析不了的公式按原样显示 TeX 源码（淡色），不用 KaTeX 默认的红字报错
+const quietKatex = {
+  renderToString(src, opts) {
+    try { return katex.renderToString(src, { ...opts, throwOnError: true }); }
+    catch { return `<code class="tex-raw">${md.utils.escapeHtml(src)}</code>`; }
+  },
+};
+
 // html: false —— 模型输出里的 HTML 一律当文本，不进 DOM
 const md = new MarkdownIt({ html: false, linkify: true, breaks: true })
-  .use(katexPlugin.default || katexPlugin, { throwOnError: false });
+  .use(katexPlugin.default || katexPlugin, { katex: quietKatex });
+
+/**
+ * 正在输出的那段，末尾没收尾的公式先扣下：`$$` 块只来了开头、行内 `$` 只来了前半个时，
+ * 半截 TeX 要么原样露出来、要么解析失败，等收尾了再一次渲染出来。
+ */
+function settledText(text) {
+  if ((text.split('$$').length - 1) % 2) return text.slice(0, text.lastIndexOf('$$'));
+  let open = -1;
+  for (let i = text.lastIndexOf('\n') + 1; i < text.length; i++) {
+    if (text[i] === '\\') { i++; continue; }
+    if (text[i] !== '$') continue;
+    if (text[i + 1] === '$') { i++; continue; }
+    open = open < 0 ? i : -1;
+  }
+  return open < 0 ? text : text.slice(0, open);
+}
 
 export const WEEKLY_PROMPT = '用我最近 7 天一直没掌握的单词写一篇生词阅读，加进阅读卡片，然后告诉我用了哪些词。';
 
@@ -42,8 +67,8 @@ const TOOL_LABEL = {
 };
 const toolLabel = (p) => (TOOL_LABEL[p.name] || (() => p.name.replace(/^mcp__\w+__/, '')))(p.input || {});
 
-function Markdown({ text }) {
-  const html = useMemo(() => md.render(text || ''), [text]);
+function Markdown({ text, live }) {
+  const html = useMemo(() => md.render(live ? settledText(text || '') : text || ''), [text, live]);
   return <div className="as-md prose" dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
@@ -191,7 +216,7 @@ export default function Assistant() {
           ) : (
             <div className="as-bot" key={i}>
               {m.parts.map((p, k) => (
-                p.type === 'text' ? <Markdown key={k} text={p.text} />
+                p.type === 'text' ? <Markdown key={k} text={p.text} live={s.running && i === s.messages.length - 1 && k === m.parts.length - 1} />
                   : p.type === 'tool' ? <ToolChip key={k} part={p} onOpen={open} />
                     : <Permission key={k} part={p} />
               ))}
