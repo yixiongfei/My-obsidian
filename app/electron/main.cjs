@@ -1,5 +1,8 @@
 /* eslint-disable no-console */
-const { app, BrowserWindow, dialog, Menu, shell, ipcMain } = require('electron');
+const { app, BrowserWindow, dialog, Menu, shell, ipcMain, Notification } = require('electron');
+
+// Windows 的通知要认得出是哪个程序：和安装包建的开始菜单快捷方式用同一个 AppUserModelID
+if (process.platform === 'win32') app.setAppUserModelId('com.yixiongfei.knowledgebase');
 const path = require('node:path');
 const fs = require('node:fs');
 const net = require('node:net');
@@ -82,6 +85,30 @@ async function startServer(vaultRoot) {
   process.env.NO_AUTOSTART = '1';
   const mod = await import(`file://${path.join(APP_ROOT, 'server', 'index.js')}`);
   server = await mod.start();
+  mod.onReminder?.(showReminder);
+}
+
+/* 日程提醒：Windows 原生通知，点一下把窗口拉到前面、跳到那天的日程 */
+const reminderRefs = new Set(); // 通知对象要留着引用，被回收了点击就没反应
+function showReminder(r) {
+  if (!Notification.isSupported()) return;
+  const n = new Notification({
+    title: r.title,
+    body: r.body,
+    icon: path.join(__dirname, '..', 'build', 'icon.png'),
+    urgency: r.stage === 'start' ? 'critical' : 'normal',
+  });
+  n.on('click', () => {
+    if (!win) return;
+    if (win.isMinimized()) win.restore();
+    win.show();
+    win.focus();
+    const [y, m, d] = r.date.split('-');
+    win.webContents.executeJavaScript(`location.hash = ${JSON.stringify(`#/schedule/${y}/${m}/${d}`)}`).catch(() => {});
+  });
+  n.on('close', () => reminderRefs.delete(n));
+  reminderRefs.add(n);
+  n.show();
 }
 
 async function restartWithVault(vaultRoot) {

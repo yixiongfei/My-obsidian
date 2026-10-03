@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api.js';
-import { useApi } from '../hooks.js';
+import { useApi, useScrollMemory } from '../hooks.js';
 import { Loading, ErrorBox, Empty } from '../components/bits.jsx';
 
 /**
@@ -26,6 +26,10 @@ export default function Resources() {
   });
   const pick = (g, k) => setPicked((p) => { const next = { ...p, [g]: k }; localStorage.setItem('kb-exam-kinds', JSON.stringify(next)); return next; });
 
+  // 从卷子、专题训练切回来，还停在刚才那一屏
+  const scrollRef = useRef(null);
+  useScrollMemory(scrollRef, 'resources', !!data);
+
   const exams = data?.exams || [];
   const byKind = useMemo(() => {
     const m = new Map();
@@ -40,7 +44,7 @@ export default function Resources() {
   const doingAll = exams.filter((e) => e.started > 0 && e.submitted < e.units).length;
 
   return (
-    <div className="scroll"><div className="page res-page">
+    <div className="scroll" ref={scrollRef}><div className="page res-page">
       <div className="band" style={{ borderBottomColor: 'var(--line-2)', marginBottom: 34 }}>
         <span className="band-title">RESOURCES · 学习资源</span>
         <span className="band-meta">{exams.length} 套真题 · 已完成 {doneAll} · 进行中 {doingAll}</span>

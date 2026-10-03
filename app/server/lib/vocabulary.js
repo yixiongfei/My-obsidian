@@ -417,6 +417,12 @@ export function dailyBetween(from, to) {
     .map((r) => [r.date, r.done || 0]));
 }
 
+/** [from, to] 闭区间内背过的不同单词数（一个词背了几天也只算一个），和评分次数 */
+export function wordsBetween(from, to) {
+  const r = vdb.handle().prepare('SELECT COUNT(DISTINCT word_id) AS words, COUNT(*) AS times FROM vocab_reviews WHERE date BETWEEN ? AND ?').get(from, to);
+  return { words: r?.words || 0, times: r?.times || 0 };
+}
+
 /* ══════════════════════════════════════════════════════════════
  * 六、Markdown 投影
  * ══════════════════════════════════════════════════════════════ */

@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { api } from '../api.js';
-import { useApi } from '../hooks.js';
+import { useApi, useScrollMemory } from '../hooks.js';
 import { Loading, ErrorBox } from '../components/bits.jsx';
 
 /**
@@ -14,15 +14,23 @@ import { Loading, ErrorBox } from '../components/bits.jsx';
 const KIND_SHORT = { 408: '', math1: '数一', math2: '数二', math3: '数三' };
 const TYPE_ORDER = ['选择题', '填空题', '解答题'];
 
+/* 每个科目组的标签页状态（选的科目、展开的知识点），只活在这次会话里 */
+const tagsMemo = new Map();
+
 export default function ExamTags() {
   const { group } = useParams();
   const navigate = useNavigate();
   const [params] = useSearchParams();
   const want = params.get('tag') || '';
   const { data, loading, error, reload } = useApi(() => api.examTags(group), [group]);
-  const [subject, setSubject] = useState('');
+  // 选的科目、展开的知识点、滚到哪儿都记着：从专题训练、笔记切回来不用重新找
+  const memo = tagsMemo.get(group) || {};
+  const [subject, setSubject] = useState(memo.subject || '');
   const [q, setQ] = useState('');
-  const [open, setOpen] = useState(() => new Set(want ? [want] : []));
+  const [open, setOpen] = useState(() => new Set([...(memo.open || []), ...(want ? [want] : [])]));
+  const scrollRef = useRef(null);
+  useEffect(() => { tagsMemo.set(group, { subject, open: [...open] }); }, [group, subject, open]);
+  useScrollMemory(scrollRef, `tags:${group}`, !!data, { restore: !want });
 
   const subjects = data?.subjects || [];
 
@@ -52,7 +60,7 @@ export default function ExamTags() {
   const hue = group === 'math' ? 'math' : '408';
 
   return (
-    <div className="scroll"><div className={`page res-page hue-${hue}`}>
+    <div className="scroll" ref={scrollRef}><div className={`page res-page hue-${hue}`}>
       <div className="rh-crumb" style={{ marginBottom: 14 }}>
         <button onClick={() => navigate('/resources')} style={{ color: 'var(--dim)', letterSpacing: 'inherit' }}>学习资源</button>
         {'　/　'}{data.label}

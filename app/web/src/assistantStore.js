@@ -11,14 +11,15 @@
  */
 
 const KEY = 'kb-assistant';
-const blank = () => ({ convId: null, title: '', sessionId: null, messages: [] });
+const blank = (projectId = null) => ({ convId: null, title: '', sessionId: null, projectId, messages: [] });
 
-let state = { ...blank(), model: '', running: false, runId: null, list: [], loaded: false };
+// effort：medium「快速回答」/ high「深入思考」。看图讲题时 high 要等很久，默认快速
+let state = { ...blank(), model: '', effort: 'medium', running: false, runId: null, list: [], projects: [], loaded: false };
 const subs = new Set();
 
 function set(fn) {
   state = fn(state);
-  try { localStorage.setItem(KEY, JSON.stringify({ convId: state.convId, model: state.model })); } catch { /* 无痕 */ }
+  try { localStorage.setItem(KEY, JSON.stringify({ convId: state.convId, model: state.model, effort: state.effort })); } catch { /* 无痕 */ }
   subs.forEach((f) => f());
 }
 
@@ -32,6 +33,28 @@ const put = (id, body) => json(`/api/assistant/conversations/${id}`, {
   method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body),
 });
 
+async function refreshProjects() {
+  try { const projects = await json('/api/assistant/projects'); set((s) => ({ ...s, projects })); } catch { /* 服务没起 */ }
+}
+const send2 = (url, method, body) => json(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body || {}) });
+
+async function createProject(name) {
+  const p = await send2('/api/assistant/projects', 'POST', { name });
+  await refreshProjects();
+  return p;
+}
+async function renameProject(id, name) { await send2(`/api/assistant/projects/${id}`, 'PATCH', { name }); refreshProjects(); }
+async function removeProject(id) {
+  await send2(`/api/assistant/projects/${id}`, 'DELETE');
+  if (state.projectId === id) set((s) => ({ ...s, projectId: null }));
+  await Promise.all([refreshProjects(), refreshList()]);
+}
+async function moveConversation(id, projectId) {
+  await send2(`/api/assistant/conversations/${id}`, 'PATCH', { projectId });
+  if (state.convId === id) set((s) => ({ ...s, projectId }));
+  refreshList();
+}
+
 async function refreshList() {
   try { const list = await json('/api/assistant/conversations'); set((s) => ({ ...s, list })); } catch { /* 服务没起 */ }
 }
@@ -41,7 +64,7 @@ async function persist() {
   const s = state;
   if (!s.convId || !s.messages.length) return;
   try {
-    await put(s.convId, { title: s.title, sessionId: s.sessionId, model: s.model, messages: s.messages });
+    await put(s.convId, { title: s.title, sessionId: s.sessionId, model: s.model, projectId: s.projectId, messages: s.messages });
     refreshList();
   } catch { /* 下一轮再存 */ }
 }
@@ -62,7 +85,7 @@ async function init() {
   if (state.loaded) return;
   let saved = {};
   try { saved = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch { /* 坏了就当空 */ }
-  set((s) => ({ ...s, loaded: true, model: saved.model || '' }));
+  set((s) => ({ ...s, loaded: true, model: saved.model || '', effort: saved.effort === 'high' ? 'high' : 'medium' }));
 
   // 上一版把整段对话放在 localStorage 里：搬进库，别丢
   if (Array.isArray(saved.messages) && saved.messages.length && !saved.convId) {
@@ -71,7 +94,7 @@ async function init() {
     await put(id, { title: (first?.text || '对话').slice(0, 30), sessionId: saved.sessionId, model: saved.model || '', messages: settle(saved.messages) }).catch(() => {});
     saved.convId = id;
   }
-  await refreshList();
+  await Promise.all([refreshList(), refreshProjects()]);
   if (saved.convId) await open(saved.convId);
 }
 
@@ -79,7 +102,7 @@ async function open(id) {
   if (state.running) return;
   try {
     const c = await json(`/api/assistant/conversations/${id}`);
-    set((s) => ({ ...s, convId: c.id, title: c.title, sessionId: c.sessionId, messages: settle(c.messages) }));
+    set((s) => ({ ...s, convId: c.id, title: c.title, sessionId: c.sessionId, projectId: c.projectId || null, messages: settle(c.messages) }));
   } catch {
     set((s) => ({ ...s, ...blank() }));
   }
@@ -132,17 +155,30 @@ function apply(ev) {
   }
 }
 
-async function send(prompt) {
+/**
+ * attachments: [{ path, kind: 'image' | 'file', name }]
+ * context（做题页侧栏）：{ exam, section, n, label, key, sig, draft } —— 正在做的那道题。
+ *   key 认题，sig 认作答；和这段对话里上一次附的题一样就只发 brief，服务端不再重复整道题和手写图。
+ */
+async function send(prompt, attachments = [], context = null) {
   const text = String(prompt || '').trim();
-  if (!text || state.running) return;
+  const images = attachments.filter((a) => a.kind === 'image').map((a) => a.path);
+  const files = attachments.filter((a) => a.kind === 'file').map((a) => ({ path: a.path, name: a.name }));
+  if ((!text && !attachments.length) || state.running) return;
   const fresh = !state.convId;
+  const lastCtx = state.messages.findLast((m) => m.role === 'user' && m.ctx)?.ctx;
+  const ctx = context && { key: context.key, label: context.label, sig: context.sig };
+  const ctxBody = context && {
+    exam: context.exam, section: context.section, n: context.n, label: context.label,
+    ...(lastCtx?.key === ctx.key && lastCtx?.sig === ctx.sig ? { brief: true } : { draft: context.draft || '' }),
+  };
   set((s) => ({
     ...s,
     convId: s.convId || crypto.randomUUID(),
-    title: s.title || text.replace(/\s+/g, ' ').slice(0, 30),
+    title: s.title || (text || files[0]?.name || '图片').replace(/\s+/g, ' ').slice(0, 30),
     running: true,
     runId: null,
-    messages: [...s.messages, { role: 'user', text }, { role: 'assistant', parts: [] }],
+    messages: [...s.messages, { role: 'user', text, ...(images.length ? { images } : {}), ...(files.length ? { files } : {}), ...(ctx ? { ctx } : {}) }, { role: 'assistant', parts: [] }],
   }));
   if (fresh) persist(); // 新对话马上进侧栏
 
@@ -150,7 +186,7 @@ async function send(prompt) {
     const res = await fetch('/api/assistant/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt: text, sessionId: state.sessionId, model: state.model || undefined }),
+      body: JSON.stringify({ prompt: text, images, files: files.map((f) => f.path), sessionId: state.sessionId, model: state.model || undefined, effort: state.effort, context: ctxBody || undefined }),
     });
     if (!res.ok || !res.body) {
       const err = await res.json().catch(() => ({}));
@@ -206,7 +242,12 @@ export const assistant = {
   stop,
   open,
   remove,
+  createProject,
+  renameProject,
+  removeProject,
+  moveConversation,
   setModel: (model) => set((s) => ({ ...s, model })),
+  setEffort: (effort) => set((s) => ({ ...s, effort: effort === 'high' ? 'high' : 'medium' })),
   /** 新对话：只是换一张白纸，旧的留在侧栏 */
-  newChat: () => { if (!state.running) set((s) => ({ ...s, ...blank() })); },
+  newChat: (projectId = null) => { if (!state.running) set((s) => ({ ...s, ...blank(projectId) })); },
 };

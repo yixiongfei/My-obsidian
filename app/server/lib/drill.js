@@ -1,5 +1,5 @@
 import { handle } from './db.js';
-import { getExam, getTags } from './exams.js';
+import { getExam, getTags, withImages } from './exams.js';
 
 /**
  * 专题训练：把一个知识点（真题标签）名下历年出现过的题抽出来，逐题练。
@@ -18,8 +18,22 @@ function ensureTable() {
       section_id  TEXT NOT NULL,
       n           INTEGER NOT NULL,
       answer      TEXT NOT NULL DEFAULT '',   -- 选择题是字母，填空 / 解答题是文本
-      correct     INTEGER,                    -- 只有选择题能判：1 对 0 错；其它 NULL
+      correct     INTEGER,                    -- 选择题自动判；填空 / 解答题由 AI 批改后填（全对 1，部分对 / 错 0），没批改 NULL
       answered_at TEXT NOT NULL,
+      ai          TEXT,                       -- AI 批改：JSON { score, total, verdict, brief, points, at }
+      PRIMARY KEY (exam_id, section_id, n)
+    )`);
+  // 老库补列：列已存在就吞掉报错
+  try { handle().exec('ALTER TABLE exam_drill ADD COLUMN ai TEXT'); } catch { /* 已有 */ }
+  // 做题便利贴：每道题一张，写做完后的总结。和作答分开存——重做不会把总结一起删掉
+  handle().exec(`
+    CREATE TABLE IF NOT EXISTS drill_notes (
+      exam_id    TEXT NOT NULL,
+      section_id TEXT NOT NULL,
+      n          INTEGER NOT NULL,
+      color      TEXT NOT NULL DEFAULT 'y',   -- 同便利贴：y 疑问 b 推导 g 结论 r 易错
+      text       TEXT NOT NULL DEFAULT '',
+      updated_at TEXT NOT NULL,
       PRIMARY KEY (exam_id, section_id, n)
     )`);
 }
@@ -61,10 +75,50 @@ export function keyOfQuestion(section, n) {
   return { solution: section.solution || '', tags: section.tags || [] };
 }
 
-const rowToAttempt = (r) => (r ? { answer: r.answer, correct: r.correct == null ? null : !!r.correct, answeredAt: r.answered_at } : null);
+const parseAi = (s) => { try { return s ? JSON.parse(s) : null; } catch { return null; } };
+const rowToAttempt = (r) => (r ? { answer: r.answer, correct: r.correct == null ? null : !!r.correct, answeredAt: r.answered_at, ai: parseAi(r.ai) } : null);
 
 export function attemptOf(examId, sectionId, n) {
   return rowToAttempt(db().prepare('SELECT * FROM exam_drill WHERE exam_id = ? AND section_id = ? AND n = ?').get(examId, sectionId, n));
+}
+
+/** 这道题满分：解答题整单元的分，选择 / 填空按题均分 */
+export function pointsOf(section) {
+  if (section.points == null) return null;
+  if (section.type === 'free') return section.points;
+  return Math.round((section.points / (section.questions?.length || 1)) * 10) / 10;
+}
+
+/** 记下 AI 批改结果，并按结论回填对错（全对算对；部分对 / 错都算没掌握） */
+export function saveGrade(examId, sectionId, n, grade) {
+  if (!attemptOf(examId, sectionId, n)) throw Object.assign(new Error('这道题还没交'), { status: 409 });
+  const correct = grade.verdict === 'right' ? 1 : 0;
+  db().prepare('UPDATE exam_drill SET ai = ?, correct = ? WHERE exam_id = ? AND section_id = ? AND n = ?')
+    .run(JSON.stringify(grade), correct, examId, sectionId, n);
+  return attemptOf(examId, sectionId, n);
+}
+
+/* ── 做题便利贴 ── */
+const NOTE_COLORS = new Set(['y', 'b', 'g', 'r']);
+const rowToNote = (r) => (r ? { color: r.color, text: r.text, updatedAt: r.updated_at } : null);
+
+export function noteOf(examId, sectionId, n) {
+  return rowToNote(db().prepare('SELECT * FROM drill_notes WHERE exam_id = ? AND section_id = ? AND n = ?').get(examId, sectionId, n));
+}
+
+/** 写便利贴；文字清空就当撕掉 */
+export function saveNote(examId, sectionId, n, { color, text } = {}) {
+  findSection(examId, sectionId, n);
+  const body = String(text ?? '').slice(0, 8000);
+  if (!body.trim()) {
+    db().prepare('DELETE FROM drill_notes WHERE exam_id = ? AND section_id = ? AND n = ?').run(examId, sectionId, n);
+    return null;
+  }
+  const c = NOTE_COLORS.has(color) ? color : (noteOf(examId, sectionId, n)?.color || 'y');
+  db().prepare(`INSERT INTO drill_notes (exam_id, section_id, n, color, text, updated_at) VALUES (?, ?, ?, ?, ?, ?)
+                ON CONFLICT(exam_id, section_id, n) DO UPDATE SET color = excluded.color, text = excluded.text, updated_at = excluded.updated_at`)
+    .run(examId, sectionId, n, c, body, new Date().toISOString());
+  return noteOf(examId, sectionId, n);
 }
 
 /** 一个知识点的题单，带每题的作答状态；已答的附答案包 */
@@ -81,6 +135,7 @@ export function drill(group, tagName) {
 
   const rows = db().prepare('SELECT * FROM exam_drill').all();
   const done = new Map(rows.map((r) => [`${r.exam_id}:${r.section_id}:${r.n}`, r]));
+  const notes = new Map(db().prepare('SELECT * FROM drill_notes').all().map((r) => [`${r.exam_id}:${r.section_id}:${r.n}`, rowToNote(r)]));
 
   const items = [];
   let missing = 0;
@@ -101,6 +156,7 @@ export function drill(group, tagName) {
       question: publicQuestion(section, it.n),
       attempt,
       key: attempt ? keyOfQuestion(section, it.n) : undefined,
+      note: notes.get(`${exam.id}:${section.id}:${it.n}`) || null,
     });
   }
   // 新到旧：先练最近的年份
@@ -135,6 +191,17 @@ export function answer(examId, sectionId, n, raw) {
   db().prepare(`INSERT INTO exam_drill (exam_id, section_id, n, answer, correct, answered_at) VALUES (?, ?, ?, ?, ?, ?)`)
     .run(examId, sectionId, n, value, correct, now);
   return { attempt: { answer: value, correct: correct == null ? null : !!correct, answeredAt: now }, key: keyOfQuestion(section, n) };
+}
+
+/** 交过的主观题补 / 换手写图：文字不动，只换图片那几行 */
+export function attachImages(examId, sectionId, n, images) {
+  const section = findSection(examId, sectionId, n);
+  if (section.type === 'choice') throw Object.assign(new Error('选择题不能贴图'), { status: 400 });
+  const cur = attemptOf(examId, sectionId, n);
+  if (!cur) throw Object.assign(new Error('这道题还没交'), { status: 409 });
+  const value = withImages(cur.answer, images);
+  db().prepare('UPDATE exam_drill SET answer = ? WHERE exam_id = ? AND section_id = ? AND n = ?').run(value, examId, sectionId, n);
+  return { ...cur, answer: value };
 }
 
 export function reset(examId, sectionId, n) {

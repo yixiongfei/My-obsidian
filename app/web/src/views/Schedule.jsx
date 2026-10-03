@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
@@ -102,10 +102,69 @@ function YearView({ version, year }) {
  * 月表
  * ------------------------------------------------------------------ */
 
+/** 相邻月份：'2026-10' + 1 → '2026-11' */
+const shiftMonth = (monthKey, step) => {
+  const [y, m] = monthKey.split('-').map(Number);
+  const d = new Date(y, m - 1 + step, 1);
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}`;
+};
+const thisMonth = () => { const d = new Date(); return `${d.getFullYear()}-${pad(d.getMonth() + 1)}`; };
+
+/**
+ * 翻月：箭头按钮、键盘 ← →、触控板左右滑都行，免得退回年表再点进来。
+ * 触控板横滑是一串 wheel 事件：攒够一段横向位移才翻一页，翻完歇一会儿，不然一滑翻好几个月。
+ */
+function useMonthFlip(monthKey) {
+  const navigate = useNavigate();
+  const [dir, setDir] = useState(0);
+  const go = useCallback((target) => {
+    setDir(target > monthKey ? 1 : -1);
+    const [ny, nm] = target.split('-');
+    navigate(`/schedule/${ny}/${nm}`);
+  }, [monthKey, navigate]);
+  const flip = useCallback((step) => go(shiftMonth(monthKey, step)), [go, monthKey]);
+
+  useEffect(() => {
+    const key = (e) => {
+      if (e.defaultPrevented || e.altKey || e.ctrlKey || e.metaKey) return;
+      if (e.target.closest?.('input, textarea, select, [contenteditable="true"]')) return;
+      if (e.key === 'ArrowLeft') flip(-1);
+      else if (e.key === 'ArrowRight') flip(1);
+    };
+    window.addEventListener('keydown', key);
+    return () => window.removeEventListener('keydown', key);
+  }, [flip]);
+
+  const acc = useRef(0);
+  const rest = useRef(0);
+  const onWheel = (e) => {
+    if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return;   // 竖着滚是在翻页面，不管
+    const now = Date.now();
+    if (now < rest.current) return;
+    acc.current += e.deltaX;
+    if (Math.abs(acc.current) < 140) return;
+    flip(acc.current > 0 ? 1 : -1);
+    acc.current = 0;
+    rest.current = now + 700;
+  };
+  // 触屏：按下到抬起横向挪了一段、又没怎么竖着动，算一次滑动
+  const start = useRef(null);
+  const onPointerDown = (e) => { if (e.pointerType !== 'mouse') start.current = { x: e.clientX, y: e.clientY }; };
+  const onPointerUp = (e) => {
+    const s = start.current;
+    start.current = null;
+    if (!s) return;
+    const dx = e.clientX - s.x;
+    if (Math.abs(dx) > 70 && Math.abs(dx) > Math.abs(e.clientY - s.y) * 1.5) flip(dx < 0 ? 1 : -1);
+  };
+  return { dir, flip, go, swipe: { onWheel, onPointerDown, onPointerUp } };
+}
+
 function MonthView({ version, monthKey }) {
   const navigate = useNavigate();
   const [y, m] = monthKey.split('-');
   const { data, loading, error, reload } = useApi(() => api.month(monthKey), [monthKey, version]);
+  const { dir, flip, go, swipe } = useMonthFlip(monthKey);
 
   if (loading && !data) return <Loading />;
   if (error) return <ErrorBox error={error} onRetry={reload} />;
@@ -113,15 +172,27 @@ function MonthView({ version, monthKey }) {
   const done = data.milestone?.tasks.filter((t) => t.done).length || 0;
   const all = data.milestone?.tasks.length || 0;
   const totals = data.days.reduce((a, d) => ({ due: a.due + d.due, reviewed: a.reviewed + d.reviewed }), { due: 0, reviewed: 0 });
+  // 翻月时新数据还没回来：先把上个月的格子压暗，别让 11 月的标题下面挂着 10 月的点
+  const stale = data.month !== monthKey;
+  const now = thisMonth();
 
   return (
-    <div className="scroll"><div className="page">
+    <div className={`scroll${stale ? ' cal-stale' : ''}`} {...swipe}><div className="page">
       <Crumbs items={[{ label: y, to: `/schedule/${y}` }, { label: `${Number(m)} 月` }]} />
 
       <div style={{ borderTop: 'var(--hair) solid var(--line-2)', paddingTop: 26, display: 'flex', alignItems: 'flex-end', gap: 40, flexWrap: 'wrap' }}>
         <div className="row" style={{ alignItems: 'baseline', gap: 16 }}>
           <span className="fig" style={{ fontSize: 96, fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 0.85 }}>{m}</span>
-          <span style={{ fontSize: 14, color: 'var(--text-2)' }}>{y} 年</span>
+          <div className="month-flip">
+            <span style={{ fontSize: 14, color: 'var(--text-2)' }}>{y} 年</span>
+            <span className="month-flip-btns">
+              <button className="month-arrow" onClick={() => flip(-1)} title="上个月（←，或在触控板上向右滑）" aria-label="上个月">‹</button>
+              <button className="month-arrow" onClick={() => flip(1)} title="下个月（→，或在触控板上向左滑）" aria-label="下个月">›</button>
+              {monthKey !== now && (
+                <button className="month-today" onClick={() => go(now)}>回到本月</button>
+              )}
+            </span>
+          </div>
         </div>
 
         <div style={{ flex: 1, display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 32, paddingBottom: 6 }}>
@@ -161,10 +232,13 @@ function MonthView({ version, monthKey }) {
 
           <div style={{ borderLeft: '1px solid var(--line)', paddingLeft: 16 }}>
             <div className="stat-k" style={{ marginTop: 0, marginBottom: 10 }}>本月合计</div>
-            <div className="row" style={{ gap: 24, alignItems: 'flex-start' }}>
+            <div className="row month-totals" style={{ gap: '10px 20px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
               <div><div className="stat-v on">{totals.due}</div><div className="stat-k">待复习</div></div>
               <div><div className="stat-v">{totals.reviewed}</div><div className="stat-k">已复习</div></div>
               <div><div className="stat-v">{data.exams?.total ?? 0}</div><div className="stat-k">已做题</div></div>
+              <div title={data.vocab?.times ? `本月背过的不同单词，共评分 ${data.vocab.times} 次` : undefined}>
+                <div className="stat-v">{data.vocab?.words ?? 0}</div><div className="stat-k">已背单词</div>
+              </div>
             </div>
             {data.exams?.total > 0 && (
               <div className="done-by">
@@ -197,7 +271,8 @@ function MonthView({ version, monthKey }) {
         ))}
       </div>
 
-      <div className="cal">
+      {/* key 跟着月份换：翻月时整张网格从翻过来的方向滑进来 */}
+      <div className={`cal${dir ? ` cal-in-${dir > 0 ? 'next' : 'prev'}` : ''}`} key={data.month}>
         {Array.from({ length: data.leadingBlanks }).map((_, i) => <div className="day-cell blank" key={`b${i}`} />)}
         {data.days.map((d) => (
           <div key={d.date}

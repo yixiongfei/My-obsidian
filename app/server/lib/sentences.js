@@ -162,6 +162,37 @@ export function rate(id, rating) {
   return out(get(id));
 }
 
+/**
+ * 改卡片的文字：原文 / 标题 / 译文 / 备注，只改传进来的。
+ * 原文一变，按词序号记的结构标注就对不上了——清掉，下次复习重新拆
+ */
+export function setFields(id, { text, title, translation, note } = {}) {
+  const r = get(id);
+  const set = [];
+  const vals = [];
+  const put = (col, v) => { set.push(`${col} = ?`); vals.push(v); };
+  if (text != null) {
+    const t = normText(text);
+    if (t.split(' ').length < 4) throw bad('原文太短了');
+    if (t !== r.text) {
+      if (handle().prepare('SELECT 1 FROM sentence_cards WHERE text = ? AND id <> ?').get(t, id)) throw bad('已经有一张一样的卡片');
+      put('text', t.slice(0, 4000));
+      if (r.kind !== 'passage') { put('spans', '[]'); put('annotated', 0); } else {
+        // 短文的生词释义也是按词序号挂的：在新原文里重新定位一遍
+        const { spans, found } = locateWords(t.split(' '), parse(r.words || '[]', []));
+        put('spans', JSON.stringify(spans));
+        put('words', JSON.stringify(found));
+      }
+    }
+  }
+  if (title != null) put('title', normText(title).slice(0, 60));
+  if (translation != null) put('translation', String(translation).slice(0, 4000));
+  if (note != null) put('note', String(note).slice(0, 2000));
+  if (!set.length) return out(r);
+  handle().prepare(`UPDATE sentence_cards SET ${set.join(', ')} WHERE id = ?`).run(...vals, id);
+  return out(get(id));
+}
+
 export function remove(id) {
   const r = handle().prepare('DELETE FROM sentence_cards WHERE id = ?').run(id);
   return { ok: r.changes > 0 };

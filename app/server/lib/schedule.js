@@ -6,7 +6,7 @@ import { index, toAbs } from './vault.js';
 import { allNotes } from './query.js';
 import { todayStr, daysBetween, addDays } from './review.js';
 import { holidaysInMonth, holidayOn } from './holidays.js';
-import { dailyCount, dailyBetween } from './vocabulary.js';
+import { dailyCount, dailyBetween, wordsBetween } from './vocabulary.js';
 import { statsBetween, drillStatsBetween } from './exams.js';
 import { eventsBetween, STAGE_NAMES } from './points.js';
 import { dailyBetween as sentenceDaily } from './sentences.js';
@@ -61,6 +61,84 @@ export function removeEvent(id) {
   const r = handle().prepare('DELETE FROM events WHERE id = ?').run(id);
   if (!r.changes) throw bad('日程不存在', 404);
   return { ok: true };
+}
+
+/* ------------------------------------------------------------------ *
+ * 日程里的时间段：存在备注里（「plan:… · 10:00–11:00 · 视频 42 分钟… · 链接」），
+ * 课程排期脚本就是这么写的。读 / 改都只动「HH:MM–HH:MM」那一段，别的原样保留
+ * ------------------------------------------------------------------ */
+
+const TIME_RE = /^(\d{1,2}):(\d{2})\s*[–—-]\s*(\d{1,2}):(\d{2})$/;
+const HHMM = /^([01]?\d|2[0-3]):[0-5]\d$/;
+const hm = (h, m) => `${String(h).padStart(2, '0')}:${m}`;
+
+export function timeOf(note) {
+  for (const seg of String(note || '').split(' · ')) {
+    const m = seg.trim().match(TIME_RE);
+    if (m) return { start: hm(m[1], m[2]), end: hm(m[3], m[4]) };
+  }
+  return null;
+}
+
+export function withTime(note, start, end) {
+  const segs = String(note || '').split(' · ').filter((s) => s.trim());
+  const at = segs.findIndex((s) => TIME_RE.test(s.trim()));
+  if (at >= 0) segs.splice(at, 1);
+  if (start) {
+    const t = `${start}–${end || start}`;
+    // 放在 plan: 标记后面，和排期脚本写的顺序一致
+    segs.splice(segs[0]?.startsWith('plan:') ? 1 : 0, 0, t);
+  }
+  return segs.join(' · ');
+}
+
+/**
+ * 一批日程改动，全成或全不成：{ op: 'add' | 'update' | 'delete', id?, date?, start?, end?, title?, note?, done? }
+ * preview=true 只算出「改前 → 改后」给用户确认，不落库
+ */
+export function applyChanges(changes, { preview = false } = {}) {
+  const db = handle();
+  const get = db.prepare('SELECT * FROM events WHERE id = ?');
+  const out = [];
+  const list = Array.isArray(changes) ? changes.slice(0, 200) : [];
+  if (!list.length) throw bad('没有要改的日程');
+  for (const c of list) {
+    if (c.start && !HHMM.test(c.start)) throw bad(`时间格式不对：${c.start}（要 HH:MM）`);
+    if (c.end && !HHMM.test(c.end)) throw bad(`时间格式不对：${c.end}（要 HH:MM）`);
+    if (c.date && !/^\d{4}-\d{2}-\d{2}$/.test(c.date)) throw bad(`日期格式不对：${c.date}`);
+    if (c.op === 'add') {
+      if (!c.date || !String(c.title || '').trim()) throw bad('新增日程要有 date 和 title');
+      out.push({ op: 'add', after: { date: c.date, title: String(c.title).trim(), note: withTime(c.note || '', c.start, c.end), kind: c.kind || 'study' } });
+      continue;
+    }
+    const row = get.get(String(c.id || ''));
+    if (!row) throw bad(`日程不存在：${c.id}`);
+    if (c.op === 'delete') { out.push({ op: 'delete', id: row.id, before: row }); continue; }
+    if (c.op !== 'update') throw bad(`不认识的操作：${c.op}`);
+    const t = timeOf(row.note);
+    const start = c.start ?? t?.start;
+    const end = c.end ?? (c.start && t ? t.end : t?.end);
+    const note = c.note != null ? withTime(c.note, start, end) : (c.start || c.end ? withTime(row.note, start, end) : row.note);
+    out.push({
+      op: 'update', id: row.id, before: row,
+      after: { date: c.date || row.date, title: c.title != null ? String(c.title).trim() : row.title, note, done: c.done != null ? !!c.done : !!row.done },
+    });
+  }
+  if (preview) return out;
+
+  db.exec('BEGIN');
+  try {
+    for (const x of out) {
+      if (x.op === 'add') addEvent(x.after);
+      else if (x.op === 'delete') removeEvent(x.id);
+      else patchEvent(x.id, x.after);
+    }
+    db.exec('COMMIT');
+  } catch (err) {
+    db.exec('ROLLBACK');
+    throw err;
+  }
+  return out;
 }
 
 /* ------------------------------------------------------------------ *
@@ -192,6 +270,30 @@ export function streak() {
   }
 }
 
+/**
+ * 仪表盘用：连续天数 + 坚持天数（有学习痕迹的天数，不要求连续——和日历上的痕迹同一口径）。
+ * 一年一块往回扫，整整一年没有痕迹就停：再往前也不会有了。
+ */
+export function studyDays() {
+  const today = todayStr();
+  let streakN = 0;
+  let total = 0;
+  let broken = false;
+  let to = today;
+  for (;;) {
+    const from = addDays(to, -364);
+    const days = studyByDay(from, to);
+    let active = 0;
+    for (let date = to; date >= from; date = addDays(date, -1)) {
+      if (isActive(days.get(date))) { active += 1; if (!broken) streakN += 1; continue; }
+      if (date !== today) broken = true;   // 今天还没学不算断
+    }
+    total += active;
+    to = addDays(from, -1);
+    if (!active || to < '2000-01-01') return { streak: streakN, total };
+  }
+}
+
 /** 年表：12 张月卡片 */
 export async function yearView(year) {
   const plan = await roadmap();
@@ -286,6 +388,8 @@ export async function monthView(monthKey) {
     examDate: examDate(),
     // 本月做过的真题题数，按学科分（英语 / 数学 / 408 四门）
     exams,
+    // 本月背过的不同单词数；词库不可用就当 0
+    vocab: (() => { try { return wordsBetween(from, to); } catch { return { words: 0, times: 0 }; } })(),
   };
 }
 

@@ -455,8 +455,12 @@ export function reclaimTex(html, display = false) {
   return null;
 }
 
-/** 只给调试脚本用：拿到未经校验的倒推结果 */
-export function __debugTex(html) {
+/**
+ * 未经校验的倒推结果。只能给模型读的一次性上下文用（助手看题），绝不能写进笔记 / 错题本。
+ * 校验没过多半是原作者的写法问题（如 cosx 没写成 \cos x），数学本身通常没错；
+ * 而原样嵌 HTML 的话，一个公式就是三千多字的 span，模型读着费额度也费劲。
+ */
+export function roughTex(html) {
   try {
     const root = parse(html);
     const el = root.querySelector('.katex-html') || root.querySelector('.katex') || root.firstChild;

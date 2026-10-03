@@ -188,11 +188,13 @@ function trashMedia(rel, col = 'media') {
  * 存一张贴图。按内容哈希命名：同一张截图粘两次只占一份磁盘，
  * 也顺带保证文件名里不会混进用户剪贴板里的奇怪字符。
  */
-/* 作答区贴的手写图放 图像/作答/，和便利贴分开——便利贴的回收逻辑只认 图像/便利贴/ */
-const ANSWER_DIR = path.join(VAULT_ROOT, '图像', '作答');
-const ANSWER_REL = '图像/作答';
+/* 作答区的手写图放 图像/作答/，和便利贴分开——便利贴的回收逻辑只认 图像/便利贴/ */
+const BUCKETS = { answer: '作答' };
 
-export async function saveMedia(buf, name = '', mime = '', { answer = false } = {}) {
+export async function saveMedia(buf, name = '', mime = '', { bucket = '' } = {}) {
+  const answer = !!BUCKETS[bucket];
+  const ANSWER_REL = `图像/${BUCKETS[bucket] || ''}`;
+  const ANSWER_DIR = path.join(VAULT_ROOT, '图像', BUCKETS[bucket] || '');
   if (!buf?.length) throw bad('空文件');
   if (buf.length > 24 * 1024 * 1024) throw bad('单张最多 24MB');
 
@@ -200,7 +202,7 @@ export async function saveMedia(buf, name = '', mime = '', { answer = false } = 
   const byName = path.extname(String(name)).toLowerCase();
   const ext = byMime || (OK_EXT.has(byName) ? byName : '');
   if (!ext) throw bad('只收图片和 PDF');
-  if (answer && ext === '.pdf') throw bad('作答区只收图片');
+  if (answer && ext === '.pdf') throw bad('这里只收图片');
 
   const dir = answer ? ANSWER_DIR : MEDIA_DIR;
   const hash = crypto.createHash('sha1').update(buf).digest('hex').slice(0, 10);

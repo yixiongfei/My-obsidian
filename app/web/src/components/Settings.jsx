@@ -30,12 +30,14 @@ export default function Settings({ open, onClose, theme, setTheme, settings, upd
   const [notice, setNotice] = useState('');
   const [ms, setMs] = useState(null);   // 里程碑：{初试, 复试, 上岸} → 通过日期或 null
   const [vp, setVp] = useState(null);   // 词汇偏好：{queueBasic}
+  const [rp, setRp] = useState(null);   // 日程提醒：{enabled, lead}
 
   useEffect(() => {
     if (!open) return;
     if (desktop) desktop.getInfo().then(setInfo).catch(() => setInfo(null));
     api.milestones().then(setMs).catch(() => setMs(null));
     api.vocabPrefs().then(setVp).catch(() => setVp(null));
+    api.reminders().then(setRp).catch(() => setRp(null));
     const onKey = (e) => { if (e.key === 'Escape') onClose(); };
     const onDown = (e) => { if (ref.current && !ref.current.contains(e.target) && !e.target.closest?.('.settings-btn')) onClose(); };
     window.addEventListener('keydown', onKey);
@@ -115,6 +117,22 @@ export default function Settings({ open, onClose, theme, setTheme, settings, upd
           ))}
         </div>
         <div className="settings-hint">考完、过了就勾上</div>
+      </div>
+
+      <div className="settings-sec">
+        <div className="settings-k">日程提醒</div>
+        <label className="settings-check">
+          <input type="checkbox" checked={!!rp?.enabled} disabled={!rp}
+                 onChange={async (e) => {
+                   try { setRp(await api.setReminders({ enabled: e.target.checked })); } catch (err) { setNotice(err.message); }
+                 }} />
+          <span>到点弹系统通知</span>
+        </label>
+        {rp?.enabled && (
+          <Seg value={rp.lead} onChange={async (lead) => { try { setRp(await api.setReminders({ lead })); } catch (err) { setNotice(err.message); } }}
+               options={[0, 5, 10, 15].map((m) => ({ key: m, label: m ? `提前 ${m} 分` : '只在开始时' }))} />
+        )}
+        <div className="settings-hint">日历里带时间段的课程，开始时（和提前几分钟）提醒一次；程序开着才会提醒</div>
       </div>
 
       <div className="settings-sec">

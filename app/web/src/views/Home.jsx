@@ -1,5 +1,6 @@
 import { lazy, Suspense, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useIsPresent } from 'framer-motion';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
 import { Loading, ErrorBox } from '../components/bits.jsx';
@@ -12,6 +13,7 @@ const dot = (d) => (d ? d.replaceAll('-', '.') : '—');
 
 export default function Home({ version, theme }) {
   const navigate = useNavigate();
+  const isPresent = useIsPresent();
   const bodyRef = useRef(null);
   const { data, loading, error, reload } = useApi(() => api.dashboard(), [version]);
   const { data: mind } = useApi(() => api.mindmap(), [version]);
@@ -71,11 +73,12 @@ export default function Home({ version, theme }) {
           </div>
 
           <div className="card hero-art">
-            <Suspense fallback={<div className="orbit3d-empty" />}>
+            {/* 退场过渡仍会保留 Home 240ms；离开时立即卸载 3D，停止 RAF 并释放 WebGL。 */}
+            {isPresent && <Suspense fallback={<div className="orbit3d-empty" />}>
               {theme === 'dark'
                 ? <KnowledgeIslands3D steps={steps} milestones={data.milestones} nextReview={nextDue} theme={theme} />
                 : <Orrery3D subjects={groups} theme={theme} />}
-            </Suspense>
+            </Suspense>}
           </div>
         </div>
 

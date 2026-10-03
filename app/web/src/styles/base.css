@@ -180,18 +180,17 @@ body {
 }
 
 /* ==================================================================
- * 整页氛围：星野
+ * 首页氛围：星野（由 Shell 按路由挂载，其他页面不生成这一层）
  *
  * 动的是 transform 而不是 background-position。
  * background-position 不是合成器属性，动它会让这个满视口的固定层每帧
- * 重绘一次；transform 能直接交给合成线程，主线程零成本。
+ * 重绘一次；transform 能直接交给合成线程，但仍有 GPU 合成开销。
  *
  * 代价是三层只能一起平移（拿不到视差），所以三个点阵的周期取成
  * 80/160/240，平移 240px 正好让三层同时回到原位，循环看不出接缝。
  * 层本身放大到视口的 1.6 倍，平移时不会露边。
  * ================================================================== */
-body::before {
-  content: '';
+.home-starfield {
   position: fixed; inset: -30%; z-index: -1;
   pointer-events: none;
   opacity: var(--star-op);
@@ -231,10 +230,12 @@ body::after {
 
 ::selection { background: var(--accent); color: var(--on-accent); }
 
-::-webkit-scrollbar { width: 9px; height: 9px; }
+/* 细滚动条：平时是一道淡淡的细条，鼠标移上去才加深，不抢内容的视线 */
+::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: var(--radius-s); }
-::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--text-2) 28%, transparent); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: color-mix(in srgb, var(--text-2) 55%, transparent); }
+::-webkit-scrollbar-corner { background: transparent; }
 
 a { color: var(--accent); text-decoration: none; }
 button, input, textarea, select { font: inherit; color: inherit; }

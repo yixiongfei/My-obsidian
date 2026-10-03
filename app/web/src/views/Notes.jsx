@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { api } from '../api.js';
-import { useApi } from '../hooks.js';
+import { useApi, useScrollMemory } from '../hooks.js';
 import Prose from '../components/Prose.jsx';
 import MindMap from '../components/MindMap.jsx';
 import ReviewBar from '../components/ReviewBar.jsx';
@@ -25,7 +25,9 @@ function Reader({ id, version, onReviewed }) {
   const [reading, setReading] = useState(false);
   const { data: note, loading, error, reload } = useApi(() => api.note(id), [id, version]);
 
-  useEffect(() => { scrollRef.current?.scrollTo({ top: 0 }); setReading(false); }, [id]);
+  useEffect(() => { setReading(false); }, [id]);
+  // 每篇笔记记住读到哪儿：跳去做题再回来，还在原处（没读过的从头开始）
+  useScrollMemory(scrollRef, `note:${id}`, note?.id === id);
 
   useEffect(() => {
     const root = scrollRef.current;

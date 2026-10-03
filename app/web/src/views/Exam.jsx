@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { api } from '../api.js';
-import { useApi } from '../hooks.js';
+import { useApi, useScrollMemory } from '../hooks.js';
 import { Loading, ErrorBox } from '../components/bits.jsx';
 import ExamReadingMode from '../components/ExamReadingMode.jsx';
 import AnswerSheet, { splitAnswer } from '../components/AnswerSheet.jsx';
@@ -76,7 +76,7 @@ export default function Exam() {
 
   // 换卷子时 useApi 会先保留上一份数据再去取新的，别把旧卷子当新卷子渲染（?q= 跳转也会跳错）
   useEffect(() => { setSections(data && data.id === id ? data.sections : null); }, [data, id]);
-  useEffect(() => { scrollRef.current?.scrollTo({ top: 0 }); jumpedTo.current = ''; }, [id]);
+  useEffect(() => { jumpedTo.current = ''; }, [id]);
 
   // ?hl=标记id → 滚到那一句（真题例句.md 里的「跳到原句」）；找不到再退回 ?q=
   const wantHl = Number(params.get('hl')) || 0;
@@ -89,6 +89,8 @@ export default function Exam() {
 
   // ?q=10 → 滚到第 10 题所在位置
   const wantQ = Number(params.get('q')) || (wantHl ? Number(hl.marks.find((m) => m.id === wantHl)?.q) || 0 : 0);
+  // 记住这套卷子看到哪儿；带 ?q= / ?hl= 进来是要跳到指定的题，只记不恢复
+  useScrollMemory(scrollRef, `exam:${id}`, !!sections, { restore: !wantQ && !wantHl });
   useEffect(() => {
     if (!sections || !wantQ || jumpedTo.current === `${id}:${wantQ}`) return;
     const unit = sections.find((s) => numbersOf(s).includes(wantQ));
@@ -110,8 +112,10 @@ export default function Exam() {
   const onSubmit = useCallback(async (sid, answers) => {
     const out = await api.submitExam(id, sid, answers);
     patch(sid, (s) => ({ ...s, attempt: out.attempt, key: out.key }));
+    // 做题也算复习：这一单元考点对上的到期笔记已经记了一次
+    if (out.reviewed?.length) notify(`已算作复习：${out.reviewed.map((r) => r.title).join('、')}`, 'md');
     return out;
-  }, [id, patch]);
+  }, [id, patch, notify]);
 
   const onReset = useCallback(async (sid) => {
     await api.resetExam(id, sid);
@@ -246,7 +250,8 @@ function useDraft(examId, section) {
   // 离开页面前把没写完的草稿冲掉
   useEffect(() => flush, [flush]);
 
-  return [answers, update, flush, locked];
+  // 第五个：交卷后服务端改过答案（补手写图），只把本地显示同步过来，不再存草稿
+  return [answers, update, flush, locked, setAnswers];
 }
 
 function useSubmit(section, answers, flush, onSubmit) {
@@ -621,10 +626,15 @@ const countWords = (t) => {
 };
 
 function FreeUnit({ section, examId, onSubmit, onReset, onExport }) {
-  const [answers, update, flush, locked] = useDraft(examId, section);
+  const [answers, update, flush, locked, setAnswers] = useDraft(examId, section);
   const [submit, busy] = useSubmit(section, answers, flush, onSubmit);
   const key = section.key;
   const text = answers.text || '';
+  const lockedImages = async (images) => {
+    const out = await api.setExamImages(examId, section.id, images);
+    setAnswers(out.answers);
+    return out.answers.text || '';
+  };
   const { cjk, latin } = countWords(splitAnswer(text).text);
   const english = section.id === 'writing-a' || section.id === 'writing-b';
   const rows = section.id.startsWith('writing') ? 12 : 8;
@@ -642,6 +652,7 @@ function FreeUnit({ section, examId, onSubmit, onReset, onExport }) {
           <span className="dim" style={{ fontSize: 11 }}>{english ? `${latin} words` : `${cjk + latin} 字`}</span>
         </div>
         <AnswerSheet value={text} rows={rows} locked={locked} onChange={(v) => update({ text: v })}
+                     onLockedImages={english ? undefined : lockedImages}
                      placeholder={english ? 'Write your answer here…' : '在这里作答，或把平板上手写的过程截图粘贴进来…'} />
       </div>
 

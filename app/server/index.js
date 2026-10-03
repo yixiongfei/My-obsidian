@@ -19,11 +19,14 @@ import * as vocabDb from './lib/vocabulary-db.js';
 import * as exams from './lib/exams.js';
 import * as marks from './lib/vocab-marks.js';
 import * as drill from './lib/drill.js';
+import * as drillAi from './lib/drill-ai.js';
+import * as practice from './lib/practice.js';
 import * as examMarks from './lib/exam-marks.js';
 import * as readingAnnotations from './lib/reading-annotations.js';
 import * as stickies from './lib/stickies.js';
 import * as sentences from './lib/sentences.js';
 import * as assistant from './lib/assistant.js';
+import * as reminders from './lib/reminders.js';
 import * as tts from './lib/tts.js';
 
 const app = express();
@@ -101,8 +104,8 @@ app.get('/api/dashboard', (_req, res) => res.json({
   // daily 给 26 周：学习节奏的热力图和每日进度共用这一份（笔记复习 / 新建 / 背词 / 做题）
   ...dashboard(schedule.examDate()), points: points.progress(), vocab: vocab.progress(), milestones: milestones(), daily: schedule.activity(26 * 7),
   stages: points.stageSummary(), wrongBooks: points.wrongBooks(),
-  // 连续天数按「这天学没学」算，笔记复习只是其中一种，覆盖 dashboard() 里那份只看笔记复习的
-  streak: schedule.streak(),
+  // 连续天数 / 坚持天数都按「这天学没学」算，笔记复习只是其中一种，覆盖 dashboard() 里那份只看笔记复习的
+  ...(({ streak, total }) => ({ streak, persistDays: total }))(schedule.studyDays()),
 }));
 
 /* 一轮复习的「总结完成」：写进笔记 frontmatter（stage: 总结 / summarized: 日期） */
@@ -253,13 +256,41 @@ app.get('/api/exams/drill/:group', (req, res) => {
   if (!out) throw bad('没有这个知识点', 404);
   res.json(out);
 });
-app.post('/api/exams/drill/answer', (req, res) => {
+app.post('/api/exams/drill/answer', wrap(async (req, res) => {
   const { exam, section, n, answer } = req.body || {};
-  res.json(drill.answer(String(exam || ''), String(section || ''), Number(n), answer));
-});
+  const out = drill.answer(String(exam || ''), String(section || ''), Number(n), answer);
+  // 做题也算复习：这道题考点对上的、今天到期的知识点笔记记一次复习
+  const e = exams.getExam(String(exam));
+  const reviewed = await practice.reviewByPractice(String(exam), [{ tags: out.key.tags || [], correct: out.attempt.correct }],
+    `${e?.kindLabel || exam} ${e?.year || ''} 第 ${Number(n)} 题`);
+  if (reviewed.length) broadcast({ type: 'vault' });
+  res.json({ ...out, reviewed });
+}));
 app.post('/api/exams/drill/reset', (req, res) => {
   const { exam, section, n } = req.body || {};
   res.json(drill.reset(String(exam || ''), String(section || ''), Number(n)));
+});
+/* AI 批改填空 / 解答题：按考研口径打分、判对错，结论回填 */
+app.post('/api/exams/drill/grade', wrap(async (req, res) => {
+  const { exam, section, n, model } = req.body || {};
+  res.json({ attempt: await drillAi.grade(String(exam || ''), String(section || ''), Number(n), { model: model || undefined }) });
+}));
+/* 做题便利贴：写 / 改 / 清空即撕掉；AI 帮写两三行总结（只返回文字，存不存由前端定） */
+app.put('/api/exams/drill/note', (req, res) => {
+  const { exam, section, n, color, text } = req.body || {};
+  res.json({ note: drill.saveNote(String(exam || ''), String(section || ''), Number(n), { color, text }) });
+});
+app.post('/api/exams/drill/note/ai', wrap(async (req, res) => {
+  const { exam, section, n, model } = req.body || {};
+  res.json(await drillAi.summarize(String(exam || ''), String(section || ''), Number(n), { model: model || undefined }));
+}));
+/* 主观题的手写图：交卷后也能补，只换图片不动文字 */
+app.put('/api/exams/drill/images', (req, res) => {
+  const { exam, section, n, images } = req.body || {};
+  res.json(drill.attachImages(String(exam || ''), String(section || ''), Number(n), images));
+});
+app.put('/api/exams/:id/sections/:section/images', (req, res) => {
+  res.json(exams.attachImages(req.params.id, req.params.section, req.body?.images));
 });
 
 app.get('/api/exams/assets/:file', (req, res, next) => {
@@ -289,7 +320,9 @@ app.post('/api/exams/marks/sync', (_req, res) => {
 
 /* 学习助手：本机 Claude Code 经 Agent SDK 驱动，结果走 SSE 流回前端 */
 app.get('/api/assistant/status', (_req, res) => res.json(assistant.status()));
-app.post('/api/assistant/chat', wrap((req, res) => assistant.chat(req, res, { onChange: () => broadcast({ type: 'readings' }) })));
+app.post('/api/assistant/chat', wrap((req, res) => assistant.chat(req, res, { onChange: (type = 'readings') => broadcast({ type }) })));
+app.get('/api/reminders', (_req, res) => res.json(reminders.prefs()));
+app.put('/api/reminders', (req, res) => res.json(reminders.setPrefs(req.body || {})));
 app.post('/api/assistant/permission', (req, res) => {
   const { runId, id, allow, always } = req.body || {};
   res.json(assistant.answerPermission(String(runId || ''), String(id || ''), !!allow, !!always));
@@ -299,6 +332,11 @@ app.get('/api/assistant/conversations', (_req, res) => res.json(assistant.listCo
 app.get('/api/assistant/conversations/:cid', (req, res) => res.json(assistant.getConversation(req.params.cid)));
 app.put('/api/assistant/conversations/:cid', (req, res) => res.json(assistant.saveConversation(req.params.cid, req.body || {})));
 app.delete('/api/assistant/conversations/:cid', (req, res) => res.json(assistant.removeConversation(req.params.cid)));
+app.patch('/api/assistant/conversations/:cid', (req, res) => res.json(assistant.moveConversation(req.params.cid, req.body?.projectId || null)));
+app.get('/api/assistant/projects', (_req, res) => res.json(assistant.listProjects()));
+app.post('/api/assistant/projects', (req, res) => res.json(assistant.createProject(req.body?.name)));
+app.patch('/api/assistant/projects/:pid', (req, res) => res.json(assistant.renameProject(req.params.pid, req.body?.name)));
+app.delete('/api/assistant/projects/:pid', (req, res) => res.json(assistant.removeProject(req.params.pid)));
 
 /* 阅读卡片（句子 + 生词短文） */
 app.get('/api/sentences', (_req, res) => res.json(sentences.queue()));
@@ -331,9 +369,16 @@ app.put('/api/exams/:id/:section/answers', (req, res) => {
   res.json(exams.saveDraft(req.params.id, req.params.section, req.body?.answers));
 });
 
-app.post('/api/exams/:id/:section/submit', (req, res) => {
-  res.json(exams.submit(req.params.id, req.params.section, req.body?.answers));
-});
+app.post('/api/exams/:id/:section/submit', wrap(async (req, res) => {
+  const out = exams.submit(req.params.id, req.params.section, req.body?.answers);
+  const e = exams.getExam(req.params.id);
+  const section = e?.sections.find((s) => s.id === req.params.section);
+  const reviewed = section
+    ? await practice.reviewByPractice(req.params.id, practice.hitsOfSection(section, out.attempt.answers), `${e.kindLabel} ${e.year} ${section.title || section.label || ''}`)
+    : [];
+  if (reviewed.length) broadcast({ type: 'vault' });
+  res.json({ ...out, reviewed });
+}));
 
 app.post('/api/exams/:id/:section/reset', (req, res) => {
   res.json(exams.reset(req.params.id, req.params.section));
@@ -398,7 +443,12 @@ app.post('/api/stickies/media',
 app.post('/api/answers/media',
   express.raw({ type: () => true, limit: '24mb' }),
   wrap(async (req, res) => {
-    res.json(await stickies.saveMedia(req.body, String(req.query.name || ''), String(req.query.mime || req.headers['content-type'] || ''), { answer: true }));
+    res.json(await stickies.saveMedia(req.body, String(req.query.name || ''), String(req.query.mime || req.headers['content-type'] || ''), { bucket: 'answer' }));
+  }));
+app.post('/api/assistant/media',
+  express.raw({ type: () => true, limit: '24mb' }),
+  wrap(async (req, res) => {
+    res.json(await assistant.saveUpload(req.body, String(req.query.name || ''), String(req.query.mime || '')));
   }));
 
 /* ------------------------------------------------------------------ *
@@ -477,6 +527,7 @@ export async function start() {
   // 早期的按天日志收进按周文件（只收没有手写内容的）
   vocab.migrateDailyLogs().then((moved) => { if (moved.length) console.log(`[词汇] 日志改为按周：合并了 ${moved.join(', ')}`); }).catch((err) => console.error('[词汇] 日志迁移失败', err));
   examMarks.recoverPending();
+  reminders.startReminders(broadcast);
 
   chokidar
     .watch(VAULT_ROOT, {
@@ -499,3 +550,5 @@ export async function start() {
 if (process.env.ELECTRON_RUN_AS_NODE !== '1' && !process.env.NO_AUTOSTART) start();
 
 export { app, toAbs };
+/** 桌面版在主进程里注册：到点了弹 Windows 原生通知 */
+export const onReminder = reminders.onReminder;

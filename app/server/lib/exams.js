@@ -199,6 +199,32 @@ export function submit(examId, sectionId, rawAnswers) {
   };
 }
 
+/* 主观题答案里的手写图是独占一行的 ![](图像/作答/xxx.png)。
+   交卷后文字锁定，但手写图常常是交了卷、对完答案才拍下来的——允许只换图片那几行 */
+const IMG_LINE = /^!\[\]\((图像\/作答\/[^)]+)\)$/;
+const IMG_PATH = /^图像\/作答\/[\w.-]+$/;
+
+export function withImages(value, images) {
+  const text = String(value || '').split('\n').filter((l) => !IMG_LINE.test(l)).join('\n').replace(/\s+$/, '');
+  const list = [...new Set((Array.isArray(images) ? images : []).map(String).filter((p) => IMG_PATH.test(p)))].slice(0, 30);
+  const tail = list.map((p) => `![](${p})`).join('\n');
+  return tail ? (text ? `${text}\n${tail}` : tail) : text;
+}
+
+export function attachImages(examId, sectionId, images) {
+  const exam = getExam(examId);
+  const section = exam?.sections.find((s) => s.id === sectionId);
+  if (!section) throw Object.assign(new Error('单元不存在'), { status: 404 });
+  if (section.type !== 'free') throw Object.assign(new Error('只有主观题能贴图'), { status: 400 });
+  const cur = attemptOf(examId, sectionId);
+  if (!cur?.submittedAt) return saveDraft(examId, sectionId, { text: withImages(cur?.answers?.text, images) });
+  const answers = { text: withImages(cur.answers?.text, images) };
+  const now = new Date().toISOString();
+  handle().prepare('UPDATE exam_attempts SET answers = ?, updated_at = ? WHERE exam_id = ? AND section_id = ?')
+    .run(JSON.stringify(answers), now, examId, sectionId);
+  return { ...cur, answers, updatedAt: now };
+}
+
 export function reset(examId, sectionId) {
   const r = handle().prepare('DELETE FROM exam_attempts WHERE exam_id = ? AND section_id = ?').run(examId, sectionId);
   return { ok: true, removed: r.changes };

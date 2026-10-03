@@ -197,6 +197,13 @@ CREATE TABLE IF NOT EXISTS assistant_conversations (
 );
 CREATE INDEX IF NOT EXISTS idx_ac_updated ON assistant_conversations(updated_at);
 
+-- 助手的项目：把对话归类（高数 / 英语 / 复盘……）。删项目不删对话，对话退回未分类
+CREATE TABLE IF NOT EXISTS assistant_projects (
+  id         TEXT PRIMARY KEY,
+  name       TEXT NOT NULL,
+  created_at TEXT NOT NULL
+);
+
 CREATE TABLE IF NOT EXISTS meta (k TEXT PRIMARY KEY, v TEXT NOT NULL);
 `;
 
@@ -231,6 +238,7 @@ export function open() {
   try { db.exec("ALTER TABLE sentence_cards ADD COLUMN kind TEXT NOT NULL DEFAULT 'sentence'"); } catch { /* 已经有了 */ }
   try { db.exec("ALTER TABLE sentence_cards ADD COLUMN title TEXT NOT NULL DEFAULT ''"); } catch { /* 已经有了 */ }
   try { db.exec("ALTER TABLE sentence_cards ADD COLUMN words TEXT NOT NULL DEFAULT '[]'"); } catch { /* 已经有了 */ }
+  try { db.exec('ALTER TABLE assistant_conversations ADD COLUMN project_id TEXT'); } catch { /* 已经有了 */ }
   try {
     db.exec(FTS_SCHEMA);
     db.prepare('SELECT rowid FROM notes_fts LIMIT 1').get();

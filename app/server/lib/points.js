@@ -271,6 +271,31 @@ const bump = (s, st) => {
   if (st === 'today') s.today += 1;
 };
 
+/**
+ * 这些考点各自对上的知识点笔记：Map<noteId, { note, point }>。
+ * 和 progress 同一套对法（同一个笔记池、按科目对），做题算复习时用——
+ * 只拿题目自己的几个标签去对的话，一篇笔记可能被错认到别的考点上。
+ */
+export function notesOfPoints(groupKey, names) {
+  const g = GROUPS.find((x) => x.key === groupKey);
+  const want = new Set(names);
+  const out = new Map();
+  if (!g || !want.size) return out;
+  const subjects = loadTags(g.file);
+  if (!subjects) return out;
+  const pool = allNotes().filter((n) => !n.empty && n.kind === 'point'
+    && (n.tags.includes(g.category) || n.id.startsWith(`${g.category}/`)));
+  for (const s of subjects) {
+    if (!s.points.some((p) => want.has(p.name))) continue;
+    const map = matchNotes(pool, s.points);
+    for (const n of pool) {
+      const p = map.get(n.id);
+      if (want.has(p) && !out.has(n.id)) out.set(n.id, { note: n, point: p });
+    }
+  }
+  return out;
+}
+
 export function progress() {
   const today = todayStr();
   const weekAgo = addDays(today, -6);

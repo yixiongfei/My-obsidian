@@ -52,7 +52,7 @@ export default function CommandPalette({ open, onClose }) {
   if (!open) return null;
 
   return (
-    <div className="overlay" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
+    <div className="palette-overlay" onMouseDown={(e) => e.target === e.currentTarget && onClose()}>
       <div className="palette">
         <div className="palette-input">
           <span className="lbl-cn" style={{ color: 'var(--accent)' }}>搜索</span>

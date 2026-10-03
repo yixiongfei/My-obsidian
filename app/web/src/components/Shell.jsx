@@ -1,16 +1,46 @@
+import { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
 const NAV = [
   { to: '/',          label: '首页', end: true },
   { to: '/dashboard', label: '仪表盘' },
-  { to: '/notes',     label: '笔记', match: ['/notes', '/note'] },
+  // remember：再点回来时回到上次停在的那一页（哪篇笔记、哪个专题），而不是栏目首页
+  { to: '/notes',     label: '笔记', match: ['/notes', '/note'], remember: true },
   // 这里进的是英语词汇 Anki，不再挂"待复习笔记数"的徽标——
   // 笔记的深度复习在笔记页里做，两条路径的计数混在一起会误导
   { to: '/review',    label: '复习' },
   { to: '/schedule',  label: '日历' },
-  { to: '/resources', label: '资源' },
+  { to: '/resources', label: '资源', remember: true },
   { to: '/assistant', label: '助手' },
 ];
+
+const LAST_KEY = 'kb-nav-last';
+const readLast = () => { try { return JSON.parse(sessionStorage.getItem(LAST_KEY) || '{}'); } catch { return {}; } };
+const sectionOf = (pathname) => NAV.find((n) => n.remember && (n.match || [n.to]).some((m) => pathname.startsWith(m)));
+
+/**
+ * 记住每个栏目上次停在哪一页：做题时跳去看笔记，点「资源」就回到刚才那个专题，
+ * 点「笔记」又回到刚才那篇。已经在这个栏目里时再点，才回栏目首页。
+ * 跳题用的 ?q= / ?hl= 只管那一次，不记——不然回来又跳一遍，盖掉滚动位置。
+ */
+function useSectionMemory(pathname, search) {
+  const [last, setLast] = useState(readLast);
+  useEffect(() => {
+    const item = sectionOf(pathname);
+    if (!item) return;
+    const qs = new URLSearchParams(search);
+    qs.delete('q');
+    qs.delete('hl');
+    const full = pathname + (qs.toString() ? `?${qs}` : '');
+    setLast((l) => {
+      if (l[item.to] === full) return l;
+      const next = { ...l, [item.to]: full };
+      try { sessionStorage.setItem(LAST_KEY, JSON.stringify(next)); } catch { /* 无痕 */ }
+      return next;
+    });
+  }, [pathname, search]);
+  return last;
+}
 
 const Sparkle = (p) => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" {...p}>
@@ -33,11 +63,14 @@ const Search = (p) => (
 );
 
 export default function Shell({ children, meta, badges = {}, theme, onToggleTheme, onSearch, onSettings, settingsOpen, settingsPanel }) {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
+  const last = useSectionMemory(pathname, search);
   const isMac = typeof navigator !== 'undefined' && /Mac/i.test(navigator.platform || '');
 
   return (
     <div className="app">
+      {/* 背景本身只在首页挂载，其他页面不保留动画层或合成纹理。 */}
+      {pathname === '/' && <div className="home-starfield" aria-hidden="true" />}
       <header className="topbar">
         <div className="brand">
           <div className="brand-mark"><Sparkle /></div>
@@ -54,7 +87,7 @@ export default function Shell({ children, meta, badges = {}, theme, onToggleThem
               : (item.match || [item.to]).some((m) => pathname.startsWith(m));
             const badge = badges[item.badgeKey];
             return (
-              <NavLink key={item.to} to={item.to} className={active ? 'active' : undefined}>
+              <NavLink key={item.to} to={active || !item.remember ? item.to : last[item.to] || item.to} className={active ? 'active' : undefined}>
                 {item.label}
                 {badge > 0 && <span className="badge">{badge}</span>}
               </NavLink>

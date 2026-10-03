@@ -21,7 +21,8 @@ const HL_COLORS = [
   { k: 'b', label: '蓝色', value: '#91BEEB' },
   { k: 'p', label: '粉色', value: '#EDA6B3' },
 ];
-const HIGHLIGHT_NAMES = HL_COLORS.map((x) => `erm-reading-${x.k}`);
+// erm-sentence：这篇里已经进了长难句的句子，画一道虚线
+const HIGHLIGHT_NAMES = [...HL_COLORS.map((x) => `erm-reading-${x.k}`), 'erm-sentence'];
 
 const html = (s) => ({ __html: s || '' });
 const makeId = () => globalThis.crypto?.randomUUID?.() || `${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -66,6 +67,9 @@ function ToolIcon({ name }) {
   if (name === 'trash') return (
     <svg {...common}><path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13M10 11v5M14 11v5" /></svg>
   );
+  if (name === 'sentence') return (
+    <svg {...common}><path d="M4 6h11M4 11h8M4 16h6" /><path d="M17 12v8M13 16h8" /></svg>
+  );
   return null;
 }
 
@@ -90,29 +94,42 @@ function selectedInside(root) {
   return { text, range: range.cloneRange() };
 }
 
-function offsetsOf(root, range) {
-  try {
-    const before = document.createRange();
-    before.selectNodeContents(root);
-    before.setEnd(range.startContainer, range.startOffset);
-    const selected = range.toString();
-    return { start: before.toString().length, end: before.toString().length + selected.length };
-  } catch { return null; }
+/*
+ * 荧光笔按「容器里第几个字符」存。题目栏交卷后每题下面会冒出「答案 + 解析」，
+ * 这段字不能算进下标，否则一交卷（或重做收起答案），后面的标记整体错位。
+ * 想标解析里的字，就以那一题的解析块为容器单独存（part: 'answer'）。
+ */
+const SKIP = { article: 'textarea, input', questions: 'textarea, input, .erm-answer' };
+
+function textIndexOf(root, skip = SKIP.article) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode: (node) => (node.parentElement?.closest(skip) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT),
+  });
+  const nodes = []; let text = '';
+  for (let n = walker.nextNode(); n; n = walker.nextNode()) { nodes.push({ node: n, start: text.length }); text += n.nodeValue; }
+  return { nodes, text };
 }
 
-function rangeAtOffsets(root, start, end) {
-  if (!root || !Number.isFinite(start) || !Number.isFinite(end) || end <= start) return null;
-  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-    acceptNode(node) {
-      return node.parentElement?.closest('textarea, input') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT;
-    },
-  });
-  let at = 0; let first = null; let last = null;
-  for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+/** 一个 DOM 位置换算成下标；落在被跳过的字里就算到它前面 */
+function pointOffset(index, container, offset) {
+  const probe = document.createRange();
+  try { probe.setStart(container, offset); } catch { return null; }
+  let at = 0;
+  for (const { node } of index.nodes) {
+    if (node === container) return at + offset;
+    if (probe.comparePoint(node, node.nodeValue.length) > 0) break;
+    at += node.nodeValue.length;
+  }
+  return at;
+}
+
+function rangeIn(index, start, end) {
+  if (!Number.isFinite(start) || !Number.isFinite(end) || end <= start) return null;
+  let first = null; let last = null;
+  for (const { node, start: at } of index.nodes) {
     const next = at + node.nodeValue.length;
     if (!first && start >= at && start <= next) first = [node, Math.min(node.nodeValue.length, start - at)];
     if (end >= at && end <= next) { last = [node, Math.min(node.nodeValue.length, end - at)]; break; }
-    at = next;
   }
   if (!first || !last) return null;
   try {
@@ -122,9 +139,122 @@ function rangeAtOffsets(root, start, end) {
   } catch { return null; }
 }
 
-function pointsPath(points, sx = 1, sy = 1) {
+const squashAll = (s) => String(s || '').replace(/\s+/g, '');
+
+/** 文字相同的几处里，挑离原下标最近的那处 */
+function nearestText(index, want, near) {
+  if (!want) return null;
+  const map = []; let compact = '';
+  for (let i = 0; i < index.text.length; i++) if (!/\s/.test(index.text[i])) { compact += index.text[i]; map.push(i); }
+  let best = -1;
+  for (let at = compact.indexOf(want); at >= 0; at = compact.indexOf(want, at + 1)) {
+    if (best < 0 || Math.abs(map[at] - near) < Math.abs(map[best] - near)) best = at;
+  }
+  return best < 0 ? null : rangeIn(index, map[best], map[best + want.length - 1] + 1);
+}
+
+/** 一条荧光笔现在该画在哪。先按下标，字对得上就是它；对不上（旧版本交卷后划的，下标里算了解析）再按原文找 */
+function locateMark(roots, mark) {
+  const scope = mark.scope || 'article';
+  let root = roots[scope]; let skip = SKIP[scope];
+  if (mark.part === 'answer') {
+    root = root?.querySelector(`[data-question="${mark.q}"] .erm-answer`); skip = SKIP.article;
+  }
+  if (!root) return null;
+  if (!Number.isFinite(mark.start)) return findTextRange(root, mark.text);
+  const index = textIndexOf(root, skip);
+  const want = squashAll(mark.text);
+  const direct = rangeIn(index, mark.start, mark.end);
+  if (direct && (!want || squashAll(index.text.slice(mark.start, mark.end)) === want)) return direct;
+  return nearestText(index, want, mark.start) || (want && findTextRange(root, mark.text)) || direct;
+}
+
+/** 选区 → 要存的标记：容器、下标、文字。选区从某题的解析里开始，就存到那一题的解析块上 */
+function targetOf(roots, scope, range) {
+  let root = roots[scope]; let skip = SKIP[scope]; let anchor = {};
+  const start = range.startContainer.nodeType === 1 ? range.startContainer : range.startContainer.parentElement;
+  const answer = scope === 'questions' ? start?.closest('.erm-answer') : null;
+  if (answer) {
+    root = answer; skip = SKIP.article;
+    anchor = { q: Number(answer.closest('[data-question]')?.dataset.question) || null, part: 'answer' };
+  }
+  if (!root) return null;
+  const index = textIndexOf(root, skip);
+  const s = pointOffset(index, range.startContainer, range.startOffset);
+  const e = pointOffset(index, range.endContainer, range.endOffset); // 越过容器的部分自然截掉
+  if (s == null || e == null || e <= s) return null;
+  const text = index.text.slice(s, e).replace(/\s+/g, ' ').trim();
+  return text.length < 2 ? null : { start: s, end: e, text, ...anchor };
+}
+
+/* ── 选区扩到整句：划得不准也没关系，往前退到上一个句末（或段首），往后走到下一个句末（或段尾） ── */
+const ABBR = /(?:^|[\s(“"'])(?:[A-Z]|Mr|Mrs|Ms|Dr|St|Prof|Jr|Sr|vs|No|e\.g|i\.e|U\.S|U\.K)$/;
+const BLOCK = 'p, li, div, blockquote, h1, h2, h3, h4, td';
+
+/** 容器里的全部文字（文章栏里和 textIndexOf 同一套下标），外加段落边界 */
+function blocksOf(root) {
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+  let text = ''; let prev = null; const breaks = [0];
+  for (let node = walker.nextNode(); node; node = walker.nextNode()) {
+    const block = node.parentElement?.closest(BLOCK);
+    if (prev && block !== prev) breaks.push(text.length);
+    prev = block; text += node.nodeValue;
+  }
+  breaks.push(text.length);
+  return { text, breaks };
+}
+
+/** text[i] 是 . ! ? 时：这里是句末就返回句子结束的位置（带上后引号 / 括号），不是返回 -1 */
+function sentenceEnd(text, i) {
+  let j = i + 1;
+  while (j < text.length && /["'”’)\]]/.test(text[j])) j++;
+  if (j < text.length && !/\s/.test(text[j])) return -1;
+  if (text[i] === '.' && ABBR.test(text.slice(Math.max(0, i - 6), i))) return -1;
+  return j;
+}
+
+function snapToSentences(root, start, end) {
+  const { text, breaks } = blocksOf(root);
+  const lo = Math.max(...breaks.filter((b) => b <= start));
+  const hi = Math.min(...breaks.filter((b) => b >= end));
+  let s = lo; let e = hi;
+  for (let i = start - 1; i >= lo; i--) {
+    if (/[.!?]/.test(text[i])) { const j = sentenceEnd(text, i); if (j >= 0 && j <= start) { s = j; break; } }
+  }
+  for (let i = Math.max(start, end - 1); i < hi; i++) {
+    if (/[.!?]/.test(text[i])) { const j = sentenceEnd(text, i); if (j >= 0) { e = j; break; } }
+  }
+  return text.slice(s, e).replace(/\s+/g, ' ').trim();
+}
+
+/** 浮窗放在选区上方（贴着松开鼠标的位置）；太靠顶就放下方 */
+function anchorOf(range, clientX) {
+  const r = range.getBoundingClientRect();
+  const x = Math.min(Math.max(clientX ?? r.left + r.width / 2, r.left), r.right);
+  return r.top > 130 ? { x, y: r.top - 8, place: 'above' } : { x, y: r.bottom + 8, place: 'below' };
+}
+
+/** 选中文字 / 右键时浮出来的一条小工具：加入长难句，右键时再带上标记、复制或取消标记 */
+function SentencePop({ pop, added, onAdd, onMark, onUnmark, onCopy }) {
+  const edge = pop.place === 'at' ? 230 : 110;
+  const style = {
+    left: Math.min(Math.max(pop.x, pop.place === 'at' ? 8 : edge), window.innerWidth - edge),
+    top: pop.place === 'at' ? Math.min(pop.y, window.innerHeight - 50) : pop.y,
+  };
+  return (
+    <div className={`erm-pop ${pop.place}`} style={style} role="menu" onMouseDown={(e) => e.preventDefault()}>
+      {added
+        ? <span className="erm-pop-done">已在长难句里</span>
+        : <button className="primary" role="menuitem" title={pop.text} onClick={onAdd}><ToolIcon name="sentence" />加入长难句</button>}
+      {pop.menu && !pop.markId && <><i /><button role="menuitem" onClick={onMark}>标记</button><button role="menuitem" onClick={onCopy}>复制</button></>}
+      {pop.markId && <><i /><button role="menuitem" onClick={onUnmark}>取消标记</button></>}
+    </div>
+  );
+}
+
+function pointsPath(points, sx = 1, sy = 1, dy = 0) {
   if (!points?.length) return '';
-  const p = points.map((x) => ({ x: x.x * sx, y: x.y * sy }));
+  const p = points.map((x) => ({ x: x.x * sx, y: x.y * sy + dy }));
   if (p.length === 1) return `M ${p[0].x} ${p[0].y} l 0.01 0`;
   let d = `M ${p[0].x} ${p[0].y}`;
   for (let i = 1; i < p.length - 1; i++) {
@@ -158,16 +288,50 @@ function ToolButton({ tool, current, onPick }) {
   );
 }
 
-const InkLayer = memo(function InkLayer({ scope, size, strokes, tool, color, onDown, onMove, onUp, onErase, mountPreview }) {
+const NO_LAYOUT = { tops: {}, shift: {}, answers: 0 };
+
+/** 题号 → 这题在题目栏里的顶边；shift 是它上面各题「答案 + 解析」一共占的高度 */
+function questionLayout(pane, list) {
+  if (!pane || !list) return NO_LAYOUT;
+  const tops = {}; const shift = {}; let answers = 0;
+  for (const el of list.querySelectorAll('.erm-question')) {
+    const n = el.dataset.question;
+    tops[n] = list.offsetTop + el.offsetTop; shift[n] = answers;
+    const a = el.querySelector('.erm-answer');
+    if (a) answers += a.offsetHeight + (parseFloat(getComputedStyle(a).marginTop) || 0);
+  }
+  return { tops, shift, answers };
+}
+
+/**
+ * 笔迹怎么摆。题目栏的笔迹跟着它写在的那道题走（q / qy），前面的题交卷冒出解析也不会错位。
+ * 没记题号的旧笔迹：看它当时的画布高度更像「没有解析」时的，就按它落在哪题整体下移；
+ * 否则照旧按画布尺寸缩放。
+ */
+function strokeFrame(stroke, size, layout) {
+  const sx = size.w / Math.max(1, stroke.w || size.w);
+  if (stroke.q != null && layout.tops[stroke.q] != null) return { sx, sy: 1, dy: layout.tops[stroke.q] - stroke.qy };
+  if (layout.answers > 0 && stroke.h) {
+    const bare = size.h - layout.answers;
+    if (Math.abs(stroke.h - bare) < Math.abs(stroke.h - size.h)) {
+      const y0 = stroke.points?.[0]?.y ?? 0;
+      let dy = 0;
+      for (const [n, top] of Object.entries(layout.tops)) if (top - layout.shift[n] <= y0) dy = layout.shift[n];
+      return { sx, sy: 1, dy };
+    }
+  }
+  return { sx, sy: size.h / Math.max(1, stroke.h || size.h), dy: 0 };
+}
+
+const InkLayer = memo(function InkLayer({ scope, size, layout = NO_LAYOUT, strokes, tool, color, onDown, onMove, onUp, onErase, mountPreview }) {
   return (
     <svg className={`erm-ink pane-${scope}`} width={size.w} height={size.h} viewBox={`0 0 ${size.w} ${size.h}`}
          style={{ width: `${size.w}px`, height: `${size.h}px` }}
          onPointerDown={(e) => onDown(scope, e)} onPointerMove={(e) => onMove(scope, e)}
          onPointerUp={(e) => onUp(scope, e)} onPointerCancel={(e) => onUp(scope, e)}>
       {strokes.map((stroke) => {
-        const sx = size.w / Math.max(1, stroke.w || size.w);
-        const sy = size.h / Math.max(1, stroke.h || size.h);
-        const d = pointsPath(stroke.points, sx, sy);
+        const { sx, sy, dy } = strokeFrame(stroke, size, layout);
+        const d = pointsPath(stroke.points, sx, sy, dy);
         const avg = stroke.points?.reduce((a, p) => a + (p.p || 0.5), 0) / Math.max(1, stroke.points?.length || 1);
         const width = (stroke.width || 2.2) * (0.75 + avg * 0.55);
         const erase = (e) => onErase(e, stroke.id);
@@ -197,9 +361,14 @@ export default function ExamReadingMode({ examId, section, answers, locked, onCh
   const [loaded, setLoaded] = useState(false);
   const [saveState, setSaveState] = useState('loading');
   const [sizes, setSizes] = useState({ article: { w: 1, h: 1 }, questions: { w: 1, h: 1 } });
+  const [qLayout, setQLayout] = useState(NO_LAYOUT); // 题目栏里各题的位置，笔迹跟着题走
   const [activeQ, setActiveQ] = useState(section.questions[0]?.n || 0);
   const [wordToast, setWordToast] = useState(null);
+  const [pop, setPop] = useState(null);
+  const [cards, setCards] = useState([]); // 这篇里已经进了长难句的句子原文
 
+  const popRef = useRef(null);
+  popRef.current = pop;
   const undoRef = useRef([]);
   const redoRef = useRef([]);
   const passageRef = useRef(null);
@@ -222,6 +391,11 @@ export default function ExamReadingMode({ examId, section, answers, locked, onCh
     setTimeout(() => setWordToast((t) => (t?.at === at ? null : t)), 1800);
   }, []);
   const { marks: wordMarks, onDoubleClick: onMarkWord } = useWordMarks(passageRef, true, examId, notifyWord);
+
+  const loadCards = useCallback(() => api.allSentences().then((out) => setCards(out.cards
+    .filter((c) => c.kind === 'sentence' && c.examId === examId && c.sectionId === section.id)
+    .map((c) => c.text))).catch(() => { /* 只影响虚线提示 */ }), [examId, section.id]);
+  useEffect(() => { loadCards(); }, [loadCards]);
 
   const migrateLegacyStrokes = useCallback((value) => {
     const pane = articlePaneRef.current; const passage = passageRef.current;
@@ -288,6 +462,8 @@ export default function ExamReadingMode({ examId, section, answers, locked, onCh
           old.article.w === next.article.w && old.article.h === next.article.h
           && old.questions.w === next.questions.w && old.questions.h === next.questions.h ? old : next
         ));
+        const layout = questionLayout(questionPaneRef.current, questionListRef.current);
+        setQLayout((old) => (JSON.stringify(old) === JSON.stringify(layout) ? old : layout));
       });
     };
     measure();
@@ -306,24 +482,24 @@ export default function ExamReadingMode({ examId, section, answers, locked, onCh
     if (cssHighlights && HighlightCtor) {
       const buckets = Object.fromEntries(HL_COLORS.map((x) => [x.k, []]));
       for (const mark of data.highlights) {
-        const root = roots[mark.scope || 'article'];
-        if (!root) continue;
-        const range = Number.isFinite(mark.start) ? rangeAtOffsets(root, mark.start, mark.end) : findTextRange(root, mark.text);
+        const range = locateMark(roots, mark);
         if (range) (buckets[mark.color] || buckets.y).push(range);
       }
       for (const c of HL_COLORS) if (buckets[c.k].length) {
         cssHighlights.set(`erm-reading-${c.k}`, new HighlightCtor(...buckets[c.k]));
       }
+      const added = cards.map((t) => (roots.article && findTextRange(roots.article, t))
+        || (roots.questions && findTextRange(roots.questions, t))).filter(Boolean);
+      if (added.length) cssHighlights.set('erm-sentence', new HighlightCtor(...added));
       return () => HIGHLIGHT_NAMES.forEach((name) => cssHighlights.delete(name));
     }
     // 极旧 Chromium 的兜底；CSS 已保证 mark 不增加行宽。
     for (const mark of data.highlights) {
-      const root = roots[mark.scope || 'article'];
-      const range = root && (Number.isFinite(mark.start) ? rangeAtOffsets(root, mark.start, mark.end) : findTextRange(root, mark.text));
+      const range = locateMark(roots, mark);
       if (range) wrapRange(range, 'erm-highlight', { id: mark.id, color: mark.color || 'y' });
     }
     return () => Object.values(roots).forEach(unwrapHighlights);
-  }, [data.highlights, fontSize, section.id, wordMarks]);
+  }, [cards, data.highlights, fontSize, section.id, section.key, wordMarks]);
 
   const commit = useCallback((makeNext) => {
     setData((current) => {
@@ -365,7 +541,7 @@ export default function ExamReadingMode({ examId, section, answers, locked, onCh
   useEffect(() => {
     document.body.classList.add('erm-open');
     const key = (e) => {
-      if (e.key === 'Escape') closeMode();
+      if (e.key === 'Escape') { if (popRef.current) setPop(null); else closeMode(); }
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'z') { e.preventDefault(); undo(); }
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'y') { e.preventDefault(); redo(); }
     };
@@ -408,21 +584,93 @@ export default function ExamReadingMode({ examId, section, answers, locked, onCh
     applySplit(drag.value);
   };
 
-  const addSelectionAnnotation = useCallback((scope) => {
-    const root = scope === 'article' ? passageRef.current : questionListRef.current;
-    const picked = selectedInside(root); if (!picked) return;
-    const offsets = offsetsOf(root, picked.range); if (!offsets) return;
-    if (!data.highlights.some((x) => (x.scope || 'article') === scope && x.start === offsets.start && x.end === offsets.end && x.color === hlColor)) {
-      commit((d) => ({ ...d, highlights: [...d.highlights, {
-        id: makeId(), scope, text: picked.text, start: offsets.start, end: offsets.end, color: hlColor,
-      }] }));
-    }
-    window.getSelection?.()?.removeAllRanges();
+  const rootsNow = () => ({ article: passageRef.current, questions: questionListRef.current });
+
+  /* 记下「要加进长难句的是哪句」：文章里扩到整句；题干 / 选项本来就短，按选中的原样 */
+  const offer = useCallback((scope, picked, target, at, extra = {}) => {
+    const whole = scope === 'article' && target ? snapToSentences(passageRef.current, target.start, target.end) : picked.text;
+    const text = whole.length > 1200 && picked.text.length <= 1200 ? picked.text : whole;
+    const qEl = picked.range.startContainer.parentElement?.closest('[data-question]');
+    setPop({ ...at, ...extra, scope, text, raw: picked.text, target, q: qEl ? Number(qEl.dataset.question) || null : null });
+  }, []);
+
+  const addHighlight = useCallback((scope, target) => {
+    const same = (x) => (x.scope || 'article') === scope && x.start === target.start && x.end === target.end
+      && x.color === hlColor && (x.part || null) === (target.part || null) && (x.q ?? null) === (target.q ?? null);
+    if (data.highlights.some(same)) return;
+    commit((d) => ({ ...d, highlights: [...d.highlights, { id: makeId(), scope, ...target, color: hlColor }] }));
   }, [commit, data.highlights, hlColor]);
+
+  const addSelectionAnnotation = useCallback((scope, clientX) => {
+    const roots = { article: passageRef.current, questions: questionListRef.current };
+    const picked = selectedInside(roots[scope]); if (!picked) return;
+    const target = targetOf(roots, scope, picked.range); if (!target) return;
+    const at = anchorOf(picked.range, clientX);
+    addHighlight(scope, target);
+    window.getSelection?.()?.removeAllRanges();
+    offer(scope, picked, target, at); // 刚划的这句读不懂，顺手就能加进长难句
+  }, [addHighlight, offer]);
+
   const onTextUp = (scope, e) => {
-    if (tool !== 'highlight' || e.detail > 1) return;
-    requestAnimationFrame(() => addSelectionAnnotation(scope));
+    if (e.button !== 0 || e.detail > 1) return; // 双击是标生词
+    const x = e.clientX;
+    if (tool === 'highlight') requestAnimationFrame(() => addSelectionAnnotation(scope, x));
+    else if (tool === 'hand') requestAnimationFrame(() => {
+      const roots = rootsNow(); const picked = selectedInside(roots[scope]);
+      if (picked) offer(scope, picked, targetOf(roots, scope, picked.range), anchorOf(picked.range, x));
+    });
   };
+
+  /* 右键：有选区就对选区；没有就看是不是点在一段荧光笔上 */
+  const onTextMenu = (scope, e) => {
+    if (tool === 'pen' || tool === 'eraser') return;
+    const roots = rootsNow();
+    const at = { x: e.clientX, y: e.clientY, place: 'at', menu: true };
+    const picked = selectedInside(roots[scope]);
+    if (picked) { e.preventDefault(); offer(scope, picked, targetOf(roots, scope, picked.range), at); return; }
+    const caret = document.caretRangeFromPoint?.(e.clientX, e.clientY);
+    if (!caret) return;
+    for (const mark of data.highlights) {
+      if ((mark.scope || 'article') !== scope) continue;
+      const range = locateMark(roots, mark);
+      if (!range?.isPointInRange(caret.startContainer, caret.startOffset)) continue;
+      e.preventDefault();
+      offer(scope, { text: mark.text, range }, targetOf(roots, scope, range), at, { markId: mark.id });
+      return;
+    }
+  };
+
+  const dropPop = () => { if (popRef.current) setPop(null); };
+  const addToSentences = async () => {
+    const p = pop; setPop(null);
+    window.getSelection?.()?.removeAllRanges();
+    try {
+      const out = await api.addSentence({ text: p.text, examId, sectionId: section.id, q: p.q });
+      notifyWord(out.added ? '已加入长难句——到「复习 · 阅读」里拆解它' : '这句已经在长难句里了', 'ok');
+      loadCards();
+    } catch (err) { notifyWord(err.message, 'err'); }
+  };
+  const markFromPop = () => {
+    const p = pop; setPop(null);
+    if (p.target) addHighlight(p.scope, p.target);
+    window.getSelection?.()?.removeAllRanges();
+  };
+  const copyFromPop = () => {
+    const p = pop; setPop(null);
+    navigator.clipboard?.writeText(p.raw).then(() => notifyWord('已复制'), () => notifyWord('复制失败', 'err'));
+  };
+  const unmarkFromPop = () => {
+    const p = pop; setPop(null);
+    commit((d) => ({ ...d, highlights: d.highlights.filter((x) => x.id !== p.markId) }));
+  };
+
+  // 点到浮窗外面就收起（这一下本身照常生效：开始新的选区、点选项……）
+  useEffect(() => {
+    if (!pop) return undefined;
+    const off = (e) => { if (!e.target.closest?.('.erm-pop')) setPop(null); };
+    window.addEventListener('pointerdown', off, true);
+    return () => window.removeEventListener('pointerdown', off, true);
+  }, [pop]);
 
   const pointOf = (e, size) => {
     const box = e.currentTarget.getBoundingClientRect();
@@ -442,8 +690,15 @@ export default function ExamReadingMode({ examId, section, answers, locked, onCh
     if (tool !== 'pen' || e.button !== 0) return;
     e.preventDefault(); e.currentTarget.setPointerCapture(e.pointerId);
     const size = sizes[scope];
+    const first = pointOf(e, size);
+    // 题目栏的笔迹记下写在哪道题上（和那题当时的顶边），之后跟着题走
+    let anchor = {};
+    if (scope === 'questions') {
+      const layout = questionLayout(questionPaneRef.current, questionListRef.current);
+      for (const [n, top] of Object.entries(layout.tops)) if (top <= first.y || !anchor.q) anchor = { q: Number(n), qy: top };
+    }
     activeStrokeRef.current = { id: makeId(), scope, coordVersion: 2, color: inkColor,
-      width: e.pointerType === 'pen' ? 2.5 : 2.2, w: size.w, h: size.h, points: [pointOf(e, size)] };
+      width: e.pointerType === 'pen' ? 2.5 : 2.2, w: size.w, h: size.h, ...anchor, points: [first] };
     paintDraft();
   };
   const inkMove = (scope, e) => {
@@ -481,6 +736,7 @@ export default function ExamReadingMode({ examId, section, answers, locked, onCh
         <div className="erm-identity">
           <b>{section.title || section.label}</b>
           <span>{section.points != null ? `${section.points} 分` : ''}</span>
+          {cards.length > 0 && <span className="erm-count" title="这篇里已经加进长难句的句子，文中画了虚线">长难句 {cards.length}</span>}
         </div>
         <div className="erm-tools" role="toolbar" aria-label="阅读批注工具">
           {TOOLS.map((x) => <ToolButton key={x.k} tool={x} current={tool} onPick={setTool} />)}
@@ -507,7 +763,7 @@ export default function ExamReadingMode({ examId, section, answers, locked, onCh
       </header>
 
       <main className="erm-main" ref={mainRef}>
-        <section className="erm-article-pane" ref={articlePaneRef}>
+        <section className="erm-article-pane" ref={articlePaneRef} onScroll={dropPop}>
           <div className="erm-paper">
             {section.directions && (
               <details className="erm-directions">
@@ -515,7 +771,7 @@ export default function ExamReadingMode({ examId, section, answers, locked, onCh
               </details>
             )}
             <article className="erm-passage" ref={passageRef}
-                     onMouseUp={(e) => onTextUp('article', e)}
+                     onMouseUp={(e) => onTextUp('article', e)} onContextMenu={(e) => onTextMenu('article', e)}
                      onDoubleClick={tool === 'pen' || tool === 'eraser' ? undefined : onMarkWord}>
               <ReadingPassage passage={section.passage || []} />
             </article>
@@ -534,7 +790,7 @@ export default function ExamReadingMode({ examId, section, answers, locked, onCh
         </div>
         <i className="erm-resize-preview" ref={previewLineRef} hidden />
 
-        <aside className="erm-question-pane" ref={questionPaneRef}>
+        <aside className="erm-question-pane" ref={questionPaneRef} onScroll={dropPop}>
           <nav className="erm-qnav">
             <span>题目</span>
             {section.questions.map((q) => (
@@ -542,7 +798,8 @@ export default function ExamReadingMode({ examId, section, answers, locked, onCh
                       onClick={() => jumpQuestion(q.n)}>{q.n}</button>
             ))}
           </nav>
-          <div className="erm-question-list" ref={questionListRef} onMouseUp={(e) => onTextUp('questions', e)}>
+          <div className="erm-question-list" ref={questionListRef} onMouseUp={(e) => onTextUp('questions', e)}
+               onContextMenu={(e) => onTextMenu('questions', e)}>
             {section.questions.map((q) => {
               const mine = answers[q.n]; const right = section.key?.answers?.[q.n];
               return (
@@ -566,10 +823,12 @@ export default function ExamReadingMode({ examId, section, answers, locked, onCh
               );
             })}
           </div>
-          <InkLayer scope="questions" size={sizes.questions} strokes={strokesBy('questions')} tool={tool} color={currentInk}
+          <InkLayer scope="questions" size={sizes.questions} layout={qLayout} strokes={strokesBy('questions')} tool={tool} color={currentInk}
                     onDown={inkDown} onMove={inkMove} onUp={inkUp} onErase={eraseStroke} mountPreview={mountPreview} />
         </aside>
       </main>
+      {pop && <SentencePop pop={pop} added={cards.includes(pop.text)} onAdd={addToSentences}
+                           onMark={markFromPop} onUnmark={unmarkFromPop} onCopy={copyFromPop} />}
       {wordToast && <div className={`erm-toast ${wordToast.kind}`}>{wordToast.text}</div>}
       {!loaded && <div className="erm-loading">正在打开批注纸…</div>}
     </div>

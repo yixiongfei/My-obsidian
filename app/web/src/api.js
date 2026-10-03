@@ -1,3 +1,5 @@
+import { shrinkImage } from './image-shrink.js';
+
 const j = async (url, opts) => {
   const res = await fetch(url, opts);
   const text = await res.text();
@@ -12,6 +14,12 @@ const body = (method, payload) => ({
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify(payload),
 });
+
+const upload = async (url, raw) => {
+  const file = await shrinkImage(raw);
+  return j(`${url}?name=${encodeURIComponent(file.name || 'paste.png')}&mime=${encodeURIComponent(file.type || '')}`,
+    { method: 'POST', headers: { 'Content-Type': 'application/octet-stream' }, body: file });
+};
 
 export const api = {
   meta: () => j('/api/meta'),
@@ -30,6 +38,8 @@ export const api = {
   // 英语词汇 Anki
   cards: () => j('/api/review/cards'),
   assistantStatus: () => j('/api/assistant/status'),
+  reminders: () => j('/api/reminders'),
+  setReminders: (patch) => j('/api/reminders', body('PUT', patch)),
   // 阅读卡片（句子 + 生词短文）
   sentences: () => j('/api/sentences'),
   allSentences: () => j('/api/sentences/all'),
@@ -79,9 +89,14 @@ export const api = {
   uploadStickyMedia: (file) =>
     j(`/api/stickies/media?name=${encodeURIComponent(file.name || 'paste.png')}&mime=${encodeURIComponent(file.type || '')}`,
       { method: 'POST', headers: { 'Content-Type': 'application/octet-stream' }, body: file }),
-  uploadAnswerImage: (file) =>
-    j(`/api/answers/media?name=${encodeURIComponent(file.name || 'paste.png')}&mime=${encodeURIComponent(file.type || '')}`,
-      { method: 'POST', headers: { 'Content-Type': 'application/octet-stream' }, body: file }),
+  setDrillImages: (exam, section, n, images) => j('/api/exams/drill/images', body('PUT', { exam, section, n, images })),
+  setExamImages: (exam, section, images) => j(`/api/exams/${encodeURIComponent(exam)}/sections/${encodeURIComponent(section)}/images`, body('PUT', { images })),
+  // 图片先缩到模型用得上的尺寸再传：传得快，助手看图也快
+  uploadAssistantFile: (file) => upload('/api/assistant/media', file),
+  uploadAnswerImage: (file) => upload('/api/answers/media', file),
+  drillGrade: (exam, section, n, model) => j('/api/exams/drill/grade', body('POST', { exam, section, n, model })),
+  saveDrillNote: (exam, section, n, note) => j('/api/exams/drill/note', body('PUT', { exam, section, n, ...note })),
+  drillNoteAi: (exam, section, n, model) => j('/api/exams/drill/note/ai', body('POST', { exam, section, n, model })),
 
   year: (y) => j(`/api/schedule/year/${y}`),
   month: (m) => j(`/api/schedule/month/${m}`),

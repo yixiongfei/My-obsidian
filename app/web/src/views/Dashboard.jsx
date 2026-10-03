@@ -68,7 +68,8 @@ export default function Dashboard({ version }) {
   if (error) return <ErrorBox error={error} onRetry={reload} />;
   if (!data) return null;
 
-  const { counts, due, upcoming, streak, daysToExam, examDate, today, points, stages, wrongBooks = [], daily = [] } = data;
+  const { counts, due, upcoming, persistDays = 0, daysToExam, examDate, today, points, stages, wrongBooks = [], daily = [] } = data;
+  const todayRow = daily.find((d) => d.date === today);
   const STAGE_COLORS = ['var(--line-2)', 'var(--hue-2)', 'var(--accent-2)', 'var(--accent)', 'var(--hue-3)'];
   const StageBar = ({ counts: c, total }) => (
     <div className="stage-bar" title={c.map((n, k) => `${stages.names[k]} ${n}`).join(' · ')}>
@@ -85,8 +86,10 @@ export default function Dashboard({ version }) {
     ['待复习考点', pt.due, pt.due > 0 ? 'on' : ''],
     ['未学考点', pt.unlearned, ''],
     ['待复习笔记', counts.due, counts.due > 0 ? 'on' : ''],
-    ['今日已复习', counts.todayDone, ''],
-    ['连续天数', streak, ''],
+    // 整卷 + 专题训练，按题数算，和日历「做题」同一份数
+    ['今日做题数', todayRow?.exams || 0, ''],
+    // 日历上有学习痕迹（复习 / 新建 / 背词 / 做题 / 阅读 / 考点推进）的天数，不要求连续
+    ['坚持天数', persistDays, ''],
   ];
 
   const openPoint = (p) => {
@@ -126,14 +129,13 @@ export default function Dashboard({ version }) {
     });
   }
   if (counts.todayDone === 0 && counts.due > 0) {
-    // 连续天数不只看笔记复习，背词 / 做题也算——今天已经学过了，就别再拿「断连续」吓人
-    const todayRow = daily.find((d) => d.date === today);
+    // 背词 / 做题也算学过——今天已经学过了，只提醒还有笔记在等
     const todayActive = todayRow ? unitsOf(todayRow) + (todayRow.points || 0) > 0 : false;
     tips.push({
       key: 'streak',
       text: todayActive
-        ? `今天还没复习笔记，${counts.due} 篇在等——顺手复习一篇`
-        : `今天还没复习笔记，${counts.due} 篇在等——复习一篇就不断连续（已 ${streak} 天）`,
+        ? `今天还没复习笔记，${counts.due} 篇在等——顺手复习一篇，或者做几道对应考点的题`
+        : `今天还没开始，${counts.due} 篇笔记在等——复习一篇或做几道题，就是坚持的第 ${persistDays + 1} 天`,
     });
   }
   if (pt.week === 0 && pt.unlearned > 0 && points?.next?.[0]) {
