@@ -110,17 +110,19 @@ export function useScrollMemory(ref, key, ready = true, { restore = true } = {})
     if (target != null) apply();
     const save = () => { scrollMemo.set(key, el.scrollTop); };
     el.addEventListener('scroll', save, { passive: true });
-    el.addEventListener('wheel', stop, { passive: true });
-    el.addEventListener('touchstart', stop, { passive: true });
-    el.addEventListener('keydown', stop);
-    el.addEventListener('pointerdown', stop);
+    // 用户在页面任何地方动一下就停：比如刚进来就点题单跳题，别和那次跳转抢滚动条
+    const opts = { capture: true, passive: true };
+    window.addEventListener('wheel', stop, opts);
+    window.addEventListener('touchstart', stop, opts);
+    window.addEventListener('keydown', stop, opts);
+    window.addEventListener('pointerdown', stop, opts);
     return () => {
       stop();
       el.removeEventListener('scroll', save);
-      el.removeEventListener('wheel', stop);
-      el.removeEventListener('touchstart', stop);
-      el.removeEventListener('keydown', stop);
-      el.removeEventListener('pointerdown', stop);
+      window.removeEventListener('wheel', stop, opts);
+      window.removeEventListener('touchstart', stop, opts);
+      window.removeEventListener('keydown', stop, opts);
+      window.removeEventListener('pointerdown', stop, opts);
       // 刷新窗口也不丢：落一份到 sessionStorage
       if (scrollMemo.has(key)) {
         try { sessionStorage.setItem(SCROLL_KEY, JSON.stringify({ ...readScrolls(), [key]: scrollMemo.get(key) })); } catch { /* 无痕 */ }

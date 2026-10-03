@@ -110,11 +110,14 @@ export default function Drill() {
   }, [notify]);
 
   /* ── 侧栏助手要知道「正在做哪道题」 ──
-     默认跟着阅读位置走：视口上方三成处压着的那道。点过、写过、问过的那道会被「钉住」，
-     直到它整个滚出视野——不然一边写下面那道一边问，题号签却跳回上一道。 */
+     默认跟着阅读位置走：卷面顶部那一截（最多 160px）压着的那道。点过、写过、问过的那道会被「钉住」，
+     直到它整个滚出视野——不然一边写下面那道一边问，题号签却跳回上一道。
+     从题单点过去时，平滑滚动一路上经过别的题：跳转期间一律算目标题，
+     滚停了（或者用户自己动了滚轮）才恢复按位置判断。 */
   const railRef = useRef(null);
   const drafts = useRef(new Map());
   const pinned = useRef(null);
+  const jumping = useRef(null);   // { id, timer }：题单点击触发的平滑滚动还在进行
   const raf = useRef(0);
   const [focusId, setFocusId] = useState(null);
   const [openSig, setOpenSig] = useState(0);
@@ -123,6 +126,7 @@ export default function Drill() {
   const track = useCallback(() => {
     const box = scrollRef.current;
     if (!box || !items?.length) return;
+    if (jumping.current) { setFocusId(jumping.current.id); return; }
     const top = box.getBoundingClientRect().top;
     const h = box.clientHeight;
     if (pinned.current) {
@@ -130,17 +134,43 @@ export default function Drill() {
       if (r && r.bottom > top + 40 && r.top < top + h - 40) return;
       pinned.current = null;
     }
+    // 判定线贴着顶部：选择题短，线放得太低（原来是三成处）会把刚滚到顶的这道算成下一道
+    const line = Math.min(h * 0.3, 160);
     let cur = items[0].id;
     for (const it of items.slice(0, shown)) {
       const el = document.getElementById(`drill-${it.id}`);
       if (!el) continue;
-      if (el.getBoundingClientRect().top - top <= h * 0.35) cur = it.id; else break;
+      if (el.getBoundingClientRect().top - top <= line) cur = it.id; else break;
     }
     setFocusId(cur);
   }, [items, shown]);
   useEffect(() => { track(); }, [track]);
-  useEffect(() => () => cancelAnimationFrame(raf.current), []);
-  const onScroll = () => { cancelAnimationFrame(raf.current); raf.current = requestAnimationFrame(track); };
+  // 定时器、事件回调里总用最新的 track：跳到第 30 题以后要先多加载一批，旧闭包里的 shown 还是 30，会把当前题算成第 30 道
+  const trackRef = useRef(track);
+  trackRef.current = track;
+  const endJump = useCallback(() => {
+    if (!jumping.current) return;
+    clearTimeout(jumping.current.timer);
+    jumping.current = null;
+    trackRef.current();
+  }, []);
+  useEffect(() => () => { cancelAnimationFrame(raf.current); clearTimeout(jumping.current?.timer); }, []);
+  const onScroll = () => { cancelAnimationFrame(raf.current); raf.current = requestAnimationFrame(() => trackRef.current()); };
+  // 跳转的平滑滚动停了就交还给位置判断；用户自己滚也立刻交还
+  useEffect(() => {
+    const box = scrollRef.current;
+    if (!box) return undefined;
+    box.addEventListener('scrollend', endJump);
+    box.addEventListener('wheel', endJump, { passive: true });
+    box.addEventListener('touchstart', endJump, { passive: true });
+    box.addEventListener('keydown', endJump);
+    return () => {
+      box.removeEventListener('scrollend', endJump);
+      box.removeEventListener('wheel', endJump);
+      box.removeEventListener('touchstart', endJump);
+      box.removeEventListener('keydown', endJump);
+    };
+  }, [items, endJump]);
 
   const touch = useCallback((id) => { pinned.current = id; setFocusId(id); }, []);
   const ask = useCallback((id) => { touch(id); setOpenSig((n) => n + 1); setFocusSig((n) => n + 1); }, [touch]);
@@ -160,8 +190,20 @@ export default function Drill() {
   const jump = (id) => {
     const i = items.findIndex((it) => it.id === id);
     if (i >= shown) setShown(Math.ceil((i + 1) / PAGE) * PAGE);
-    touch(id);
-    setTimeout(() => document.getElementById(`drill-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }), i >= shown ? 120 : 0);
+    // 跳题不钉：滚停后目标题就在顶上，按位置判断自然就是它；之后往下读，题号签跟着走
+    pinned.current = null;
+    setFocusId(id);
+    if (jumping.current) clearTimeout(jumping.current.timer);
+    // 兜底：万一没触发 scrollend（目标本来就在原位），一秒半后也交还
+    jumping.current = { id, timer: setTimeout(endJump, 1500) };
+    setTimeout(() => {
+      // 只滚卷面这一栏：scrollIntoView 会顺带去滚外层容器（连 overflow:hidden 的也滚），整页会错位
+      const box = scrollRef.current;
+      const el = document.getElementById(`drill-${id}`);
+      if (!box || !el) return;
+      const offset = el.getBoundingClientRect().top - box.getBoundingClientRect().top - 20;
+      box.scrollTo({ top: box.scrollTop + offset, behavior: 'smooth' });
+    }, i >= shown ? 120 : 0);
   };
 
   if (loading && !data) return <Loading />;
