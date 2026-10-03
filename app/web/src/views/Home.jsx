@@ -55,7 +55,7 @@ export default function Home({ version, theme }) {
             <div className="lbl" style={{ color: 'var(--accent)' }}>PERSONAL KNOWLEDGE, MADE NAVIGABLE</div>
             <h1 className="hero-title">
               坚持<br />
-              <span style={{ color: 'var(--accent)' }}>才能到达终点。</span>
+              <span style={{ color: 'var(--accent)' }}>才能到达终点</span>
             </h1>
             <p className="hero-lede">
             </p>

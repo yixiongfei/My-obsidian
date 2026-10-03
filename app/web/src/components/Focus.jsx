@@ -1,29 +1,102 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
-  FOCUS_CHOICES, focusToday, mmss, pauseFocus, prefs, remaining, resumeFocus, setPrefs,
+  focusToday, mmss, pauseFocus, prefs, remaining, resumeFocus, setPrefs,
   skipBreak, startFocus, stopFocus, useFocus, usePrefsVersion, useTicker,
 } from '../focus.js';
 
 /**
  * 番茄钟的两张脸：
- *   FocusCard   仪表盘上的大钟——挑时长、开始、暂停、结束
+ *   FocusCard   仪表盘上的大钟——拖钟面定时长、开始、暂停、结束
  *   FocusFloat  其他页面角落里的小钟，跟着换页走，可以拖到任何位置
  *
  * 钟面是一只 60 分钟的计时钟：从 12 点顺时针铺开的扇面 = 还剩几分钟，
  * 时间走着走着，扇面边缘就逆时针退回 12 点。专注是主色、休息是绿色、暂停变灰。
+ * 没开始的时候扇面边缘有个把手：按住拖一圈就是在拧计时器，松手那一刻的分钟数就是这一轮的长度。
  */
 
 const TAU = Math.PI * 2;
+const MIN_MIN = 1;
+const MAX_MIN = 60;
+const reduceMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+const easeOut = (t) => 1 - (1 - t) ** 3;
 
-/** 钟面。frac = 扇面占整圈的比例（剩余分钟 / 60） */
-export function FocusDial({ size, frac, tone = 'focus', mini = false }) {
+/** 扇面跳变（换阶段、松手、键盘调）时补一段缓动；拖动中、计时中的细小变化直接跟手 */
+function useTween(target, instant) {
+  const [v, setV] = useState(target);
+  const cur = useRef(target);
+  useEffect(() => {
+    const from = cur.current;
+    if (instant || reduceMotion() || Math.abs(target - from) < 0.004) {
+      cur.current = target;
+      setV(target);
+      return undefined;
+    }
+    let raf = 0;
+    const t0 = performance.now();
+    const step = (now) => {
+      const p = Math.min(1, (now - t0) / 460);
+      cur.current = from + (target - from) * easeOut(p);
+      setV(cur.current);
+      if (p < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [target, instant]);
+  return v;
+}
+
+/**
+ * 钟面。frac = 扇面占整圈的比例（剩余分钟 / 60）。
+ * 给了 onAdjust 就能拧：按住钟面拖动，按角度换算成 1–60 分钟（过 12 点不翻转）；键盘方向键 ±1、PageUp/Down ±5。
+ */
+export function FocusDial({ size, frac, tone = 'focus', mini = false, minutes, onAdjust, onAdjustEnd }) {
   const c = size / 2;
   const rim = c - (mini ? 2 : 4);
   const face = rim - (mini ? 3 : 14);
   const f = Math.max(0, Math.min(1, frac));
   const at = (r, p) => [c + r * Math.sin(p * TAU), c - r * Math.cos(p * TAU)];
   const [ex, ey] = at(face, f);
+  const svg = useRef(null);
+  const last = useRef(minutes);
+  const [dragging, setDragging] = useState(false);
+  const adjustable = !!onAdjust;
+
+  const minutesAt = (e, wrapGuard) => {
+    const r = svg.current.getBoundingClientRect();
+    const x = e.clientX - (r.left + r.width / 2);
+    const y = e.clientY - (r.top + r.height / 2);
+    let a = Math.atan2(x, -y) / TAU;
+    if (a < 0) a += 1;
+    let m = Math.round(a * 60);
+    const prev = last.current;
+    // 拧过 12 点不翻面：从大往 0 拧就停在 60，从小往 59 拧就停在 1
+    if (wrapGuard && prev >= 45 && m <= 15) m = MAX_MIN;
+    else if (wrapGuard && prev <= 15 && m >= 45) m = MIN_MIN;
+    if (m === 0) m = prev > 30 ? MAX_MIN : MIN_MIN;
+    m = Math.max(MIN_MIN, Math.min(MAX_MIN, m));
+    last.current = m;
+    return m;
+  };
+  const onDown = (e) => {
+    if (!adjustable || e.button !== 0) return;
+    e.preventDefault();
+    last.current = minutes;
+    try { svg.current.setPointerCapture(e.pointerId); } catch { /* 无 */ }
+    setDragging(true);
+    onAdjust(minutesAt(e, false), true);
+  };
+  const onMove = (e) => { if (dragging) onAdjust(minutesAt(e, true), true); };
+  const onUp = () => { if (!dragging) return; setDragging(false); onAdjustEnd?.(); };
+  const onKey = (e) => {
+    if (!adjustable) return;
+    const step = { ArrowUp: 1, ArrowRight: 1, ArrowDown: -1, ArrowLeft: -1, PageUp: 5, PageDown: -5 }[e.key];
+    if (!step) return;
+    e.preventDefault();
+    onAdjust(Math.max(MIN_MIN, Math.min(MAX_MIN, minutes + step)), false);
+    onAdjustEnd?.();
+  };
+
   const wedge = f >= 0.9995
     ? <circle cx={c} cy={c} r={face} className="fd-wedge" />
     : f > 0.0005 && <path d={`M${c},${c} L${c},${c - face} A${face},${face} 0 ${f > 0.5 ? 1 : 0} 1 ${ex},${ey} Z`} className="fd-wedge" />;
@@ -36,19 +109,29 @@ export function FocusDial({ size, frac, tone = 'focus', mini = false }) {
   }
   const [hx, hy] = at(face + (mini ? 0 : 2), f);
   return (
-    <svg className={`fd fd-${tone}`} width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true">
+    <svg ref={svg} className={`fd fd-${tone}${adjustable ? ' adjustable' : ''}${dragging ? ' dragging' : ''}`}
+         width={size} height={size} viewBox={`0 0 ${size} ${size}`}
+         {...(adjustable
+           ? { role: 'slider', tabIndex: 0, 'aria-label': '专注时长', 'aria-valuemin': MIN_MIN, 'aria-valuemax': MAX_MIN, 'aria-valuenow': minutes, 'aria-valuetext': `${minutes} 分钟`,
+               onPointerDown: onDown, onPointerMove: onMove, onPointerUp: onUp, onPointerCancel: onUp, onKeyDown: onKey }
+           : { 'aria-hidden': true })}>
       <circle cx={c} cy={c} r={rim} className="fd-face" />
       {ticks}
       {wedge}
+      {!mini && [0, 15, 30, 45].map((m) => {
+        const [x, y] = at(face - 13, m / 60);
+        return <text key={m} x={x} y={y + 4} className="fd-num" textAnchor="middle">{m}</text>;
+      })}
       {f > 0.0005 && <line x1={c} y1={c} x2={hx} y2={hy} className="fd-hand" />}
       <circle cx={c} cy={c} r={mini ? 2.5 : 5} className="fd-knob" />
+      {adjustable && <circle cx={ex} cy={ey} r={dragging ? 10 : 8} className="fd-grip" />}
     </svg>
   );
 }
 
 /** 这一刻钟面该怎么画、读数写什么 */
 function view(s, now, idleMinutes) {
-  if (!s) return { tone: 'idle', frac: idleMinutes / 60, time: mmss(idleMinutes * 60_000), status: '选好时长，点开始' };
+  if (!s) return { tone: 'idle', frac: idleMinutes / 60, time: mmss(idleMinutes * 60_000), status: '拖动钟面定时长，点开始' };
   const { left } = remaining(s, now);
   const label = s.label ? ` · ${s.label}` : '';
   if (s.phase === 'over') return { tone: 'over', frac: 0, time: '00:00', status: '休息结束，再来一个？' };
@@ -73,8 +156,22 @@ export function FocusCard() {
   usePrefsVersion();
   const now = useTicker(!!s && !s.paused && s.phase !== 'over');
   const p = prefs();
-  const v = view(s, now, p.minutes);
+  // 拖动中先只改这里，松手再存：拖一圈不至于写几十次 localStorage
+  const [draft, setDraft] = useState(null);
+  const draftRef = useRef(null);
+  const [live, setLive] = useState(false);
+  const minutes = draft ?? p.minutes;
+  const v = view(s, now, minutes);
+  const shown = useTween(v.frac, live);
   const day = focusToday();
+
+  const adjust = (m, fromDrag) => { draftRef.current = m; setDraft(m); setLive(fromDrag); };
+  const commit = () => {
+    if (draftRef.current != null) setPrefs({ minutes: draftRef.current });
+    draftRef.current = null;
+    setDraft(null);
+    setLive(false);
+  };
 
   return (
     <div className="fc">
@@ -83,19 +180,13 @@ export function FocusCard() {
         <span className="fc-meta">{day.rounds ? `今天 ${day.rounds} 个番茄 · ${day.minutes} 分钟` : '今天还没开始番茄'}</span>
       </div>
       <div className="fc-body">
-        <FocusDial size={188} frac={v.frac} tone={v.tone} />
+        <FocusDial size={196} frac={shown} tone={v.tone} minutes={minutes}
+                   onAdjust={s ? undefined : adjust} onAdjustEnd={s ? undefined : commit} />
         <div className="fc-side">
-          <div className={`fc-time fig${v.tone === 'idle' ? ' idle' : ''}`} role="timer" aria-live="off">{v.time}</div>
+          <div className={`fc-time fig${v.tone === 'idle' ? ' idle' : ''}${live ? ' live' : ''}`} role="timer" aria-live="off">{v.time}</div>
           <div className="fc-status">{v.status}</div>
-          {!s && (
-            <div className="seg fc-len" role="group" aria-label="专注时长">
-              {FOCUS_CHOICES.map((m) => (
-                <button key={m} className={p.minutes === m ? 'on' : ''} aria-pressed={p.minutes === m} onClick={() => setPrefs({ minutes: m })}>{m} 分</button>
-              ))}
-            </div>
-          )}
           <div className="fc-acts">
-            {!s && <button className="btn primary" onClick={() => startFocus({ minutes: p.minutes })}>开始专注</button>}
+            {!s && <button className="btn primary" onClick={() => startFocus({ minutes })}>开始专注</button>}
             {s?.phase === 'focus' && !s.paused && <button className="btn" onClick={pauseFocus}>暂停</button>}
             {s?.paused && <button className="btn primary" onClick={resumeFocus}>继续</button>}
             {s?.phase === 'break' && !s.paused && <button className="btn" onClick={skipBreak}>跳过休息</button>}
@@ -104,7 +195,6 @@ export function FocusCard() {
           </div>
         </div>
       </div>
-      <p className="fc-note">专注的时间算进今天的学习时间。换页、最小化窗口都接着计时，到点会响铃提醒；其他页面角落里有一只小钟。</p>
     </div>
   );
 }

@@ -197,17 +197,29 @@
 .fd-paused { --fd-c: var(--dim); }
 .fd-idle { --fd-c: color-mix(in srgb, var(--accent) 45%, var(--bg-1)); }
 .fd-over .fd-hand { display: none; }
+.fd-num { font-size: 10px; fill: var(--text-2); font-variant-numeric: tabular-nums; pointer-events: none; }
+/* 能拧的时候：钟面可抓，扇面边缘一颗把手；按住时扇面亮成主色、把手放大 */
+.fd.adjustable { cursor: grab; touch-action: none; border-radius: 50%; }
+.fd.adjustable.dragging { cursor: grabbing; }
+.fd.adjustable:hover, .fd.adjustable.dragging { --fd-c: color-mix(in srgb, var(--accent) 70%, var(--bg-1)); }
+.fd.adjustable.dragging { --fd-c: var(--accent); }
+.fd.adjustable:focus { outline: none; }
+.fd.adjustable:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+.fd-grip {
+  fill: var(--bg-1); stroke: var(--fd-c); stroke-width: 3;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.35));
+  transition: r 160ms var(--ease), stroke var(--dur-1);
+}
+.fd.adjustable:hover .fd-grip { stroke: var(--accent); }
 
 .fc-meta { margin-left: auto; font-size: 12px; color: var(--dim); }
 .fc-body { display: flex; align-items: center; gap: 28px; margin-top: 16px; }
 .fc-side { flex: 1; min-width: 0; display: grid; gap: 10px; justify-items: start; }
-.fc-time { font-size: 52px; font-weight: 500; line-height: 1; letter-spacing: -0.03em; color: var(--text); }
+.fc-time { font-size: 52px; font-weight: 500; line-height: 1; letter-spacing: -0.03em; color: var(--text); transition: color var(--dur-1); }
 .fc-time.idle { color: var(--text-2); }
+.fc-time.live { color: var(--text); }
 .fc-status { max-width: 100%; font-size: 13px; color: var(--text-2); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.fc-len { margin-top: 2px; flex-wrap: nowrap; }
-.fc-len button { white-space: nowrap; }
 .fc-acts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
-.fc-note { margin: 18px 0 0; font-size: 12px; line-height: 1.7; color: var(--dim); }
 
 /* 跟着换页走的小钟：左下角（右下角是便利贴的取纸台），可拖 */
 .ff {

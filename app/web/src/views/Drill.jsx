@@ -254,10 +254,10 @@ export default function Drill() {
           <article className={`paper paper-${group} drill`}>
             <header className="paper-head">
               <div className="rh-crumb">
-                <button onClick={() => navigate('/resources')} style={{ color: 'var(--dim)', letterSpacing: 'inherit' }}>学习资源</button>
+                <button onClick={() => navigate('/resources?mode=topics')} style={{ color: 'var(--dim)', letterSpacing: 'inherit' }}>专题训练</button>
                 {'　/　'}
                 <button onClick={() => navigate(`/resources/tags/${group}?tag=${encodeURIComponent(tag)}`)} style={{ color: 'var(--dim)', letterSpacing: 'inherit' }}>{data.label}</button>
-                {'　/　'}专题训练
+                {'　/　'}{tag}
               </div>
               <h1 className="paper-title">
                 {data.tag}

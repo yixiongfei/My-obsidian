@@ -148,7 +148,7 @@ export default function Exam() {
                  onDoubleClick={isEnglish ? onMarkWord : undefined} onContextMenu={isEnglish ? hl.onContextMenu : undefined}>
           <header className="paper-head">
             <div className="rh-crumb">
-              <button onClick={() => navigate('/resources')} style={{ color: 'var(--dim)', letterSpacing: 'inherit' }}>学习资源</button>
+              <button onClick={() => navigate('/resources?mode=papers')} style={{ color: 'var(--dim)', letterSpacing: 'inherit' }}>真题模式</button>
               {'　/　'}{groupLabel}{'　/　'}{data.kindLabel}
             </div>
             <h1 className="paper-title">

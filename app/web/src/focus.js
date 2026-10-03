@@ -14,7 +14,6 @@ import { useEffect, useState, useSyncExternalStore } from 'react';
 const KEY = 'kb-focus';
 const PREF_KEY = 'kb-focus-pref';
 const DAY_KEY = 'kb-focus-day';
-export const FOCUS_CHOICES = [25, 45, 60];
 const STALE = 2 * 3600_000;   // 结束两小时以上的旧状态，重开时直接丢掉
 
 const read = (k, fallback) => { try { return JSON.parse(localStorage.getItem(k)) ?? fallback; } catch { return fallback; } };

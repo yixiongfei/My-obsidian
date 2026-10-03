@@ -107,7 +107,8 @@ function Ticks() {
 export function TodayOrbit({ today, goals, words, exams, onEditGoals }) {
   const [hover, setHover] = useState(null);   // 'time' | 'words' | 'exams' | 活动 key
   const goalSec = goals.minutes * 60;
-  const total = today?.total || 0;
+  // 不到半分钟的零头不画：圆环上一个点、图例里「0 分」只会让人困惑
+  const total = (today?.total || 0) >= 30 ? today.total : 0;
   const t = useIntro([total, words, exams, goals.minutes, goals.words, goals.exams]);
 
   // 外圈的分段：按 ACTS 顺序首尾相接，总长 = 学习时间 / 目标（超过一圈就封顶在一圈）
@@ -117,7 +118,7 @@ export function TodayOrbit({ today, goals, words, exams, onEditGoals }) {
     const scale = total > goalSec ? total : goalSec;
     for (const a of ACTS) {
       const s = today?.byKind?.[a.key] || 0;
-      if (!s) continue;
+      if (s < 30) continue;
       const len = s / scale;
       out.push({ ...a, sec: s, from: at, to: at + len });
       at += len;

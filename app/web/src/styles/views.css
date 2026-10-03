@@ -763,6 +763,42 @@ body.readmode-open { overflow: hidden; }
 .exam-card .ec-go { position: absolute; right: 10px; top: 9px; font-size: 12px; color: var(--line-2); transition: color 0.16s, transform 0.16s var(--ease); }
 .exam-card:hover .ec-go { color: var(--hue, var(--accent)); transform: translateX(3px); }
 
+/* 刷题方式：专题训练 / 真题模式（以后还有阅读模式之类），大字标签，当前那个下面一道主色线 */
+.res-modes { display: flex; gap: 30px; margin-bottom: 36px; border-bottom: var(--hair) solid var(--line); }
+.res-mode {
+  position: relative; padding: 0 0 12px; background: none;
+  font-size: 20px; font-weight: 500; letter-spacing: 0.01em; color: var(--dim);
+  transition: color var(--dur-1);
+}
+.res-mode:hover { color: var(--text-2); }
+.res-mode.on { color: var(--text); }
+.res-mode.on::after { content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; border-radius: 1px; background: var(--accent); }
+.res-mode:focus-visible { outline: 1px solid var(--accent); outline-offset: 4px; }
+
+/* 专题训练：一个知识点一张卡，底下一条做了多少的进度 */
+.topic-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 8px; }
+.topic-card {
+  position: relative; text-align: left;
+  display: flex; flex-direction: column; gap: 6px; min-height: 96px;
+  padding: 12px 12px 13px;
+  background: var(--bg-1);
+  border: var(--hair) solid var(--line); border-radius: var(--radius);
+  border-top: 2px solid var(--line);
+  transition: border-color 0.16s, background 0.16s, transform 0.16s var(--ease);
+}
+.topic-card:not(:disabled):hover { border-color: var(--hue, var(--accent)); background: var(--bg-2); transform: translateY(-2px); }
+.topic-card.doing { border-top-color: var(--due); }
+.topic-card.done { border-top-color: var(--hue, var(--accent)); }
+.topic-card.off { opacity: 0.45; cursor: default; }
+.topic-card .tc-name { padding-right: 16px; font-size: 14px; font-weight: 500; line-height: 1.4; color: var(--text); }
+.topic-card.done .tc-name { color: var(--hue, var(--accent)); }
+.topic-card .tc-meta { margin-top: auto; font-size: 11px; color: var(--dim); font-variant-numeric: tabular-nums; }
+.topic-card .tc-meta b { margin-right: 1px; font-size: 13px; font-weight: 500; color: var(--text); }
+.topic-card .tc-bar { height: 3px; border-radius: 99px; background: var(--line); overflow: hidden; }
+.topic-card .tc-bar i { display: block; height: 100%; border-radius: inherit; background: var(--hue, var(--accent)); }
+.topic-card .ec-go { position: absolute; right: 10px; top: 10px; font-size: 12px; color: var(--line-2); transition: color 0.16s, transform 0.16s var(--ease); }
+.topic-card:not(:disabled):hover .ec-go { color: var(--hue, var(--accent)); transform: translateX(3px); }
+
 /* ── 真题标签 ─────────────────────────────────────────── */
 .tags-subjects { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 18px; }
 .tags-subject {
