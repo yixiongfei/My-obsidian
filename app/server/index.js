@@ -21,6 +21,7 @@ import * as marks from './lib/vocab-marks.js';
 import * as drill from './lib/drill.js';
 import * as drillAi from './lib/drill-ai.js';
 import * as practice from './lib/practice.js';
+import * as studytime from './lib/studytime.js';
 import * as examMarks from './lib/exam-marks.js';
 import * as readingAnnotations from './lib/reading-annotations.js';
 import * as stickies from './lib/stickies.js';
@@ -106,7 +107,20 @@ app.get('/api/dashboard', (_req, res) => res.json({
   stages: points.stageSummary(), wrongBooks: points.wrongBooks(),
   // 连续天数 / 坚持天数都按「这天学没学」算，笔记复习只是其中一种，覆盖 dashboard() 里那份只看笔记复习的
   ...(({ streak, total }) => ({ streak, persistDays: total }))(schedule.studyDays()),
+  // 学习时长（近 35 天，按天、按类别）和每日目标：今日圆环、周 / 月柱状图都用这一份
+  studyTime: studytime.summary(35),
+  goals: studytime.goals(),
 }));
+
+/* 学习时长：前端每半分钟交一次各类别的秒数；关窗时用 sendBeacon 补最后一段 */
+app.post('/api/study-time', (req, res) => {
+  const items = Array.isArray(req.body?.items) ? req.body.items : [req.body || {}];
+  let n = 0;
+  for (const it of items.slice(0, 10)) if (studytime.add(it?.kind, it?.seconds)) n += 1;
+  res.json({ ok: true, added: n });
+});
+app.get('/api/goals', (_req, res) => res.json(studytime.goals()));
+app.put('/api/goals', (req, res) => res.json(studytime.setGoals(req.body || {})));
 
 /* 一轮复习的「总结完成」：写进笔记 frontmatter（stage: 总结 / summarized: 日期） */
 app.post('/api/note/summarize', wrap(async (req, res) => {

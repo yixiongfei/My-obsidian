@@ -21,6 +21,7 @@ import Drill from './views/Drill.jsx';
 
 import { api } from './api.js';
 import { useApi, useHotkey, useTheme, useVaultVersion } from './hooks.js';
+import { useStudyClock } from './studyClock.js';
 
 // 换页过渡：淡入 + 极轻微的上浮。位移控制在 6px 以内，
 // 再大就会和页内的逐块进场动画叠成"整页在晃"
@@ -38,6 +39,8 @@ export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [settings, updateSettings] = useSettings();
   const location = useLocation();
+  // 做题、背单词、阅读、看笔记、问助手的时候计学习时长，仪表盘的「今日学习时间」和圆环用它
+  useStudyClock(location.pathname);
   const navigate = useNavigate();
 
   // 「启动时打开」只在这次会话第一次进入时生效，之后刷新 / 回首页都不再跳

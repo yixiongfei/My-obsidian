@@ -1,0 +1,174 @@
+/* ==================================================================
+ * 仪表盘「今天」：三道轨道环 + 学习时间走势（见 components/Vitals.jsx）
+ *
+ * 做什么 = 什么颜色，全页一致。五个色深浅两套各自过了色盲校验（dataviz 的 validate_palette）：
+ * 顺序 做题 / 笔记 / 助手 / 阅读 / 背单词，冷暖交替、蓝紫不相邻；三道环的 蓝-青-玫 相邻对也单独校过。
+ * ================================================================== */
+
+:root {
+  --act-exam: #D9506E;
+  --act-notes: #3D7FE8;
+  --act-assistant: #D96A35;
+  --act-reading: #8E74E6;
+  --act-words: #22A6A8;
+}
+:root[data-theme='light'] {
+  --act-exam: #C23B5C;
+  --act-notes: #2F6BD8;
+  --act-assistant: #C8561F;
+  --act-reading: #6A47C8;
+  --act-words: #00909A;
+}
+
+.vt-board { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 20px; margin-top: 48px; }
+.vt-card {
+  position: relative; min-width: 0; padding: 24px 26px 22px;
+  border-radius: 18px; border: var(--hair) solid var(--line);
+  background: color-mix(in srgb, var(--bg-1) 90%, transparent);
+}
+/* 主角那一张：轨道环背后一团很淡的主色光，像星图上被照亮的那片天区 */
+.vt-card-today {
+  border-color: color-mix(in srgb, var(--accent) 22%, var(--line));
+  background:
+    radial-gradient(90% 120% at 20% 50%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 62%),
+    color-mix(in srgb, var(--bg-1) 90%, transparent);
+}
+
+/* ── 今天 ── */
+.vt-today { display: flex; align-items: center; gap: 30px; }
+.vt-orbit { flex: none; width: min(264px, 44%); }
+.vt-orbit svg { display: block; width: 100%; height: auto; overflow: visible; font-family: inherit; }
+.vt-track { stroke: color-mix(in srgb, var(--text) 7%, transparent); }
+.vt-arc { transition: opacity var(--dur-2) var(--ease); }
+.vt-arc.dim, .vt-sat.dim { opacity: 0.25; }
+.vt-sat { stroke: var(--bg-1); stroke-width: 2.5; transition: opacity var(--dur-2) var(--ease); }
+.vt-tick { stroke: var(--tick); stroke-width: 1; }
+.vt-tick.major { stroke: var(--line-2); stroke-width: 1.4; }
+.vt-center-v { font-size: 40px; font-weight: 500; letter-spacing: -0.03em; fill: var(--text); }
+.vt-center-u { font-size: 11.5px; fill: var(--text-2); }
+.vt-center-k { font-size: 11px; fill: var(--dim); }
+
+.vt-read { flex: 1; min-width: 0; }
+.vt-read-h, .vt-trend-h { display: flex; align-items: center; gap: 12px; }
+.vt-read-h { margin-bottom: 10px; }
+.vt-read-h h3, .vt-trend-h h3 { margin: 0; font-size: 17px; font-weight: 600; color: var(--text); letter-spacing: 0.02em; }
+.vt-goal-btn {
+  margin-left: auto; padding: 4px 11px; font-size: 12px; color: var(--text-2);
+  border: var(--hair) solid var(--line-2); border-radius: 99px;
+  transition: color var(--dur-1), border-color var(--dur-1);
+}
+.vt-goal-btn:hover { color: var(--text); border-color: var(--accent); }
+
+.vt-row {
+  display: flex; align-items: baseline; gap: 10px; padding: 10px 0;
+  border-bottom: var(--hair) solid var(--line); outline: none;
+  transition: opacity var(--dur-2) var(--ease);
+}
+.vt-row.dim { opacity: 0.45; }
+.vt-row:focus-visible { box-shadow: inset 2px 0 0 var(--accent); }
+.vt-key { flex: none; align-self: center; width: 11px; height: 11px; border-radius: 50%; border: 3px solid; }
+/* 学习时间那道环是分段的：钥匙也是一圈分色 */
+.vt-key.k-time {
+  border: none;
+  background: conic-gradient(var(--act-exam) 0 25%, var(--act-notes) 0 50%, var(--act-reading) 0 75%, var(--act-words) 0);
+  -webkit-mask: radial-gradient(circle, transparent 2.5px, #000 3px);
+          mask: radial-gradient(circle, transparent 2.5px, #000 3px);
+}
+.vt-key.k-words { border-color: var(--act-words); }
+.vt-key.k-exams { border-color: var(--act-exam); }
+.vt-row-k { min-width: 64px; font-size: 13px; color: var(--text-2); }
+.vt-row-v { font-size: 13px; color: var(--dim); }
+.vt-row-v b { margin-right: 2px; font-size: 20px; font-weight: 500; letter-spacing: -0.02em; color: var(--text); }
+.vt-done { margin-left: auto; display: inline-flex; align-items: center; gap: 5px; font-size: 11.5px; color: var(--text-2); }
+.vt-done::before {
+  content: ''; width: 9px; height: 5px; margin-top: -3px;
+  border-left: 2px solid var(--hl-g); border-bottom: 2px solid var(--hl-g); transform: rotate(-45deg);
+}
+
+.vt-split { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 12px 0 0; padding: 0; list-style: none; }
+.vt-split li { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-2); transition: opacity var(--dur-2); }
+.vt-split li i { width: 8px; height: 8px; border-radius: 2px; }
+.vt-split li b { font-weight: 500; color: var(--text); }
+.vt-split li.dim { opacity: 0.4; }
+.vt-insight { margin: 14px 0 0; font-size: 13px; line-height: 1.7; color: var(--text-2); }
+
+/* ── 学习时间走势 ── */
+.vt-trend-h .seg { margin-left: auto; }
+.vt-story { min-height: 22px; margin: 8px 0 10px; font-size: 13px; line-height: 1.7; color: var(--text-2); }
+.vt-plot { position: relative; }
+.vt-plot svg { display: block; overflow: visible; }
+.vt-grid { stroke: var(--line); stroke-width: 1; }
+.vt-axis { font-size: 10.5px; fill: var(--dim); font-variant-numeric: tabular-nums; }
+.vt-axis.now { fill: var(--text); }
+/* 柱子：今天用主色，别的日子退一步；从底线长出来 */
+.vt-bar {
+  fill: color-mix(in srgb, var(--accent) 40%, var(--bg-1));
+  transform-box: fill-box; transform-origin: 50% 100%;
+  transition: transform 560ms cubic-bezier(0.2, 0.8, 0.2, 1), fill var(--dur-1);
+}
+.vt-bar.today { fill: var(--accent); }
+.vt-bar.hot { fill: var(--accent-2); }
+.vt-none { stroke: var(--line-2); stroke-width: 2; stroke-linecap: round; }
+.vt-goal { stroke: var(--text-2); stroke-width: 1; opacity: 0.55; }
+.vt-goal-t { font-size: 10.5px; fill: var(--text-2); }
+.vt-plot rect:focus { outline: none; }
+
+.vt-tip {
+  position: absolute; top: 0; z-index: 5; transform: translate(-50%, -10px);
+  display: grid; gap: 3px; min-width: 124px; padding: 9px 11px;
+  pointer-events: none; border-radius: 10px;
+  background: var(--bg-2); border: var(--hair) solid var(--line-2);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
+}
+.vt-tip b { font-size: 15px; font-weight: 600; color: var(--text); }
+.vt-tip-d { margin-bottom: 2px; font-size: 11px; color: var(--dim); }
+.vt-tip-r { display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: var(--text-2); }
+.vt-tip-r i { width: 10px; height: 2px; border-radius: 1px; }
+.vt-tip-r em { margin-left: auto; padding-left: 12px; font-style: normal; color: var(--text); }
+
+/* 坚持：最近 14 天，一天一颗 */
+.vt-streak { display: flex; align-items: center; gap: 12px; margin-top: 12px; padding-top: 14px; border-top: var(--hair) solid var(--line); }
+.vt-streak-k { font-size: 12px; color: var(--text-2); }
+.vt-dots { display: inline-flex; gap: 6px; margin-left: auto; }
+.vt-dots i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
+.vt-dots i.on { background: var(--accent); }
+.vt-dots i.now { box-shadow: 0 0 0 2px var(--bg-1), 0 0 0 3.5px var(--text-2); }
+
+/* ── 调整目标 ── */
+.vt-goal-pop {
+  position: absolute; top: 60px; right: 22px; z-index: 30; width: 268px; padding: 14px;
+  display: grid; gap: 10px; border-radius: 14px;
+  background: var(--bg-1); border: var(--hair) solid var(--line-2);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+  animation: rise var(--dur-1) var(--ease) both;
+}
+.vt-goal-f { display: grid; grid-template-columns: 70px 1fr 34px; align-items: center; gap: 10px; font-size: 13px; color: var(--text-2); }
+.vt-goal-f input {
+  width: 100%; padding: 6px 9px; border-radius: 8px;
+  border: var(--hair) solid var(--line-2); background: var(--bg); color: var(--text); font: inherit;
+}
+.vt-goal-f input:focus { outline: none; border-color: var(--accent); }
+.vt-goal-f em { font-size: 12px; font-style: normal; color: var(--dim); }
+.vt-goal-acts { display: flex; justify-content: flex-end; gap: 8px; margin-top: 2px; }
+
+/* ── 一轮进度：每科一条，点开看分支 ── */
+.prog-toggle { width: 100%; padding: 0; text-align: left; cursor: pointer; background: none; }
+.prog-toggle:focus-visible { outline: 1px solid var(--accent); outline-offset: 3px; }
+.prog-chev {
+  width: 7px; height: 7px; margin-left: 4px; flex: none;
+  border-right: 1.5px solid var(--dim); border-bottom: 1.5px solid var(--dim);
+  transform: rotate(-45deg); transition: transform var(--dur-2) var(--ease);
+}
+.prog-chev.open { transform: rotate(45deg); }
+
+/* 顶部六个数里「今日学习时间」带单位 */
+.stat-unit { margin-left: 3px; font-size: 12px; font-weight: 400; letter-spacing: 0; color: var(--text-2); }
+
+@media (max-width: 1100px) {
+  .vt-board { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  .vt-today { flex-direction: column; align-items: stretch; }
+  .vt-orbit { width: min(240px, 80%); margin: 0 auto; }
+  .vt-card { padding: 20px 18px; }
+}

@@ -8,6 +8,7 @@ import './styles/markdown.css';
 import './styles/views.css';
 import './styles/stickies.css';
 import './styles/dock.css';
+import './styles/vitals.css';
 import App from './App.jsx';
 
 createRoot(document.getElementById('root')).render(

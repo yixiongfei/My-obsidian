@@ -94,6 +94,7 @@ export const api = {
   // 图片先缩到模型用得上的尺寸再传：传得快，助手看图也快
   uploadAssistantFile: (file) => upload('/api/assistant/media', file),
   uploadAnswerImage: (file) => upload('/api/answers/media', file),
+  setGoals: (goals) => j('/api/goals', body('PUT', goals)),
   drillGrade: (exam, section, n, model) => j('/api/exams/drill/grade', body('POST', { exam, section, n, model })),
   saveDrillNote: (exam, section, n, note) => j('/api/exams/drill/note', body('PUT', { exam, section, n, ...note })),
   drillNoteAi: (exam, section, n, model) => j('/api/exams/drill/note/ai', body('POST', { exam, section, n, model })),

@@ -1,74 +1,38 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api.js';
 import { useApi } from '../hooks.js';
-import { Band, Loading, ErrorBox, Empty, Item } from '../components/bits.jsx';
-import Trend, { SERIES, unitsOf, tipOf } from '../components/Trend.jsx';
+import { Band, Loading, ErrorBox, Empty } from '../components/bits.jsx';
+import { unitsOf } from '../components/Trend.jsx';
+import { TodayOrbit, TimeTrend, GoalEditor, fmtDur } from '../components/Vitals.jsx';
 
 /**
- * 仪表盘按学习过程来摆，只留每天要看的：
+ * 仪表盘只回答两件事：今天学得怎么样、接下来该做什么。
  *   概览——倒计时、六个数、今天该做什么（建议）
- *   考点层（真题标签）——今天学了哪些考点、有多少要复习、薄弱在哪、每科走到哪
- *   笔记层——学习节奏、到期的笔记
- * 笔记是学某个考点时写下的感悟，所以「学没学」看有没有对上的笔记，
- * 「要不要复习」看那篇笔记到没到期。
- * 最近复习 / 标签分布 / 未纳入复习 这些流水账不放这儿：日历和笔记页各有一份，仪表盘只回答「现在该做什么」。
+ *   今天——学习时间 / 背单词 / 做题三道轨道环；旁边是学习时间的 7 / 30 天走势和最近 14 天的坚持
+ *   需要关注——到期的考点、到期的错题本、到期的笔记，合成一张单子
+ *   一轮进度——每科走到哪，点开看分支
+ * 笔记是学某个考点时写下的感悟，所以「学没学」看有没有对上的笔记，「要不要复习」看那篇笔记到没到期。
  */
 
 const dot = (d) => (d ? d.replaceAll('-', '.') : '—');
 const GROUP_HUE = { math: 'hue-math', 408: 'hue-408' };
-const WEEKS = 26;
-
-/* 热力图的深浅按「单位量」分档：和每日进度同一套折算（笔记 1、做题 0.5、背词 0.2） */
-const level = (u) => (u <= 0 ? 0 : u <= 2 ? 1 : u <= 6 ? 2 : 3);
-const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
-
-/**
- * 学习节奏的热力图：近 26 周、从周一起算，一格一天，深浅 = 那天学了多少（四种活动折算后相加）。
- * 数据和右边的每日进度是同一份 daily，所以两边对得上。
- */
-function Heat({ daily, today }) {
-  const byDate = new Map(daily.map((r) => [r.date, r]));
-  const cursor = new Date(`${today}T00:00:00`);
-  cursor.setDate(cursor.getDate() - ((cursor.getDay() + 6) % 7) - (WEEKS - 1) * 7);
-  const cells = [];
-  for (let i = 0; i < WEEKS * 7; i++) {
-    const date = iso(cursor);
-    const r = byDate.get(date);
-    // 考点推进不进柱子，但那天也算学过（和日历、连续天数同一口径）
-    cells.push({ date, r, units: r ? unitsOf(r) + (r.points || 0) : 0, future: date > today });
-    cursor.setDate(cursor.getDate() + 1);
-  }
-  const totals = SERIES.map((s) => ({ ...s, n: daily.reduce((a, r) => a + (r[s.key] || 0), 0) }));
-  const activeDays = cells.filter((c) => c.units > 0).length;
-  const tip = (c) => (c.r ? tipOf(c.r) : `${c.date}　—`);
-  return (
-    <div className="heat-wrap">
-      <div className="trend-head">
-        <span>近 {WEEKS} 周</span>
-        <span className="spacer" />
-        <span>{activeDays} 个学习日</span>
-      </div>
-      <div className="heat" style={{ gridTemplateColumns: `repeat(${WEEKS}, 11px)` }}>
-        {cells.map((c) => <i key={c.date} data-l={level(c.units)} data-f={c.future ? 1 : 0} title={tip(c)} />)}
-      </div>
-      {/* 学了些什么：四种活动在这 26 周里各多少，颜色和每日进度的柱子一致 */}
-      <div className="trend-legend">
-        {totals.map((s) => <span key={s.key}><i style={{ background: s.color }} />{s.label} <b className="fig">{s.n}</b></span>)}
-      </div>
-    </div>
-  );
-}
 
 export default function Dashboard({ version }) {
   const navigate = useNavigate();
   const { data, loading, error, reload } = useApi(() => api.dashboard(), [version]);
   const { data: mind } = useApi(() => api.mindmap(), [version]);
+  const [goalOpen, setGoalOpen] = useState(false);
+  const [openGroup, setOpenGroup] = useState(null);
 
   if (loading && !data) return <Loading />;
   if (error) return <ErrorBox error={error} onRetry={reload} />;
   if (!data) return null;
 
-  const { counts, due, upcoming, persistDays = 0, daysToExam, examDate, today, points, stages, wrongBooks = [], daily = [] } = data;
+  const { counts, due, persistDays = 0, daysToExam, examDate, today, points, stages, wrongBooks = [], daily = [] } = data;
+  const goals = data.goals || { minutes: 120, words: 50, exams: 10 };
+  const studyDays = data.studyTime?.days || [];
+  const studyToday = studyDays.find((d) => d.date === today) || { total: 0, byKind: {} };
   const todayRow = daily.find((d) => d.date === today);
   const STAGE_COLORS = ['var(--line-2)', 'var(--hue-2)', 'var(--accent-2)', 'var(--accent)', 'var(--hue-3)'];
   const StageBar = ({ counts: c, total }) => (
@@ -76,13 +40,13 @@ export default function Dashboard({ version }) {
       {c.map((n, k) => (n > 0 ? <i key={k} style={{ width: `${(n / Math.max(1, total)) * 100}%`, background: STAGE_COLORS[k] }} /> : null))}
     </div>
   );
-  const list = due.length ? due : upcoming;
   const pt = points?.totals || { total: 0, learned: 0, unlearned: 0, due: 0, today: 0 };
-  const wrongTotal = wrongBooks.reduce((a, b) => a + b.count, 0);
+  const studyMin = Math.round(studyToday.total / 60);
 
   const STATS = [
+    // 做题、背单词、看笔记、问助手时自动计时（见 studyClock.js）
+    ['今日学习时间', <>{studyMin}<small className="stat-unit">分钟</small></>, studyMin > 0 ? 'acc' : ''],
     // 琥珀只在真的有到期项时亮起；0 个待复习不是警示状态
-    ['今日学习考点', pt.today, pt.today > 0 ? 'acc' : ''],
     ['待复习考点', pt.due, pt.due > 0 ? 'on' : ''],
     ['未学考点', pt.unlearned, ''],
     ['待复习笔记', counts.due, counts.due > 0 ? 'on' : ''],
@@ -143,6 +107,27 @@ export default function Dashboard({ version }) {
     tips.push({ key: 'next', text: `近 7 天没学新考点——「${n.name}」真题最多，从它开始`, go: () => openPoint(n) });
   }
 
+  /* 需要关注：到期的考点、到期的错题本、到期的笔记，逾期最久的排前面，最多 6 条 */
+  const attention = [
+    ...(points?.due || []).map((p) => ({
+      key: `p:${p.group}/${p.name}`, hue: GROUP_HUE[p.group] || '', name: p.name, sub: p.subject,
+      right: p.overdueDays > 0 ? `逾期 ${p.overdueDays} 天` : '今天到期', on: p.overdueDays > 0, weight: p.overdueDays + 1, go: () => openPoint(p),
+    })),
+    ...wrongBooks.filter((b) => b.nextReview && b.nextReview <= today).map((b) => ({
+      key: `w:${b.id}`, hue: 'hue-wrong', name: b.title, sub: `错题本 · 错 ${b.count} 题`,
+      right: '盖住解析重做', on: false, weight: 0.5, go: () => openNote(b.id),
+    })),
+    ...(counts.due > 0 && due[0] ? [{
+      key: 'notes', hue: '', name: `${counts.due} 篇笔记到期`, sub: due.slice(0, 2).map((n) => n.title).join('、'),
+      right: due[0].overdueDays > 0 ? `最久逾期 ${due[0].overdueDays} 天` : '今天到期', on: due[0].overdueDays > 0,
+      weight: (due[0].overdueDays || 0) + 0.8, go: () => openNote(due[0].id),
+    }] : []),
+  ].sort((a, b) => b.weight - a.weight).slice(0, 6);
+
+  /* 最近 14 天哪天学过：日历上有痕迹的都算，和「坚持天数」同一口径 */
+  const byDate = new Map(daily.map((r) => [r.date, r]));
+  const activeDays = daily.slice(-14).map((r) => ({ date: r.date, on: unitsOf(byDate.get(r.date)) + (r.points || 0) > 0 }));
+
   return (
     <div className="scroll"><div className="page">
       <div className="band">
@@ -192,131 +177,70 @@ export default function Dashboard({ version }) {
         </Band>
       </div>
 
+      {/* 今天：三道轨道环（这一页唯一张扬的东西）+ 学习时间走势 */}
+      <section className="vt-board">
+        <div className="vt-card vt-card-today">
+          <TodayOrbit today={studyToday} goals={goals} words={todayRow?.words || 0} exams={todayRow?.exams || 0}
+                      onEditGoals={() => setGoalOpen(true)} />
+          {goalOpen && (
+            <GoalEditor goals={goals} onClose={() => setGoalOpen(false)}
+                        onSave={async (g) => { await api.setGoals(g); reload(); }} />
+          )}
+        </div>
+        <div className="vt-card">
+          <TimeTrend days={studyDays} since={data.studyTime?.since} goalMinutes={goals.minutes} activeDays={activeDays} />
+        </div>
+      </section>
+
       <div className="g12" style={{ marginTop: 48, gap: 48 }}>
         <div style={{ gridColumn: 'span 7' }}>
-          {/* 今天学了什么：对上考点的笔记今天新建 / 首次复习 */}
-          <Band title="今日学习" meta={pt.today ? `${pt.today} 个考点` : '还没有'}>
-            {points?.todayLearned?.map((p) => (
-              <button key={`${p.group}/${p.name}`} className={`pt-row ${GROUP_HUE[p.group] || ''}`} onClick={() => openPoint(p)}>
+          {/* 到期的考点、错题本、笔记合成一张单子：逾期最久的在前 */}
+          <Band title="需要关注" meta={attention.length ? `${attention.length} 项` : '没有'}>
+            {attention.map((a) => (
+              <button key={a.key} className={`pt-row ${a.hue}`} onClick={a.go}>
                 <i className="pt-sw" />
-                <span className="pt-name">{p.name}</span>
-                <span className="pt-sub">{p.subject}</span>
-                <span className="pt-r">真题 {p.items} 题</span>
+                <span className="pt-name">{a.name}</span>
+                <span className="pt-sub">{a.sub}</span>
+                <span className={`pt-r${a.on ? ' on' : ''}`}>{a.right}</span>
               </button>
             ))}
-            {!points?.todayLearned?.length && <Empty>今天还没有学新的考点——写一篇以考点命名的笔记就算学过了</Empty>}
+            {!attention.length && <Empty>没有到期的考点、笔记和错题本</Empty>}
           </Band>
-
-          <div style={{ marginTop: 48 }}>
-            <Band title="待复习考点" meta={pt.due ? `${pt.due} 个` : '没有'}>
-              {points?.due?.map((p) => (
-                <button key={`${p.group}/${p.name}`} className={`pt-row ${GROUP_HUE[p.group] || ''}`} onClick={() => openPoint(p)}>
-                  <i className="pt-sw" />
-                  <span className="pt-name">{p.name}</span>
-                  <span className="pt-sub">{p.subject}</span>
-                  <span className={`pt-r${p.overdueDays > 0 ? ' on' : ''}`}>{p.overdueDays > 0 ? `逾期 ${p.overdueDays} 天` : '今天到期'}</span>
-                </button>
-              ))}
-              {!points?.due?.length && <Empty>没有到期的考点</Empty>}
-            </Band>
-          </div>
-
-          <div style={{ marginTop: 48 }}>
-            {/* 学习节奏：左边热力图看坚持，右边柱线图看每天做了多少；两边同一份 daily */}
-            <Band title="学习节奏" meta="笔记复习 · 背词 · 做题 · 阅读 · 新建">
-              <div className="rhythm">
-                <Heat daily={daily} today={today} />
-                <Trend daily={daily} />
-              </div>
-            </Band>
-          </div>
-
-          <div style={{ marginTop: 48 }}>
-            <Band title={due.length ? '今日待复习笔记' : '即将到期的笔记'} meta="间隔　逾期">
-              {list.map((n, i) => (
-                <Item key={n.id} note={n} index={i}
-                      right={<>
-                        <span className="it-r">{n.reviewCount ? `${n.reviewCount} 次` : '首次'}</span>
-                        <span className={`it-r${n.overdueDays > 0 ? ' on' : ''}`}>
-                          {n.overdueDays > 0 ? `+${n.overdueDays}` : n.inDays ? `${n.inDays} 天后` : '今天'}
-                        </span>
-                      </>} />
-              ))}
-              {!list.length && <Empty>没有到期的笔记</Empty>}
-            </Band>
-          </div>
         </div>
 
         <div style={{ gridColumn: 'span 5' }}>
-          {/* 二轮查漏，放在最上面：先是每本错题本记了几题（多的在前），再是做错过的考点 */}
-          <Band title="薄弱考点" meta={wrongTotal ? `错题本 ${wrongTotal} 题` : '没有'}>
-            {wrongBooks.map((b) => (
-              <button key={b.id} className="pt-row hue-wrong" onClick={() => openNote(b.id)}>
-                <i className="pt-sw" />
-                <span className="pt-name">{b.title}</span>
-                <span className="pt-sub">{b.subject}</span>
-                <span className={`pt-r${b.nextReview && b.nextReview <= today ? ' on' : ''}`}>错 {b.count} 题</span>
-              </button>
-            ))}
-            {stages?.weak?.map((p) => (
-              <button key={`${p.group}/${p.name}`} className={`pt-row ${GROUP_HUE[p.group] || ''}`} onClick={() => openPoint(p)}>
-                <i className="pt-sw" />
-                <span className="pt-name">{p.name}</span>
-                <span className="pt-sub">{p.subject} · {stages.names[p.stage]}</span>
-                <span className={`pt-r${p.wrongAfter ? ' on' : ''}`}>错 {p.wrong} / {p.attempted}{p.wrongAfter ? ` · 总结后 ${p.wrongAfter}` : ''}</span>
-              </button>
-            ))}
-            {!wrongBooks.length && !stages?.weak?.length && <Empty>还没有错题本——真题交卷后点「错题」，做错的题会按考点归档到这里</Empty>}
-          </Band>
-
-          <div style={{ marginTop: 48 }}>
-            {/* 一轮复习走到哪：每个考点在 概念 / 做题 / 理解 / 复习 / 总结 五段里的哪一段 */}
-            <Band title="一轮进度" meta="概念 → 做题 → 理解 → 复习 → 总结">
-              {stages?.groups?.map((g) => {
-                const pg = points?.groups?.find((x) => x.key === g.key);
-                return (
-                  <div key={g.key} className={`prog-group ${GROUP_HUE[g.key] || ''}`}>
-                    <div className="prog-head">
-                      <i className="pt-sw" />
-                      <span className="prog-name">{g.label}</span>
-                      <span className="prog-n fig">总结 {g.counts[4]} / {g.total}</span>
-                      {pg?.due > 0 && <span className="prog-due">{pg.due} 待复习</span>}
-                      {pg?.today > 0 && <span className="prog-today">今日 +{pg.today}</span>}
-                    </div>
-                    <StageBar counts={g.counts} total={g.total} />
-                    {g.subjects.map((s) => (
-                      <div className="stage-row" key={s.name}>
-                        <div className="stage-name">{s.name}</div>
-                        <div className="stage-nums fig">{s.counts.slice(1).map((n, k) => <span key={k} style={{ color: n ? STAGE_COLORS[k + 1] : 'var(--line-2)' }}>{n}</span>)}</div>
-                        <StageBar counts={s.counts} total={s.total} />
-                      </div>
-                    ))}
-                  </div>
-                );
-              })}
-              {stages?.names && (
-                <div className="stage-legend">
-                  {stages.names.map((n, k) => <span key={n}><i style={{ background: STAGE_COLORS[k] }} />{n}</span>)}
-                </div>
-              )}
-              {!stages?.groups?.length && <Empty>还没有考点清单（.kb/exams/tags-*.json）</Empty>}
-            </Band>
-          </div>
-
-          {points?.next?.length > 0 && (
-            <div style={{ marginTop: 48 }}>
-              <Band title="接下来可以学" meta="未学 · 真题最多">
-                {points.next.map((p) => (
-                  <button key={`${p.group}/${p.name}`} className={`pt-row ${GROUP_HUE[p.group] || ''}`} onClick={() => openPoint(p)}>
+          {/* 一轮复习走到哪：每科一条，点开看各分支 */}
+          <Band title="一轮进度" meta="概念 → 做题 → 理解 → 复习 → 总结">
+            {stages?.groups?.map((g) => {
+              const pg = points?.groups?.find((x) => x.key === g.key);
+              const open = openGroup === g.key;
+              return (
+                <div key={g.key} className={`prog-group ${GROUP_HUE[g.key] || ''}`}>
+                  <button className="prog-head prog-toggle" aria-expanded={open} onClick={() => setOpenGroup(open ? null : g.key)}>
                     <i className="pt-sw" />
-                    <span className="pt-name">{p.name}</span>
-                    <span className="pt-sub">{p.subject}</span>
-                    <span className="pt-r">{p.items} 题</span>
+                    <span className="prog-name">{g.label}</span>
+                    <span className="prog-n fig">总结 {g.counts[4]} / {g.total}</span>
+                    {pg?.due > 0 && <span className="prog-due">{pg.due} 待复习</span>}
+                    <span className={`prog-chev${open ? ' open' : ''}`} aria-hidden="true" />
                   </button>
-                ))}
-              </Band>
-            </div>
-          )}
+                  <StageBar counts={g.counts} total={g.total} />
+                  {open && g.subjects.map((s) => (
+                    <div className="stage-row" key={s.name}>
+                      <div className="stage-name">{s.name}</div>
+                      <div className="stage-nums fig">{s.counts.slice(1).map((n, k) => <span key={k} style={{ color: n ? STAGE_COLORS[k + 1] : 'var(--line-2)' }}>{n}</span>)}</div>
+                      <StageBar counts={s.counts} total={s.total} />
+                    </div>
+                  ))}
+                </div>
+              );
+            })}
+            {stages?.names && (
+              <div className="stage-legend">
+                {stages.names.map((n, k) => <span key={n}><i style={{ background: STAGE_COLORS[k] }} />{n}</span>)}
+              </div>
+            )}
+            {!stages?.groups?.length && <Empty>还没有考点清单（.kb/exams/tags-*.json）</Empty>}
+          </Band>
         </div>
       </div>
     </div></div>
