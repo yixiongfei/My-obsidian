@@ -110,6 +110,9 @@ app.get('/api/dashboard', (_req, res) => res.json({
   // 学习时长（近 35 天，按天、按类别）和每日目标：今日圆环、周 / 月柱状图都用这一份
   studyTime: studytime.summary(35),
   goals: studytime.goals(),
+  // 「需要关注」的学习任务：今天的单词、长难句
+  vocabToday: vocab.todayCounts(),
+  readingToday: sentences.todayCounts(),
 }));
 
 /* 学习时长：前端每半分钟交一次各类别的秒数；关窗时用 sendBeacon 补最后一段 */

@@ -40,7 +40,7 @@ export default function Home({ version, theme }) {
   ];
 
   const ENTRIES = [
-    { to: '/dashboard', k: '仪表盘', v: counts.due, unit: '篇待复习', d: '倒计时、复习节奏与标签分布' },
+    { to: '/dashboard', k: '仪表盘', v: counts.due, unit: '篇待复习', d: '今天学了多久、每日进度、番茄钟专注' },
     { to: '/notes', k: '笔记', v: counts.notes, unit: '篇', d: '按词表铺开的结构图与阅读页' },
     { to: '/review', k: '复习', v: counts.reviews, unit: '次', d: '到期笔记逐篇过，折叠即自测' },
     { to: '/schedule', k: '日历', v: Math.round((daysToExam || 0) / 7), unit: '周', d: '年 → 月 → 日，含日本の祝日' },
@@ -54,8 +54,8 @@ export default function Home({ version, theme }) {
           <div className="hero-copy">
             <div className="lbl" style={{ color: 'var(--accent)' }}>PERSONAL KNOWLEDGE, MADE NAVIGABLE</div>
             <h1 className="hero-title">
-              把问题沉淀成<br />
-              <span style={{ color: 'var(--accent)' }}>可生长的理解。</span>
+              坚持<br />
+              <span style={{ color: 'var(--accent)' }}>才能到达终点。</span>
             </h1>
             <p className="hero-lede">
             </p>

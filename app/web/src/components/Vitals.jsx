@@ -1,13 +1,14 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 
 /**
- * 仪表盘的「运动健康」那一块：今天的三道轨道环、学习时长的周 / 月柱状图、最近 14 天的坚持点。
+ * 仪表盘的「运动健康」那一块：今天的三道轨道环、每日进度柱状图、最近 14 天的坚持点。
  *
  * 轨道环是这一页唯一张扬的东西——星图的气质：三道同心轨道，进度头上一颗「卫星」，外圈一圈刻度。
- *   外圈  学习时间，按做什么分段上色（做题 / 笔记 / 助手 / 阅读 / 背单词），一圈 = 当天目标
+ *   外圈  学习时间，按做什么分段上色（做题 / 笔记 / 助手 / 阅读 / 背单词 / 专注），一圈 = 当天目标
  *   中圈  背单词个数 / 目标
  *   内圈  做题道数 / 目标
- * 颜色跟着「做什么」走，全页一致；五个色经过色盲校验（深浅两套各自校验，相邻对 CVD ΔE ≥ 8）。
+ * 颜色跟着「做什么」走，全页一致。这六个色、以及每日进度里四段的叠放顺序，深浅两套都过了色盲校验
+ * （dataviz 的 validate_palette，相邻对 CVD ΔE ≥ 8）。
  * 动效只有一次：进页面时三道环从 0 扫到当前进度、数字跟着数上去；柱子从底线长出来。减少动效时直接到位。
  */
 
@@ -18,6 +19,8 @@ export const ACTS = [
   { key: 'assistant', label: '助手' },
   { key: 'reading', label: '阅读' },
   { key: 'words', label: '背单词' },
+  // 番茄钟专注、但不在上面这些页面（在纸上做题、看书）
+  { key: 'focus', label: '专注' },
 ];
 const actColor = (k) => `var(--act-${k})`;
 
@@ -132,7 +135,7 @@ export function TodayOrbit({ today, goals, words, exams, onEditGoals }) {
   const minutes = Math.round((total / 60) * t);
   const left = goalSec - total;
   const insight = !total && !words && !exams
-    ? '今天还没开始。做题、背单词、看笔记的时间会自动记进来。'
+    ? '今天还没开始。做题、背单词、看笔记的时间会自动记进来，开番茄钟专注也算。'
     : left > 60 ? `离今天的学习目标还差 ${fmtDur(left)}。`
       : words < goals.words ? `学习时间够了，背单词还差 ${goals.words - words} 个。`
         : exams < goals.exams ? `学习时间够了，做题还差 ${goals.exams - exams} 道。`
@@ -215,7 +218,7 @@ export function TodayOrbit({ today, goals, words, exams, onEditGoals }) {
 }
 
 /* ------------------------------------------------------------------ *
- * 学习时长：近 7 / 30 天柱状图 + 目标线 + 一句话结论
+ * 每日进度：每天学了多少（做题 / 笔记 / 背单词 / 阅读叠成一根柱子）+ 7 天均线 + 一句话结论 + 最近 14 天坚持
  * ------------------------------------------------------------------ */
 
 function useWidth(ref) {
@@ -234,6 +237,7 @@ function useWidth(ref) {
 const WEEKDAY = ['日', '一', '二', '三', '四', '五', '六'];
 const dayOf = (iso) => new Date(`${iso}T00:00:00`);
 const mmdd = (iso) => `${Number(iso.slice(5, 7))}/${Number(iso.slice(8))}`;
+const weekday = (iso) => `周${WEEKDAY[dayOf(iso).getDay()]}`;
 
 /** 顶部圆角、底部方角的柱子 */
 const barPath = (x, y, w, h, r) => {
@@ -241,20 +245,31 @@ const barPath = (x, y, w, h, r) => {
   return `M${x},${y + h} L${x},${y + rr} Q${x},${y} ${x + rr},${y} L${x + w - rr},${y} Q${x + w},${y} ${x + w},${y + rr} L${x + w},${y + h} Z`;
 };
 
-const RANGE_KEY = 'kb-vitals-range';
+/* 柱子从下往上叠的顺序 = 图例顺序。笔记 = 复习 + 新建。
+   相邻两段的颜色都过了色盲校验（做题玫 / 笔记蓝 / 背单词青 / 阅读紫：蓝紫不挨着）。
+   背单词一天几十个、笔记一天一两篇，硬叠在一起笔记那段看不见：按 w 折算成「学习量」再叠，
+   日历的深浅、「坚持天数」也是这套折算 */
+export const PROGRESS = [
+  { key: 'exam', label: '做题', of: (r) => r?.exams || 0, w: 0.5, unit: '道' },
+  { key: 'notes', label: '笔记', of: (r) => (r?.reviews || 0) + (r?.created || 0), w: 1, unit: '篇' },
+  { key: 'words', label: '背单词', of: (r) => r?.words || 0, w: 0.2, unit: '个' },
+  { key: 'reading', label: '阅读', of: (r) => r?.sentences || 0, w: 0.5, unit: '句' },
+];
+export const unitsOf = (r) => PROGRESS.reduce((a, s) => a + s.of(r) * s.w, 0);
 
-export function TimeTrend({ days, since, goalMinutes, activeDays }) {
-  const [range, setRange] = useState(() => { try { return Number(localStorage.getItem(RANGE_KEY)) || 7; } catch { return 7; } });
+const RANGES = [7, 14, 30, 90];
+const RANGE_KEY = 'kb-trend-days';
+
+export function DailyProgress({ daily = [], studyDays = [], activeDays = [], today }) {
+  const [range, setRange] = useState(() => {
+    try { const v = Number(localStorage.getItem(RANGE_KEY)); return RANGES.includes(v) ? v : 7; } catch { return 7; }
+  });
   const box = useRef(null);
   const width = useWidth(box);
   const [hover, setHover] = useState(-1);
   // 换范围时清掉悬停：第 3 根柱子在 7 天和 30 天里不是同一天
   const pick = (n) => { setRange(n); setHover(-1); try { localStorage.setItem(RANGE_KEY, String(n)); } catch { /* 无痕 */ } };
   const [grown, setGrown] = useState(reduceMotion());
-
-  const list = days.slice(-range);
-  const today = days.at(-1)?.date;
-  const goal = goalMinutes * 60;
   useEffect(() => {
     if (reduceMotion()) return undefined;
     setGrown(false);
@@ -262,99 +277,122 @@ export function TimeTrend({ days, since, goalMinutes, activeDays }) {
     return () => cancelAnimationFrame(id);
   }, [range]);
 
-  // 纵轴按小时取整；目标线一定落在图里
-  const max = Math.max(goal, ...list.map((d) => d.total), 3600);
-  const stepH = max > 4 * 3600 ? 2 : 1;
-  const top = Math.ceil((max * 1.08) / (stepH * 3600)) * stepH * 3600;
-  const H = 188;
-  const padL = 34;
-  const padB = 26;
-  const plotH = H - padB - 10;
-  const plotW = Math.max(0, width - padL - 8);
-  const slot = list.length ? plotW / list.length : 0;
-  const barW = Math.max(3, Math.min(24, slot * (range > 7 ? 0.6 : 0.46)));
-  const y = (s) => 10 + plotH - (s / top) * plotH;
-  const ticks = [];
-  for (let s = 0; s <= top; s += stepH * 3600) ticks.push(s);
+  const list = daily.slice(-range);
+  const time = useMemo(() => new Map(studyDays.map((d) => [d.date, d.total])), [studyDays]);
+  const totals = list.map(unitsOf);
+  // 7 天均线：每根柱子往前看 7 天（含当天），范围左边界之外的日子也算进去
+  const avg = list.map((_, i) => {
+    const end = daily.length - list.length + i;
+    const win = daily.slice(Math.max(0, end - 6), end + 1);
+    return win.reduce((s, r) => s + unitsOf(r), 0) / Math.max(1, win.length);
+  });
 
-  // 一句话：近 7 天合计、日均、和前 7 天比；还没记满就只说记了几天
-  const last7 = days.slice(-7);
-  const prev7 = days.slice(-14, -7);
-  const sum = (a) => a.reduce((n, d) => n + d.total, 0);
-  const tracked7 = last7.filter((d) => !since || d.date >= since);
-  const prevTracked = since && prev7.length && prev7[0].date >= since;
-  const best = [...last7].sort((a, b) => b.total - a.total)[0];
-  let story = '';
-  if (!since) story = '学习时间从今天开始记录。';
-  else if (!sum(last7)) story = '最近 7 天还没有记录到学习时间。';
-  else {
-    story = `近 7 天学了 ${fmtDur(sum(last7))}，平均每天 ${fmtDur(sum(last7) / Math.max(1, tracked7.length))}`;
-    if (prevTracked) {
-      const d = sum(last7) - sum(prev7);
-      story += Math.abs(d) >= 60 ? `，比前 7 天${d > 0 ? '多' : '少'} ${fmtDur(Math.abs(d))}` : '，和前 7 天差不多';
+  const H = 176;
+  const padX = 4;
+  const padT = 12;
+  const padB = 26;
+  const plotH = H - padT - padB;
+  const plotW = Math.max(0, width - padX * 2);
+  const slot = list.length ? plotW / list.length : 0;
+  const barW = Math.max(2, Math.min(24, slot * (range > 14 ? 0.62 : 0.5)));
+  const top = Math.max(1, ...totals, ...avg) * 1.08;
+  const y = (v) => padT + plotH - (v / top) * plotH;
+  const gap = range > 30 ? 1 : 2;   // 段与段之间留一道底色缝
+  const every = range === 7 ? 1 : range === 14 ? 2 : range === 30 ? 5 : 15;
+  const cx = (i) => padX + i * slot + slot / 2;
+  const avgPath = avg.map((v, i) => `${i ? 'L' : 'M'}${cx(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+
+  // 一句话：这段时间各做了多少、哪天最用功
+  const sum = (s) => list.reduce((a, r) => a + s.of(r), 0);
+  const [nExam, nNotes, nWords, nRead] = PROGRESS.map(sum);
+  const parts = [
+    nWords && `背了 ${nWords} 个单词`,
+    nExam && `做了 ${nExam} 道题`,
+    nNotes && `笔记 ${nNotes} 篇`,
+    nRead && `读了 ${nRead} 句`,
+  ].filter(Boolean);
+  const secs = list.reduce((a, r) => a + (time.get(r.date) || 0), 0);
+  let story = `近 ${range} 天还没有学习记录。`;
+  if (parts.length) {
+    story = `近 ${range} 天${parts.join('，')}${secs >= 60 ? `，计时 ${fmtDur(secs)}` : ''}。`;
+    const best = list[totals.indexOf(Math.max(...totals))];
+    if (totals.filter((v) => v > 0).length > 1 && best) {
+      story += `${best.date === today ? '今天' : range <= 7 ? weekday(best.date) : mmdd(best.date)}最用功。`;
     }
-    if (best?.total) story += `。${best.date === today ? '今天' : `周${WEEKDAY[dayOf(best.date).getDay()]}`}学得最久。`;
-    else story += '。';
   }
 
   const tip = hover >= 0 ? list[hover] : null;
-  const notTracked = (d) => !since || d.date < since;
 
   return (
     <div className="vt-trend">
       <div className="vt-trend-h">
-        <h3>学习时间</h3>
+        <h3>每日进度</h3>
         <div className="seg" role="group" aria-label="时间范围">
-          {[7, 30].map((n) => <button key={n} className={range === n ? 'on' : ''} aria-pressed={range === n} onClick={() => pick(n)}>{n} 天</button>)}
+          {RANGES.map((n) => <button key={n} className={range === n ? 'on' : ''} aria-pressed={range === n} onClick={() => pick(n)}>{n} 天</button>)}
         </div>
       </div>
       <p className="vt-story">{story}</p>
 
       <div className="vt-plot" ref={box} onPointerLeave={() => setHover(-1)}>
         {width > 0 && (
-          <svg width={width} height={H} role="img" aria-label={`近 ${range} 天每天的学习时间，目标每天 ${goalMinutes} 分钟`}>
-            {ticks.map((s) => (
-              <g key={s}>
-                <line x1={padL} x2={width - 8} y1={y(s)} y2={y(s)} className="vt-grid" />
-                <text x={padL - 8} y={y(s) + 3.5} className="vt-axis" textAnchor="end">{s ? `${s / 3600}h` : '0'}</text>
-              </g>
-            ))}
-            {list.map((d, i) => {
-              const x = padL + i * slot + (slot - barW) / 2;
-              const h = Math.max(0, y(0) - y(d.total));
-              const isToday = d.date === today;
-              const label = range === 7 ? `周${WEEKDAY[dayOf(d.date).getDay()]}` : (i % 5 === (list.length - 1) % 5 ? mmdd(d.date) : '');
+          <svg width={width} height={H} role="img" aria-label={`近 ${range} 天每日进度：${story}`}>
+            <line x1={padX} x2={width - padX} y1={y(0) + 0.5} y2={y(0) + 0.5} className="vt-grid" />
+            {list.map((r, i) => {
+              const x = padX + i * slot + (slot - barW) / 2;
+              const segs = [];
+              let acc = 0;
+              for (const s of PROGRESS) {
+                const v = s.of(r) * s.w;
+                if (v > 0) { segs.push({ s, from: acc, to: acc + v }); acc += v; }
+              }
+              const isToday = r.date === today;
+              const label = i % every === (list.length - 1) % every ? (isToday ? '今天' : range === 7 ? weekday(r.date) : mmdd(r.date)) : '';
               return (
-                <g key={d.date}>
-                  {h > 0 && (
-                    <path d={barPath(x, y(d.total), barW, h, 4)}
-                          className={`vt-bar${isToday ? ' today' : ''}${hover === i ? ' hot' : ''}`}
-                          style={{ transform: `scaleY(${grown ? 1 : 0})`, transitionDelay: `${i * (range > 7 ? 12 : 40)}ms` }} />
-                  )}
-                  {!h && notTracked(d) && <line x1={x} x2={x + barW} y1={y(0) - 1} y2={y(0) - 1} className="vt-none" />}
-                  {label && <text x={x + barW / 2} y={H - 8} className={`vt-axis${isToday ? ' now' : ''}`} textAnchor="middle">{isToday ? '今天' : label}</text>}
-                  {/* 命中区是整根柱子的槽位，比柱子大得多 */}
-                  <rect x={padL + i * slot} y={0} width={slot} height={H - padB} fill="transparent"
-                        tabIndex={0} role="img" aria-label={`${d.date} ${notTracked(d) && !d.total ? '没记录' : fmtDur(d.total)}`}
+                <g key={r.date} className={`vt-col${hover >= 0 && hover !== i ? ' dim' : ''}`}>
+                  <g className="vt-stack" style={{ transform: `scaleY(${grown ? 1 : 0})`, transitionDelay: `${i * (range > 14 ? 8 : 36)}ms` }}>
+                    {segs.map((g, j) => {
+                      const y0 = y(g.to);
+                      const h = y(g.from) - (j ? gap : 0) - y0;
+                      if (h < 0.5) return null;
+                      return j === segs.length - 1
+                        ? <path key={g.s.key} d={barPath(x, y0, barW, h, 4)} fill={actColor(g.s.key)} />
+                        : <rect key={g.s.key} x={x} y={y0} width={barW} height={h} fill={actColor(g.s.key)} />;
+                    })}
+                  </g>
+                  {!segs.length && <line x1={x} x2={x + barW} y1={y(0) - 1} y2={y(0) - 1} className="vt-none" />}
+                  {label && <text x={cx(i)} y={H - 8} className={`vt-axis${isToday ? ' now' : ''}`} textAnchor="middle">{label}</text>}
+                  {/* 命中区是整个槽位，比柱子大得多 */}
+                  <rect x={padX + i * slot} y={0} width={slot} height={H - padB} fill="transparent"
+                        tabIndex={0} role="img"
+                        aria-label={`${r.date} ${PROGRESS.map((s) => `${s.label} ${s.of(r)}`).join('，')}`}
                         onPointerEnter={() => setHover(i)} onFocus={() => setHover(i)} onBlur={() => setHover(-1)} />
                 </g>
               );
             })}
-            {/* 目标线：实线发丝，右端标字 */}
-            <line x1={padL} x2={width - 8} y1={y(goal)} y2={y(goal)} className="vt-goal" />
-            <text x={width - 10} y={y(goal) - 6} className="vt-goal-t" textAnchor="end">目标 {fmtDur(goal)}</text>
+            <path d={avgPath} className="vt-avg" />
+            {avg.length > 0 && <circle cx={cx(avg.length - 1)} cy={y(avg.at(-1))} r={3} className="vt-avg-dot" />}
           </svg>
         )}
         {tip && (
-          <div className="vt-tip" style={{ left: Math.min(Math.max(padL + hover * slot + slot / 2, 90), width - 90) }}>
-            <b>{notTracked(tip) && !tip.total ? '没记录' : fmtDur(tip.total)}</b>
-            <span className="vt-tip-d">{mmdd(tip.date)} 周{WEEKDAY[dayOf(tip.date).getDay()]}</span>
-            {ACTS.filter((a) => tip.byKind?.[a.key]).map((a) => (
-              <span key={a.key} className="vt-tip-r"><i style={{ background: actColor(a.key) }} />{a.label}<em>{fmtDur(tip.byKind[a.key], { short: true })}</em></span>
+          <div className="vt-tip" style={{ left: Math.min(Math.max(cx(hover), 80), width - 80) }}>
+            <b>{tip.date === today ? '今天' : `${mmdd(tip.date)} ${weekday(tip.date)}`}</b>
+            {PROGRESS.filter((s) => s.of(tip)).map((s) => (
+              <span key={s.key} className="vt-tip-r">
+                <i style={{ background: actColor(s.key) }} />{s.label}
+                <em>{s.key === 'notes' && tip.created ? `复习 ${tip.reviews || 0} · 新建 ${tip.created}` : `${s.of(tip)} ${s.unit}`}</em>
+              </span>
             ))}
+            {tip.points > 0 && <span className="vt-tip-r"><i style={{ background: 'var(--line-2)' }} />考点推进<em>{tip.points} 个</em></span>}
+            {time.get(tip.date) >= 60 && <span className="vt-tip-r"><i style={{ background: 'var(--text-2)' }} />计时<em>{fmtDur(time.get(tip.date), { short: true })}</em></span>}
+            {!unitsOf(tip) && !tip.points && <span className="vt-tip-d">这天没有学习记录</span>}
           </div>
         )}
       </div>
+
+      <ul className="vt-legend" aria-label="图例">
+        {PROGRESS.map((s) => <li key={s.key}><i style={{ background: actColor(s.key) }} />{s.label}</li>)}
+        <li><i className="line" />7 天均线</li>
+      </ul>
 
       {/* 坚持：最近 14 天哪天学过（日历上有痕迹的都算，和「坚持天数」同一口径） */}
       <div className="vt-streak">
@@ -366,6 +404,7 @@ export function TimeTrend({ days, since, goalMinutes, activeDays }) {
     </div>
   );
 }
+
 
 /* ------------------------------------------------------------------ *
  * 调整目标

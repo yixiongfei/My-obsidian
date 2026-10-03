@@ -209,6 +209,15 @@ export function queue() {
   return { today, round: ROUND, cards, counts: { total: c.total, due: c.due, fresh: c.fresh, reviewedToday, lastPassage } };
 }
 
+/** 仪表盘「需要关注」用：到期几句、还没标注几句、今天读了几句 */
+export function todayCounts() {
+  const d = handle();
+  const today = todayStr();
+  const c = d.prepare('SELECT COUNT(*) total, IFNULL(SUM(due <= ?), 0) due, IFNULL(SUM(annotated = 0), 0) fresh FROM sentence_cards').get(today);
+  const read = d.prepare('SELECT COUNT(DISTINCT card_id) c FROM sentence_reviews WHERE date = ?').get(today).c;
+  return { total: c.total, due: c.due, fresh: c.fresh, readToday: read };
+}
+
 /** 全部卡片，新加的在前：句子列表拿来平时翻着回顾 */
 export function all() {
   return { today: todayStr(), cards: handle().prepare('SELECT * FROM sentence_cards ORDER BY id DESC').all().map(out) };

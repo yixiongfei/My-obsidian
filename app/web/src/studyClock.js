@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import { focusRunning, takeFocusCredit } from './focus.js';
 
 /**
  * 学习计时：在做题、背单词、阅读、看笔记、问助手的页面上，人在用就计时。
@@ -8,6 +9,9 @@ import { useEffect, useRef } from 'react';
  *   看笔记、阅读、问助手给 5 分钟；背单词一张卡几秒钟，2 分钟没动就是走开了。
  * 每秒按真实流逝的时间累加（一次最多算 5 秒，电脑睡眠、定时器被节流都不会多算），
  * 半分钟交一次；窗口藏起来或关掉时用 sendBeacon 把最后一段交上去。
+ *
+ * 开着番茄钟专注时换一套算法（见 focus.js）：按墙上时钟整段算，不管窗口在不在前台、人动没动；
+ * 停在上面那些页面就记到对应类别，其他页面（或在纸上做题）记成「专注」。这期间普通计时停掉，免得重复算。
  */
 
 const IDLE = { exam: 600, notes: 300, reading: 300, assistant: 300, words: 120 };
@@ -27,9 +31,16 @@ const pending = {};
 let lastActive = Date.now();
 
 function flush(beacon) {
-  const items = Object.entries(pending)
-    .filter(([, s]) => s >= 1)
-    .map(([kind, s]) => ({ kind, seconds: Math.round(s) }));
+  // 服务端一条最多收 10 分钟：关窗期间补算的专注时间可能更长，拆成几条交
+  const items = [];
+  for (const [kind, s] of Object.entries(pending)) {
+    let left = Math.floor(s);
+    while (left >= 1 && items.length < 10) {
+      const n = Math.min(600, left);
+      items.push({ kind, seconds: n });
+      left -= n;
+    }
+  }
   if (!items.length) return;
   for (const { kind, seconds } of items) pending[kind] -= seconds;
   const body = JSON.stringify({ items });
@@ -58,6 +69,9 @@ export function useStudyClock(pathname) {
       const dt = Math.min(5, (now - lastTick) / 1000);
       lastTick = now;
       const k = kind.current;
+      const focus = takeFocusCredit();
+      if (focus > 0) pending[k || 'focus'] = (pending[k || 'focus'] || 0) + focus;
+      if (focusRunning()) return;
       if (!k || document.visibilityState !== 'visible') return;
       if ((now - lastActive) / 1000 > IDLE[k]) return;
       pending[k] = (pending[k] || 0) + dt;

@@ -6,6 +6,7 @@ import Shell from './components/Shell.jsx';
 import Settings from './components/Settings.jsx';
 import { useSettings } from './settings.js';
 import CommandPalette from './components/CommandPalette.jsx';
+import { FocusFloat } from './components/Focus.jsx';
 import Home from './views/Home.jsx';
 import Dashboard from './views/Dashboard.jsx';
 import Notes from './views/Notes.jsx';
@@ -103,6 +104,8 @@ export default function App() {
       </Shell>
 
       <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
+      {/* 番茄钟开着时，除仪表盘外每一页角落里都挂一只小钟，跟着换页走 */}
+      <FocusFloat pathname={location.pathname} />
     </>
   );
 }

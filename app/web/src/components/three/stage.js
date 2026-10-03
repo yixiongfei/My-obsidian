@@ -10,9 +10,36 @@ import { OutputPass } from 'three/examples/jsm/postprocessing/OutputPass.js';
  * 三条硬规则：
  *   1. 配色一律从 CSS token 读，3D 场景不许自己定义颜色
  *   2. 出视口 / 切后台 / 开启减少动态效果时停掉 RAF，不空转 GPU
- *   3. 卸载时必须把 geometry、material、texture、renderer 全部 dispose，
+ *   3. 卸载时必须把 geometry、material、texture、后期目标全部 dispose，
  *      否则切主题反复挂载会漏显存
+ *
+ * 渲染器（也就是 WebGL 上下文）整个应用只有一个，首页的两张图轮流借用。
+ * 以前每次离开首页都强制丢掉上下文、回来再新建一个：Chromium 丢上下文那一下合成器要重来一帧，
+ * 换页时整个窗口会白闪一下。现在离开时只摘下画布、放掉场景里的东西，上下文留着下次接着用。
  */
+
+let shared = null;
+function sharedRenderer() {
+  if (!shared) {
+    shared = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+    /* 画布透明，底色交给外层卡片的 CSS 背景。
+       用不透明清屏色的话，那个值会在合成器管线里被多做一次 sRGB 编码——
+       #0B0F1A 实测输出成 rgb(59,69,90)，画布比页面黑底亮一大截。
+       透明就绕开了这段色彩空间往返，和 token 底色天然对齐。 */
+    shared.setClearColor(0x000000, 0);
+    // 同理不做色调映射：ACES 会把暗部整体抬亮
+    shared.toneMapping = THREE.NoToneMapping;
+    shared.domElement.style.display = 'block';
+  }
+  return shared;
+}
+
+/** 材质连同它挂着的贴图一起放掉：material.dispose() 不管贴图 */
+function freeMaterial(m) {
+  if (!m) return;
+  for (const v of Object.values(m)) if (v?.isTexture) v.dispose();
+  m.dispose?.();
+}
 
 /** 读取当前主题的 token 颜色 */
 export function themeColors() {
@@ -58,24 +85,17 @@ export function createStage(el, { fov = 38, cameraAt = [0, 0, 60], bloom = 0.7, 
   /* 像素比封顶 1.5：27 寸 2K/4K 屏上 dpr 2 意味着后期的每张渲染目标都是四倍像素，
      辉光那一串半精度 mip 目标加起来几百 MB；1.5 在这种画面上看不出差别 */
   const DPR = Math.min(window.devicePixelRatio || 1, 1.5);
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+  const renderer = sharedRenderer();
   renderer.setPixelRatio(DPR);
   renderer.setSize(width, height);
-  /* 画布透明，底色交给外层卡片的 CSS 背景。
-     用不透明清屏色的话，那个值会在合成器管线里被多做一次 sRGB 编码——
-     #0B0F1A 实测输出成 rgb(59,69,90)，画布比页面黑底亮一大截。
-     透明就绕开了这段色彩空间往返，和 token 底色天然对齐。 */
-  renderer.setClearColor(0x000000, 0);
-  // 同理不做色调映射：ACES 会把暗部整体抬亮
-  renderer.toneMapping = THREE.NoToneMapping;
-  if (shadows) {
-    renderer.shadowMap.enabled = true;
-    // r186 起 PCFSoftShadowMap 已被移除，写它只会拿到一句警告和静默回退。
-    // 柔和度改由各光源的 shadow.radius 控制。
-    renderer.shadowMap.type = THREE.PCFShadowMap;
-  }
+  // 上一张图可能开过阴影：借用的渲染器每次按这张图自己的需要重设
+  renderer.shadowMap.enabled = !!shadows;
+  // r186 起 PCFSoftShadowMap 已被移除，写它只会拿到一句警告和静默回退。
+  // 柔和度改由各光源的 shadow.radius 控制。
+  if (shadows) renderer.shadowMap.type = THREE.PCFShadowMap;
+  renderer.setRenderTarget(null);
+  renderer.clear();   // 别让上一张图的最后一帧在新画布上露一下
   el.appendChild(renderer.domElement);
-  renderer.domElement.style.display = 'block';
 
   const scene = new THREE.Scene();
   const orthoFrustum = (cam, w, h) => {
@@ -186,18 +206,21 @@ export function createStage(el, { fov = 38, cameraAt = [0, 0, 60], bloom = 0.7, 
       document.removeEventListener('visibilitychange', sync);
       reduce.removeEventListener('change', sync);
       scene.traverse((o) => {
+        if (o.isLight) o.shadow?.dispose?.();   // 阴影贴图是挂在灯上的渲染目标
         o.geometry?.dispose?.();
         const m = o.material;
-        if (Array.isArray(m)) m.forEach((x) => x.dispose?.());
-        else m?.dispose?.();
+        if (Array.isArray(m)) m.forEach(freeMaterial);
+        else freeMaterial(m);
       });
+      if (scene.background?.isTexture) scene.background.dispose();
       /* EffectComposer.dispose 只放掉它自己的两张目标；UnrealBloomPass 里那一串 mip 目标
          得逐个 pass 调 dispose，否则每挂载一次就漏几十到几百 MB 显存。
-         再强制丢掉 WebGL 上下文：不等浏览器攒到 16 个才回收 */
+         渲染器本身不 dispose、不丢上下文（见文件头），只清掉它缓存的渲染列表和阴影贴图 */
       for (const pass of composer.passes) pass.dispose?.();
       composer.dispose?.();
-      renderer.dispose();
-      renderer.forceContextLoss?.();
+      renderer.setRenderTarget(null);
+      renderer.renderLists.dispose();
+      renderer.shadowMap.enabled = false;
       renderer.domElement.remove();
     },
   };

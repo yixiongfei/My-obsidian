@@ -134,7 +134,9 @@ if (!process.versions.electron) {
         await js(`location.hash = '#/resources'`);
         await waitFor(`!document.querySelector('.home-starfield') && !document.querySelector('.hero-art canvas')`);
         const left = await state();
-        assert.equal(left.contexts, left.lost, '离开首页后所有 WebGL 上下文已释放');
+        // 整个应用只留一个上下文反复借用；强制丢上下文会让换页时窗口白闪
+        assert.equal(left.contexts, 1, '来回切首页、切主题都只用同一个 WebGL 上下文');
+        assert.equal(left.lost, 0, '离开首页不丢上下文');
         await waitFor(`!!document.querySelector('.res-page')`);
         await sleep(350);
         const idle = await state();

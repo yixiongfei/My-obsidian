@@ -9,11 +9,12 @@ import { todayStr, addDays } from './review.js';
  *   reading  阅读卡片（长难句、生词短文）
  *   notes    看笔记、复习笔记
  *   assistant 和学习助手讨论
+ *   focus    番茄钟专注、但人不在上面这些页面（在纸上做题、看书）——专注期间不看窗口在不在前台
  *
  * 只记从开始计时那天起的真实时长；之前的日子没有数，就显示「没记录」，不拿学习量去估。
  */
 
-export const KINDS = ['exam', 'notes', 'assistant', 'reading', 'words'];
+export const KINDS = ['exam', 'notes', 'assistant', 'reading', 'words', 'focus'];
 
 function ensureTable() {
   handle().exec(`

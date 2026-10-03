@@ -321,6 +321,17 @@ export function buildQueue() {
   };
 }
 
+/** 仪表盘「需要关注」用：今天到期要复习的词、还能学的新词（只数，不取卡片） */
+export function todayCounts() {
+  const today = todayStr();
+  const r = vdb.handle().prepare(`
+    SELECT
+      SUM(CASE WHEN c.state <> 'mastered' AND c.state <> 'new' AND c.due <= ? THEN 1 ELSE 0 END) AS due,
+      SUM(CASE WHEN c.state = 'new' AND ${QUEUE_FILTER()} THEN 1 ELSE 0 END) AS fresh
+    FROM vocab_cards c JOIN vocab_words w ON w.id = c.word_id`).get(today);
+  return { due: r.due || 0, fresh: r.fresh || 0, sessionNew: SESSION_NEW_LIMIT };
+}
+
 /** 首页阶梯用的词汇进度：学过（进过队列、评过分）的词 / 词表总数 */
 export function progress() {
   // 分母只算要背的：没退休、不是基础词（基础词开进队列时才算）
