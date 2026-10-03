@@ -322,8 +322,9 @@ const ANSWER_IMG = /!\[\]\((图像\/作答\/[^)/\\]+\.(?:png|jpe?g|webp|gif))\)/
  * 做题页侧栏助手随消息附上的「正在做的这道题」。
  * 题面和交过的作答同 questionOf（没交不给答案）；没交时把正在写的草稿也带上并注明还没提交。
  * 作答里的手写图另外列出来，由调用方当图片发给模型。
+ * extras: false 不带 AI 上次的批改和便利贴——重新批改时只看题、答案和作答，免得被上一次的分数带偏。
  */
-export function questionContext(examId, sectionId, n, draft = '') {
+export function questionContext(examId, sectionId, n, draft = '', { extras = true } = {}) {
   const exam = getExam(examId);
   const section = exam?.sections.find((s) => s.id === sectionId);
   if (!section) throw bad('题目不存在', 404);
@@ -336,11 +337,11 @@ export function questionContext(examId, sectionId, n, draft = '') {
       ? `\n\n**我现在选的是 ${wip}（还没提交）**`
       : `\n\n**我正在写的作答（还没提交）**\n\n${wip.replace(ANSWER_IMG, '（手写图，见附图）')}`;
   }
-  if (ai) {
+  if (ai && extras) {
     text += `\n\n**AI 批改**：${ai.score} / ${ai.total} 分（${VERDICT[ai.verdict] || ai.verdict}）——${ai.brief}`;
     if (ai.points?.length) text += `\n${ai.points.map((p) => `- ${p}`).join('\n')}`;
   }
-  const note = num != null ? drill.noteOf(examId, sectionId, num) : null;
+  const note = extras && num != null ? drill.noteOf(examId, sectionId, num) : null;
   if (note?.text) text += `\n\n**我的便利贴**\n\n${note.text}`;
   const images = [...String((submitted ? mine : wip) || '').matchAll(ANSWER_IMG)].map((m) => m[1]);
   return { text, images, submitted, label: labelOf(exam, section, num) };

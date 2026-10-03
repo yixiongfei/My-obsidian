@@ -53,7 +53,7 @@ export async function grade(examId, sectionId, n, { model } = {}) {
   if (!String(attempt.answer || '').trim()) throw bad('没有作答，没法批改');
 
   const total = drill.pointsOf(section) ?? (section.type === 'free' ? 10 : 5);
-  const q = questionContext(examId, sectionId, n);
+  const q = questionContext(examId, sectionId, n, '', { extras: false });
   const { data, cost } = await askOnce({
     system: GRADE_SYSTEM,
     text: `${q.text}\n\n这道题满分 ${total} 分。请批改上面「我的作答」。`,

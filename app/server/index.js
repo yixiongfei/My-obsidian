@@ -256,14 +256,28 @@ app.get('/api/exams/drill/:group', (req, res) => {
   if (!out) throw bad('没有这个知识点', 404);
   res.json(out);
 });
+/**
+ * 做题也算复习：交卷之后顺带记，记不上也不能让这次交卷报错——
+ * 作答已经存进库了，报错的话前端以为没交上，再交一次只会得到「已经交过了」
+ */
+async function reviewAfterPractice(examId, hits, label) {
+  try {
+    const reviewed = await practice.reviewByPractice(examId, hits, label);
+    if (reviewed.length) broadcast({ type: 'vault' });
+    return reviewed;
+  } catch (err) {
+    console.warn('[做题复习]', err.message);
+    return [];
+  }
+}
+
 app.post('/api/exams/drill/answer', wrap(async (req, res) => {
   const { exam, section, n, answer } = req.body || {};
   const out = drill.answer(String(exam || ''), String(section || ''), Number(n), answer);
-  // 做题也算复习：这道题考点对上的、今天到期的知识点笔记记一次复习
+  // 这道题考点对上的、到期（或还没复习过）的知识点笔记记一次复习
   const e = exams.getExam(String(exam));
-  const reviewed = await practice.reviewByPractice(String(exam), [{ tags: out.key.tags || [], correct: out.attempt.correct }],
+  const reviewed = await reviewAfterPractice(String(exam), [{ tags: out.key.tags || [], correct: out.attempt.correct }],
     `${e?.kindLabel || exam} ${e?.year || ''} 第 ${Number(n)} 题`);
-  if (reviewed.length) broadcast({ type: 'vault' });
   res.json({ ...out, reviewed });
 }));
 app.post('/api/exams/drill/reset', (req, res) => {
@@ -374,9 +388,8 @@ app.post('/api/exams/:id/:section/submit', wrap(async (req, res) => {
   const e = exams.getExam(req.params.id);
   const section = e?.sections.find((s) => s.id === req.params.section);
   const reviewed = section
-    ? await practice.reviewByPractice(req.params.id, practice.hitsOfSection(section, out.attempt.answers), `${e.kindLabel} ${e.year} ${section.title || section.label || ''}`)
+    ? await reviewAfterPractice(req.params.id, practice.hitsOfSection(section, out.attempt.answers), `${e.kindLabel} ${e.year} ${section.title || section.label || ''}`)
     : [];
-  if (reviewed.length) broadcast({ type: 'vault' });
   res.json({ ...out, reviewed });
 }));
 
